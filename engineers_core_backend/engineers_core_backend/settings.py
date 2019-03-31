@@ -83,10 +83,18 @@ WSGI_APPLICATION = 'engineers_core_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# TODO: 環境変数から読み取るようにする
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.environ['LOCAL_MYSQL_DB_NAME'],
+        'NAME': 'engineersCore',
+        # 'USER': os.environ['LOCAL_MYSQL_USER_NAME'],
+        'USER': 'vIarYotual',
+        # 'PASSWORD': os.environ['LOCAL_MYSQL_PASSWORD'],
+        'PASSWORD': 'virYotual',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -113,9 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja-JP'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 

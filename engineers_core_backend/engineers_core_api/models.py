@@ -52,7 +52,7 @@ class BookDetail(models.Model):
 
 class AmazonBook(models.Model):
     book = models.ForeignKey(Book, related_name='amazon_book', on_delete=models.CASCADE)
-    data_asin = models.BigIntegerField(unique=True)
+    data_asin = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
