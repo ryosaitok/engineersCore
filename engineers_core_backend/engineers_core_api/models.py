@@ -5,8 +5,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class User(models.Model):
+    user_name = models.CharField(max_length=128)
+    account_name = models.CharField(max_length=128, unique=True, db_index=True)
+    description = models.TextField(max_length=512)
+    profile_image_link = models.ImageField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user_name
+
+
 class Author(models.Model):
-    author_name = models.CharField(max_length=1000)
+    author_name = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -14,14 +26,8 @@ class Author(models.Model):
         return self.author_name
 
 
-class FontSizeEnum(Enum):
-    LARGER = 'BIG'
-    NORMAL = 'MID'
-    SMALL = 'SMALL'
-
-
 class Book(models.Model):
-    title = models.CharField(max_length=1000)
+    title = models.CharField(max_length=1024)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     book_status_choices = [
         ['PRE', 'Pre-Sales'],
@@ -52,7 +58,7 @@ class BookDetail(models.Model):
 
 class AmazonBook(models.Model):
     book = models.ForeignKey(Book, related_name='amazon_book', on_delete=models.CASCADE)
-    data_asin = models.CharField(max_length=100)
+    data_asin = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
