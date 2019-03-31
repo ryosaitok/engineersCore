@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import Book, BookDetail, AmazonBook, Author
+from .models import Book, BookDetail, AmazonBook, Author, User
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'user_name', 'account_name', 'description', 'profile_image_link')
 
 
 class AuthorSerializer(serializers.ModelSerializer):
