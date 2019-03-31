@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 class User(models.Model):
     user_name = models.CharField(max_length=128)
     account_name = models.CharField(max_length=128, unique=True, db_index=True)
-    description = models.TextField(max_length=512)
-    profile_image_link = models.ImageField(unique=True)
+    description = models.TextField(max_length=512, null=True)
+    profile_image_link = models.ImageField(unique=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
