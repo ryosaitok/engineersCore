@@ -18,7 +18,7 @@ class User(models.Model):
 
 
 class Author(models.Model):
-    author_name = models.CharField(max_length=128)
+    author_name = models.CharField(max_length=128, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -27,7 +27,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=1024)
+    title = models.CharField(max_length=255, db_index=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     book_status_choices = [
         ['PRE', 'Pre-Sales'],
@@ -58,7 +58,7 @@ class BookDetail(models.Model):
 
 class AmazonBook(models.Model):
     book = models.ForeignKey(Book, related_name='amazon_book', on_delete=models.CASCADE)
-    data_asin = models.CharField(max_length=64)
+    data_asin = models.CharField(max_length=64, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
