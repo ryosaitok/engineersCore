@@ -28,7 +28,6 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=255, db_index=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     book_status_choices = [
         ['PRE', 'Pre-Sales'],
         ['PUB', 'Published'],
@@ -44,6 +43,16 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class BookAuthor(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.book.title
 
 
 class BookDetail(models.Model):
