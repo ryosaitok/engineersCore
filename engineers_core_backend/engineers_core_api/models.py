@@ -36,8 +36,10 @@ class Book(models.Model):
     book_status = models.CharField(choices=book_status_choices,
                    default='PUB',
                    max_length=10)
-    sale_date = models.DateField()
+    sale_date = models.DateField(null=True)
     pages_count = models.IntegerField()
+    # 一旦税込価格とする
+    offer_price = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
