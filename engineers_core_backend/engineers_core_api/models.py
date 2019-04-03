@@ -47,6 +47,20 @@ class Book(models.Model):
         return self.title
 
 
+class BookReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    report_text = models.TextField(max_length=10000)
+    report_date = models.DateField(null=True)
+    tweet_flag = models.BooleanField(default=False)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.book.title
+
+
 class BookAuthor(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
