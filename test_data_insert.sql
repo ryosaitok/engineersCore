@@ -1,3 +1,23 @@
+-- USERデータ
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (1, '仮想サーファー', 'virtual_techX', 'Webエンジニア@ベンチャー | 日常生活の作業を自動化(さぼる) | 雑記ブログ月間10万PV(http://www.virtual-surfer.com ) | プログラミングチュートリアル(https://note.mu/virtual_surfer ) | 複業(@business_techX)', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (2, '仮想サーファー@複業実験室', 'business_techX', '複業で学んだことをつぶやく', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (3, '駆け出しサーファー', 'muscle_techX', '元駆け出しエンジニアマッチョになるまでの記録', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (4, '仮想通貨ニュース', 'cryptoNewsBot', '仮想通貨のニュース情報を呟き続けるBotです', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (5, '田中太郎', 'tarotaro', '世田谷で働く営業マン', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (6, '山田二郎', 'jiro_love', '二郎系ラーメンをこよなく愛するマン', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (7, 'ナナナ', '777', '平成7年7月7日生まれ7歳児（←）', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (8, '技術書展開催したい', 'tech_party', 'いつか技術書展を開催したい', null, now(), now());
+INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
+  VALUES (9, 'Python学習中', 'python_now', 'pythonを勉強中の高校生', null, now(), now());
+
 -- AUTHORデータ
 INSERT INTO engineers_core_api_author (id, author_name, created_at, updated_at)
   VALUES (1, '吉田裕美', now(), now());
@@ -30,7 +50,7 @@ INSERT INTO engineers_core_api_book (id, title, sale_date, pages_count, offer_pr
 INSERT INTO engineers_core_api_book (id, title, sale_date, pages_count, offer_price, created_at, updated_at, book_status)
   VALUES (5, 'プログラムはなぜ動くのか　第２版　知っておきたいプログラムの基礎知識', null, 296, 2592, now(), now(), 'PUB');
 INSERT INTO engineers_core_api_book (id, title, sale_date, pages_count, offer_price, created_at, updated_at, book_status)
-  VALUES (6, 'コンピュータはなぜ動くのか～知っておきたいハードウエア＆ソフトウエアの基礎知識', 2592, '2003-06-02', 277, now(), now(), 'PUB');
+  VALUES (6, 'コンピュータはなぜ動くのか～知っておきたいハードウエア＆ソフトウエアの基礎知識', '2003-06-02', 2592, 277, now(), now(), 'PUB');
 INSERT INTO engineers_core_api_book (id, title, sale_date, pages_count, offer_price, created_at, updated_at, book_status)
   VALUES (7, 'Javaでなぜつくるのか 知っておきたいJavaプログラミングの基礎知識', '2005-03-31', 309, 2592, now(), now(), 'PUB');
 INSERT INTO engineers_core_api_book (id, title, sale_date, pages_count, offer_price, created_at, updated_at, book_status)
@@ -193,22 +213,23 @@ INSERT INTO engineers_core_api_bookdetail (id, summary, created_at, updated_at, 
 私たちが作る個々のWebサービスも,Webのアーキテクチャにのっとることで成功へとつながります。Webのアーキテクチャに正しく適応したWebサービスは,情報が整理され,ユーザの使い勝手が向上し,ほかのサービスと連携しやすくなり,将来的な拡張性が確保されるからです。
 本書のテーマは,Webサービスの実践的な設計です。まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。そしてWebサービスにおける設計課題,たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,設計プロセスなどについて,現時点のベストプラクティスを紹介します。', now(), now(), 9);
 
--- USERデータ
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (1, '仮想サーファー', 'virtual_techX', 'Webエンジニア@ベンチャー | 日常生活の作業を自動化(さぼる) | 雑記ブログ月間10万PV(http://www.virtual-surfer.com ) | プログラミングチュートリアル(https://note.mu/virtual_surfer ) | 複業(@business_techX)', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (2, '仮想サーファー@複業実験室', 'business_techX', '複業で学んだことをつぶやく', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (3, '駆け出しサーファー', 'muscle_techX', '元駆け出しエンジニアマッチョになるまでの記録', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (4, '仮想通貨ニュース', 'cryptoNewsBot', '仮想通貨のニュース情報を呟き続けるBotです', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (5, '田中太郎', 'tarotaro', '世田谷で働く営業マン', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (6, '山田二郎', 'jiro_love', '二郎系ラーメンをこよなく愛するマン', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (7, 'ナナナ', '777', '平成7年7月7日生まれ7歳児（←）', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (8, '技術書展開催したい', 'tech_party', 'いつか技術書展を開催したい', null, now(), now());
-INSERT INTO engineers_core_api_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (9, 'Python学習中', 'python_now', 'pythonを勉強中の高校生', null, now(), now());
+-- BOOK_REPORTデータ
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (1, 'Reactの超基本的なことを学べる本。ある程度Reactを書いたことがある人は読者対象ではなさそう。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 1, 1);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (2, 'Reactの中級者向けの本として読んだ！ちょっと理解できてないところもあるから再読したい...', CURRENT_DATE(), FALSE, FALSE, now(), now(), 2, 1);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (3, 'Linuxコマンドはエンジニアとして働くなら絶対触ることになるし、このタイミングで教科書的に学べたのはとてもよかった。', '2019-03-01', TRUE, FALSE, now(), now(), 3, 1);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (4, 'コマンド忘れすぎてて再読。
+割とすぐに忘れてしまってて辛い...', '2019-04-02', TRUE, FALSE, now(), now(), 3, 1);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (5, 'エンジニア初期に読んだけど久しぶりに読んだ。今読むと違う気づきがあっておもしろい。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 4, 1);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (6, '基礎的な仕組み関して学べる', CURRENT_DATE(), FALSE, FALSE, now(), now(), 6, 2);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (7, 'なぜJavaを使うのか？勉強になる。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 7, 3);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (8, 'オブジェクト指向しか知らないと持てない視点を学べた！良い本〜', CURRENT_DATE(), FALSE, FALSE, now(), now(), 8, 4);
+INSERT INTO engineers_core_api_bookreport (id, report_text, report_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (9, 'これはエンジニア研修とかで全員に読ませるべきやつなのでは。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 9, 5);

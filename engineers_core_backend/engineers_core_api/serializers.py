@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, BookAuthor, BookDetail, AmazonBook, Author, User
+from .models import Book, BookAuthor, BookReport, BookDetail, AmazonBook, Author, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,6 +33,15 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book',)
+
+
+class BookReportSerializer(serializers.ModelSerializer):
+    book = BookSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = BookReport
+        fields = ('id', 'user', 'book', 'report_text', 'report_date', 'tweet_flag', 'delete_flag',)
 
 
 class BookAuthorSerializer(serializers.ModelSerializer):
