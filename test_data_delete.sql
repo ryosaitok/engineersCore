@@ -1,11 +1,29 @@
-delete from engineers_core_api_user;
+-- INTERESTED_BOOKデータ
+DELETE FROM engineers_core_api_readbook;
 
-delete from engineers_core_api_bookdetail;
+-- READ_BOOKデータ
+DELETE FROM engineers_core_api_readbook;
 
-delete from engineers_core_api_amazonbook;
+-- COMMENT_FAVORITEデータ
+DELETE FROM engineers_core_api_commentfavorite;
 
-delete from engineers_core_api_bookauthor;
+-- BOOK_COMMENTデータ
+DELETE FROM engineers_core_api_bookcomment;
 
-delete from engineers_core_api_book;
+-- BOOK_DETAILデータ
+DELETE FROM engineers_core_api_bookdetail;
 
-delete from engineers_core_api_author;
+-- AMAZON_BOOKデータ
+DELETE FROM engineers_core_api_amazonbook;
+
+-- BOOK_AUTHORデータ
+DELETE FROM engineers_core_api_bookauthor;
+
+-- BOOKデータ
+DELETE FROM engineers_core_api_book;
+
+-- AUTHORデータ
+DELETE FROM engineers_core_api_author;
+
+-- USERデータ
+DELETE FROM engineers_core_api_user;
