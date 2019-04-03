@@ -47,25 +47,14 @@ class Book(models.Model):
         return self.title
 
 
-class BookReport(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    report_text = models.TextField(max_length=10000)
-    report_date = models.DateField(null=True)
-    tweet_flag = models.BooleanField(default=False)
-    delete_flag = models.BooleanField(null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return '【' + self.user.user_name + '】', self.book.title
-
-
 class BookAuthor(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("book", "author")
 
     def __str__(self):
         return self.book.title
@@ -89,3 +78,59 @@ class AmazonBook(models.Model):
 
     def __str__(self):
         return self.book.title
+
+
+class BookComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    comment_text = models.TextField(max_length=10000)
+    comment_date = models.DateField(auto_now=True)
+    tweet_flag = models.BooleanField(default=False)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.book.title
+
+
+class CommentFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(BookComment, on_delete=models.CASCADE)
+    favorite_date = models.DateField(auto_now=True)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "comment")
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.comment.comment_text
+
+
+class ReadBook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    read_date = models.DateField(null=True)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.book.title
+
+
+class InterestedBook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    interested_date = models.DateField(auto_now=True)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "book")
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.book.title

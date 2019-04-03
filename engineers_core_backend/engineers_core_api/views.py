@@ -1,7 +1,8 @@
 from rest_framework import generics
 
-from .models import Book, Author, User, BookAuthor, BookDetail, BookReport
-from .serializers import BookSerializer, AuthorSerializer, UserSerializer, BookAuthorSerializer, BookDetailSerializer, BookReportSerializer
+from .models import Book, Author, User, BookAuthor, BookDetail, BookComment, CommentFavorite, ReadBook, InterestedBook
+from .serializers import BookSerializer, AuthorSerializer, UserSerializer, BookAuthorSerializer, BookDetailSerializer, \
+    BookCommentSerializer, CommentFavoriteSerializer, ReadBookSerializer, InterestedBookSerializer
 
 
 class BookList(generics.ListCreateAPIView):
@@ -54,11 +55,41 @@ class BookAuthor(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookAuthorSerializer
 
 
-class BookReportList(generics.ListCreateAPIView):
-    queryset = BookReport.objects.all()
-    serializer_class = BookReportSerializer
+class BookCommentList(generics.ListCreateAPIView):
+    queryset = BookComment.objects.all()
+    serializer_class = BookCommentSerializer
 
 
-class BookReport(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BookReport.objects.all()
-    serializer_class = BookReportSerializer
+class BookComment(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookComment.objects.all()
+    serializer_class = BookCommentSerializer
+
+
+class CommentFavoriteList(generics.ListCreateAPIView):
+    queryset = CommentFavorite.objects.all()
+    serializer_class = CommentFavoriteSerializer
+
+
+class CommentFavorite(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CommentFavorite.objects.all()
+    serializer_class = CommentFavoriteSerializer
+
+
+class ReadBookList(generics.ListCreateAPIView):
+    queryset = ReadBook.objects.all()
+    serializer_class = ReadBookSerializer
+
+
+class ReadBook(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ReadBook.objects.all()
+    serializer_class = ReadBookSerializer
+
+
+class InterestedBookList(generics.ListCreateAPIView):
+    queryset = InterestedBook.objects.all()
+    serializer_class = InterestedBookSerializer
+
+
+class InterestedBook(generics.RetrieveUpdateDestroyAPIView):
+    queryset = InterestedBook.objects.all()
+    serializer_class = InterestedBookSerializer
