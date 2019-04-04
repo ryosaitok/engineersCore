@@ -11,7 +11,8 @@ urlpatterns = [
     path('authors/', AuthorList.as_view()),
     path('author/<int:pk>/', Author.as_view()),
     path('users/', UserList.as_view()),
-    path('user/<int:pk>/', User.as_view()),
+    # path('user/<int:pk>/', User.as_view()),
+    path('user/<str:account_name>/', User.as_view(), name='account_name'),
     path('bookcomments/', BookCommentList.as_view()),
     path('bookcomment/<int:pk>/', BookComment.as_view()),
     path('commentfavorites/', CommentFavoriteList.as_view()),
@@ -23,5 +24,5 @@ urlpatterns = [
     path('readbooks/', ReadBookList.as_view()),
     path('readbook/<int:pk>/', ReadBook.as_view()),
     path('interestedbooks/', InterestedBookList.as_view()),
-    path('interestedbook/<int:pk>/', InterestedBook.as_view()),
+    path('interestedbook/<int:user_id>/', InterestedBook.as_view()),
 ]

@@ -43,6 +43,7 @@ class UserList(generics.ListCreateAPIView):
 class User(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = 'account_name'
 
 
 class BookAuthorList(generics.ListCreateAPIView):
