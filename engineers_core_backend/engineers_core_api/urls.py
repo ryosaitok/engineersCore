@@ -1,28 +1,26 @@
 from django.urls import path
 
-from .views import BookList, Book, AuthorList, Author, UserList, User, BookAuthorList, BookAuthor, BookDetailList, \
-    BookDetail, BookCommentList, BookComment, CommentFavoriteList, CommentFavorite, ReadBookList, ReadBook, \
-    InterestedBookList, InterestedBook
+from .views import *
 
 
 urlpatterns = [
-    path('books/', BookList.as_view()),
-    path('book/<int:pk>/', Book.as_view()),
-    path('authors/', AuthorList.as_view()),
-    path('author/<int:pk>/', Author.as_view()),
-    path('users/', UserList.as_view()),
+    path('books/', BookListView.as_view()),
+    path('book/<int:pk>/', BookView.as_view()),
+    path('authors/', AuthorListView.as_view()),
+    path('author/<int:pk>/', AuthorView.as_view()),
+    path('users/', UserListView.as_view()),
     # path('user/<int:pk>/', User.as_view()),
-    path('user/<str:account_name>/', User.as_view(), name='account_name'),
-    path('bookcomments/', BookCommentList.as_view()),
-    path('bookcomment/<int:pk>/', BookComment.as_view()),
-    path('commentfavorites/', CommentFavoriteList.as_view()),
-    path('commentfavorite/<int:pk>/', CommentFavorite.as_view()),
-    path('bookdetails/', BookDetailList.as_view()),
-    path('bookdetail/<int:pk>/', BookDetail.as_view()),
-    path('bookauthors/', BookAuthorList.as_view()),
-    path('bookauthor/<int:pk>/', BookAuthor.as_view()),
-    path('readbooks/', ReadBookList.as_view()),
-    path('readbook/<int:pk>/', ReadBook.as_view()),
-    path('interestedbooks/', InterestedBookList.as_view()),
-    path('interestedbook/<int:user_id>/', InterestedBook.as_view()),
+    path('user/<str:account_name>/', UserView.as_view(), name='account_name'),
+    path('bookcomments/', BookCommentListView.as_view()),
+    path('bookcomment/<int:pk>/', BookCommentView.as_view()),
+    path('commentfavorites/', CommentFavoriteListView.as_view()),
+    path('commentfavorite/<int:pk>/', CommentFavoriteView.as_view()),
+    path('bookdetails/', BookDetailListView.as_view()),
+    path('bookdetail/<int:pk>/', BookDetailView.as_view()),
+    path('bookauthors/', BookAuthorListView.as_view()),
+    path('bookauthor/<int:pk>/', BookAuthorView.as_view()),
+    path('readbooks/', ReadBookListView.as_view()),
+    path('readbook/<int:pk>/', ReadBookView.as_view()),
+    path('interestedbooks/', InterestedBookListView.as_view()),
+    path('interestedbook/<int:user_id>/', InterestedBookView.as_view()),
 ]
