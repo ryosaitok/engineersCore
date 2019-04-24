@@ -1,96 +1,103 @@
 from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Book, Author, User, BookAuthor, BookDetail, BookComment, CommentFavorite, ReadBook, InterestedBook
-from .serializers import BookSerializer, AuthorSerializer, UserSerializer, BookAuthorSerializer, BookDetailSerializer, \
-    BookCommentSerializer, CommentFavoriteSerializer, ReadBookSerializer, InterestedBookSerializer
+from .models import *
+from .serializers import *
 
 
-class BookList(generics.ListCreateAPIView):
+class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
 
-class Book(generics.RetrieveUpdateDestroyAPIView):
+class BookView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
 
-class BookDetailList(generics.ListCreateAPIView):
+class BookDetailListView(generics.ListCreateAPIView):
     queryset = BookDetail.objects.all()
     serializer_class = BookDetailSerializer
 
 
-class BookDetail(generics.RetrieveUpdateDestroyAPIView):
+class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookDetail.objects.all()
     serializer_class = BookDetailSerializer
 
 
-class AuthorList(generics.ListCreateAPIView):
+class AuthorListView(generics.ListCreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 
-class Author(generics.RetrieveUpdateDestroyAPIView):
+class AuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 
-class UserList(generics.ListCreateAPIView):
+class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class User(generics.RetrieveUpdateDestroyAPIView):
+class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'account_name'
 
 
-class BookAuthorList(generics.ListCreateAPIView):
+class BookAuthorListView(generics.ListCreateAPIView):
     queryset = BookAuthor.objects.all()
     serializer_class = BookAuthorSerializer
 
 
-class BookAuthor(generics.RetrieveUpdateDestroyAPIView):
+class BookAuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookAuthor.objects.all()
     serializer_class = BookAuthorSerializer
 
 
-class BookCommentList(generics.ListCreateAPIView):
+class BookCommentListView(generics.ListCreateAPIView):
     queryset = BookComment.objects.all()
     serializer_class = BookCommentSerializer
 
 
-class BookComment(generics.RetrieveUpdateDestroyAPIView):
+class BookCommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookComment.objects.all()
     serializer_class = BookCommentSerializer
 
 
-class CommentFavoriteList(generics.ListCreateAPIView):
+class CommentFavoriteListView(generics.ListCreateAPIView):
     queryset = CommentFavorite.objects.all()
     serializer_class = CommentFavoriteSerializer
 
 
-class CommentFavorite(generics.RetrieveUpdateDestroyAPIView):
+class CommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CommentFavorite.objects.all()
     serializer_class = CommentFavoriteSerializer
 
 
-class ReadBookList(generics.ListCreateAPIView):
+class ReadBookListView(generics.ListCreateAPIView):
+    queryset = ReadBook.objects.all()
+    serializer_class = ReadBookSerializer
+
+    def get_queryset(self):
+        queryset = ReadBook.objects.all()
+        account_name = self.request.query_params.get('account_name', None)
+        if account_name is not None:
+            queryset = queryset.filter(user__account_name=account_name)
+        return queryset
+
+
+class ReadBookView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ReadBook.objects.all()
     serializer_class = ReadBookSerializer
 
 
-class ReadBook(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ReadBook.objects.all()
-    serializer_class = ReadBookSerializer
-
-
-class InterestedBookList(generics.ListCreateAPIView):
+class InterestedBookListView(generics.ListCreateAPIView):
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer
 
 
-class InterestedBook(generics.RetrieveUpdateDestroyAPIView):
+class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer
