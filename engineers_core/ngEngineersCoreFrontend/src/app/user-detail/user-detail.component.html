@@ -1,5 +1,8 @@
 <div *ngIf="user">
   <h2>{{user.userName}} Details</h2>
   <div><span>id: </span>{{user.id}}</div>
-  <div><span>name: {{user.userName}}</span></div>
+  <div>
+    {{user.userName}}
+  </div>
+  <button (click)="goBack()">go back</button>
 </div>

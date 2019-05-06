@@ -3,8 +3,17 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
+  <ul>
+    <li>
+      <nav>
+        <a routerLink="/dashboard">Dashboard</a>
+      </nav>
+    </li>
+    <li>
+      <nav>
+        <a routerLink="/users">Users</a>
+      </nav>
+    </li>
+  </ul>
 </div>
-
 <router-outlet></router-outlet>
-
-<app-users></app-users>
