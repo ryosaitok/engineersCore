@@ -1,0 +1,10 @@
+<div *ngIf="book">
+  <h2>『{{book.title}}』</h2>
+  <div><span>id: </span>{{book.id}}</div>
+  <div>本の販売状況：{{book.bookStatus}}</div>
+  <div>販売日：{{book.saleDate}}</div>
+  <div>ページ数：{{book.pagesCount}}</div>
+  <div>定価：¥{{book.offerPrice | number}}</div>
+  <a href="https://www.amazon.co.jp/dp/{{book.amazonBook}}/?language=ja_JP" target="_blank"><div>Amazonで確認する</div></a>
+  <button (click)="goBack()">go back</button>
+</div>
