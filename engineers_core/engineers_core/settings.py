@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # Third Party App
     'rest_framework',
     'django_filters',
+    # AngularからAPIにアクセス可能とする
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -61,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'engineers_core.urls'
@@ -146,3 +150,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'engineers_core_frontend', 'build', 'static'),
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True

@@ -1,20 +1,23 @@
 import {Injectable} from '@angular/core';
 
-import {Observable, of} from 'rxjs';
-
-import {User} from './user';
-import {USERS} from './mock-users';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
 
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+  ) {}
+  host = 'http://127.0.0.1:8000/';
+  url = 'api/user/';
+  usersUrl = 'api/mockUsers/';
 
-  getUsers(): Observable<User[]> {
-    return of(USERS);
+  getUsers(): Observable<any> {
+    return this.http.get<any>(this.host + this.usersUrl);
   }
 
-  getUser(id: number): Observable<User> {
-    return of(USERS.find(user => user.id === id));
+  getUser(userAccountName): Observable<any> {
+    return this.http.get<any>(this.host + this.url + userAccountName + '/');
   }
 }

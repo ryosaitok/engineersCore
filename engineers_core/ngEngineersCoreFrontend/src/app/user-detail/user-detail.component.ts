@@ -16,7 +16,7 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit() {
@@ -24,8 +24,15 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.userService.getUser(id).subscribe(user => this.user = user);
+    const userAccountName = this.route.snapshot.paramMap.get('userAccountName');
+    this.userService.getUser(userAccountName).subscribe(response => {
+      this.user = new User(
+        response.id,
+        response.user_name,
+        response.account_name,
+        response.description,
+        response.account_name);
+    });
   }
 
   goBack(): void {
