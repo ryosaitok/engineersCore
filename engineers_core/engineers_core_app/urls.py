@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import *
 
 urlpatterns = [
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
     path('books/', BookListView.as_view()),
     path('book/<int:pk>/', BookView.as_view()),
     path('authors/', AuthorListView.as_view()),

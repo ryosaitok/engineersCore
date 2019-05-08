@@ -1,0 +1,21 @@
+<h2>ログイン</h2>
+<div *ngIf="isAuthError">
+  <p>{{authErrorMessage}}</p>
+</div>
+<div *ngIf="!isAuthError">
+  <p>ユーザー名：{{appComponent.username}}で、{{authMessage}}</p>
+</div>
+<div class="signin">
+  <form #f="ngForm" (ngSubmit)="signIn(f)" novalidate>
+    <ul>
+      <li>ユーザー名：<input name="username" ngModel required></li>
+      <li>パスワード：<input name="password" ngModel required></li>
+    </ul>
+    <button>送信</button>
+  </form>
+</div>
+<div>
+  <form (ngSubmit)="signOut()">
+    <button>ログアウトする</button>
+  </form>
+</div>

@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +11,9 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BooksComponent } from './books/books.component';
+import { SigninComponent } from './signin/signin.component';
+import { GlobalHeaderComponent } from './global-header/global-header.component';
+import {AuthGuard} from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -17,14 +22,17 @@ import { BooksComponent } from './books/books.component';
     UserDetailComponent,
     DashboardComponent,
     BookDetailComponent,
-    BooksComponent
+    BooksComponent,
+    SigninComponent,
+    GlobalHeaderComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

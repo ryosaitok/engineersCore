@@ -1,4 +1,5 @@
-from rest_framework import generics
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
@@ -105,12 +106,31 @@ class CommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ReadBookListView(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = ReadBook.objects.all()
     serializer_class = ReadBookSerializer
 
+    ### これでクエリパラメーターからユーザー情報を取得できる。しかし、認証しているかどうか判定できない...
+    # def get_queryset(self):
+    #     queryset = ReadBook.objects.all()
+    #     account_name = self.request.query_params.get('account_name', None)
+    #     if account_name is not None:
+    #         queryset = queryset.filter(user__account_name=account_name)
+    #     return queryset
+    #
+    ### これでリクエストパラメータからユーザー情報を取得できるよう。しかし、usernameを取得してqueryでFilter指定できない...
+    # def get(self, request, format=None):
+    #     return Response(data={
+    #         'username': request.user.username,
+    #         'email': request.user.email,
+    #         },
+    #         status=status.HTTP_200_OK)
+    ### これで認証しているかを判定し、リクエストパラメータからユーザー情報を取得できる。
+    ### 「readbook/user/1」のように、誰の読了一覧データかどうかを判定できるようにしたい。
     def get_queryset(self):
         queryset = ReadBook.objects.all()
         account_name = self.request.query_params.get('account_name', None)
+        print('account_name'.format(account_name))
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
         return queryset

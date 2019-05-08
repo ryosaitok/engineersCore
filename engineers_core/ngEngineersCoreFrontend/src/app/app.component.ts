@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {User} from './user';
+import {AuthGuard} from './guard/auth.guard';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   appName = 'engineersCore';
+  username: string;
+
+  constructor(public auth: AuthGuard) {
+    this.username = auth.getObservable();
+  }
 }
