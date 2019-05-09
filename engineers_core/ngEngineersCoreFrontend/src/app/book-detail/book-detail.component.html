@@ -1,10 +1,138 @@
-<div *ngIf="book">
-  <h2>『{{book.title}}』</h2>
-  <div><span>id: </span>{{book.id}}</div>
-  <div>本の販売状況：{{book.bookStatus}}</div>
-  <div>販売日：{{book.saleDate}}</div>
-  <div>ページ数：{{book.pagesCount}}</div>
-  <div>定価：¥{{book.offerPrice | number}}</div>
-  <a href="https://www.amazon.co.jp/dp/{{book.amazonBook}}/?language=ja_JP" target="_blank"><div>Amazonで確認する</div></a>
-  <button (click)="goBack()">go back</button>
+<div class="page-outer" *ngIf="book">
+  <!-- 本のタイトル -->
+  <div class="BookNavigation">
+    <div class="BookNavigation-canopy u-bgUserColor">
+      <div class="BookNavigation-textContainer">
+        <h1 class="BookNavigation-titleText" dir="ltr">
+          {{book.title}}
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- 左サイドバー(本の情報) -->
+      <div class="SidebarBookModules">
+        <!-- 本の情報 -->
+        <div class="module book">
+          <div class="flex-module">
+            <div class="flex-module-header"></div>
+            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+              <div class="book-image item">
+                <div class="BookImageItem-context">
+                  <div class="content">
+                    <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook}}/">
+                      <img border="0"
+                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook}}&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                    src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook}}"
+                    width="1"
+                    height="1" border="0" alt="" style="border:none !important; margin:0px !important;"/>
+                  </div>
+                </div>
+              </div>
+              <div class="book-basic-info item">
+                <div class="BookBasicInfoItem-context">
+                  <div class="content">
+                    <div class="book-info-text book-title">
+                      <strong><b>{{book.title}}</b></strong>
+                    </div>
+                    <div class="book-info-text book-author">
+                      <span><b>TODO:本の著者名で置き換え（著）</b></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="book-detail-info item">
+                <div class="BookDetailInfoItem-context">
+                  <div class="content">
+                    <div class="book-info-text book-sale-date">
+                      <span><b>{{book.saleDate}} 発売</b></span>
+                    </div>
+                    <div class="book-info-text book-page-count">
+                      <span><b>{{book.pagesCount}} ページ</b></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 本の読んだ・読みたい登録 -->
+        <div class="module register">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>本の登録</strong>
+            </div>
+            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+              <div class="book-read item">
+                <div class="BookReadItem-context">
+                  <div class="content">
+                    <div class="book-read">
+                      <ul class="book-action-button">
+                        <li>
+                          <strong><b>読んだ</b></strong>
+                        </li>
+                        <li>
+                          <button><strong><b>読んだ本に登録</b></strong></button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="interested-read item">
+                <div class="BookInterestedItem-context">
+                  <div class="content">
+                    <div class="book-interested">
+                      <ul class="book-action-button">
+                        <li>
+                          <strong><b>読みたい</b></strong>
+                        </li>
+                        <li>
+                          <button><strong><b>読みたい本に登録</b></strong></button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 本のリアクション -->
+        <div class="module reaction">
+          <div class="flex-module">
+            <div class="js-book-reaction dashboard-book-reaction flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+              <div class="book-comment item">
+                <div class="BookCommentItem-context">
+                  <div class="content">
+                    <div class="book-comment-count">
+                      <!-- TODO -->
+                      <strong><b>3人がコメントしています</b></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="book-read item">
+                <div class="BookReadCountItem-context">
+                  <div class="content">
+                    <div class="book-read-count">
+                      <!-- TODO -->
+                      <strong><b>9人が読んでいます</b></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メインメニュー(本の読んだコメント) -->
 </div>

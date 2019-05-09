@@ -16,8 +16,6 @@ import {Router} from "@angular/router";
 export class SigninComponent implements OnInit {
 
   isAuthError = false;
-  authErrorMessage = '未ログイン状態です。ログインしてください。';
-  authMessage = 'ログイン中です。';
 
   constructor(
     private cookieService: CookieService,

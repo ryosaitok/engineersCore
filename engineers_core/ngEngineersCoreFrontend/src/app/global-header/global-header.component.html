@@ -1,3 +1,66 @@
-<div id="header">
-
-</div>
+<header>
+  <div id="header">
+    <div class="top-bar">
+      <div class="global-nav">
+        <div class="global-nav-inner">
+          <div class="container">
+            <!-- ホームメニュー -->
+            <h1 class="home-menu Icon Icon--engineersCore topbar-etched">
+              <nav>
+                <a routerLink="/dashboard">EngineersCore</a>
+              </nav>
+            </h1>
+            <!-- 左メニュー -->
+            <div class="left-menu">
+              <ul class="nav" id="global-actions">
+                <li id="global-nav-home">
+                  <nav>
+                    <a routerLink="/dashboard">ホーム</a>
+                  </nav>
+                </li>
+                <li id="global-nav-users">
+                  <nav>
+                    <a routerLink="/users">ユーザー一覧</a>
+                  </nav>
+                </li>
+                <li id="global-nav-books">
+                  <nav>
+                    <a routerLink="/books">技術書一覧</a>
+                  </nav>
+                </li>
+              </ul>
+            </div>
+            <div class="pull-right nav-extras">
+              <!-- 検索フォーム -->
+              <div class="search-form">
+                <nav>
+                  <a routerLink="/search">検索フォーム</a>
+                </nav>
+              </div>
+              <ul class="nav right-actions">
+                <!-- ログインユーザーメニュー -->
+                <!--              <li class="me dropdown session js-session" data-global-action="t1me" id="user-dropdown"></li>-->
+                <div class="login-user-menu">
+                  <div id="login-state">
+                    <div *ngIf="appComponent.username === null">
+                      <nav>
+                        <a routerLink="/login">{{appComponent.authErrorMessage}}</a>
+                      </nav>
+                    </div>
+                    <div *ngIf="appComponent.username !== null">
+                      <nav>
+                        <a routerLink="/login">{{appComponent.authMessage}}({{appComponent.username}})</a>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <!-- 読んだ本登録ボタン -->
+                <!--              <li role="complementary" aria-labelledby="global-new-readbook-button" class="topbar-readbook-btn"></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

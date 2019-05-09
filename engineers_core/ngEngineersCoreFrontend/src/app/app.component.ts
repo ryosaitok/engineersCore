@@ -10,8 +10,10 @@ import {AuthGuard} from './guard/auth.guard';
 export class AppComponent {
   appName = 'engineersCore';
   username: string;
+  authErrorMessage = '未ログイン状態です。ログインしてください。';
+  authMessage = 'ログイン中です。';
 
   constructor(public auth: AuthGuard) {
-    this.username = auth.getObservable();
+    // this.username = auth.getObservable();
   }
 }

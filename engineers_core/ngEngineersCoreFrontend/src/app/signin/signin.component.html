@@ -1,10 +1,4 @@
 <h2>ログイン</h2>
-<div *ngIf="isAuthError">
-  <p>{{authErrorMessage}}</p>
-</div>
-<div *ngIf="!isAuthError">
-  <p>ユーザー名：{{appComponent.username}}で、{{authMessage}}</p>
-</div>
 <div class="signin">
   <form #f="ngForm" (ngSubmit)="signIn(f)" novalidate>
     <ul>

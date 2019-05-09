@@ -9,9 +9,7 @@ import {User} from '../user';
 })
 export class AuthGuard implements CanActivate {
 
-  // @ts-ignore
-  // private userSubject = new BehaviorSubject<User>(new User());
-  private loginUsername: string;
+  // private loginUsername: string;
 
   constructor(
     private signinService: SigninService,
@@ -37,7 +35,7 @@ export class AuthGuard implements CanActivate {
   // ログイン情報をリアルタイムに通知します。
   // 未ログインであれば空のオブジェクトが、
   // ログイン済みであればログイン情報がストリームに流れます。
-  getObservable(): string {
-    return this.loginUsername;
-  }
+  // getObservable(): string {
+    // return this.loginUsername;
+  // }
 }
