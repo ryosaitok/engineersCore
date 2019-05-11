@@ -1,0 +1,9 @@
+<div *ngIf="bookComment">
+  <h2></h2>
+  <div><span>ID: </span>{{bookComment.id}}</div>
+  <div>ユーザー名：{{bookComment.user.userName}}</div>
+  <div>アカウント名：{{bookComment.user.userAccountName}}</div>
+  <div>コメント：{{bookComment.commentText}}</div>
+  <div>コメント日：{{bookComment.commentDate}}</div>
+  <div>読んだ本：{{bookComment.book.title}}</div>
+</div>

@@ -80,6 +80,9 @@ class BookCommentListView(generics.ListCreateAPIView):
         account_name = self.request.query_params.get('account_name', None)
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
+        book_id = self.request.query_params.get('book_id', None)
+        if book_id is not None:
+            queryset = queryset.filter(book__id=book_id)
         return queryset
 
 

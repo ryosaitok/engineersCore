@@ -131,8 +131,54 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- メインメニュー(本の読んだコメント) -->
+      <!-- メインメニュー(本の読んだコメント) -->
+      <div class="BookCommentsModules">
+        <!-- 本の情報 -->
+        <div class="module bookComments">
+          <div class="comment-module">
+            <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
+                 data-section-id="wtf" style="opacity: 1;">
+              <a routerLink="/bookcomment/{{comment.id}}/">
+                <div class="book-comment">
+                  <div class="BookCommentItem-context">
+                    <!-- いいねしたユーザーの情報など -->
+                    <div class="context"></div>
+                    <div class="comment-content">
+                      <div class="comment-user">
+                        <a routerLink="/user/{{comment.user.account_name}}">
+                          <div class="comment-user">
+                            <div class="user-icon">
+                              <img class="avatar" src="../../assets/image/profile/test_image.png"/>
+<!--                              <img class="avatar" [src]={{}} alt="" />-->
+                              <!--                        {{comment.user.profileImageLink}}-->
+                            </div>
+                            <div class="user-name">
+                              {{comment.user.user_name}}(@{{comment.user.account_name}})
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="comment-date">
+                        ・{{comment.comment_date}}
+                      </div>
+                      <div class="comment-text">
+                        {{comment.comment_text}}
+                      </div>
+                      <div class="comment-reaction">
+                        (コメント数・いいね数)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右サイドバー -->
+
+  </div>
 </div>

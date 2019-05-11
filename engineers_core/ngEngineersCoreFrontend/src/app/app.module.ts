@@ -14,6 +14,7 @@ import { BooksComponent } from './books/books.component';
 import { SigninComponent } from './signin/signin.component';
 import { GlobalHeaderComponent } from './global-header/global-header.component';
 import {AuthGuard} from './guard/auth.guard';
+import { BookCommentComponent } from './book-comment/book-comment.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {AuthGuard} from './guard/auth.guard';
     BooksComponent,
     SigninComponent,
     GlobalHeaderComponent,
+    BookCommentComponent,
   ],
   imports: [
     BrowserModule,

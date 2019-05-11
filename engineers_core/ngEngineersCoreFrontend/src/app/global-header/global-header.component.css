@@ -2,6 +2,15 @@ header {
   padding-bottom: 46px;
 }
 
+a {
+    color: #222222;
+    text-decoration: none;
+}
+a:hover {
+    color: #1da1f2;
+    text-decoration: none;
+}
+
 .top-bar {
     backface-visibility: hidden;
     border-bottom: 1px solid #e6ecf0;
