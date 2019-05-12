@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,10 @@ import {Observable} from 'rxjs';
 export class SigninService {
 
   host = 'http://127.0.0.1:8000/';
-  authUrl = 'api/auth/jwt/create/';
-  userUrl = 'api/auth/users/me/';
+  authUrl = 'api/auth/';
+  userUrl = 'api/auth/me/';
   authApiUrl = this.host + this.authUrl;
+  authUserApiUrl = this.host + this.userUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -20,34 +21,48 @@ export class SigninService {
   token: string;
 
   constructor(
-    private cookieService: CookieService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private userService: UserService
+  ) {
+  }
 
   // 認証トークンを取得する。
-  getAuthToken(username, password): string {
+  getAuthToken(username, password): Observable<any> {
     this.httpOptions.headers.set('username', username);
     this.httpOptions.headers.set('password', password);
     const body = {
       username,
       password
     };
-    this.http.post<any>(this.authApiUrl, body, this.httpOptions).subscribe(response => {
-      this.token = response.access;
-    });
-    const tokenUser = {
-      token: this.token,
-      username
-    };
-    return JSON.stringify(tokenUser);
+    return this.http.post<any>(this.authApiUrl, body, this.httpOptions);
   }
 
   getLoginUser(): Observable<any> {
-    return this.http.post<any>(this.userUrl, this.httpOptions);
+    const token = this.getTokenFromLocalStorage();
+    if (token !== null) {
+      const jwtHeader = this.createJwtHeader(token);
+      return this.http.get<any>(this.authUserApiUrl, jwtHeader);
+    }
   }
 
-  // 認証状態かどうか
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem('authToken');
-    return token !== null;
+  getLoginUserAccountNameDeprecated(): string {
+    return localStorage.getItem('accountName');
+  }
+
+  getLoginUserIdDeprecated(): Observable<any> {
+    const accountName = localStorage.getItem('accountName');
+    return this.userService.getUser(accountName);
+  }
+
+  // LocalStorageから認証トークンを取得する
+  getTokenFromLocalStorage(): string {
+    return localStorage.getItem('authToken');
+  }
+
+  createJwtHeader(token: string): any {
+    console.log('\'JWT \' + token: ' + 'JWT ' + token);
+   　return new HttpHeaders({
+      Authorization: 'JWT ' + token
+    });
   }
 }

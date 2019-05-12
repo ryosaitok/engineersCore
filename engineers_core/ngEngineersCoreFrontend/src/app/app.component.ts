@@ -8,8 +8,11 @@ import {AuthGuard} from './guard/auth.guard';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  loginUserId: string;
+  accountName: string;
+
   appName = 'engineersCore';
-  username: string;
   authErrorMessage = '未ログイン状態です。ログインしてください。';
   authMessage = 'ログイン中です。';
 

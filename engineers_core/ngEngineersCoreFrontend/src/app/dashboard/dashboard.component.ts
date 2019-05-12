@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {User} from '../user';
 import {UserService} from '../service/user/user.service';
 
@@ -10,8 +10,9 @@ import {UserService} from '../service/user/user.service';
 export class DashboardComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private userService: UserService) {
-  }
+  constructor(
+    private userService: UserService,
+  ) {}
 
   ngOnInit() {
     this.getUsers();

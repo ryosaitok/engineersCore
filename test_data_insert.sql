@@ -1,22 +1,42 @@
+-- AUTH_USERデータ
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (1, 'pbkdf2_sha256$120000$QfxGMcxuSeQ3$nK589TlyZLNTVFHL/O+9o6s7d88JAHrndAH5VEtoKmo=', now(), 1, 'virtual_techX', 'サーファー', '仮想', 'jinko.chinoxxx@gmail.com', 1, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (2, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'business_techX', '複業実験室', '仮想サーファー', 'test1@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (3, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'muscle_techX', 'サーファー', '駆け出し', 'test2@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (4, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'cryptoNewsBot', 'ニュース', '仮想通貨', 'test3@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (5, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'tarotaro', '太郎', '田中', 'test4@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (6, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'jiro_love', '二郎', '山田', 'test5@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (7, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, '777', 'ナ', 'ナナ', 'test6@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (8, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'tech_party', '開催したい', '技術書展', 'test7@example.com', 0, 1, now());
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined)
+  VALUES (9, 'pbkdf2_sha256$120000$uxmLs3hwY5cO$zT8MZ/h8BXKMEaXmg9UcwzitFWq77T3cZtEtM2kAfiQ=', now(), 0, 'python_now', '学習中', 'Python', 'test8@example.com', 0, 1, now());
+
 -- USERデータ
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (1, '仮想サーファー', 'virtual_techX', 'Webエンジニア@ベンチャー | 日常生活の作業を自動化(さぼる) | 雑記ブログ月間10万PV(http://www.virtual-surfer.com ) | プログラミングチュートリアル(https://note.mu/virtual_surfer ) | 複業(@business_techX)', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (2, '仮想サーファー@複業実験室', 'business_techX', '複業で学んだことをつぶやく', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (3, '駆け出しサーファー', 'muscle_techX', '元駆け出しエンジニアマッチョになるまでの記録', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (4, '仮想通貨ニュース', 'cryptoNewsBot', '仮想通貨のニュース情報を呟き続けるBotです', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (5, '田中太郎', 'tarotaro', '世田谷で働く営業マン', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (6, '山田二郎', 'jiro_love', '二郎系ラーメンをこよなく愛するマン', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (7, 'ナナナ', '777', '平成7年7月7日生まれ7歳児（←）', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (8, '技術書展開催したい', 'tech_party', 'いつか技術書展を開催したい', null, now(), now());
-INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at)
-  VALUES (9, 'Python学習中', 'python_now', 'pythonを勉強中の高校生', null, now(), now());
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (1, '仮想サーファー', 'virtual_techX', 'Webエンジニア@ベンチャー | 日常生活の作業を自動化(さぼる) | 雑記ブログ月間10万PV(http://www.virtual-surfer.com ) | プログラミングチュートリアル(https://note.mu/virtual_surfer ) | 複業(@business_techX)', null, now(), now(), 1);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (2, '仮想サーファー@複業実験室', 'business_techX', '複業で学んだことをつぶやく', null, now(), now(), 2);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (3, '駆け出しサーファー', 'muscle_techX', '元駆け出しエンジニアマッチョになるまでの記録', null, now(), now(), 3);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (4, '仮想通貨ニュース', 'cryptoNewsBot', '仮想通貨のニュース情報を呟き続けるBotです', null, now(), now(), 4);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (5, '田中太郎', 'tarotaro', '世田谷で働く営業マン', null, now(), now(), 5);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (6, '山田二郎', 'jiro_love', '二郎系ラーメンをこよなく愛するマン', null, now(), now(), 6);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (7, 'ナナナ', '777', '平成7年7月7日生まれ7歳児（←）', null, now(), now(), 7);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (8, '技術書展開催したい', 'tech_party', 'いつか技術書展を開催したい', null, now(), now(), 8);
+INSERT INTO engineers_core_app_user (id, user_name, account_name, description, profile_image_link, created_at, updated_at, auth_user_id)
+  VALUES (9, 'Python学習中', 'python_now', 'pythonを勉強中の高校生', null, now(), now(), 9);
 
 -- AUTHORデータ
 INSERT INTO engineers_core_app_author (id, author_name, created_at, updated_at)

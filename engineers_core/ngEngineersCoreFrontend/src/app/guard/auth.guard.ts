@@ -19,10 +19,13 @@ export class AuthGuard implements CanActivate {
   async canActivate(): Promise<boolean> {
     await this.checkAsync();
     // ログインしていない場合Login画面に飛ばす
-    if (!this.signinService.isAuthenticated()) {
-      this.router.navigate(['login']);
-      return false;
-    }
+    console.log('this.signinService.getTokenFromLocalStorage(): ' + this.signinService.getTokenFromLocalStorage());
+    this.signinService.getLoginUser().subscribe(response => {
+      if (response.id === null) {
+        this.router.navigate(['login']);
+        return false;
+      }
+    });
     return true;
   }
 

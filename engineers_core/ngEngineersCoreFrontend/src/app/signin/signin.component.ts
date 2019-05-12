@@ -5,7 +5,9 @@ import {HttpClient} from '@angular/common/http';
 
 import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {UserService} from '../service/user/user.service';
+import {error} from 'util';
 
 @Component({
   selector: 'app-signin',
@@ -15,33 +17,35 @@ import {Router} from "@angular/router";
 @Injectable()
 export class SigninComponent implements OnInit {
 
-  isAuthError = false;
-
   constructor(
     private cookieService: CookieService,
     private http: HttpClient,
     private appComponent: AppComponent,
     private signInService: SigninService,
+    private userService: UserService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
-    this.checkAuth();
+  ) {
   }
 
-  // ログインする（認証トークンを取得してLocalStorageにセットする）。
+  ngOnInit() {
+    // this.checkAuth();
+  }
+
+  // ログインする
+  // ・認証トークンを取得してLocalStorageにセット
+  // ・ユーザー情報を取得してAppComponent(永続化できる場所)にセット
   signIn(f: NgForm) {
-    const tokenUserStr = this.signInService.getAuthToken(f.value.username, f.value.password);
-    console.log(tokenUserStr);
-    const tokenUser = JSON.parse(tokenUserStr);
-    if (tokenUser.token !== null && tokenUser.username !== null) {
-      localStorage.setItem('authToken', tokenUser.token);
-      // TODO:ryo.saito Requestの持っているユーザー情報でユーザー情報を取得してappComponentに持たせるようにする。
-      this.appComponent.username = tokenUser.username;
-      this.isAuthError = false;
-    } else {
-      this.isAuthError = true;
-    }
+    const accountName = f.value.username;
+    this.signInService.getAuthToken(f.value.username, f.value.password).subscribe(response => {
+      const authToken = response.token;
+      if (authToken === null) {
+        error('ログイン失敗！');
+      }
+      this.appComponent.accountName = accountName;
+      localStorage.setItem('authToken', authToken);
+      // TODO:ryo.saito 一旦LocalStorageを活用するが、ユーザーのアクセスできない場所に持たせるように改修する。
+      localStorage.setItem('accountName', accountName);
+    });
   }
 
   // ユーザー情報更新
@@ -50,7 +54,7 @@ export class SigninComponent implements OnInit {
       .subscribe(response => {
         const user = response.data;
         // TODO:ryo.saito データベース(Model)の持っているUserと認証で使うUserを揃える必要あり。
-        this.appComponent.username = user.username;
+        this.appComponent.accountName = user.username;
         return user;
       });
   }
@@ -58,11 +62,11 @@ export class SigninComponent implements OnInit {
   // ログアウトする（認証トークンをCookieから削除する）。
   signOut() {
     localStorage.removeItem('authToken');
-    this.appComponent.username = null;
+    this.appComponent.accountName = null;
     this.router.navigate(['dashboard']);
   }
 
-  checkAuth() {
-    this.isAuthError = localStorage.getItem('authToken') === null;
-  }
+  // checkAuth() {
+  //   this.isAuthError = localStorage.getItem('authToken') === null;
+  // }
 }

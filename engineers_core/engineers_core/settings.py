@@ -57,7 +57,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
     # 'NON_FIELD_ERRORS_KEY': 'detail',
     # 'TEST_REQUEST_DEFAULT_FORMAT': 'json'
@@ -66,10 +67,10 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 5,
 }
 
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
-}
+# SIMPLE_JWT = {
+#     'AUTH_HEADER_TYPES': ('JWT',),
+#     'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

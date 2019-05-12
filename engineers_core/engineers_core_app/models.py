@@ -1,11 +1,15 @@
 # coding=utf-8
 from enum import Enum
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser, _user_has_perm, AbstractUser
+)
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as AuthUser
 
 
 class User(models.Model):
+    auth_user = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True)
     user_name = models.CharField(max_length=128)
     account_name = models.CharField(max_length=128, unique=True, db_index=True)
     description = models.TextField(max_length=512, null=True)

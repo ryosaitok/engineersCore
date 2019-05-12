@@ -75,8 +75,30 @@
                         <li>
                           <strong><b>読んだ</b></strong>
                         </li>
+                        <!--                        <li>-->
+                        <!--                          <form (ngSubmit)="registerBookComment(book.id, comment, null)">-->
+                        <!--                            <button>読んだ本に登録</button>-->
+                        <!--                          </form>-->
+                        <!--                        </li>-->
                         <li>
-                          <button><strong><b>読んだ本に登録</b></strong></button>
+                          <form (ngSubmit)="onSubmit()" #bookDetail="ngForm">
+                            <div class="form-group">
+                              <label for="bookId">本ID</label>
+                              <input type="number" class="form-control" id="bookId" required [(ngModel)]="book.id"
+                                     name="bookId" #bookId="ngModel">
+                            </div>
+                            <div class="form-group">
+                              <label for="comment">感想</label>
+                              <input type="text" class="form-control" id="comment" required ngModel name="comment"
+                                     #comment="ngModel">
+                            </div>
+                            <div class="form-group">
+                              <label for="readDate">読んだ日</label>
+                              <input type="date" class="form-control" id="readDate" required ngModel name="readDate"
+                                     #readDate="ngModel">
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                          </form>
                         </li>
                       </ul>
                     </div>
@@ -91,8 +113,15 @@
                         <li>
                           <strong><b>読みたい</b></strong>
                         </li>
-                        <li>
-                          <button><strong><b>読みたい本に登録</b></strong></button>
+                        <li *ngIf="!isInterested">
+                          <form (ngSubmit)="interested(book.id)">
+                            <button><strong><b>読みたい本に登録する</b></strong></button>
+                          </form>
+                        </li>
+                        <li *ngIf="isInterested">
+                          <form (ngSubmit)="notInterested(book.id)">
+                            <button><strong><b>読みたい本に登録済み</b></strong></button>
+                          </form>
                         </li>
                       </ul>
                     </div>
@@ -150,7 +179,7 @@
                           <div class="comment-user">
                             <div class="user-icon">
                               <img class="avatar" src="../../assets/image/profile/test_image.png"/>
-<!--                              <img class="avatar" [src]={{}} alt="" />-->
+                              <!--                              <img class="avatar" [src]={{}} alt="" />-->
                               <!--                        {{comment.user.profileImageLink}}-->
                             </div>
                             <div class="user-name">

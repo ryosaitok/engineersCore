@@ -1,10 +1,11 @@
 from django.urls import path, include
+from rest_framework_jwt.views import obtain_jwt_token
 
 from .views import *
 
 urlpatterns = [
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', obtain_jwt_token),
+    path('auth/me/', AuthInfoGetView.as_view()),
     path('books/', BookListView.as_view()),
     path('book/<int:pk>/', BookView.as_view()),
     path('authors/', AuthorListView.as_view()),
@@ -22,5 +23,5 @@ urlpatterns = [
     path('readbooks/', ReadBookListView.as_view()),
     path('readbook/<int:pk>/', ReadBookView.as_view()),
     path('interestedbooks/', InterestedBookListView.as_view()),
-    path('interestedbook/<int:user_id>/', InterestedBookView.as_view()),
+    path('interestedbook/<int:pk>/', InterestedBookView.as_view()),
 ]
