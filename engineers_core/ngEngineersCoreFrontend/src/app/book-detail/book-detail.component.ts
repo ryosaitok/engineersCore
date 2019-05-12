@@ -7,6 +7,7 @@ import {BookComment} from '../book-comment';
 import {SigninService} from '../service/signin/signin.service';
 import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-book-detail',
@@ -69,12 +70,33 @@ export class BookDetailComponent implements OnInit {
     );
   }
 
-  registerBookComment(bookId: number, comment: string, readDate: Date): void {
+  registerBookComment(f: NgForm): void {
+    // userId: number, bookId: number, comment: string
+    const bookId = f.value.bookId;
+    const comment = f.value.comment;
+    const readDate = f.value.readDate;
+    console.log('bookId: ' + bookId);
+    console.log('comment: ' + comment);
+    console.log('readDate: ' + readDate);
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = response.id;
-      this.readBookService.registerReadBook(userId, bookId, readDate);
-      this.bookCommentService.registerBookComment(userId, bookId, comment);
+      this.readBookService.registerReadBook(userId, bookId, readDate).subscribe(
+        (res) => {
+          console.log('res.status: ' + res.status);
+        }, (error) => {
+          console.log('error: ' + error);
+        }
+      );
+      this.bookCommentService.registerBookComment(userId, bookId, comment).subscribe(
+        (res) => {
+          console.log('res.status: ' + res.status);
+        }, (error) => {
+          console.log('error: ' + error);
+        }
+      );
     });
+    // メソッドの呼び出し箇所考える
+    this.getBookComments();
   }
 
   // TODO: ryo.saito getInterestedBookでデータ取得できるはずなのにundefinedになって...絶対isInterested = falseになる。

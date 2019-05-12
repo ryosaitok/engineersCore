@@ -156,14 +156,17 @@ class ReadBookListView(generics.ListCreateAPIView):
     #         'email': request.user.email,
     #         },
     #         status=status.HTTP_200_OK)
-    ### これで認証しているかを判定し、リクエストパラメータからユーザー情報を取得できる。
-    ### 「readbook/user/1」のように、誰の読了一覧データかどうかを判定できるようにしたい。
     def get_queryset(self):
-        queryset = ReadBook.objects.all()
+        queryset = InterestedBook.objects.all()
+        # accountNameがクエリパラメータで設定されている場合
         account_name = self.request.query_params.get('account_name', None)
-        print('account_name'.format(account_name))
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
+        # user_idとbook_idがクエリパラメータで設定されている場合
+        user_id = self.request.query_params.get('user_id', None)
+        book_id = self.request.query_params.get('book_id', None)
+        if user_id is not None and book_id is not None:
+            queryset = queryset.filter(user__id=user_id, book__id=book_id)
         return queryset
 
 

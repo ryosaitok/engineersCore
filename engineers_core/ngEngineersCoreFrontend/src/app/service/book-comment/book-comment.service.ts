@@ -34,9 +34,10 @@ export class BookCommentService {
 
   registerBookComment(userId: number, bookId: number, comment: string) {
     const body = {
-      user_id: userId,
-      book_id: bookId,
+      user: userId,
+      book: bookId,
       comment_text: comment,
+      delete_flag: false,
     };
     return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
   }

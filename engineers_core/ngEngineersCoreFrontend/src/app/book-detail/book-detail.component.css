@@ -184,6 +184,9 @@ b {
 .comment-content {
     margin-left: 58px;
 }
+.comment-text, .comment-reaction {
+    padding-top: 5px;
+}
 .avatar {
     float: left;
     position: absolute;
@@ -198,5 +201,8 @@ b {
     color: #91D2FA !important;
 }
 .comment-user {
-  float: left;
+    float: left;
+}
+.user-name {
+    font-weight: bold;
 }

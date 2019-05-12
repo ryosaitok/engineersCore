@@ -22,10 +22,12 @@ export class ReadBookService {
 
   registerReadBook(userId: number, bookId: number, readDate: Date) {
     const body = {
-      user_id: userId,
-      book_id: bookId,
+      user: userId,
+      book: bookId,
       read_date: readDate,
+      delete_flag: false,
     };
+    console.log('ここきたよ');
     return this.http.post<any>(this.readBooksAPIUrl, body, this.httpOptions);
   }
 }
