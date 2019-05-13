@@ -45,6 +45,7 @@ export class SigninComponent implements OnInit {
       localStorage.setItem('authToken', authToken);
       // TODO:ryo.saito 一旦LocalStorageを活用するが、ユーザーのアクセスできない場所に持たせるように改修する。
       localStorage.setItem('accountName', accountName);
+      this.router.navigate(['books']);
     });
   }
 
@@ -62,7 +63,7 @@ export class SigninComponent implements OnInit {
   // ログアウトする（認証トークンをCookieから削除する）。
   signOut() {
     localStorage.removeItem('authToken');
-    this.appComponent.accountName = null;
+    localStorage.removeItem('accountName');
     this.router.navigate(['dashboard']);
   }
 
