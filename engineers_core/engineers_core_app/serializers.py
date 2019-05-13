@@ -71,8 +71,15 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 
 
 class CommentFavoriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommentFavorite
+        fields = ('id', 'user', 'comment', 'favorite_date', 'delete_flag')
+
+
+class CommentFavoriteWithForeignSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    comment = BookCommentSerializer()
+    comment = BookCommentWithForeignSerializer()
 
     class Meta:
         model = CommentFavorite

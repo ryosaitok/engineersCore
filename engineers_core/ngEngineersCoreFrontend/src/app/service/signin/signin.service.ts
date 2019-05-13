@@ -38,11 +38,8 @@ export class SigninService {
   }
 
   getLoginUser(): Observable<any> {
-    const token = this.getTokenFromLocalStorage();
-    if (token !== null) {
-      const jwtHeader = this.createJwtHeader(token);
-      return this.http.get<any>(this.authUserApiUrl, jwtHeader);
-    }
+    const jwtHeader = this.createJwtHeaderFromLocalStorage();
+    return this.http.get<any>(this.authUserApiUrl, jwtHeader);
   }
 
   getLoginUserAccountNameDeprecated(): string {
@@ -59,9 +56,16 @@ export class SigninService {
     return localStorage.getItem('authToken');
   }
 
+  createJwtHeaderFromLocalStorage(): any {
+    const token = this.getTokenFromLocalStorage();
+    if (token !== null) {
+      return this.createJwtHeader(token);
+    }
+  }
+
   createJwtHeader(token: string): any {
     console.log('\'JWT \' + token: ' + 'JWT ' + token);
-   　return new HttpHeaders({
+    return new HttpHeaders({
       Authorization: 'JWT ' + token
     });
   }

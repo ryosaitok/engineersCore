@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {SigninService} from '../signin/signin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class InterestedBookService {
 
   constructor(
     private http: HttpClient,
+    private signinService: SigninService,
   ) { }
 
   getInterestedBook(userId: number, bookId: number): Observable<any> {
@@ -37,10 +39,12 @@ export class InterestedBookService {
   }
 
   updateInterestedBook(interestedBookId: number, deleteFlag: boolean): Observable<any> {
+    const url = this.interestedBookAPIUrl + interestedBookId + '/';
     const body = {
       id: interestedBookId,
       delete_flg: deleteFlag
     };
-    return this.http.put<any>(this.interestedBookAPIUrl, body, this.httpOptions);
+    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
+    return this.http.put<any>(url, body, jwtHeader);
   }
 }

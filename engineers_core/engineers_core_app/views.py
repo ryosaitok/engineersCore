@@ -114,7 +114,9 @@ class BookCommentView(generics.RetrieveUpdateDestroyAPIView):
 
 class CommentFavoriteListView(generics.ListCreateAPIView):
     queryset = CommentFavorite.objects.all()
-    serializer_class = CommentFavoriteSerializer
+    serializer_class = CommentFavoriteWithForeignSerializer
+
+    # serializer_class = CommentFavoriteSerializer
 
     def get_queryset(self):
         queryset = CommentFavorite.objects.all()
@@ -122,6 +124,13 @@ class CommentFavoriteListView(generics.ListCreateAPIView):
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
         return queryset
+
+    # 登録処理ではuserとcommentのidだけ指定で行いたいので、CommentFavoriteSerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = CommentFavoriteSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
 
 
 class CommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
@@ -157,7 +166,7 @@ class ReadBookListView(generics.ListCreateAPIView):
     #         },
     #         status=status.HTTP_200_OK)
     def get_queryset(self):
-        queryset = InterestedBook.objects.all()
+        queryset = ReadBook.objects.all()
         # accountNameがクエリパラメータで設定されている場合
         account_name = self.request.query_params.get('account_name', None)
         if account_name is not None:
@@ -205,22 +214,3 @@ class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer
-
-    # def get_object(self):
-    #     queryset = self.get_queryset()
-    #     filter = {}
-    #     for field in self.multiple_lookup_fields:
-    #         filter[field] = self.kwargs[field]
-    #
-    #     obj = get_object_or_404(queryset, **filter)
-    #     self.check_object_permissions(self.request, obj)
-    #     return obj
-    #
-    # def update(self, request, *args, **kwargs):
-    #     serializer_class = InterestedBookSerializer(data=request.data)
-    #     print('きてる１？')
-    #     serializer_class.is_valid(raise_exception=True)
-    #     print('きてる２？')
-    #     serializer_class.save()
-    #     print('きてる３？')
-    #     return Response(serializer_class.data, status=200)

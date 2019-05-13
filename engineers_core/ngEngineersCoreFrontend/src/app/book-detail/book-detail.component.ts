@@ -7,7 +7,7 @@ import {BookComment} from '../book-comment';
 import {SigninService} from '../service/signin/signin.service';
 import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-book-detail',
@@ -121,10 +121,9 @@ export class BookDetailComponent implements OnInit {
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = response.id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(interested => {
-        // すでにデータがある場合は更新する。
-        if (interested !== null) {
-          // すでに存在する場合はdelete_flagをFalseに変える。
-          this.interestedBookService.updateInterestedBook(interested.id, false).subscribe(
+        // まだデータが存在しない場合は作成する。
+        if (interested === null || interested === undefined) {
+          this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
             (res) => {
               this.isInterested = true;
             },
@@ -132,9 +131,12 @@ export class BookDetailComponent implements OnInit {
               console.log(error);
             }
           );
-          // まだデータが存在しない場合は作成する。
+          // すでにデータがある場合は更新する。
         } else {
-          this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
+          // すでに存在する場合はdelete_flagをFalseに変える。
+          console.log('interested: ' + interested);
+          console.log('interested.id: ' + interested.id);
+          this.interestedBookService.updateInterestedBook(interested.id, false).subscribe(
             (res) => {
               this.isInterested = true;
             },
