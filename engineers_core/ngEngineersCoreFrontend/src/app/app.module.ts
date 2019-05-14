@@ -15,6 +15,7 @@ import { SigninComponent } from './signin/signin.component';
 import { GlobalHeaderComponent } from './global-header/global-header.component';
 import {AuthGuard} from './guard/auth.guard';
 import { BookCommentComponent } from './book-comment/book-comment.component';
+import { PageNotFoundComponent } from './error/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BookCommentComponent } from './book-comment/book-comment.component';
     SigninComponent,
     GlobalHeaderComponent,
     BookCommentComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

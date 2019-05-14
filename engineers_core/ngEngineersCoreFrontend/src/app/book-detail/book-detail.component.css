@@ -206,3 +206,8 @@ b {
 .user-name {
     font-weight: bold;
 }
+
+.no-comment-text {
+  text-align: center;
+}
+

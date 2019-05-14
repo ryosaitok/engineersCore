@@ -8,6 +8,7 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { SigninComponent } from './signin/signin.component';
 import {AuthGuard} from './guard/auth.guard';
 import {BookCommentComponent} from './book-comment/book-comment.component';
+import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'user/:userAccountName', component: UserDetailComponent },
   { path: 'books', component: BooksComponent, canActivate: [AuthGuard]},
   { path: 'book/:id', component: BookDetailComponent },
-  { path: 'bookcomment/:id', component: BookCommentComponent }
+  { path: 'bookcomment/:id', component: BookCommentComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

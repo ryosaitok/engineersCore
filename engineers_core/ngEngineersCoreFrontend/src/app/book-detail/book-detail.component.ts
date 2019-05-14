@@ -36,17 +36,21 @@ export class BookDetailComponent implements OnInit {
 
   getBook(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.bookService.getBook(id).subscribe(response => {
-      this.book = new Book(
-        response.id,
-        response.title,
-        response.book_status,
-        response.sale_date,
-        response.pages_count,
-        response.offer_price,
-        response.amazon_book
-      );
-    });
+    this.bookService.getBook(id).subscribe(
+      (res) => {
+        this.book = new Book(
+          res.id,
+          res.title,
+          res.book_status,
+          res.sale_date,
+          res.pages_count,
+          res.offer_price,
+          res.amazon_book
+        );
+      },
+      (error) => {
+        // 404表示する？
+      });
     this.checkInterested(Number(id));
   }
 
@@ -100,16 +104,20 @@ export class BookDetailComponent implements OnInit {
   checkInterested(bookId: number): void {
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = Number(response.id);
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
-        if (data.length === 1) {
-          const deleteFlag = data[0].delete_flag;
-          if (deleteFlag !== undefined) {
-            this.isInterested = deleteFlag !== true;
-          } else {
-            this.isInterested = false;
-          }
+      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
+        // dataの方に来るということは、データが見つかった
+        (data) => {
+        const deleteFlag = data[0].delete_flag;
+        if (deleteFlag !== undefined) {
+          this.isInterested = deleteFlag !== true;
+        } else {
+          this.isInterested = false;
         }
-      });
+      },
+        // errorの方に来るということは、データが見つからなかった。
+        (error) => {
+          this.isInterested = false;
+        });
     });
   }
 
@@ -118,7 +126,7 @@ export class BookDetailComponent implements OnInit {
       const userId = response.id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (data.length === 0) {
+        if (data === null || data === undefined || data.length === 0) {
           this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
             (res) => {
               this.isInterested = true;
@@ -148,7 +156,7 @@ export class BookDetailComponent implements OnInit {
       const userId = response.id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // すでにデータがある場合は更新する。
-        if (data.length !== 0) {
+        if (data !== null && data !== undefined && data.length !== 0) {
           const interestedId = data[0].id;
           this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, true).subscribe((res) => {
               this.isInterested = false;

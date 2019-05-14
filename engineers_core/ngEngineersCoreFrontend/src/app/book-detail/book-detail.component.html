@@ -153,7 +153,7 @@
       <div class="BookCommentsModules">
         <!-- 本の情報 -->
         <div class="module bookComments">
-          <div class="comment-module">
+          <div *ngIf="bookComments.length > 0" class="comment-module">
             <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <a routerLink="/bookcomment/{{comment.id}}/">
@@ -189,6 +189,11 @@
                   </div>
                 </div>
               </a>
+            </div>
+          </div>
+          <div *ngIf="bookComments.length === 0" class="comment-module">
+            <div class="no-comment-text">
+              <span>まだ読んだコメントはありません。</span>
             </div>
           </div>
         </div>
