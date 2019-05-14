@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BookService} from '../service/book/book.service';
 import {Book} from '../book';
 import {ActivatedRoute} from '@angular/router';
 import {BookCommentService} from '../service/book-comment/book-comment.service';
-import {BookComment} from '../book-comment';
 import {SigninService} from '../service/signin/signin.service';
 import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
@@ -18,7 +17,6 @@ export class BookDetailComponent implements OnInit {
 
   @Input() book: Book;
   bookComments: any[];
-  submitted = false;
   isInterested: boolean;
 
   constructor(
@@ -99,19 +97,17 @@ export class BookDetailComponent implements OnInit {
     this.getBookComments();
   }
 
-  // TODO: ryo.saito getInterestedBookでデータ取得できるはずなのにundefinedになって...絶対isInterested = falseになる。
   checkInterested(bookId: number): void {
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = Number(response.id);
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(res => {
-        if (res.delete_flag !== undefined) {
-          console.log('res.delete_flag: ' + res.delete_flag);
-          this.isInterested = res.delete_flag !== true;
-        } else {
-          console.log('res: ' + res);
-          console.log('res.id: ' + res.id);
-          console.log('res.delete_flagはundefi');
-          this.isInterested = false;
+      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
+        if (data.length === 1) {
+          const deleteFlag = data[0].delete_flag;
+          if (deleteFlag !== undefined) {
+            this.isInterested = deleteFlag !== true;
+          } else {
+            this.isInterested = false;
+          }
         }
       });
     });
@@ -120,9 +116,9 @@ export class BookDetailComponent implements OnInit {
   interested(bookId: number): void {
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = response.id;
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(interested => {
+      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (interested === null || interested === undefined) {
+        if (data.length === 0) {
           this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
             (res) => {
               this.isInterested = true;
@@ -133,10 +129,8 @@ export class BookDetailComponent implements OnInit {
           );
           // すでにデータがある場合は更新する。
         } else {
-          // すでに存在する場合はdelete_flagをFalseに変える。
-          console.log('interested: ' + interested);
-          console.log('interested.id: ' + interested.id);
-          this.interestedBookService.updateInterestedBook(interested.id, false).subscribe(
+          const interestedId = data[0].id;
+          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, false).subscribe(
             (res) => {
               this.isInterested = true;
             },
@@ -152,33 +146,22 @@ export class BookDetailComponent implements OnInit {
   notInterested(bookId: number): void {
     this.signinService.getLoginUserIdDeprecated().subscribe(response => {
       const userId = response.id;
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(interested => {
+      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // すでにデータがある場合は更新する。
-        if (interested !== null) {
-          // すでに存在する場合はdelete_flagをTrueに変える。
-          this.interestedBookService.updateInterestedBook(interested.id, true).subscribe((res) => {
+        if (data.length !== 0) {
+          const interestedId = data[0].id;
+          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, true).subscribe((res) => {
               this.isInterested = false;
             },
             (error) => {
               console.log(error);
             }
           );
-          // まだデータが存在しない場合は何もしない。
         } else {
-          this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
-            (res) => {
-              this.isInterested = false;
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+          // まだデータが存在しない場合はデータ変更は無し。
+          this.isInterested = false;
         }
       });
     });
-  }
-
-  onSubmit() {
-    this.submitted = true;
   }
 }

@@ -210,7 +210,8 @@ class InterestedBookListView(generics.ListCreateAPIView):
         return queryset
 
 
+# TODO: ryo.saito pkだけで更新処理できるようにする。
 class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer

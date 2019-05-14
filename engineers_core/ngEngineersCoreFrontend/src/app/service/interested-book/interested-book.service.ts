@@ -32,17 +32,19 @@ export class InterestedBookService {
 
   registerInterestedBook(userId: number, bookId: number): Observable<any> {
     const body = {
-      user_id: userId,
-      book_id: bookId
+      user: userId,
+      book: bookId,
+      delete_flag: false,
     };
     return this.http.post<any>(this.interestedBooksAPIUrl, body, this.httpOptions);
   }
 
-  updateInterestedBook(interestedBookId: number, deleteFlag: boolean): Observable<any> {
+  updateInterestedBook(interestedBookId: number, userId: number, bookId: number, deleteFlag: boolean): Observable<any> {
     const url = this.interestedBookAPIUrl + interestedBookId + '/';
     const body = {
-      id: interestedBookId,
-      delete_flg: deleteFlag
+      user: userId,
+      book: bookId,
+      delete_flag: deleteFlag
     };
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
     return this.http.put<any>(url, body, jwtHeader);
