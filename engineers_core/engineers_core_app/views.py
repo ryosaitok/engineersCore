@@ -14,7 +14,7 @@ class AuthInfoGetView(generics.RetrieveAPIView):
     def get(self, request, format=None):
         return Response(data={
             'user_id': request.user.id,
-            'username': request.user.username,
+            'account_name': request.user.username,
             'email': request.user.email,
         },
             status=status.HTTP_200_OK)
@@ -180,7 +180,7 @@ class ReadBookListView(generics.ListCreateAPIView):
 
 
 class ReadBookView(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = ReadBook.objects.all()
     serializer_class = ReadBookSerializer
 
@@ -212,6 +212,6 @@ class InterestedBookListView(generics.ListCreateAPIView):
 
 # TODO: ryo.saito pkだけで更新処理できるようにする。
 class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer

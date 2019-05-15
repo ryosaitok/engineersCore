@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 
@@ -9,26 +9,25 @@ import {SigninService} from '../service/signin/signin.service';
 })
 export class GlobalHeaderComponent implements OnInit {
 
-  accountName: string;
-
   constructor(
     private appComponent: AppComponent,
     private signinService: SigninService,
-  ) { }
-
-  ngOnInit() {
-    this.getLoginUserAccountName();
+  ) {
   }
 
-  getLoginUserAccountName(): void {
-    // TODO: ryo.saito ログイン中ユーザーを取得できるようにする
-    // this.signinService.getLoginUser().subscribe(response => {
-    //   this.appComponent.loginUserId = response.id;
-    //   this.appComponent.accountName = response.username;
-    // });
-    const accountName = this.signinService.getLoginUserAccountNameDeprecated();
-    this.accountName = accountName;
-    console.log(accountName);
+  ngOnInit() {
+    this.getLoginUser();
+  }
+
+  getLoginUser(): void {
+    this.signinService.getAuthUser().subscribe(response => {
+      const user = response;
+      this.appComponent.userId = user.user_id;
+      this.appComponent.accountName = user.account_name;
+    }, error => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+    });
   }
 
 }

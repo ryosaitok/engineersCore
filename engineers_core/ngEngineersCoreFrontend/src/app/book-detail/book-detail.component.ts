@@ -16,6 +16,8 @@ import {NgForm} from '@angular/forms';
 export class BookDetailComponent implements OnInit {
 
   @Input() book: Book;
+  userId: number;
+  accountName: string;
   bookComments: any[];
   isInterested: boolean;
 
@@ -30,8 +32,17 @@ export class BookDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getLoginUser();
     this.getBook();
     this.getBookComments();
+  }
+
+  getLoginUser(): void {
+    this.signinService.getAuthUser().subscribe(response => {
+      const user = response;
+      this.userId = user.user_id;
+      this.accountName = user.account_name;
+    });
   }
 
   getBook(): void {
@@ -72,28 +83,25 @@ export class BookDetailComponent implements OnInit {
     );
   }
 
+  // TODO: 読んだだけ登録できてコメントが登録できない場合を考慮してトランザクションを設定する。
   registerBookComment(f: NgForm): void {
-    // userId: number, bookId: number, comment: string
     const bookId = f.value.bookId;
     const comment = f.value.comment;
     const readDate = f.value.readDate;
-    console.log('bookId: ' + bookId);
-    console.log('comment: ' + comment);
-    console.log('readDate: ' + readDate);
-    this.signinService.getLoginUserIdDeprecated().subscribe(response => {
-      const userId = response.id;
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
       this.readBookService.registerReadBook(userId, bookId, readDate).subscribe(
         (res) => {
-          console.log('res.status: ' + res.status);
+          console.log('読んだ本に登録しました！read-book-id: ' + res.id);
         }, (error) => {
-          console.log('error: ' + error);
+          console.log('読んだ本の登録に失敗しました！error: ' + error);
         }
       );
       this.bookCommentService.registerBookComment(userId, bookId, comment).subscribe(
         (res) => {
-          console.log('res.status: ' + res.status);
+          console.log('読んだコメントを登録しました！book-comment-id: ' + res.id);
         }, (error) => {
-          console.log('error: ' + error);
+          console.log('読んだコメントの登録に失敗しました！error: ' + error);
         }
       );
     });
@@ -102,28 +110,29 @@ export class BookDetailComponent implements OnInit {
   }
 
   checkInterested(bookId: number): void {
-    this.signinService.getLoginUserIdDeprecated().subscribe(response => {
-      const userId = Number(response.id);
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
         // dataの方に来るということは、データが見つかった
         (data) => {
-        const deleteFlag = data[0].delete_flag;
-        if (deleteFlag !== undefined) {
-          this.isInterested = deleteFlag !== true;
-        } else {
-          this.isInterested = false;
-        }
-      },
+          const deleteFlag = data[0].delete_flag;
+          if (deleteFlag !== undefined) {
+            this.isInterested = deleteFlag !== true;
+          } else {
+            this.isInterested = false;
+          }
+        },
         // errorの方に来るということは、データが見つからなかった。
         (error) => {
+          console.log('checkInterestedでerror: ' + error);
           this.isInterested = false;
         });
     });
   }
 
   interested(bookId: number): void {
-    this.signinService.getLoginUserIdDeprecated().subscribe(response => {
-      const userId = response.id;
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
         if (data === null || data === undefined || data.length === 0) {
@@ -132,7 +141,7 @@ export class BookDetailComponent implements OnInit {
               this.isInterested = true;
             },
             (error) => {
-              console.log(error);
+              console.log('interestedでerror: ' + error);
             }
           );
           // すでにデータがある場合は更新する。
@@ -143,7 +152,7 @@ export class BookDetailComponent implements OnInit {
               this.isInterested = true;
             },
             (error) => {
-              console.log(error);
+              console.log('interestedでerror: ' + error);
             }
           );
         }
@@ -152,17 +161,18 @@ export class BookDetailComponent implements OnInit {
   }
 
   notInterested(bookId: number): void {
-    this.signinService.getLoginUserIdDeprecated().subscribe(response => {
-      const userId = response.id;
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // すでにデータがある場合は更新する。
         if (data !== null && data !== undefined && data.length !== 0) {
           const interestedId = data[0].id;
-          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, true).subscribe((res) => {
+          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, true).subscribe(
+            (res) => {
               this.isInterested = false;
             },
             (error) => {
-              console.log(error);
+              console.log('notInterestedでerror: ' + error);
             }
           );
         } else {

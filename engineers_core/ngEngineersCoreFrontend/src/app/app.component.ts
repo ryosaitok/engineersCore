@@ -9,7 +9,7 @@ import {AuthGuard} from './guard/auth.guard';
 })
 export class AppComponent {
 
-  loginUserId: string;
+  userId: string;
   accountName: string;
 
   appName = 'engineersCore';

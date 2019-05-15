@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {UserService} from '../user/user.service';
+import {AuthUser} from '../../auth-user';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,6 @@ export class SigninService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
   ) {
   }
 
@@ -37,18 +36,18 @@ export class SigninService {
     return this.http.post<any>(this.authApiUrl, body, this.httpOptions);
   }
 
-  getLoginUser(): Observable<any> {
+  getLoggedInUser(): any {
+    this.getAuthUser().subscribe(response => {
+      return new AuthUser(response.user_id, response.account_name, response.email);
+    }, error => {
+      console.log('getLoggedInUserで認証ユーザー情報取得できませんでした。error: ' + error);
+      return null;
+    });
+  }
+
+  getAuthUser(): Observable<any> {
     const jwtHeader = this.createJwtHeaderFromLocalStorage();
-    return this.http.get<any>(this.authUserApiUrl, jwtHeader);
-  }
-
-  getLoginUserAccountNameDeprecated(): string {
-    return localStorage.getItem('accountName');
-  }
-
-  getLoginUserIdDeprecated(): Observable<any> {
-    const accountName = localStorage.getItem('accountName');
-    return this.userService.getUser(accountName);
+    return this.http.get<any>(this.authUserApiUrl, {headers: jwtHeader});
   }
 
   // LocalStorageから認証トークンを取得する
@@ -56,17 +55,17 @@ export class SigninService {
     return localStorage.getItem('authToken');
   }
 
-  createJwtHeaderFromLocalStorage(): any {
+  createJwtHeaderFromLocalStorage(): HttpHeaders {
     const token = this.getTokenFromLocalStorage();
     if (token !== null) {
       return this.createJwtHeader(token);
     }
   }
 
-  createJwtHeader(token: string): any {
-    console.log('\'JWT \' + token: ' + 'JWT ' + token);
+  createJwtHeader(token: string): HttpHeaders {
+    const authorization = 'JWT ' + token;
     return new HttpHeaders({
-      Authorization: 'JWT ' + token
+      Authorization: authorization
     });
   }
 }

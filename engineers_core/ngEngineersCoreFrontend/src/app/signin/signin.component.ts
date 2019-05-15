@@ -7,7 +7,6 @@ import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 import {Router} from '@angular/router';
 import {UserService} from '../service/user/user.service';
-import {error} from 'util';
 
 @Component({
   selector: 'app-signin',
@@ -37,26 +36,25 @@ export class SigninComponent implements OnInit {
   signIn(f: NgForm) {
     const accountName = f.value.username;
     this.signInService.getAuthToken(f.value.username, f.value.password).subscribe(response => {
-      const authToken = response.token;
-      if (authToken === null) {
-        error('ログイン失敗！');
-      }
-      this.appComponent.accountName = accountName;
-      localStorage.setItem('authToken', authToken);
-      // TODO:ryo.saito 一旦LocalStorageを活用するが、ユーザーのアクセスできない場所に持たせるように改修する。
-      localStorage.setItem('accountName', accountName);
-      this.router.navigate(['books']);
+      localStorage.setItem('authToken', response.token);
+      this.signInService.getAuthUser().subscribe(res => {
+        if (res.user_id !== null) {
+          this.appComponent.userId = res.user_id;
+          this.appComponent.accountName = accountName;
+          this.router.navigate(['books']);
+        }
+      });
     });
+    this.router.navigate(['login']);
   }
 
   // ユーザー情報更新
   reloadUser() {
-    this.signInService.getLoginUser()
+    this.signInService.getAuthUser()
       .subscribe(response => {
-        const user = response.data;
-        // TODO:ryo.saito データベース(Model)の持っているUserと認証で使うUserを揃える必要あり。
-        this.appComponent.accountName = user.username;
-        return user;
+        const user = response;
+        this.appComponent.userId = user.user_id;
+        this.appComponent.accountName = user.account_name;
       });
   }
 
@@ -64,6 +62,8 @@ export class SigninComponent implements OnInit {
   signOut() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('accountName');
+    this.appComponent.userId = null;
+    this.appComponent.accountName = null;
     this.router.navigate(['dashboard']);
   }
 

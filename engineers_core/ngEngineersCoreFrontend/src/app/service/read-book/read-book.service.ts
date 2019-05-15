@@ -27,7 +27,6 @@ export class ReadBookService {
       read_date: readDate,
       delete_flag: false,
     };
-    console.log('ここきたよ');
     return this.http.post<any>(this.readBooksAPIUrl, body, this.httpOptions);
   }
 }

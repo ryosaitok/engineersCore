@@ -24,7 +24,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    const userAccountName = this.route.snapshot.paramMap.get('userAccountName');
+    const userAccountName = this.route.snapshot.paramMap.get('accountName');
     this.userService.getUser(userAccountName).subscribe(response => {
       this.user = new User(
         response.id,

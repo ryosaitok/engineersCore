@@ -42,14 +42,14 @@
                 <!--              <li class="me dropdown session js-session" data-global-action="t1me" id="user-dropdown"></li>-->
                 <div class="login-user-menu">
                   <div id="login-state">
-                    <div *ngIf="accountName === null">
+                    <div *ngIf="appComponent.userId === null || appComponent.userId === undefined">
                       <nav>
                         <a routerLink="/login">{{appComponent.authErrorMessage}}</a>
                       </nav>
                     </div>
-                    <div *ngIf="accountName !== null">
+                    <div *ngIf="appComponent.userId !== null && appComponent.userId !== undefined">
                       <nav>
-                        <a routerLink="/login">{{appComponent.authMessage}}({{accountName}})</a>
+                        <a routerLink="/login">{{appComponent.authMessage}}({{appComponent.accountName}})</a>
                       </nav>
                     </div>
                   </div>

@@ -26,7 +26,6 @@ export class InterestedBookService {
 
   getInterestedBook(userId: number, bookId: number): Observable<any> {
     const url = this.interestedBooksAPIUrl + '?user_id=' + userId + '&book_id=' + bookId;
-    console.log('url: ' + url);
     return this.http.get<any>(url, this.httpOptions);
   }
 
@@ -47,6 +46,6 @@ export class InterestedBookService {
       delete_flag: deleteFlag
     };
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.put<any>(url, body, jwtHeader);
+    return this.http.put<any>(url, body, {headers: jwtHeader});
   }
 }
