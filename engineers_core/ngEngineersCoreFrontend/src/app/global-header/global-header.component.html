@@ -41,15 +41,18 @@
                 <!-- ログインユーザーメニュー -->
                 <!--              <li class="me dropdown session js-session" data-global-action="t1me" id="user-dropdown"></li>-->
                 <div class="login-user-menu">
-                  <div id="login-state">
-                    <div *ngIf="appComponent.userId === null || appComponent.userId === undefined">
+                  <div class="login-state">
+                    <div *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
                       <nav>
                         <a routerLink="/login">{{appComponent.authErrorMessage}}</a>
                       </nav>
                     </div>
-                    <div *ngIf="appComponent.userId !== null && appComponent.userId !== undefined">
+                    <div class="user-profile-image" *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
                       <nav>
-                        <a routerLink="/login">{{appComponent.authMessage}}({{appComponent.accountName}})</a>
+                        <a routerLink="/login">
+                          <img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
+                               alt=""/>
+                        </a>
                       </nav>
                     </div>
                   </div>

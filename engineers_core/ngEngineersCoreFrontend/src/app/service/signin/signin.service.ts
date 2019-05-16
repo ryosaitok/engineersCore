@@ -9,9 +9,11 @@ import {AuthUser} from '../../auth-user';
 export class SigninService {
 
   host = 'http://127.0.0.1:8000/';
+  userRegisterUrl = 'api/authuser/register/';
+  userRegisterApiUrl = this.host + this.userRegisterUrl;
   authUrl = 'api/auth/';
-  userUrl = 'api/auth/me/';
   authApiUrl = this.host + this.authUrl;
+  userUrl = 'api/auth/me/';
   authUserApiUrl = this.host + this.userUrl;
   httpOptions = {
     headers: new HttpHeaders({
@@ -25,10 +27,20 @@ export class SigninService {
   ) {
   }
 
+  // 認証ユーザーを新規登録する。
+  registerUser(username, email, password): Observable<any> {
+    const body = {
+      username,
+      email,
+      password
+    };
+    return this.http.post<any>(this.userRegisterApiUrl, body, this.httpOptions);
+  }
+
   // 認証トークンを取得する。
   getAuthToken(username, password): Observable<any> {
-    this.httpOptions.headers.set('username', username);
-    this.httpOptions.headers.set('password', password);
+    console.log('username: ' + username);
+    console.log('password: ' + password);
     const body = {
       username,
       password

@@ -199,3 +199,14 @@ li {
 li {
     text-align: inherit;
 }
+.user-profile-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-42%);
+}
+.avatar {
+    display: block;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+}

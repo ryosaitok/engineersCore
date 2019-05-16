@@ -11,9 +11,10 @@ export class AppComponent {
 
   userId: string;
   accountName: string;
+  profileImageLink: string;
 
   appName = 'engineersCore';
-  authErrorMessage = '未ログイン状態です。ログインしてください。';
+  authErrorMessage = 'ログインする。';
   authMessage = 'ログイン中です。';
 
   constructor(public auth: AuthGuard) {

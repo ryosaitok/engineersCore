@@ -1,24 +1,37 @@
 from rest_framework import serializers
-from .models import Book, BookAuthor, BookComment, BookDetail, AmazonBook, Author, User, CommentFavorite, ReadBook, InterestedBook
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+from .models import Book, BookAuthor, BookComment, BookDetail, AmazonBook, Author, User, CommentFavorite, ReadBook, \
+    InterestedBook
+
+
+class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AuthUser
+        fields = ('id', 'username', 'email', 'password')
+
+    write_only_fields = (['password'])
+    read_only_fields = (['id'])
+
+    def create(self, validated_data):
+        password = validated_data.get('password')
+        validated_data['password'] = make_password(password)
+        return AuthUser.objects.create(**validated_data)
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ('id', 'user_name', 'account_name', 'description', 'profile_image_link')
-        extra_kwargs = {'id': {'read_only': False}}
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Author
         fields = ('id', 'author_name',)
 
 
 class AmazonBookSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = AmazonBook
         fields = ('id', 'data_asin',)
@@ -34,7 +47,6 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book',)
-        extra_kwargs = {'id': {'read_only': False}}
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
@@ -46,7 +58,6 @@ class BookDetailSerializer(serializers.ModelSerializer):
 
 
 class BookCommentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = BookComment
         fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag',)
@@ -71,7 +82,6 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 
 
 class CommentFavoriteSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CommentFavorite
         fields = ('id', 'user', 'comment', 'favorite_date', 'delete_flag')
@@ -102,7 +112,6 @@ class ReadBookWithForeignSerializer(serializers.ModelSerializer):
 
 
 class InterestedBookSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = InterestedBook
         fields = ('id', 'user', 'book', 'interested_date', 'delete_flag')

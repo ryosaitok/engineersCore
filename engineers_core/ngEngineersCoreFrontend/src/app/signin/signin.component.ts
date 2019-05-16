@@ -34,16 +34,42 @@ export class SigninComponent implements OnInit {
   // ・認証トークンを取得してLocalStorageにセット
   // ・ユーザー情報を取得してAppComponent(永続化できる場所)にセット
   signIn(f: NgForm) {
-    const accountName = f.value.username;
-    this.signInService.getAuthToken(f.value.username, f.value.password).subscribe(response => {
+    const accountName = f.value.accountName;
+    this.signInService.getAuthToken(accountName, f.value.password).subscribe(response => {
       localStorage.setItem('authToken', response.token);
       this.signInService.getAuthUser().subscribe(res => {
         if (res.user_id !== null) {
           this.appComponent.userId = res.user_id;
           this.appComponent.accountName = accountName;
-          this.router.navigate(['books']);
+          this.appComponent.profileImageLink = res.profile_image_link;
+          const url = 'user/' + accountName;
+          this.router.navigate([url]);
         }
       });
+    });
+    this.router.navigate(['login']);
+  }
+
+  // 新規ユーザー登録する
+  // TODO:認証ユーザーとユーザーを同一トランザクションで扱えるようにする
+  signUp(f: NgForm) {
+    const accountName = f.value.accountName;
+    const username = f.value.username;
+    const email = f.value.email;
+    const description = f.value.description;
+    const imageLink = f.value.imageLink;
+    const password = f.value.password;
+    this.signInService.registerUser(accountName, email, password).subscribe(res => {
+      const authUserId = res.id;
+      if (authUserId !== null) {
+        this.userService.registerUser(authUserId, accountName, username, description, imageLink).subscribe(data => {
+          this.signInService.getAuthToken(f.value.username, f.value.password).subscribe(response => {
+            localStorage.setItem('authToken', response.token);
+            const url = 'user/' + accountName + '/';
+            this.router.navigate([url]);
+          });
+        });
+      }
     });
     this.router.navigate(['login']);
   }
@@ -55,6 +81,7 @@ export class SigninComponent implements OnInit {
         const user = response;
         this.appComponent.userId = user.user_id;
         this.appComponent.accountName = user.account_name;
+        this.appComponent.profileImageLink = user.profile_image_link;
       });
   }
 
@@ -64,6 +91,7 @@ export class SigninComponent implements OnInit {
     localStorage.removeItem('accountName');
     this.appComponent.userId = null;
     this.appComponent.accountName = null;
+    this.appComponent.profileImageLink = null;
     this.router.navigate(['dashboard']);
   }
 

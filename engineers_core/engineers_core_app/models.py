@@ -1,7 +1,22 @@
 # coding=utf-8
 
 from django.db import models
+from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import User as AuthUser
+
+
+class AuthUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('Users must have a email address')
+        email = AuthUserManager.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        return self.create_user(email, password)
 
 
 class User(models.Model):

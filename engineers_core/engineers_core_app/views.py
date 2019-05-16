@@ -1,5 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import UserManager
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
@@ -62,6 +64,19 @@ class AuthorListView(generics.ListCreateAPIView):
 class AuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+
+class AuthUserRegisterView(generics.ListCreateAPIView):
+    queryset = AuthUser.objects.all()
+    serializer_class = AuthUserSerializer
+
+    # def post(self, request, *args, **kwargs):
+    #     serialized = AuthUserSerializer(data=request.data)
+    #     if serialized.is_valid():
+    #         serialized.save()
+    #         return Response(serialized.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserListView(generics.ListCreateAPIView):
