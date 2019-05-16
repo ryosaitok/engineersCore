@@ -129,6 +129,18 @@ h1 {
     font-size: 12px;
 }
 
+.book-info-text > a:hover {
+    color: #91D2FA !important;
+}
+
+.book-title {
+    font-size: 14px;
+}
+
+.book-title, .book-sale-date {
+    margin-bottom: 3px
+}
+
 .BookImageItem-context > .content {
     text-align: center;
 }
@@ -142,9 +154,6 @@ h1 {
     position: relative;
     display: block;
     min-height: 48px;
-}
-.book-author {
-    font-size: 8px !important;
 }
 b {
   margin: 1px;

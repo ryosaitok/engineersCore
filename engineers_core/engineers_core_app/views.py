@@ -79,6 +79,16 @@ class BookAuthorListView(generics.ListCreateAPIView):
     queryset = BookAuthor.objects.all()
     serializer_class = BookAuthorSerializer
 
+    def get_queryset(self):
+        queryset = BookAuthor.objects.all()
+        book_id = self.request.query_params.get('book_id', None)
+        if book_id is not None:
+            queryset = queryset.filter(book__id=book_id)
+        author_id = self.request.query_params.get('author_id', None)
+        if author_id is not None:
+            queryset = queryset.filter(author__id=author_id)
+        return queryset
+
 
 class BookAuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookAuthor.objects.all()

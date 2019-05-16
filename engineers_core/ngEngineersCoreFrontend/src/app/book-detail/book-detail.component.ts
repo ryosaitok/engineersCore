@@ -7,6 +7,7 @@ import {SigninService} from '../service/signin/signin.service';
 import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
 import {NgForm} from '@angular/forms';
+import {BookAuthorService} from '../service/book-author/book-author.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -24,6 +25,7 @@ export class BookDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
+    private bookAuthorService: BookAuthorService,
     private bookCommentService: BookCommentService,
     private readBookService: ReadBookService,
     private interestedBookService: InterestedBookService,
@@ -45,24 +47,31 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  // TODO: ryo.saito Authorの配列をもてるようにする。
   getBook(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.bookService.getBook(id).subscribe(
-      (res) => {
-        this.book = new Book(
-          res.id,
-          res.title,
-          res.book_status,
-          res.sale_date,
-          res.pages_count,
-          res.offer_price,
-          res.amazon_book
-        );
+    const bookId = this.route.snapshot.paramMap.get('id');
+    this.bookAuthorService.getBookAuthors(bookId).subscribe(
+      (data) => {
+        const bookAuthor = data[0];
+        if (bookAuthor !== undefined) {
+          this.book = new Book(
+            bookAuthor.book.id,
+            bookAuthor.book.title,
+            bookAuthor.book.book_status,
+            bookAuthor.book.sale_date,
+            bookAuthor.book.pages_count,
+            bookAuthor.book.offer_price,
+            bookAuthor.book.amazon_book,
+            bookAuthor.author.author_name
+          );
+        } else {
+          // 404表示する？
+        }
       },
       (error) => {
         // 404表示する？
       });
-    this.checkInterested(Number(id));
+    this.checkInterested(Number(bookId));
   }
 
   getBookComments(): void {
@@ -115,9 +124,8 @@ export class BookDetailComponent implements OnInit {
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
         // dataの方に来るということは、データが見つかった
         (data) => {
-          const deleteFlag = data[0].delete_flag;
-          if (deleteFlag !== undefined) {
-            this.isInterested = deleteFlag !== true;
+          if (data[0] !== undefined) {
+            this.isInterested = data[0].delete_flag !== true;
           } else {
             this.isInterested = false;
           }
