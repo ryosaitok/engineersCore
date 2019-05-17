@@ -163,6 +163,57 @@ class CommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentFavoriteSerializer
 
 
+class BookCommentReplyListView(generics.ListCreateAPIView):
+    queryset = BookCommentReply.objects.all()
+    serializer_class = BookCommentReplyWithForeignSerializer
+
+    # 登録処理ではuserとcommentのidだけ指定で行いたいので、BookCommentReplySerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookCommentReplySerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+    def get_queryset(self):
+        queryset = BookCommentReply.objects.all()
+        account_name = self.request.query_params.get('account_name', None)
+        if account_name is not None:
+            queryset = queryset.filter(user__account_name=account_name)
+        comment_id = self.request.query_params.get('comment_id', None)
+        if comment_id is not None:
+            queryset = queryset.filter(comment__id=comment_id)
+        return queryset
+
+
+class BookCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookCommentReply.objects.all()
+    serializer_class = BookCommentReplySerializer
+
+
+class BookCommentReplyFavoriteListView(generics.ListCreateAPIView):
+    queryset = BookCommentReplyFavorite.objects.all()
+    serializer_class = BookCommentReplyFavoriteSerializer
+
+    def get_queryset(self):
+        queryset = BookCommentReplyFavorite.objects.all()
+        account_name = self.request.query_params.get('account_name', None)
+        if account_name is not None:
+            queryset = queryset.filter(user__account_name=account_name)
+        return queryset
+
+    # 登録処理ではuserとcommentのidだけ指定で行いたいので、BookCommentReplyFavoriteSerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookCommentReplyFavoriteSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+
+class BookCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookCommentReplyFavorite.objects.all()
+    serializer_class = BookCommentReplyFavoriteSerializer
+
+
 class ReadBookListView(generics.ListCreateAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     queryset = ReadBook.objects.all()

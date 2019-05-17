@@ -124,6 +124,33 @@ class CommentFavorite(models.Model):
         return '【' + self.user.user_name + '】', self.comment.comment_text
 
 
+class BookCommentReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(BookComment, on_delete=models.CASCADE)
+    comment_text = models.TextField(max_length=10000)
+    comment_date = models.DateField(auto_now=True)
+    tweet_flag = models.BooleanField(default=False)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.comment.comment_text
+
+
+class BookCommentReplyFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reply = models.ForeignKey(BookCommentReply, on_delete=models.CASCADE)
+    favorite_date = models.DateField(auto_now=True)
+    delete_flag = models.BooleanField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Django標準API画面で表示できない...
+    # def __str__(self):
+    #     return '【' + self.user.user_name + '】', self.user.user_name
+
+
 class ReadBook(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)

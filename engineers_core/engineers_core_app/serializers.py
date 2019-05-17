@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
 from .models import Book, BookAuthor, BookComment, BookDetail, AmazonBook, Author, User, CommentFavorite, ReadBook, \
-    InterestedBook
+    InterestedBook, BookCommentReply, BookCommentReplyFavorite
 
 
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
@@ -57,6 +57,15 @@ class BookDetailSerializer(serializers.ModelSerializer):
         fields = ('id', 'book', 'summary',)
 
 
+class BookAuthorSerializer(serializers.ModelSerializer):
+    book = BookSerializer()
+    author = AuthorSerializer()
+
+    class Meta:
+        model = BookAuthor
+        fields = ('id', 'book', 'author',)
+
+
 class BookCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookComment
@@ -72,15 +81,6 @@ class BookCommentWithForeignSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag',)
 
 
-class BookAuthorSerializer(serializers.ModelSerializer):
-    book = BookSerializer()
-    author = AuthorSerializer()
-
-    class Meta:
-        model = BookAuthor
-        fields = ('id', 'book', 'author',)
-
-
 class CommentFavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentFavorite
@@ -94,6 +94,36 @@ class CommentFavoriteWithForeignSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentFavorite
         fields = ('id', 'user', 'comment', 'favorite_date', 'delete_flag')
+
+
+class BookCommentReplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag',)
+
+
+class BookCommentReplyWithForeignSerializer(serializers.ModelSerializer):
+    comment = BookCommentSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = BookCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag',)
+
+
+class BookCommentReplyFavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookCommentReplyFavorite
+        fields = ('id', 'user', 'reply', 'favorite_date', 'delete_flag')
+
+
+class BookCommentReplyFavoriteWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    reply = BookCommentReplySerializer()
+
+    class Meta:
+        model = BookCommentReplyFavorite
+        fields = ('id', 'user', 'reply', 'favorite_date', 'delete_flag')
 
 
 class ReadBookSerializer(serializers.ModelSerializer):
