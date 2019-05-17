@@ -274,6 +274,46 @@ INSERT INTO engineers_core_app_commentfavorite (id, favorite_date, delete_flag, 
 INSERT INTO engineers_core_app_commentfavorite (id, favorite_date, delete_flag, created_at, updated_at, comment_id, user_id)
   VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 8, 5);
 
+-- BOOK_COMMENT_REPLYデータ
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (1, 'たしかに', CURRENT_DATE(), FALSE, FALSE, now(), now(), 1, 2);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (2, '断...', CURRENT_DATE(), FALSE, FALSE, now(), now(), 2, 1);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (3, 'なんともいえない', '2019-03-01', TRUE, FALSE, now(), now(), 3, 4);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (4, 'いい', '2019-04-02', TRUE, FALSE, now(), now(), 3, 5);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (5, 'だめ。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 4, 6);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (6, 'せやな', CURRENT_DATE(), FALSE, FALSE, now(), now(), 6, 7);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (7, 'そん', CURRENT_DATE(), FALSE, FALSE, now(), now(), 7, 8);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (8, '良い本〜', CURRENT_DATE(), FALSE, FALSE, now(), now(), 8, 9);
+INSERT INTO engineers_core_app_bookcommentreply (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, comment_id, user_id)
+  VALUES (9, 'で。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 9, 5);
+
+-- BOOK_COMMENT_REPLY_FAVORITEデータ
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (1, CURRENT_DATE(), FALSE, now(), now(), 1, 1);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (2, CURRENT_DATE(), TRUE, now(), now(), 2, 1);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (3, CURRENT_DATE(), FALSE, now(), now(), 3, 1);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (4, CURRENT_DATE(), FALSE, now(), now(), 1, 2);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (5, CURRENT_DATE(), FALSE, now(), now(), 4, 2);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (6, CURRENT_DATE(), FALSE, now(), now(), 5, 3);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (7, CURRENT_DATE(), FALSE, now(), now(), 6, 4);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (8, CURRENT_DATE(), FALSE, now(), now(), 7, 4);
+INSERT INTO engineers_core_app_bookcommentreplyfavorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
+  VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 8, 5);
+
 -- READ_BOOKデータ
 INSERT INTO engineers_core_app_readbook (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
   VALUES (1, CURRENT_DATE(), FALSE, now(), now(), 1, 1);
