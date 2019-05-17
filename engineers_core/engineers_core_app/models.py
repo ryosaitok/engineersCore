@@ -28,6 +28,9 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'user'
+
     def __str__(self):
         return self.user_name
 
@@ -36,6 +39,9 @@ class Author(models.Model):
     author_name = models.CharField(max_length=128, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'author'
 
     def __str__(self):
         return self.author_name
@@ -58,6 +64,9 @@ class Book(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'book'
+
     def __str__(self):
         return self.title
 
@@ -70,6 +79,7 @@ class BookAuthor(models.Model):
 
     class Meta:
         unique_together = ("book", "author")
+        db_table = 'book_author'
 
     def __str__(self):
         return self.book.title
@@ -81,6 +91,9 @@ class BookDetail(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'book_detail'
+
     def __str__(self):
         return self.book.title
 
@@ -90,6 +103,9 @@ class AmazonBook(models.Model):
     data_asin = models.CharField(max_length=64, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'amazon_book'
 
     def __str__(self):
         return self.book.title
@@ -105,6 +121,9 @@ class BookComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'book_comment'
+
     def __str__(self):
         return '【' + self.user.user_name + '】', self.book.title
 
@@ -119,6 +138,7 @@ class CommentFavorite(models.Model):
 
     class Meta:
         unique_together = ("user", "comment")
+        db_table = 'comment_favorite'
 
     def __str__(self):
         return '【' + self.user.user_name + '】', self.comment.comment_text
@@ -134,6 +154,9 @@ class BookCommentReply(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'book_comment_reply'
+
     def __str__(self):
         return '【' + self.user.user_name + '】', self.comment.comment_text
 
@@ -145,6 +168,9 @@ class BookCommentReplyFavorite(models.Model):
     delete_flag = models.BooleanField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'book_comment_reply_favorite'
 
     # Django標準API画面で表示できない...
     # def __str__(self):
@@ -159,6 +185,9 @@ class ReadBook(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'read_book'
+
     def __str__(self):
         return '【' + self.user.user_name + '】', self.book.title
 
@@ -172,6 +201,7 @@ class InterestedBook(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        db_table = 'interested_book'
         unique_together = ("user", "book")
 
     def __str__(self):
