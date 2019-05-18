@@ -94,6 +94,7 @@ element.style {
     font-style: normal;
     vertical-align: baseline;
     position: relative;
+    margin-right: 115px;
 }
 h1 {
     font-size: 24px;
@@ -108,7 +109,6 @@ h1 {
 }
 .nav {
     text-align: left;
-    margin-top: 10px;
 }
 .nav, .nav>li {
     float: left;
@@ -202,7 +202,7 @@ li {
 .user-profile-image {
     position: absolute;
     top: 50%;
-    transform: translateY(-42%);
+    transform: translateY(-50%);
 }
 .avatar {
     display: block;

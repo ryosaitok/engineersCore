@@ -29,6 +29,16 @@ export class InterestedBookService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
+  getUserInterestedBook(userId: number): Observable<any> {
+    const url = this.interestedBooksAPIUrl + '?user_id=' + userId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getBookInterested(bookId: number): Observable<any> {
+    const url = this.interestedBooksAPIUrl + '?book_id=' + bookId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
   registerInterestedBook(userId: number, bookId: number): Observable<any> {
     const body = {
       user: userId,

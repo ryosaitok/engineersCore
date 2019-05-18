@@ -182,7 +182,8 @@ b {
 }
 .book-comment-content {
     border-bottom: 1px solid #e6ecf0;
-    cursor: pointer;
+    /* ↓コメント詳細を開けるようにしたら有効にする */
+    /*cursor: pointer;*/
     margin: 5px;
     padding: 10px 0;
 }
@@ -191,13 +192,13 @@ b {
 }
 .comment-text, .comment-reaction {
     padding-top: 5px;
+    white-space: pre-line;
 }
 .avatar {
     float: left;
     position: absolute;
-    width: 48px;
-    height: 48px;
-    margin-top: 3px;
+    width: 45px;
+    height: 45px;
     margin-left: -58px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 1;

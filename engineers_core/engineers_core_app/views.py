@@ -283,6 +283,10 @@ class InterestedBookListView(generics.ListCreateAPIView):
         book_id = self.request.query_params.get('book_id', None)
         if user_id is not None and book_id is not None:
             queryset = queryset.filter(user__id=user_id, book__id=book_id)
+        elif user_id is not None and book_id is None:
+            queryset = queryset.filter(user__id=user_id)
+        elif user_id is None and book_id is not None:
+            queryset = queryset.filter(book__id=book_id)
         return queryset
 
 

@@ -13,3 +13,7 @@ a[target="_blank"]::before {
     top: 0;
     left: 0;
 }
+
+.pre-wrap {
+    white-space: pre-wrap;
+}

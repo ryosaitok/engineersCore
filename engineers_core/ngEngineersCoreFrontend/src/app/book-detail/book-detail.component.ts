@@ -20,12 +20,16 @@ export class BookDetailComponent implements OnInit {
   userId: number;
   accountName: string;
   bookComments: any[];
+  bookCommentCount: number;
+  bookInterestedCount: number;
   isInterested: boolean;
 
   ngOnInit() {
     this.getLoginUser();
     this.getBook();
     this.getBookComments();
+    this.checkInterested();
+    this.getInterestedCount();
   }
 
   constructor(
@@ -71,23 +75,18 @@ export class BookDetailComponent implements OnInit {
       (error) => {
         // 404表示する？
       });
-    this.checkInterested(Number(bookId));
   }
 
   getBookComments(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.bookCommentService.getBookComments(id).subscribe(data => {
-        // promiseの中だとpushメソッドが使えない？
-        // this.bookComments.push(new BookComment(
-        //   data.id,
-        //   data.user,
-        //   data.book,
-        //   data.comment_text,
-        //   data.comment_date,
-        //   data.tweet_flag,
-        //   data.delete_flag
-        // ));
         this.bookComments = data;
+        this.bookCommentCount = 0;
+        data.forEach(comment => {
+          if (comment.id !== null && comment.id !== undefined) {
+            this.bookCommentCount = this.bookCommentCount + 1;
+          }
+        });
       }
     );
   }
@@ -118,7 +117,8 @@ export class BookDetailComponent implements OnInit {
     this.getBookComments();
   }
 
-  checkInterested(bookId: number): void {
+  checkInterested(): void {
+    const bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
@@ -135,6 +135,18 @@ export class BookDetailComponent implements OnInit {
           console.log('checkInterestedでerror: ' + error);
           this.isInterested = false;
         });
+    });
+  }
+
+  getInterestedCount(): void {
+    const bookId = Number(this.route.snapshot.paramMap.get('id'));
+    this.interestedBookService.getBookInterested(bookId).subscribe(data => {
+      data.forEach(res => {
+        this.bookInterestedCount = 0;
+        if (res.id !== null && res.id !== undefined) {
+          this.bookInterestedCount = this.bookInterestedCount + 1;
+        }
+      });
     });
   }
 

@@ -82,7 +82,8 @@
                         <div>
                           <form #f="ngForm" (ngSubmit)="registerBookComment(f)" novalidate>
                             <input type="hidden" [(ngModel)]="book.id" name="bookId" ngModel>
-                            <div class="form-group">感想：<input type="text" name="comment" ngModel required></div>
+                            <div class="form-group">感想：<textarea cols='30' rows='3' type="text" name="comment" ngModel
+                                                                 required></textarea></div>
                             <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
                             <button type="submit" class="btn btn-primary"><strong><b>読んだ本として登録する</b></strong></button>
                           </form>
@@ -118,6 +119,9 @@
         <!-- 本のリアクション -->
         <div class="module reaction">
           <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>本のデータ</strong>
+            </div>
             <div class="js-book-reaction dashboard-book-reaction flex-module-inner" data-section-id="wtf"
                  style="opacity: 1;">
               <div class="book-comment item">
@@ -125,17 +129,17 @@
                   <div class="content">
                     <div class="book-comment-count">
                       <!-- TODO -->
-                      <strong><b>3人がコメントしています</b></strong>
+                      <strong><b>{{bookCommentCount}}人がコメントしています</b></strong>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="book-read item">
-                <div class="BookReadCountItem-context">
+              <div class="book-interested item">
+                <div class="BookInterestedCountItem-context">
                   <div class="content">
-                    <div class="book-read-count">
+                    <div class="book-interested-count">
                       <!-- TODO -->
-                      <strong><b>9人が読んでいます</b></strong>
+                      <strong><b>{{bookInterestedCount}}人が興味を持っています</b></strong>
                     </div>
                   </div>
                 </div>
@@ -152,41 +156,41 @@
           <div *ngIf="bookComments.length > 0" class="comment-module">
             <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
-              <a routerLink="/bookcomment/{{comment.id}}/">
-                <div class="book-comment">
-                  <div class="BookCommentItem-context">
-                    <!-- いいねしたユーザーの情報など -->
-                    <div class="context"></div>
-                    <div class="comment-content">
-                      <div class="comment-user">
-                        <a routerLink="/user/{{comment.user.account_name}}">
-                          <div class="comment-user">
-                            <div *ngIf="comment.user.profile_image_link !== null" class="user-icon">
-                              <img class="avatar" src="../../assets/image/profile/{{comment.user.profile_image_link}}"
-                                   alt=""/>
-                            </div>
-                            <div *ngIf="comment.user.profile_image_link === null" class="user-icon">
-                              <img class="avatar" src="../../assets/image/profile/default_profile_image.png" alt=""/>
-                            </div>
-                            <div class="user-name">
-                              {{comment.user.user_name}}(@{{comment.user.account_name}})
-                            </div>
+              <!--              <a routerLink="/bookcomment/{{comment.id}}/">-->
+              <div class="book-comment">
+                <div class="BookCommentItem-context">
+                  <!-- いいねしたユーザーの情報など -->
+                  <div class="context"></div>
+                  <div class="comment-content">
+                    <div class="comment-user">
+                      <a routerLink="/user/{{comment.user.account_name}}">
+                        <div class="comment-user">
+                          <div *ngIf="comment.user.profile_image_link !== null" class="user-icon">
+                            <img class="avatar" src="../../assets/image/profile/{{comment.user.profile_image_link}}"
+                                 alt=""/>
                           </div>
-                        </a>
-                      </div>
-                      <div class="comment-date">
-                        ・{{comment.comment_date}}
-                      </div>
-                      <div class="comment-text">
-                        {{comment.comment_text}}
-                      </div>
-                      <!--                      <div class="comment-reaction">-->
-                      <!--                        (コメント数・いいね数)-->
-                      <!--                      </div>-->
+                          <div *ngIf="comment.user.profile_image_link === null" class="user-icon">
+                            <img class="avatar" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                          </div>
+                          <div class="user-name">
+                            {{comment.user.user_name}}(@{{comment.user.account_name}})
+                          </div>
+                        </div>
+                      </a>
                     </div>
+                    <div class="comment-date">
+                      ・{{comment.comment_date}}
+                    </div>
+                    <div class="comment-text pre-wrap">
+                      {{comment.comment_text}}
+                    </div>
+                    <!--                      <div class="comment-reaction">-->
+                    <!--                        (コメント数・いいね数)-->
+                    <!--                      </div>-->
                   </div>
                 </div>
-              </a>
+              </div>
+              <!--              </a>-->
             </div>
           </div>
           <div *ngIf="bookComments.length === 0" class="comment-module">
