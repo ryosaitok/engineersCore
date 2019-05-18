@@ -78,24 +78,16 @@
                 <div class="BookReadItem-context">
                   <div class="content">
                     <div class="book-read">
-                      <ul class="book-action-button">
-                        <li>
-                          <strong><b>読んだ</b></strong>
-                        </li>
-                        <li>
+                      <div class="book-action-button">
+                        <div>
                           <form #f="ngForm" (ngSubmit)="registerBookComment(f)" novalidate>
                             <input type="hidden" [(ngModel)]="book.id" name="bookId" ngModel>
                             <div class="form-group">感想：<input type="text" name="comment" ngModel required></div>
                             <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
-                            <!--                            <mat-form-field>-->
-                            <!--                              <input matInput [matDatepicker]="picker" placeholder="Choose a date">-->
-                            <!--                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-                            <!--                              <mat-datepicker #picker></mat-datepicker>-->
-                            <!--                            </mat-form-field>-->
-                            <button type="submit" class="btn btn-success">登録する</button>
+                            <button type="submit" class="btn btn-primary"><strong><b>読んだ本として登録する</b></strong></button>
                           </form>
-                        </li>
-                      </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -104,21 +96,18 @@
                 <div class="BookInterestedItem-context">
                   <div class="content">
                     <div class="book-interested">
-                      <ul class="book-action-button">
-                        <li>
-                          <strong><b>読みたい</b></strong>
-                        </li>
-                        <li *ngIf="!isInterested">
+                      <div class="book-action-button">
+                        <div *ngIf="!isInterested">
                           <form (ngSubmit)="interested(book.id)">
-                            <button><strong><b>読みたい本に登録する</b></strong></button>
+                            <button type="submit" class="btn btn-default"><strong><b>読みたい本に登録する</b></strong></button>
                           </form>
-                        </li>
-                        <li *ngIf="isInterested">
+                        </div>
+                        <div *ngIf="isInterested">
                           <form (ngSubmit)="notInterested(book.id)">
-                            <button><strong><b>読みたい本に登録済み</b></strong></button>
+                            <button type="submit" class="btn btn-success"><strong><b>読みたい本に登録済み</b></strong></button>
                           </form>
-                        </li>
-                      </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -191,9 +180,9 @@
                       <div class="comment-text">
                         {{comment.comment_text}}
                       </div>
-                      <div class="comment-reaction">
-                        (コメント数・いいね数)
-                      </div>
+                      <!--                      <div class="comment-reaction">-->
+                      <!--                        (コメント数・いいね数)-->
+                      <!--                      </div>-->
                     </div>
                   </div>
                 </div>

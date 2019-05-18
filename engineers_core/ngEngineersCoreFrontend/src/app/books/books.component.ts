@@ -27,7 +27,8 @@ export class BooksComponent implements OnInit {
           book.saleDate,
           book.pagesCount,
           book.offerPrice,
-          book.amazonBook));
+          book.amazonBook,
+          null));
       });
     });
   }

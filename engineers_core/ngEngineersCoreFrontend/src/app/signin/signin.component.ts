@@ -22,7 +22,7 @@ export class SigninComponent implements OnInit {
     private appComponent: AppComponent,
     private signInService: SigninService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {
   }
 

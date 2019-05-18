@@ -22,6 +22,12 @@ export class BookDetailComponent implements OnInit {
   bookComments: any[];
   isInterested: boolean;
 
+  ngOnInit() {
+    this.getLoginUser();
+    this.getBook();
+    this.getBookComments();
+  }
+
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
@@ -31,12 +37,6 @@ export class BookDetailComponent implements OnInit {
     private interestedBookService: InterestedBookService,
     private signinService: SigninService,
   ) {
-  }
-
-  ngOnInit() {
-    this.getLoginUser();
-    this.getBook();
-    this.getBookComments();
   }
 
   getLoginUser(): void {

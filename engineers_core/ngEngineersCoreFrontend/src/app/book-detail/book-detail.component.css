@@ -159,8 +159,8 @@ b {
   margin: 1px;
 }
 
-.book-action-button > li {
-    display: inline-flex;
+.book-action-button {
+    text-align: center;
 }
 
 /* メインコンテンツ */
@@ -172,7 +172,6 @@ b {
 }
 
 .BookCommentsModules {
-    /*float: right;*/
     width: 590px;
 }
 .comment-module {
@@ -187,9 +186,6 @@ b {
     margin: 5px;
     padding: 10px 0;
 }
-/*.book-comment-content > a:hover {*/
-/*    background-color: #e6ecf0 !important;*/
-/*}*/
 .comment-content {
     margin-left: 58px;
 }
