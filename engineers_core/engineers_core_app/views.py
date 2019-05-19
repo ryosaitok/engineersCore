@@ -215,53 +215,6 @@ class BookCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookCommentReplyFavoriteSerializer
 
 
-class ReadBookListView(generics.ListCreateAPIView):
-    # permission_classes = (permissions.IsAuthenticated,)
-    queryset = ReadBook.objects.all()
-    serializer_class = ReadBookWithForeignSerializer
-
-    # 登録処理ではuserとbookのidだけ指定で行いたいので、ReadBookSerializerを使う。
-    def post(self, request, *args, **kwargs):
-        serializer_class = ReadBookSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
-
-    ### これでクエリパラメーターからユーザー情報を取得できる。しかし、認証しているかどうか判定できない...
-    # def get_queryset(self):
-    #     queryset = ReadBook.objects.all()
-    #     account_name = self.request.query_params.get('account_name', None)
-    #     if account_name is not None:
-    #         queryset = queryset.filter(user__account_name=account_name)
-    #     return queryset
-    #
-    ### これでリクエストパラメータからユーザー情報を取得できるよう。しかし、usernameを取得してqueryでFilter指定できない...
-    # def get(self, request, format=None):
-    #     return Response(data={
-    #         'username': request.user.username,
-    #         'email': request.user.email,
-    #         },
-    #         status=status.HTTP_200_OK)
-    def get_queryset(self):
-        queryset = ReadBook.objects.all()
-        # accountNameがクエリパラメータで設定されている場合
-        account_name = self.request.query_params.get('account_name', None)
-        if account_name is not None:
-            queryset = queryset.filter(user__account_name=account_name)
-        # user_idとbook_idがクエリパラメータで設定されている場合
-        user_id = self.request.query_params.get('user_id', None)
-        book_id = self.request.query_params.get('book_id', None)
-        if user_id is not None and book_id is not None:
-            queryset = queryset.filter(user__id=user_id, book__id=book_id)
-        return queryset
-
-
-class ReadBookView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = ReadBook.objects.all()
-    serializer_class = ReadBookSerializer
-
-
 class InterestedBookListView(generics.ListCreateAPIView):
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookWithForeignSerializer

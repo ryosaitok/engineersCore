@@ -173,10 +173,10 @@ b {
 }
 
 .SearchModules {
-    width: 850px;
+    width: 800px;
 }
 .book-info {
-    width: 30%;
+    width: 25%;
     margin: 0 8px;
     display: inline-block;
 }
@@ -186,7 +186,7 @@ b {
 .book-comment {
     display: inline-block;
     vertical-align: top;
-    width: 60%;
+    width: 68%;
     margin: 10px;
 }
 .comment-module {

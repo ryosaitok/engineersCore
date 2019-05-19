@@ -104,7 +104,7 @@
                         </a>
                       </div>
                       <div class="comment-date">
-                        ・{{comment.comment_date}}
+                        ・{{comment.comment_date | date:"yyyy年M月d日" }}
                       </div>
                       <div class="comment-text pre-wrap">
                         {{comment.comment_text}}

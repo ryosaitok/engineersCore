@@ -234,25 +234,25 @@ INSERT INTO book_detail (id, summary, created_at, updated_at, book_id)
 本書のテーマは,Webサービスの実践的な設計です。まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。そしてWebサービスにおける設計課題,たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,設計プロセスなどについて,現時点のベストプラクティスを紹介します。', now(), now(), 9);
 
 -- BOOK_COMMENTデータ
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (1, 'Reactの超基本的なことを学べる本。ある程度Reactを書いたことがある人は読者対象ではなさそう。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 1, 1);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (2, 'Reactの中級者向けの本として読んだ！ちょっと理解できてないところもあるから再読したい...', CURRENT_DATE(), FALSE, FALSE, now(), now(), 2, 1);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (3, 'Linuxコマンドはエンジニアとして働くなら絶対触ることになるし、このタイミングで教科書的に学べたのはとてもよかった。', '2019-03-01', TRUE, FALSE, now(), now(), 3, 1);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (1, 'Reactの超基本的なことを学べる本。ある程度Reactを書いたことがある人は読者対象ではなさそう。', CURRENT_DATE(), '2019-05-02', FALSE, FALSE, now(), now(), 1, 1);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (2, 'Reactの中級者向けの本として読んだ！ちょっと理解できてないところもあるから再読したい...', CURRENT_DATE(), '2019-05-03', FALSE, FALSE, now(), now(), 2, 1);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (3, 'Linuxコマンドはエンジニアとして働くなら絶対触ることになるし、このタイミングで教科書的に学べたのはとてもよかった。', '2019-03-01', '2019-05-04', TRUE, FALSE, now(), now(), 3, 1);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
   VALUES (4, 'コマンド忘れすぎてて再読。
-割とすぐに忘れてしまってて辛い...', '2019-04-02', TRUE, FALSE, now(), now(), 3, 1);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (5, 'エンジニア初期に読んだけど久しぶりに読んだ。今読むと違う気づきがあっておもしろい。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 4, 1);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (6, '基礎的な仕組み関して学べる', CURRENT_DATE(), FALSE, FALSE, now(), now(), 6, 2);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (7, 'なぜJavaを使うのか？勉強になる。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 7, 3);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (8, 'オブジェクト指向しか知らないと持てない視点を学べた！良い本〜', CURRENT_DATE(), FALSE, FALSE, now(), now(), 8, 4);
-INSERT INTO book_comment (id, comment_text, comment_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (9, 'これはエンジニア研修とかで全員に読ませるべきやつなのでは。', CURRENT_DATE(), FALSE, FALSE, now(), now(), 9, 5);
+割とすぐに忘れてしまってて辛い...', '2019-04-02', '2019-05-05', TRUE, FALSE, now(), now(), 3, 1);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (5, 'エンジニア初期に読んだけど久しぶりに読んだ。今読むと違う気づきがあっておもしろい。', CURRENT_DATE(), '2019-05-06', FALSE, FALSE, now(), now(), 4, 1);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (6, '基礎的な仕組み関して学べる', CURRENT_DATE(), '2019-05-07', FALSE, FALSE, now(), now(), 6, 2);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (7, 'なぜJavaを使うのか？勉強になる。', CURRENT_DATE(), '2019-05-08', FALSE, FALSE, now(), now(), 7, 3);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (8, 'オブジェクト指向しか知らないと持てない視点を学べた！良い本〜', CURRENT_DATE(), '2019-05-09', FALSE, FALSE, now(), now(), 8, 4);
+INSERT INTO book_comment (id, comment_text, comment_date, read_date, tweet_flag, delete_flag, created_at, updated_at, book_id, user_id)
+  VALUES (9, 'これはエンジニア研修とかで全員に読ませるべきやつなのでは。', CURRENT_DATE(), '2019-05-10', FALSE, FALSE, now(), now(), 9, 5);
 
 -- COMMENT_FAVORITEデータ
 INSERT INTO comment_favorite (id, favorite_date, delete_flag, created_at, updated_at, comment_id, user_id)
@@ -313,26 +313,6 @@ INSERT INTO book_comment_reply_favorite (id, favorite_date, delete_flag, created
   VALUES (8, CURRENT_DATE(), FALSE, now(), now(), 7, 4);
 INSERT INTO book_comment_reply_favorite (id, favorite_date, delete_flag, created_at, updated_at, reply_id, user_id)
   VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 8, 5);
-
--- READ_BOOKデータ
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (1, CURRENT_DATE(), FALSE, now(), now(), 1, 1);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (2, CURRENT_DATE(), FALSE, now(), now(), 2, 1);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (3, '2019-03-01', FALSE, now(), now(), 3, 1);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (4, '2019-04-02', TRUE, now(), now(), 3, 1);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (5, CURRENT_DATE(), FALSE, now(), now(), 4, 1);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (6, CURRENT_DATE(), FALSE, now(), now(), 6, 2);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (7, CURRENT_DATE(), FALSE, now(), now(), 7, 3);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (8, CURRENT_DATE(), FALSE, now(), now(), 8, 4);
-INSERT INTO read_book (id, read_date, delete_flag, created_at, updated_at, book_id, user_id)
-  VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 9, 5);
 
 -- INTERESTED_BOOKデータ
 INSERT INTO interested_book (id, interested_date, delete_flag, created_at, updated_at, book_id, user_id)

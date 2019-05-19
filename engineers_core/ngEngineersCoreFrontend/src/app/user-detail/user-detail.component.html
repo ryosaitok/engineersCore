@@ -133,7 +133,7 @@
                           <a routerLink="/book/{{comment.book.id}}">
                             <li><b>{{comment.book.title}}</b></li>
                           </a>
-                          <li>{{comment.book.sale_date}} 発売</li>
+                          <li>{{comment.book.sale_date | date:"yyyy年M月d日" }} 発売</li>
                         </ul>
                       </div>
                     </div>
@@ -163,7 +163,7 @@
                         </a>
                       </div>
                       <div class="comment-date">
-                        ・{{comment.comment_date}}
+                        ・{{comment.comment_date | date:"yyyy年M月d日" }}
                       </div>
                       <div class="comment-text pre-wrap">
                         {{comment.comment_text}}

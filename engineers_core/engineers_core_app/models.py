@@ -116,6 +116,7 @@ class BookComment(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=10000)
     comment_date = models.DateField(auto_now=True)
+    read_date = models.DateField(auto_now=True)
     tweet_flag = models.BooleanField(default=False)
     delete_flag = models.BooleanField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -175,21 +176,6 @@ class BookCommentReplyFavorite(models.Model):
     # Django標準API画面で表示できない...
     # def __str__(self):
     #     return '【' + self.user.user_name + '】', self.user.user_name
-
-
-class ReadBook(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    read_date = models.DateField(null=True)
-    delete_flag = models.BooleanField(null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'read_book'
-
-    def __str__(self):
-        return '【' + self.user.user_name + '】', self.book.title
 
 
 class InterestedBook(models.Model):

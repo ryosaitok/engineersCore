@@ -145,21 +145,6 @@ class BookCommentReplyFavoriteWithForeignSerializer(serializers.ModelSerializer)
         fields = ('id', 'user', 'reply', 'favorite_date', 'delete_flag')
 
 
-class ReadBookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ReadBook
-        fields = ('id', 'user', 'book', 'read_date', 'delete_flag')
-
-
-class ReadBookWithForeignSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    book = BookSerializer()
-
-    class Meta:
-        model = ReadBook
-        fields = ('id', 'user', 'book', 'read_date', 'delete_flag')
-
-
 class InterestedBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestedBook

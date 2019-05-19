@@ -4,7 +4,6 @@ import {Book} from '../book';
 import {ActivatedRoute} from '@angular/router';
 import {BookCommentService} from '../service/book-comment/book-comment.service';
 import {SigninService} from '../service/signin/signin.service';
-import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
 import {NgForm} from '@angular/forms';
 import {BookAuthorService} from '../service/book-author/book-author.service';
@@ -40,7 +39,6 @@ export class BookDetailComponent implements OnInit {
     private bookService: BookService,
     private bookAuthorService: BookAuthorService,
     private bookCommentService: BookCommentService,
-    private readBookService: ReadBookService,
     private interestedBookService: InterestedBookService,
     private signinService: SigninService,
   ) {
@@ -94,21 +92,13 @@ export class BookDetailComponent implements OnInit {
     );
   }
 
-  // TODO: 読んだだけ登録できてコメントが登録できない場合を考慮してトランザクションを設定する。
   registerBookComment(f: NgForm): void {
     const bookId = f.value.bookId;
     const comment = f.value.comment;
     const readDate = f.value.readDate;
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
-      this.readBookService.registerReadBook(userId, bookId, readDate).subscribe(
-        (res) => {
-          console.log('読んだ本に登録しました！read-book-id: ' + res.id);
-        }, (error) => {
-          console.log('読んだ本の登録に失敗しました！error: ' + error);
-        }
-      );
-      this.bookCommentService.registerBookComment(userId, bookId, comment).subscribe(
+      this.bookCommentService.registerBookComment(userId, bookId, comment, readDate).subscribe(
         (res) => {
           console.log('読んだコメントを登録しました！book-comment-id: ' + res.id);
         }, (error) => {

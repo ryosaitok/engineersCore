@@ -48,11 +48,12 @@ export class BookCommentService {
     return this.http.get<any>(this.filteredBookCommentsByTitleAPIUrl + title, this.httpOptions);
   }
 
-  registerBookComment(userId: number, bookId: number, comment: string) {
+  registerBookComment(userId: number, bookId: number, comment: string, readDate: Date) {
     const body = {
       user: userId,
       book: bookId,
       comment_text: comment,
+      read_date: readDate,
       delete_flag: false,
     };
     return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
