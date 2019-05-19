@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
-from .models import Book, BookAuthor, BookComment, BookDetail, AmazonBook, Author, User, CommentFavorite, ReadBook, \
-    InterestedBook, BookCommentReply, BookCommentReplyFavorite
+from .models import *
 
 
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):

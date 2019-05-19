@@ -10,8 +10,8 @@ a:visited {
     text-decoration: none;
 }
 
-/* 本のタイトルナビ */
-.BookNavigation {
+/* 検索タイトルナビ */
+SearchNavigation {
     backface-visibility: hidden;
     position: absolute;
     left: 0;
@@ -21,19 +21,17 @@ a:visited {
 .u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
     background-color: #91D2FA !important;
 }
-.BookNavigation-canopy {
+.SearchNavigation-canopy {
     background-color: #1da1f2;
     padding: 16px 0;
 }
-.BookNavigation-textContainer {
+.SearchNavigation-textContainer {
     margin: 0 auto;
     max-width: 1190px;
 }
-.BookNavigation-titleText {
+.SearchNavigation-titleText {
     color: #fff;
-    font-size: 27px;
     font-weight: bold;
-    line-height: 32px;
     overflow: hidden;
     padding-left: 12px;
     text-overflow: ellipsis;
@@ -94,6 +92,24 @@ h1 {
     width: 33.33333333333333%!important;
 }
 
+/* サブヘッダー */
+ul.search-form {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.search-form li {
+    display: inline-block;
+    text-align: center;
+}
+.form-group {
+    color: #222222 !important;
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+.search-button {
+    transform: translateY(-10%);
+}
+
 /* 左サイドバー */
 .SidebarBookModules {
     float: left;
@@ -129,21 +145,6 @@ h1 {
     font-size: 14px;
 }
 
-.book-info-text > a:hover {
-    color: #91D2FA !important;
-}
-
-.book-title {
-    font-size: 14px;
-}
-
-.book-title, .book-sale-date {
-    margin-bottom: 3px
-}
-
-.BookImageItem-context > .content {
-    text-align: center;
-}
 
 .item {
     margin-top: 5px;
@@ -165,14 +166,28 @@ b {
 
 /* メインコンテンツ */
 @media (min-width: 1236px) {
-  .BookCommentsModules {
+  .SearchModules {
     float: left;
     margin: 0 10px;
   }
 }
 
-.BookCommentsModules {
-    width: 590px;
+.SearchModules {
+    width: 850px;
+}
+.book-info {
+    width: 30%;
+    margin: 0 8px;
+    display: inline-block;
+}
+.book-image {
+    text-align: center;
+}
+.book-comment {
+    display: inline-block;
+    vertical-align: top;
+    width: 60%;
+    margin: 10px;
 }
 .comment-module {
   background-color: #fff;
@@ -186,6 +201,23 @@ b {
     /*cursor: pointer;*/
     margin: 5px;
     padding: 10px 0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    margin: 3px 0;
+}
+.book-title {
+    margin: 8px 0;
+}
+ul.book-title-data > a:hover {
+    color: #91D2FA !important;
+}
+.space-dot {
+    color: #ffffff !important;
 }
 .comment-content {
     margin-left: 58px;
@@ -241,6 +273,6 @@ ul.comment-reaction li > a.comment-reaction-heart:hover {
     color: #f08080;
 }
 .no-comment-text {
-  text-align: center;
+    text-align: center;
 }
 

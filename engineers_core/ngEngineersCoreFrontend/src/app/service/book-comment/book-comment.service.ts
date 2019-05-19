@@ -12,6 +12,8 @@ export class BookCommentService {
   bookCommentAPIUrl = this.host + this.bookCommentUrl;
   filteredBookCommentsUrl = 'api/bookcomments/?book_id=';
   filteredBookCommentsAPIUrl = this.host + this.filteredBookCommentsUrl;
+  filteredBookCommentsByTitleUrl = 'api/bookcomments/?title=';
+  filteredBookCommentsByTitleAPIUrl = this.host + this.filteredBookCommentsByTitleUrl;
   bookCommentsUrl = 'api/bookcomments/';
   bookCommentsAPIUrl = this.host + this.bookCommentsUrl;
   httpOptions = {
@@ -30,6 +32,14 @@ export class BookCommentService {
 
   getBookComments(bookId: string): Observable<any> {
     return this.http.get<any>(this.filteredBookCommentsAPIUrl + bookId);
+  }
+
+ /**
+　 * 本のタイトルでLIKE検索し、ユーザー/本のデータを持ったコメント一覧を取得する。
+　 * @param title 本のタイトル
+ 　*/
+  getBookCommentsByTitle(title: string): Observable<any> {
+    return this.http.get<any>(this.filteredBookCommentsByTitleAPIUrl + title, this.httpOptions);
   }
 
   registerBookComment(userId: number, bookId: number, comment: string) {

@@ -8,6 +8,7 @@ import {ReadBookService} from '../service/read-book/read-book.service';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
 import {NgForm} from '@angular/forms';
 import {BookAuthorService} from '../service/book-author/book-author.service';
+import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-book-detail',
@@ -17,6 +18,8 @@ import {BookAuthorService} from '../service/book-author/book-author.service';
 export class BookDetailComponent implements OnInit {
 
   @Input() book: Book;
+  faHeart = faHeart;
+  faCommentDots = faCommentDots;
   userId: number;
   accountName: string;
   bookComments: any[];

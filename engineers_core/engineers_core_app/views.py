@@ -1,10 +1,6 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.models import UserManager
-from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import *
 from .serializers import *
 
 
@@ -129,6 +125,11 @@ class BookCommentListView(generics.ListCreateAPIView):
         book_id = self.request.query_params.get('book_id', None)
         if book_id is not None:
             queryset = queryset.filter(book__id=book_id)
+        title = self.request.query_params.get('title', None)
+        if title is not None:
+            queryset = queryset.filter(book__title__icontains=title)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookCommentListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
 

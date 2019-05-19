@@ -55,7 +55,7 @@
                 <div class="BookDetailInfoItem-context">
                   <div class="content">
                     <div class="book-info-text book-sale-date">
-                      <span><b>{{book.saleDate}} 発売</b></span>
+                      <span><b>{{book.saleDate | date:"yyyy年M月d日" }} 発売</b></span>
                     </div>
                     <div class="book-info-text book-page-count">
                       <span><b>{{book.pagesCount}} ページ</b></span>
@@ -82,8 +82,9 @@
                         <div>
                           <form #f="ngForm" (ngSubmit)="registerBookComment(f)" novalidate>
                             <input type="hidden" [(ngModel)]="book.id" name="bookId" ngModel>
-                            <div class="form-group">感想：<textarea cols='30' rows='3' type="text" name="comment" ngModel
-                                                                 required></textarea></div>
+                            <div class="form-group"><textarea placeholder="本の感想は？" cols='30' rows='3' type="text"
+                                                              name="comment" ngModel
+                                                              required></textarea></div>
                             <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
                             <button type="submit" class="btn btn-primary"><strong><b>読んだ本として登録する</b></strong></button>
                           </form>
@@ -179,14 +180,31 @@
                       </a>
                     </div>
                     <div class="comment-date">
-                      ・{{comment.comment_date}}
+                      ・{{comment.comment_date | date:"yyyy年M月d日" }}
                     </div>
                     <div class="comment-text pre-wrap">
                       {{comment.comment_text}}
                     </div>
-                    <!--                      <div class="comment-reaction">-->
-                    <!--                        (コメント数・いいね数)-->
-                    <!--                      </div>-->
+                    <div class="comment-reaction">
+                      <ul class="comment-reactions">
+                        <li>
+                          <ul class="comment-replies comment-reaction">
+                            <li>
+                              <a class="comment-reaction-reply" href=""><fa-icon [icon]="faCommentDots"></fa-icon></a>
+                            </li>
+                            <li>6</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <ul class="comment-favorites comment-reaction">
+                            <li>
+                              <a class="comment-reaction-heart" href=""><fa-icon [icon]="faHeart"></fa-icon></a>
+                            </li>
+                            <li>9</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

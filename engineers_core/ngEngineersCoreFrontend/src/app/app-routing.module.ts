@@ -9,6 +9,7 @@ import {SigninComponent} from './signin/signin.component';
 import {AuthGuard} from './guard/auth.guard';
 import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
+import {SearchComponent} from './search/search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -19,6 +20,8 @@ const routes: Routes = [
   { path: 'books', component: BooksComponent, canActivate: [AuthGuard]},
   { path: 'book/:id', component: BookDetailComponent },
   { path: 'bookcomment/:id', component: BookCommentComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'search/:title', component: SearchComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

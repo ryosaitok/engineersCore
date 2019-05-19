@@ -16,6 +16,8 @@ import {GlobalHeaderComponent} from './global-header/global-header.component';
 import {AuthGuard} from './guard/auth.guard';
 import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
+import {SearchComponent} from './search/search.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,12 +31,14 @@ import {PageNotFoundComponent} from './error/page-not-found/page-not-found.compo
     GlobalHeaderComponent,
     BookCommentComponent,
     PageNotFoundComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    FontAwesomeModule,
   ],
   exports: [],
   providers: [CookieService, AuthGuard],
