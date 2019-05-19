@@ -1,31 +1,308 @@
-/* UserDetailComponent's private CSS styles */
-label {
-  display: inline-block;
-  width: 3em;
-  margin: .5em 0;
-  color: #607D8B;
-  font-weight: bold;
+.page-outer {
 }
-input {
-  height: 2em;
-  font-size: 1em;
-  padding-left: .4em;
+
+a {
+    color: #222222;
+    text-decoration: none;
 }
-button {
-  margin-top: 20px;
-  font-family: Arial;
-  background-color: #eee;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  cursor: hand;
+a:visited {
+    color: #222222;
+    text-decoration: none;
 }
-button:hover {
-  background-color: #cfd8dc;
+
+/* 本のタイトルナビ */
+.UserNavigation {
+    backface-visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 46px;
 }
-button:disabled {
-  background-color: #eee;
-  color: #ccc;
-  cursor: auto;
+.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
+    background-color: #91D2FA !important;
+}
+.UserNavigation-canopy {
+    background-color: #1da1f2;
+    padding: 16px 0;
+}
+.UserNavigation-textContainer {
+    margin: 0 auto;
+    max-width: 1190px;
+}
+.UserNavigation-titleText {
+    color: #fff;
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 32px;
+    overflow: hidden;
+    padding-left: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h1 {
+    font-size: 24px;
+    line-height: .8;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+}
+
+/* ナビゲーションメニュー */
+.MenuNavigation {
+    backface-visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 110px;
+    border-bottom: 1px solid #e6ecf0;
+}
+.MenuNavigation-canopy {
+    background-color: #ffffff;
+    padding: 16px 0;
+}
+.MenuNavigation-textContainer {
+    margin: 0 auto;
+    max-width: 1190px;
+}
+.MenuNavigation-titleText {
+    color: #222222;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 20px;
+    overflow: hidden;
+    padding-left: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h1 {
+    font-size: 18px;
+    line-height: .6;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+}
+
+/* メインコンテンツ */
+@media screen and (min-width: 1236px) {
+  .AppContainer {
+    max-width: 1190px;
+  }
+}
+.AppContainer {
+    margin: 130px auto;
+}
+.AppContent-main {
+    margin: 15px auto 0;
+    max-width: 1190px;
+    min-width: 890px;
+}
+.Grid--withGutter {
+    margin: 0 -5px;
+}
+.Grid {
+    display: block;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.Grid--withGutter>.Grid-cell {
+    padding: 0 5px;
+}
+.Grid-cell {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+    width: 100%;
+}
+@media screen and (min-width: 1236px) {
+  .u-lg-size1of4, .u-lg-size2of8, .u-lg-size3of12 {
+    width: 25%!important;
+  }
+}
+.u-size1of3, .u-size2of6, .u-size4of12 {
+    width: 33.33333333333333%!important;
+}
+
+/* 左サイドバー */
+.SidebarUserModules {
+    float: left;
+    width: 290px;
+}
+
+.wtf-module.has-content {
+    display: block;
+}
+.wtf-module {
+    display: none;
+}
+.module {
+    background-clip: padding-box;
+    border: 0;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.module ul:first-child li:first-child .list-link, .module .flex-module:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.module .flex-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 15px;
+    line-height: 16px;
+}
+
+.flex-module-inner, .flex-module-footer {
+    color: #222222;
+    font-size: 14px;
+}
+
+.user-info-text > a:hover {
+    color: #91D2FA !important;
+}
+.user-name {
+    font-size: 14px;
+}
+.user-name, .user-account-name {
+    margin-bottom: 3px
+}
+.user-account-name > a {
+    color: #657786 !important;
+}
+
+.UserImageItem-context > .content {
+    text-align: center;
+}
+.profile-image {
+    width: 150px;
+    height: 150px;
+}
+.description {
+    line-height: initial;
+}
+.item {
+    margin-top: 5px;
+    border-bottom: 1px solid #e6ecf0;
+    padding: 6px 0;
+}
+b {
+  margin: 1px;
+}
+
+/* メインコンテンツ */
+@media (min-width: 1236px) {
+  .ReadBookModules {
+    float: left;
+    margin: 0 10px;
+  }
+}
+
+.ReadBookModules {
+    width: 850px;
+}
+.book-info {
+    width: 30%;
+    margin: 0 8px;
+    display: inline-block;
+}
+.book-image {
+    text-align: center;
+}
+.book-comment {
+    display: inline-block;
+    vertical-align: top;
+    width: 60%;
+    margin: 10px;
+}
+.comment-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+.book-comment-content {
+    border-bottom: 1px solid #e6ecf0;
+    /* ↓コメント詳細を開けるようにしたら有効にする */
+    /*cursor: pointer;*/
+    margin: 5px;
+    padding: 10px 0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    margin: 3px 0;
+}
+.book-title {
+    margin: 8px 0;
+}
+ul.book-title-data > a:hover {
+    color: #91D2FA !important;
+}
+.space-dot {
+    color: #ffffff !important;
+}
+.comment-content {
+    margin-left: 58px;
+}
+.comment-text, .comment-reaction {
+    padding-top: 5px;
+    white-space: pre-line;
+    line-height: normal;
+}
+.avatar {
+    float: left;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    margin-left: -58px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 1;
+}
+.comment-user > a:hover {
+    color: #91D2FA !important;
+}
+.comment-user {
+    float: left;
+}
+.user-name {
+    font-weight: bold;
+}
+ul.comment-reactions {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.comment-reactions li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.comment-reaction {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.comment-reaction li {
+    display: inline-block;
+    margin-right: 4px;
+}
+ul.comment-reaction li > a {
+    color: #cccccc;
+}
+ul.comment-reaction li > a.comment-reaction-reply:hover {
+    color: #1da1f2;
+}
+ul.comment-reaction li > a.comment-reaction-heart:hover {
+    color: #f08080;
+}
+.no-comment-text {
+    text-align: center;
 }

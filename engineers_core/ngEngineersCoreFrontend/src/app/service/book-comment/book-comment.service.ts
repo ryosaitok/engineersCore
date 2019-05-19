@@ -12,6 +12,8 @@ export class BookCommentService {
   bookCommentAPIUrl = this.host + this.bookCommentUrl;
   filteredBookCommentsUrl = 'api/bookcomments/?book_id=';
   filteredBookCommentsAPIUrl = this.host + this.filteredBookCommentsUrl;
+  accountNameFilteredBookCommentsUrl = 'api/bookcomments/?account_name=';
+  accountNameFilteredBookCommentsAPIUrl = this.host + this.accountNameFilteredBookCommentsUrl;
   filteredBookCommentsByTitleUrl = 'api/bookcomments/?title=';
   filteredBookCommentsByTitleAPIUrl = this.host + this.filteredBookCommentsByTitleUrl;
   bookCommentsUrl = 'api/bookcomments/';
@@ -32,6 +34,10 @@ export class BookCommentService {
 
   getBookComments(bookId: string): Observable<any> {
     return this.http.get<any>(this.filteredBookCommentsAPIUrl + bookId);
+  }
+
+  getBookCommentsByAccountName(userId: string): Observable<any> {
+    return this.http.get<any>(this.accountNameFilteredBookCommentsAPIUrl + userId);
   }
 
  /**

@@ -1,8 +1,9 @@
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../user';
-import { UserService } from '../service/user/user.service';
+import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from '../user';
+import {UserService} from '../service/user/user.service';
+import {BookCommentService} from '../service/book-comment/book-comment.service';
+import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-detail',
@@ -12,15 +13,20 @@ import { UserService } from '../service/user/user.service';
 export class UserDetailComponent implements OnInit {
 
   @Input() user: User;
+  bookComments: any[];
+  bookCommentCount: number;
+  faHeart = faHeart;
+  faCommentDots = faCommentDots;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private location: Location,
+    private bookCommentService: BookCommentService,
   ) {}
 
   ngOnInit() {
     this.getUser();
+    this.getBookComments();
   }
 
   getUser(): void {
@@ -31,12 +37,22 @@ export class UserDetailComponent implements OnInit {
         response.user_name,
         response.account_name,
         response.description,
-        response.account_name);
+        response.profile_image_link);
     });
   }
 
-  goBack(): void {
-    this.location.back();
+  getBookComments(): void {
+    const accountName = this.route.snapshot.paramMap.get('accountName');
+    this.bookCommentService.getBookCommentsByAccountName(accountName).subscribe(data => {
+        this.bookComments = data;
+        this.bookCommentCount = 0;
+        data.forEach(comment => {
+          if (comment.id !== null && comment.id !== undefined) {
+            this.bookCommentCount = this.bookCommentCount + 1;
+          }
+        });
+      }
+    );
   }
 
 }

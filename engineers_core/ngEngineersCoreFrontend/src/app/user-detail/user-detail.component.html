@@ -1,9 +1,214 @@
-<div *ngIf="user">
-  <h2>{{user.userName}} Details</h2>
-  <div><span>id: </span>{{user.id}}</div>
-  <div>ユーザー名：{{user.userName}}</div>
-  <div>アカウント名：{{user.userAccountName}}</div>
-  <div>説明：{{user.description}}</div>
-  <div>プロフィール写真リンク：{{user.profileImageLink}}</div>
-  <button (click)="goBack()">go back</button>
+<!--<div *ngIf="user">-->
+<!--  <h2>{{user.userName}} Details</h2>-->
+<!--  <div><span>id: </span>{{user.id}}</div>-->
+<!--  <div>ユーザー名：{{user.userName}}</div>-->
+<!--  <div>アカウント名：{{user.userAccountName}}</div>-->
+<!--  <div>説明：{{user.description}}</div>-->
+<!--  <div>プロフィール写真リンク：{{user.profileImageLink}}</div>-->
+<!--  <button (click)="goBack()">go back</button>-->
+<!--</div>-->
+
+
+<div class="page-outer" *ngIf="user">
+  <!-- サブヘッダー(ユーザー名) -->
+  <div class="UserNavigation">
+    <a routerLink="/user/{{user.userAccountName}}">
+      <div class="UserNavigation-canopy u-bgUserColor">
+        <div class="UserNavigation-textContainer">
+          <h1 class="UserNavigation-titleText" dir="ltr">
+            {{user.userName}}(@{{user.userAccountName}})
+          </h1>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- ナビゲーションメニュー -->
+  <div class="MenuNavigation">
+    <div class="MenuNavigation-canopy">
+      <div class="MenuNavigation-textContainer">
+        <h1 class="MenuNavigation-titleText" dir="ltr">
+          TODO: 読んだ・読みたい・いいねした など選択できるようにする。
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- 左サイドバー(本の情報) -->
+      <div class="SidebarUserModules">
+        <!-- ユーザーの情報 -->
+        <div class="module user">
+          <div class="flex-module">
+            <div class="js-user-detail dashboard-user-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+              <div class="user-image item">
+                <div class="UserImageItem-context">
+                  <div class="content">
+                    <a routerLink="/user/{{user.userAccountName}}">
+                      <div *ngIf="user.profileImageLink !== null" class="user-profile-icon">
+                        <img class="profile-image" src="../../assets/image/profile/{{user.profileImageLink}}" alt=""/>
+                      </div>
+                      <div *ngIf="user.profileImageLink === null" class="user-profile-icon">
+                        <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="user-basic-info item">
+                <div class="UserBasicInfoItem-context">
+                  <div class="content">
+                    <div class="user-info-text user-name">
+                      <a routerLink="/user/{{user.userAccountName}}">
+                        <strong><b>{{user.userName}}</b></strong>
+                      </a>
+                    </div>
+                    <div class="user-info-text user-account-name">
+                      <a routerLink="/user/{{user.userAccountName}}">
+                        <span>@{{user.userAccountName}}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="user-detail-info item">
+                <div class="UserDetailInfoItem-context">
+                  <div class="content">
+                    <div class="user-info-text description">
+                      <span>{{user.description}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 知識スコア -->
+        <div class="module register">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>知識スコア</strong>
+            </div>
+            <div class="js-read-book dashboard-read-book flex-module-inner" data-section-id="wtf" style="opacity: 1;">
+            </div>
+          </div>
+        </div>
+        <!-- 読んだ本 -->
+        <div class="module register">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>最近読んだ本</strong>
+            </div>
+            <div class="js-read-book dashboard-read-book flex-module-inner" data-section-id="wtf" style="opacity: 1;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- メインメニュー(読んだコメント) -->
+      <div class="ReadBookModules">
+        <!-- 本の情報 -->
+        <div class="module bookComments">
+          <div *ngIf="bookComments.length > 0" class="comment-module">
+            <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
+                 data-section-id="wtf" style="opacity: 1;">
+              <!-- 本の情報 -->
+              <div class="book-info">
+                <div class="BookCommentItem-context">
+                  <!-- 本の基本情報 -->
+                  <div class="context">
+                    <div class="book-content">
+                      <div class="book-image">
+                        <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{comment.book.amazon_book}}/"
+                           target="_blank">
+                          <img border="0"
+                               src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{comment.book.amazon_book}}&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                        src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{comment.book.amazon_book}}"
+                        width="1"
+                        height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
+                      </div>
+                      <div class="book-title">
+                        <ul class="book-title-data">
+                          <a routerLink="/book/{{comment.book.id}}">
+                            <li><b>{{comment.book.title}}</b></li>
+                          </a>
+                          <li>{{comment.book.sale_date}} 発売</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 読んだコメントしたユーザーの情報 -->
+              <div class="book-comment">
+                <div class="BookCommentItem-context">
+                  <!-- いいねしたユーザーの情報など -->
+                  <div class="context">
+                    <div class="comment-content">
+                      <div class="comment-user">
+                        <a routerLink="/user/{{comment.user.account_name}}">
+                          <div class="comment-user">
+                            <div *ngIf="comment.user.profile_image_link !== null" class="user-icon">
+                              <img class="avatar" src="../../assets/image/profile/{{comment.user.profile_image_link}}"
+                                   alt=""/>
+                            </div>
+                            <div *ngIf="comment.user.profile_image_link === null" class="user-icon">
+                              <img class="avatar" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                            </div>
+                            <div class="user-name">
+                              {{comment.user.user_name}}(@{{comment.user.account_name}})
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="comment-date">
+                        ・{{comment.comment_date}}
+                      </div>
+                      <div class="comment-text pre-wrap">
+                        {{comment.comment_text}}
+                      </div>
+                      <div class="comment-reaction">
+                        <ul class="comment-reactions">
+                          <li>
+                            <ul class="comment-replies comment-reaction">
+                              <li>
+                                <a class="comment-reaction-reply" href="">
+                                  <fa-icon [icon]="faCommentDots"></fa-icon>
+                                </a>
+                              </li>
+                              <li>{{comment.reply_ids.length}}</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <ul class="comment-favorites comment-reaction">
+                              <li>
+                                <a class="comment-reaction-heart" href="">
+                                  <fa-icon [icon]="faHeart"></fa-icon>
+                                </a>
+                              </li>
+                              <li>{{comment.favorite_ids.length}}</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="bookComments.length === 0" class="comment-module">
+            <div class="no-comment-text">
+              <span>検索結果がありませんでした。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右サイドバー -->
+
+  </div>
 </div>
+
