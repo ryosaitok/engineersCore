@@ -11,6 +11,8 @@ export class InterestedBookService {
   host = 'http://127.0.0.1:8000/';
   interestedBooksUrl = 'api/interestedbooks/';
   interestedBooksAPIUrl = this.host + this.interestedBooksUrl;
+  accountNameInterestedBooksUrl = 'api/interestedbooks/?account_name=';
+  accountNameInterestedBooksAPIUrl = this.host + this.accountNameInterestedBooksUrl;
   interestedBookUrl = 'api/interestedbook/';
   interestedBookAPIUrl = this.host + this.interestedBookUrl;
   httpOptions = {
@@ -31,6 +33,11 @@ export class InterestedBookService {
 
   getUserInterestedBook(userId: number): Observable<any> {
     const url = this.interestedBooksAPIUrl + '?user_id=' + userId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getInterestedBookByAccountName(accountName: string): Observable<any> {
+    const url = this.accountNameInterestedBooksAPIUrl + accountName;
     return this.http.get<any>(url, this.httpOptions);
   }
 

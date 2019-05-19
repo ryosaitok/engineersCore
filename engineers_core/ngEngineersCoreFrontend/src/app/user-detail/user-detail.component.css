@@ -57,7 +57,7 @@ h1 {
 }
 .MenuNavigation-canopy {
     background-color: #ffffff;
-    padding: 16px 0;
+    padding: 4px 0;
 }
 .MenuNavigation-textContainer {
     margin: 0 auto;
@@ -65,19 +65,36 @@ h1 {
 }
 .MenuNavigation-titleText {
     color: #222222;
-    font-size: 20px;
-    font-weight: normal;
-    line-height: 20px;
+    font-weight: bold;
     overflow: hidden;
-    padding-left: 12px;
+    font-size: 15px;
+    padding-left: 230px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-h1 {
-    font-size: 18px;
-    line-height: .6;
-    text-rendering: optimizeLegibility;
-    margin: 0;
+ul.navigation-menu {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.navigation-menu li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.navigation {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.navigation > a {
+    display: grid;
+    text-align: center;
+}
+ul.navigation > a:hover {
+    list-style: none;
+    margin-bottom: 0 !important;
+    color: #91D2FA;
+}
+ul.navigation li {
+    margin-right: 4px;
 }
 
 /* メインコンテンツ */
@@ -162,9 +179,11 @@ h1 {
     color: #222222;
     font-size: 14px;
 }
-
 .user-info-text > a:hover {
     color: #91D2FA !important;
+}
+.user-image {
+    padding-bottom: 15px !important;
 }
 .user-name {
     font-size: 14px;

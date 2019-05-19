@@ -26,9 +26,43 @@
   <div class="MenuNavigation">
     <div class="MenuNavigation-canopy">
       <div class="MenuNavigation-textContainer">
-        <h1 class="MenuNavigation-titleText" dir="ltr">
-          TODO: 読んだ・読みたい・いいねした など選択できるようにする。
-        </h1>
+        <div class="MenuNavigation-titleText" dir="ltr">
+          <ul class="navigation-menu">
+            <li>
+              <ul class="read-books navigation">
+                <a routerLink="/user/{{user.userAccountName}}">
+                  <li>読んだ本</li>
+                  <li>{{bookCommentCount}}</li>
+                </a>
+              </ul>
+            </li>
+            <li>
+              <ul class="interested-books navigation">
+                <a routerLink="/user/{{user.userAccountName}}/interested">
+                  <li>読みたい本</li>
+                  <li>{{interestedBookCount}}</li>
+                </a>
+              </ul>
+            </li>
+            <li>
+              <ul class="favorite-comments navigation">
+                <a routerLink="/user/{{user.userAccountName}}/favorite">
+                  <li>いいね</li>
+                  <li>{{favoriteCommentCount}}</li>
+                </a>
+              </ul>
+            </li>
+            <li>
+              <ul class="knowledge-score navigation">
+                <a routerLink="/user/{{user.userAccountName}}/score">
+                  <li>知識スコア</li>
+                  <li>TODO:</li>
+                  <!--                  <a routerLink="/user/{{user.userAccountName}}/favorite">{{knowledgeScore}}</a>-->
+                </a>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -110,7 +144,7 @@
       <div class="ReadBookModules">
         <!-- 本の情報 -->
         <div class="module bookComments">
-          <div *ngIf="bookComments.length > 0" class="comment-module">
+          <div *ngIf="bookCommentCount > 0" class="comment-module">
             <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <!-- 本の情報 -->
@@ -198,7 +232,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="bookComments.length === 0" class="comment-module">
+          <div *ngIf="bookCommentCount === 0" class="comment-module">
             <div class="no-comment-text">
               <span>検索結果がありませんでした。</span>
             </div>

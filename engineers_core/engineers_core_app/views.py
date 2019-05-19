@@ -66,14 +66,6 @@ class AuthUserRegisterView(generics.ListCreateAPIView):
     queryset = AuthUser.objects.all()
     serializer_class = AuthUserSerializer
 
-    # def post(self, request, *args, **kwargs):
-    #     serialized = AuthUserSerializer(data=request.data)
-    #     if serialized.is_valid():
-    #         serialized.save()
-    #         return Response(serialized.data, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -142,13 +134,13 @@ class CommentFavoriteListView(generics.ListCreateAPIView):
     queryset = CommentFavorite.objects.all()
     serializer_class = CommentFavoriteWithForeignSerializer
 
-    # serializer_class = CommentFavoriteSerializer
-
     def get_queryset(self):
         queryset = CommentFavorite.objects.all()
         account_name = self.request.query_params.get('account_name', None)
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('CommentFavoriteListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
     # 登録処理ではuserとcommentのidだけ指定で行いたいので、CommentFavoriteSerializerを使う。
@@ -241,6 +233,8 @@ class InterestedBookListView(generics.ListCreateAPIView):
             queryset = queryset.filter(user__id=user_id)
         elif user_id is None and book_id is not None:
             queryset = queryset.filter(book__id=book_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('CommentFavoriteListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
 
