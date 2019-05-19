@@ -101,7 +101,7 @@
                       <div class="book-action-button">
                         <div *ngIf="!isInterested">
                           <form (ngSubmit)="interested(book.id)">
-                            <button type="submit" class="btn btn-default"><strong><b>読みたい本に登録する</b></strong></button>
+                            <button type="submit" class="btn btn-primary"><strong><b>読みたい本に登録する</b></strong></button>
                           </form>
                         </div>
                         <div *ngIf="isInterested">
@@ -190,17 +190,21 @@
                         <li>
                           <ul class="comment-replies comment-reaction">
                             <li>
-                              <a class="comment-reaction-reply" href=""><fa-icon [icon]="faCommentDots"></fa-icon></a>
+                              <a class="comment-reaction-reply" href="">
+                                <fa-icon [icon]="faCommentDots"></fa-icon>
+                              </a>
                             </li>
-                            <li>6</li>
+                            <li>{{comment.reply_ids.length}}</li>
                           </ul>
                         </li>
                         <li>
                           <ul class="comment-favorites comment-reaction">
                             <li>
-                              <a class="comment-reaction-heart" href=""><fa-icon [icon]="faHeart"></fa-icon></a>
+                              <a class="comment-reaction-heart" href="">
+                                <fa-icon [icon]="faHeart"></fa-icon>
+                              </a>
                             </li>
-                            <li>9</li>
+                            <li>{{comment.favorite_ids.length}}</li>
                           </ul>
                         </li>
                       </ul>
