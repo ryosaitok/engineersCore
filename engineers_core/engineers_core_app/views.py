@@ -120,6 +120,7 @@ class BookCommentListView(generics.ListCreateAPIView):
         title = self.request.query_params.get('title', None)
         if title is not None:
             queryset = queryset.filter(book__title__icontains=title)
+        queryset = queryset.filter(delete_flag=False)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('BookCommentListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
@@ -128,6 +129,12 @@ class BookCommentListView(generics.ListCreateAPIView):
 class BookCommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookComment.objects.all()
     serializer_class = BookCommentSerializer
+
+    def get_queryset(self):
+        queryset = BookComment.objects.all().filter(delete_flag=False)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookCommentViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
 
 
 class CommentFavoriteListView(generics.ListCreateAPIView):
@@ -139,6 +146,16 @@ class CommentFavoriteListView(generics.ListCreateAPIView):
         account_name = self.request.query_params.get('account_name', None)
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
+        # user_idとcomment_idがクエリパラメータで設定されている場合
+        user_id = self.request.query_params.get('user_id', None)
+        comment_id = self.request.query_params.get('comment_id', None)
+        if user_id is not None and comment_id is not None:
+            queryset = queryset.filter(user__id=user_id, comment__id=comment_id)
+        elif user_id is not None and comment_id is None:
+            queryset = queryset.filter(user__id=user_id)
+        elif user_id is None and comment_id is not None:
+            queryset = queryset.filter(comment__id=comment_id)
+        queryset = queryset.filter(delete_flag=False)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('CommentFavoriteListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
@@ -154,6 +171,12 @@ class CommentFavoriteListView(generics.ListCreateAPIView):
 class CommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CommentFavorite.objects.all()
     serializer_class = CommentFavoriteSerializer
+
+    def get_queryset(self):
+        queryset = CommentFavorite.objects.all().filter(delete_flag=False)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('CommentFavoriteViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
 
 
 class BookCommentReplyListView(generics.ListCreateAPIView):

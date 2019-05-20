@@ -28,6 +28,7 @@ export class CommentFavoriteService {
 
   getCommentFavorite(userId: number, commentId: number): Observable<any> {
     const url = this.commentFavoritesAPIUrl + '?user_id=' + userId + '&comment_id=' + commentId;
+    console.log('getCommentFavorite。url: ' + url);
     return this.http.get<any>(url, this.httpOptions);
   }
 
@@ -58,6 +59,7 @@ export class CommentFavoriteService {
       delete_flag: deleteFlag
     };
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
+    console.log('url: ' + url, 'userId: ' + userId, 'commentId: ' + commentId);
     return this.http.put<any>(url, body, {headers: jwtHeader});
   }
 }

@@ -8,6 +8,7 @@ import {InterestedBookService} from '../service/interested-book/interested-book.
 import {NgForm} from '@angular/forms';
 import {BookAuthorService} from '../service/book-author/book-author.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -40,6 +41,7 @@ export class BookDetailComponent implements OnInit {
     private bookAuthorService: BookAuthorService,
     private bookCommentService: BookCommentService,
     private interestedBookService: InterestedBookService,
+    private commentFavoriteService: CommentFavoriteService,
     private signinService: SigninService,
   ) {
   }
@@ -191,6 +193,66 @@ export class BookDetailComponent implements OnInit {
         } else {
           // まだデータが存在しない場合はデータ変更は無し。
           this.isInterested = false;
+        }
+      });
+    });
+  }
+
+  commentFavorite(commentId: number): void {
+    console.log('commentFavorite。commentId ' + commentId);
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
+      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
+        // まだデータが存在しない場合は作成する。
+        if (data === null || data === undefined || data.length === 0) {
+          this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
+            (res) => {
+              console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
+              // TODO: いいねボタンを着色させたい
+            },
+            (error) => {
+              console.log('commentFavoriteでerror: ' + error);
+            }
+          );
+          // すでにデータがある場合は更新する。
+        } else {
+          const favoriteId = data[0].id;
+          this.commentFavoriteService.updateCommentFavorite(favoriteId, userId, commentId, false).subscribe(
+            (res) => {
+              console.log('updateCommentFavoriteしたよ。favoriteId: ' + favoriteId + ', userId: ' + userId +
+                'commentId:' + commentId + ',delete: false');
+              // TODO: いいねボタンを着色させたい
+            },
+            (error) => {
+              console.log('commentFavoriteでerror: ' + error);
+            }
+          );
+        }
+      });
+    });
+  }
+
+  notCommentFavorite(commentId: number): void {
+    console.log('notCommentFavorite。commentId ' + commentId);
+    this.signinService.getAuthUser().subscribe(response => {
+      const userId = response.user_id;
+      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
+        // すでにデータがある場合は更新する。
+        if (data !== null && data !== undefined && data.length !== 0) {
+          const favoriteId = data[0].id;
+          this.commentFavoriteService.updateCommentFavorite(favoriteId, userId, commentId, true).subscribe(
+            (res) => {
+              console.log('updateCommentFavoriteしたよ。commentId ,delete: true' + commentId);
+              // TODO: いいねボタンの色消したい
+            },
+            (error) => {
+              console.log('notCommentFavoriteでerror: ' + error);
+            }
+          );
+        } else {
+          // まだデータが存在しない場合はデータ変更は無し。
+          console.log('なぜかここきた...。commentId ' + commentId);
+          // TODO: いいねボタンの着色したい
         }
       });
     });

@@ -65,10 +65,10 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 
 
 class BookCommentSerializer(serializers.ModelSerializer):
-    favorite_ids = serializers.SlugRelatedField(
+    favorite_users = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        slug_field='id'
+        slug_field='user_id'
     )
     reply_ids = serializers.SlugRelatedField(
         many=True,
@@ -78,16 +78,16 @@ class BookCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookComment
-        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag', 'favorite_ids', 'reply_ids')
+        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag', 'favorite_users', 'reply_ids')
 
 
 class BookCommentWithForeignSerializer(serializers.ModelSerializer):
     book = BookSerializer()
     user = UserSerializer()
-    favorite_ids = serializers.SlugRelatedField(
+    favorite_users = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        slug_field='id'
+        slug_field='user_id'
     )
     reply_ids = serializers.SlugRelatedField(
         many=True,
@@ -97,7 +97,7 @@ class BookCommentWithForeignSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookComment
-        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag', 'favorite_ids', 'reply_ids')
+        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'delete_flag', 'favorite_users', 'reply_ids')
 
 
 class CommentFavoriteSerializer(serializers.ModelSerializer):

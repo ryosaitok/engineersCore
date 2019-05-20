@@ -199,12 +199,17 @@
                         </li>
                         <li>
                           <ul class="comment-favorites comment-reaction">
-                            <li>
-                              <a class="comment-reaction-heart" href="">
+                            <li *ngIf="comment.favorite_users.indexOf(userId) >= 0">
+                              <span class="comment-reaction-heart favorite-done" (click)="notCommentFavorite(comment.id)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
-                              </a>
+                              </span>
                             </li>
-                            <li>{{comment.favorite_ids.length}}</li>
+                            <li *ngIf="comment.favorite_users.indexOf(userId) == -1">
+                              <span class="comment-reaction-heart favorite-none" (click)="commentFavorite(comment.id)">
+                                <fa-icon [icon]="faHeart"></fa-icon>
+                              </span>
+                            </li>
+                            <li>{{comment.favorite_users.length}}</li>
                           </ul>
                         </li>
                       </ul>

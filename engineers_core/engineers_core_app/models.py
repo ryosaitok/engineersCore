@@ -131,7 +131,7 @@ class BookComment(models.Model):
 
 class CommentFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(BookComment, related_name='favorite_ids', on_delete=models.CASCADE)
+    comment = models.ForeignKey(BookComment, related_name='favorite_users', on_delete=models.CASCADE)
     favorite_date = models.DateField(auto_now=True)
     delete_flag = models.BooleanField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
