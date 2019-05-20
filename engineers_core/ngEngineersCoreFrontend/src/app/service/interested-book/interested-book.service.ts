@@ -50,19 +50,13 @@ export class InterestedBookService {
     const body = {
       user: userId,
       book: bookId,
-      delete_flag: false,
     };
     return this.http.post<any>(this.interestedBooksAPIUrl, body, this.httpOptions);
   }
 
-  updateInterestedBook(interestedBookId: number, userId: number, bookId: number, deleteFlag: boolean): Observable<any> {
+  deleteInterestedBook(interestedBookId: number): Observable<any> {
     const url = this.interestedBookAPIUrl + interestedBookId + '/';
-    const body = {
-      user: userId,
-      book: bookId,
-      delete_flag: deleteFlag
-    };
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.put<any>(url, body, {headers: jwtHeader});
+    return this.http.delete<any>(url, {headers: jwtHeader});
   }
 }

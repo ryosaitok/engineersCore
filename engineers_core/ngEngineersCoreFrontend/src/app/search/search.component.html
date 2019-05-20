@@ -51,7 +51,7 @@
       <div class="SearchModules">
         <!-- 本の情報 -->
         <div class="module bookComments">
-          <div *ngIf="bookComments.length > 0" class="comment-module">
+          <div *ngIf="bookCommentCount > 0" class="comment-module">
             <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <!-- 本の情報 -->
@@ -118,7 +118,7 @@
                                   <fa-icon [icon]="faCommentDots"></fa-icon>
                                 </a>
                               </li>
-                              <li>{{comment.reply_ids.length}}</li>
+                              <li>3</li>
                             </ul>
                           </li>
                           <li>
@@ -128,7 +128,7 @@
                                   <fa-icon [icon]="faHeart"></fa-icon>
                                 </a>
                               </li>
-                              <li>{{comment.favorite_ids.length}}</li>
+                              <li>3</li>
                             </ul>
                           </li>
                         </ul>
@@ -139,7 +139,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="bookComments.length === 0" class="comment-module">
+          <div *ngIf="bookCommentCount === 0" class="comment-module">
             <div class="no-comment-text">
               <span>検索結果がありませんでした。</span>
             </div>

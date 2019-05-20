@@ -236,9 +236,11 @@ ul.comment-reaction li > span {
 }
 ul.comment-reaction li > span.comment-reaction-reply:hover {
     color: #1da1f2;
+    cursor: pointer;
 }
 ul.comment-reaction li > span.comment-reaction-heart:hover {
     color: #f08080;
+    cursor: pointer;
 }
 ul.comment-reaction li > span.favorite-done {
     color: #f08080;

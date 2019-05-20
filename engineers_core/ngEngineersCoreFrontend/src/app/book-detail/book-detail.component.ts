@@ -83,15 +83,9 @@ export class BookDetailComponent implements OnInit {
   getBookComments(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.bookCommentService.getBookComments(id).subscribe(data => {
-        this.bookComments = data;
-        this.bookCommentCount = 0;
-        data.forEach(comment => {
-          if (comment.id !== null && comment.id !== undefined) {
-            this.bookCommentCount = this.bookCommentCount + 1;
-          }
-        });
-      }
-    );
+      this.bookComments = data;
+      this.bookCommentCount = Object.keys(data).length;
+    });
   }
 
   registerBookComment(f: NgForm): void {
@@ -119,11 +113,7 @@ export class BookDetailComponent implements OnInit {
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
         // dataの方に来るということは、データが見つかった
         (data) => {
-          if (data[0] !== undefined) {
-            this.isInterested = data[0].delete_flag !== true;
-          } else {
-            this.isInterested = false;
-          }
+          this.isInterested = data[0] !== undefined;
         },
         // errorの方に来るということは、データが見つからなかった。
         (error) => {
@@ -136,12 +126,7 @@ export class BookDetailComponent implements OnInit {
   getInterestedCount(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.interestedBookService.getBookInterested(bookId).subscribe(data => {
-      data.forEach(res => {
-        this.bookInterestedCount = 0;
-        if (res.id !== null && res.id !== undefined) {
-          this.bookInterestedCount = this.bookInterestedCount + 1;
-        }
-      });
+      this.bookInterestedCount = Object.keys(data).length;
     });
   }
 
@@ -159,17 +144,9 @@ export class BookDetailComponent implements OnInit {
               console.log('interestedでerror: ' + error);
             }
           );
-          // すでにデータがある場合は更新する。
+          // すでにデータがある場合はメソッドが呼ばれるのおかしい。
         } else {
-          const interestedId = data[0].id;
-          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, false).subscribe(
-            (res) => {
-              this.isInterested = true;
-            },
-            (error) => {
-              console.log('interestedでerror: ' + error);
-            }
-          );
+          console.log('すでにデータある。メソッドが呼ばれるのおかしい。userId: ' + userId + ' , bookId: ' + bookId);
         }
       });
     });
@@ -179,10 +156,10 @@ export class BookDetailComponent implements OnInit {
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
-        // すでにデータがある場合は更新する。
+        // データがある場合は削除する。
         if (data !== null && data !== undefined && data.length !== 0) {
           const interestedId = data[0].id;
-          this.interestedBookService.updateInterestedBook(interestedId, userId, bookId, true).subscribe(
+          this.interestedBookService.deleteInterestedBook(interestedId).subscribe(
             (res) => {
               this.isInterested = false;
             },
@@ -192,6 +169,7 @@ export class BookDetailComponent implements OnInit {
           );
         } else {
           // まだデータが存在しない場合はデータ変更は無し。
+          console.log('データ最初からない。メソッドが呼ばれるのおかしい。userId: ' + userId + ' , bookId: ' + bookId);
           this.isInterested = false;
         }
       });
@@ -208,25 +186,13 @@ export class BookDetailComponent implements OnInit {
           this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
             (res) => {
               console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
-              // TODO: いいねボタンを着色させたい
             },
             (error) => {
-              console.log('commentFavoriteでerror: ' + error);
+              console.error('commentFavoriteでerror: ' + error);
             }
           );
-          // すでにデータがある場合は更新する。
         } else {
-          const favoriteId = data[0].id;
-          this.commentFavoriteService.updateCommentFavorite(favoriteId, userId, commentId, false).subscribe(
-            (res) => {
-              console.log('updateCommentFavoriteしたよ。favoriteId: ' + favoriteId + ', userId: ' + userId +
-                'commentId:' + commentId + ',delete: false');
-              // TODO: いいねボタンを着色させたい
-            },
-            (error) => {
-              console.log('commentFavoriteでerror: ' + error);
-            }
-          );
+          console.error('commentFavoriteが呼ばれるのおかしい。userId: ' + userId, 'commentId: ' + commentId);
         }
       });
     });
@@ -237,22 +203,19 @@ export class BookDetailComponent implements OnInit {
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // すでにデータがある場合は更新する。
+        // データがある場合は削除する。
         if (data !== null && data !== undefined && data.length !== 0) {
           const favoriteId = data[0].id;
-          this.commentFavoriteService.updateCommentFavorite(favoriteId, userId, commentId, true).subscribe(
+          this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
             (res) => {
-              console.log('updateCommentFavoriteしたよ。commentId ,delete: true' + commentId);
-              // TODO: いいねボタンの色消したい
+              console.log('deleteCommentFavoriteしたよ。commentId' + commentId);
             },
             (error) => {
               console.log('notCommentFavoriteでerror: ' + error);
             }
           );
         } else {
-          // まだデータが存在しない場合はデータ変更は無し。
-          console.log('なぜかここきた...。commentId ' + commentId);
-          // TODO: いいねボタンの着色したい
+          console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
         }
       });
     });

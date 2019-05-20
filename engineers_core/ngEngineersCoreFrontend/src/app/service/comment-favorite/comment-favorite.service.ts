@@ -46,20 +46,13 @@ export class CommentFavoriteService {
     const body = {
       user: userId,
       comment: commentId,
-      delete_flag: false,
     };
     return this.http.post<any>(this.commentFavoritesAPIUrl, body, this.httpOptions);
   }
 
-  updateCommentFavorite(commentFavoriteId: number, userId: number, commentId: number, deleteFlag: boolean): Observable<any> {
+  deleteCommentFavorite(commentFavoriteId: number): Observable<any> {
     const url = this.commentFavoriteAPIUrl + commentFavoriteId + '/';
-    const body = {
-      user: userId,
-      comment: commentId,
-      delete_flag: deleteFlag
-    };
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    console.log('url: ' + url, 'userId: ' + userId, 'commentId: ' + commentId);
-    return this.http.put<any>(url, body, {headers: jwtHeader});
+    return this.http.delete<any>(url, {headers: jwtHeader});
   }
 }

@@ -12,6 +12,7 @@ import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 export class SearchComponent implements OnInit, OnChanges {
 
   @Input() bookComments: any[];
+  bookCommentCount: number;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
 
@@ -45,6 +46,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
       this.bookComments = data;
+      this.bookCommentCount = Object.keys(data).length;
     });
   }
 }

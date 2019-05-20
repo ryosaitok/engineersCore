@@ -54,7 +54,6 @@ export class BookCommentService {
       book: bookId,
       comment_text: comment,
       read_date: readDate,
-      delete_flag: false,
     };
     return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
   }

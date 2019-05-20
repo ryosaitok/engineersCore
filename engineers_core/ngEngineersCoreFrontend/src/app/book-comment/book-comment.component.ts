@@ -31,7 +31,6 @@ export class BookCommentComponent implements OnInit {
           response.comment_text,
           response.comment_date,
           response.tweet_flag,
-          response.delete_flag
       );
     });
   }
