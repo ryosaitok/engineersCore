@@ -23,7 +23,7 @@ SearchNavigation {
 }
 .SearchNavigation-canopy {
     background-color: #1da1f2;
-    padding: 16px 0;
+    padding: 14px 0;
 }
 .SearchNavigation-textContainer {
     margin: 0 auto;
@@ -147,9 +147,8 @@ ul.search-form li {
 
 
 .item {
-    margin-top: 5px;
     border-bottom: 1px solid #e6ecf0;
-    padding: 6px 0;
+    padding: 10px 0;
 }
 .account-summary {
     position: relative;

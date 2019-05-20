@@ -23,7 +23,7 @@ a:visited {
 }
 .UserNavigation-canopy {
     background-color: #1da1f2;
-    padding: 16px 0;
+    padding: 14px 0;
 }
 .UserNavigation-textContainer {
     margin: 0 auto;
@@ -206,9 +206,8 @@ ul.navigation li {
     line-height: initial;
 }
 .item {
-    margin-top: 5px;
     border-bottom: 1px solid #e6ecf0;
-    padding: 6px 0;
+    padding: 10px 0;
 }
 b {
   margin: 1px;
