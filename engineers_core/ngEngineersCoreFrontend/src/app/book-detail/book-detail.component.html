@@ -157,7 +157,6 @@
           <div *ngIf="bookComments.length > 0" class="comment-module">
             <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
-              <!--              <a routerLink="/bookcomment/{{comment.id}}/">-->
               <div class="book-comment">
                 <div class="BookCommentItem-context">
                   <!-- いいねしたユーザーの情報など -->
@@ -200,7 +199,8 @@
                         <li>
                           <ul class="comment-favorites comment-reaction">
                             <li *ngIf="comment.favorite_users.indexOf(userId) >= 0">
-                              <span class="comment-reaction-heart favorite-done" (click)="notCommentFavorite(comment.id)">
+                              <span class="comment-reaction-heart favorite-done"
+                                    (click)="notCommentFavorite(comment.id)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                             </li>
@@ -217,7 +217,6 @@
                   </div>
                 </div>
               </div>
-              <!--              </a>-->
             </div>
           </div>
           <div *ngIf="bookComments.length === 0" class="comment-module">

@@ -262,13 +262,18 @@ ul.comment-reaction li {
     display: inline-block;
     margin-right: 4px;
 }
-ul.comment-reaction li > a {
+ul.comment-reaction li > span {
     color: #cccccc;
 }
-ul.comment-reaction li > a.comment-reaction-reply:hover {
+ul.comment-reaction li > span.comment-reaction-reply:hover {
     color: #1da1f2;
+    cursor: pointer;
 }
-ul.comment-reaction li > a.comment-reaction-heart:hover {
+ul.comment-reaction li > span.comment-reaction-heart:hover {
+    color: #f08080;
+    cursor: pointer;
+}
+ul.comment-reaction li > span.favorite-done {
     color: #f08080;
 }
 .no-comment-text {

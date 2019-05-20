@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {User} from './user';
 import {AuthGuard} from './guard/auth.guard';
 
 @Component({
@@ -9,7 +8,7 @@ import {AuthGuard} from './guard/auth.guard';
 })
 export class AppComponent {
 
-  userId: string;
+  userId: number;
   accountName: string;
   profileImageLink: string;
 

@@ -18,7 +18,7 @@ import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 import {SearchComponent} from './search/search.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {NgbButtonsModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
