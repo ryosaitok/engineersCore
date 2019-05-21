@@ -80,11 +80,14 @@ ul.navigation {
     list-style: none;
     margin-bottom: 0 !important;
 }
-ul.navigation > a {
+ul.navigation > li {
     display: grid;
     text-align: center;
 }
-ul.navigation > a:hover {
+ul.navigation > li.selected {
+    color: #91D2FA;
+}
+ul.navigation > li:hover {
     list-style: none;
     margin-bottom: 0 !important;
     color: #91D2FA;

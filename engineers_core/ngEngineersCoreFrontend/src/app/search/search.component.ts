@@ -21,8 +21,12 @@ export class SearchComponent implements OnInit, OnChanges {
   isSearchByTitle: boolean;
   isSearchByAuthor: boolean;
   isSearchByUser: boolean;
+
   faHeart = faHeart;
   faCommentDots = faCommentDots;
+  titleSelected = '';
+  authorSelected = '';
+  userSelected = '';
 
   constructor(
     private router: Router,
@@ -48,12 +52,15 @@ export class SearchComponent implements OnInit, OnChanges {
       if (params.title !== null && params.title !== undefined) {
         this.isSearchByTitle = true;
         this.query = params.title;
+        this.addSelected(true, false, false);
       } else if (params.author !== null && params.author !== undefined) {
         this.isSearchByAuthor = true;
         this.query = params.author;
+        this.addSelected(false, true, false);
       } else if (params.user !== null && params.user !== undefined) {
         this.isSearchByUser = true;
         this.query = params.user;
+        this.addSelected(false, false, true);
       }
       console.log('query: ' + this.query + ', isSearchByTitle: ' + this.isSearchByTitle + ', isSearchByAuthor: '
         + this.isSearchByAuthor + ', isSearchByUser: ' + this.isSearchByUser);
@@ -99,6 +106,7 @@ export class SearchComponent implements OnInit, OnChanges {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
+      this.addSelected(true, false, false);
       console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
     });
@@ -112,6 +120,7 @@ export class SearchComponent implements OnInit, OnChanges {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
+      this.addSelected(false, true, false);
       console.log('searchBookCommentsByAuthorの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
     });
@@ -125,9 +134,29 @@ export class SearchComponent implements OnInit, OnChanges {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
+      this.addSelected(false, false, true);
       console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
     });
+  }
+
+  /**
+   * 指定したクラスにselectedを指定し、その他の要素は空にする。
+   */
+  addSelected(titleSelected: boolean, authorSelected: boolean, userSelected: boolean) {
+    if (titleSelected) {
+      this.titleSelected = 'selected';
+      this.authorSelected = '';
+      this.userSelected = '';
+    } else if (authorSelected) {
+      this.titleSelected = '';
+      this.authorSelected = 'selected';
+      this.userSelected = '';
+    } else {
+      this.titleSelected = '';
+      this.authorSelected = '';
+      this.userSelected = 'selected';
+    }
   }
 
   commentFavorite(commentId: number): void {

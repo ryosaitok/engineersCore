@@ -18,23 +18,18 @@
           <ul class="navigation-menu">
             <li>
               <ul class="title-search navigation">
-                <a routerLink="/search" [queryParams]="{title: query}">
-                  <li>タイトル</li>
-                </a>
+<!--                <a routerLink="/search" [queryParams]="{title: query}">-->
+                <li class="title-search navigation" [class]="titleSelected" (click)="searchBookCommentsByTitle(query)">タイトル</li>
               </ul>
             </li>
             <li>
               <ul class="author-search navigation">
-                <a routerLink="/search" [queryParams]="{author: query}">
-                  <li>著者名</li>
-                </a>
+                <li class="user-search navigation" [class]="authorSelected" (click)="searchBookCommentsByAuthor(query)">著者</li>
               </ul>
             </li>
             <li>
               <ul class="user-search navigation">
-                <a routerLink="/search" [queryParams]="{user: query}">
-                  <li>ユーザー</li>
-                </a>
+                <li class="user-search navigation" [class]="userSelected" (click)="searchBookCommentsByUser(query)">ユーザー</li>
               </ul>
             </li>
           </ul>
