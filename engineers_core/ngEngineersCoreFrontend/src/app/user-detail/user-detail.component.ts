@@ -60,6 +60,10 @@ export class UserDetailComponent implements OnInit {
     this.bookCommentService.getBookCommentsByAccountName(accountName).subscribe(data => {
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
+      this.knowledgeScore = 0;
+      data.forEach(res => {
+        this.knowledgeScore = this.knowledgeScore  + res.book.offer_price;
+      });
     });
   }
 

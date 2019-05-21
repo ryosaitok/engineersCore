@@ -52,15 +52,14 @@
                 </a>
               </ul>
             </li>
-            <!--            <li>-->
-            <!--              <ul class="knowledge-score navigation">-->
-            <!--                <a routerLink="/user/{{user.userAccountName}}/score">-->
-            <!--                  <li>知識スコア</li>-->
-            <!--                  <li>TODO:</li>-->
-            <!--                  &lt;!&ndash;                  <a routerLink="/user/{{user.userAccountName}}/favorite">{{knowledgeScore}}</a>&ndash;&gt;-->
-            <!--                </a>-->
-            <!--              </ul>-->
-            <!--            </li>-->
+            <li>
+              <ul class="knowledge-score navigation">
+                <a routerLink="/user/{{user.userAccountName}}/score">
+                  <li>知識スコア</li>
+                  <li>{{knowledgeScore}}</li>
+                </a>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -118,16 +117,41 @@
             </div>
           </div>
         </div>
-        <!--        &lt;!&ndash; 知識スコア &ndash;&gt;-->
-        <!--        <div class="module register">-->
-        <!--          <div class="flex-module">-->
-        <!--            <div class="flex-module-header">-->
-        <!--              <strong>知識スコア</strong>-->
-        <!--            </div>-->
-        <!--            <div class="js-read-book dashboard-read-book flex-module-inner" data-section-id="wtf" style="opacity: 1;">-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
+        <!-- 知識スコア -->
+        <div class="module register">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>知識スコア</strong>
+            </div>
+            <div class="js-user-knowledge-score-sum dashboard-user-knowledge-score-sum flex-module-inner"
+                 data-section-id="wtf" style="opacity: 1;">
+              <div class="user-knowledge-score-sum item">
+                <div class="UserKnowledgeScoreSum-context">
+                  <div class="content">
+                    <ul class="knowledge-score-sum">
+                      <li>合計</li>
+                      <li>{{knowledgeScore}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="js-user-knowledge-score-week dashboard-user-knowledge-score-week flex-module-inner"
+                 data-section-id="wtf" style="opacity: 1;">
+              <div class="user-knowledge-score-week item">
+                <div class="UserKnowledgeScoreWeek-context">
+                  <div class="content">
+                    <ul class="knowledge-score-week">
+                      <li>今週</li>
+                      <!-- TODO:ryo.saito 修正 -->
+                      <li>{{knowledgeScore}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- 読んだ本 -->
         <div class="module register">
           <div class="flex-module">

@@ -212,6 +212,15 @@ ul.navigation li {
 b {
   margin: 1px;
 }
+ul.knowledge-score-sum, ul.knowledge-score-week {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
+    display: inline-block;
+    margin-right: 10px;
+}
 
 /* メインコンテンツ */
 @media (min-width: 1236px) {
