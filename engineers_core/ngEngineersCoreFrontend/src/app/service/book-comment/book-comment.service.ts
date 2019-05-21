@@ -28,11 +28,11 @@ export class BookCommentService {
     private http: HttpClient,
   ) {}
 
-  getBookComment(bookId: string): Observable<any> {
+  getBookComment(bookId: number): Observable<any> {
     return this.http.get<any>(this.bookCommentAPIUrl + bookId + '/');
   }
 
-  getBookComments(bookId: string): Observable<any> {
+  getBookComments(bookId: number): Observable<any> {
     return this.http.get<any>(this.filteredBookCommentsAPIUrl + bookId);
   }
 

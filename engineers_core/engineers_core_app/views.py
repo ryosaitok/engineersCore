@@ -120,9 +120,11 @@ class BookCommentListView(generics.ListCreateAPIView):
         title = self.request.query_params.get('title', None)
         if title is not None:
             queryset = queryset.filter(book__title__icontains=title)
-        compiler = queryset.query.get_compiler(using=queryset.db)
-        print('BookCommentListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(BookCommentListView, self).filter_queryset(queryset)
+        return queryset.order_by('-id')
 
 
 class BookCommentView(generics.RetrieveUpdateDestroyAPIView):

@@ -217,10 +217,9 @@
                           <li>
                             <ul class="comment-favorites comment-reaction">
                               <li *ngIf="comment.favorite_users.indexOf(userId) >= 0">
-                              <span class="comment-reaction-heart favorite-done"
-                                    (click)="notCommentFavorite(comment.id)">
-                                <fa-icon [icon]="faHeart"></fa-icon>
-                              </span>
+                                <span class="comment-reaction-heart favorite-done"
+                                      (click)="notCommentFavorite(comment.id)"><fa-icon
+                                  [icon]="faHeart"></fa-icon></span>
                               </li>
                               <li *ngIf="comment.favorite_users.indexOf(userId) == -1">
                               <span class="comment-reaction-heart favorite-none" (click)="commentFavorite(comment.id)">

@@ -17,6 +17,7 @@ import {CommentFavoriteService} from '../service/comment-favorite/comment-favori
 })
 export class BookDetailComponent implements OnInit {
 
+  bookId = Number(this.route.snapshot.paramMap.get('id'));
   @Input() book: Book;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
@@ -30,9 +31,9 @@ export class BookDetailComponent implements OnInit {
   ngOnInit() {
     this.getLoginUser();
     this.getBook();
-    this.getBookComments();
-    this.checkInterested();
-    this.getInterestedCount();
+    this.getBookComments(this.bookId);
+    this.checkInterested(this.bookId);
+    this.getInterestedCount(this.bookId);
   }
 
   constructor(
@@ -80,9 +81,8 @@ export class BookDetailComponent implements OnInit {
       });
   }
 
-  getBookComments(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.bookCommentService.getBookComments(id).subscribe(data => {
+  getBookComments(bookId: number): void {
+    this.bookCommentService.getBookComments(bookId).subscribe(data => {
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
     });
@@ -103,11 +103,10 @@ export class BookDetailComponent implements OnInit {
       );
     });
     // メソッドの呼び出し箇所考える
-    this.getBookComments();
+    this.getBookComments(this.bookId);
   }
 
-  checkInterested(): void {
-    const bookId = Number(this.route.snapshot.paramMap.get('id'));
+  checkInterested(bookId: number): void {
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
@@ -123,8 +122,7 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
-  getInterestedCount(): void {
-    const bookId = Number(this.route.snapshot.paramMap.get('id'));
+  getInterestedCount(bookId: number): void {
     this.interestedBookService.getBookInterested(bookId).subscribe(data => {
       this.bookInterestedCount = Object.keys(data).length;
     });
