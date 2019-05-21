@@ -2,6 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from .serializers import *
+from django.db.models import Q
 
 
 class AuthInfoGetView(generics.RetrieveAPIView):
@@ -111,15 +112,29 @@ class BookCommentListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = BookComment.objects.all()
+        # アカウント名で検索
         account_name = self.request.query_params.get('account_name', None)
         if account_name is not None:
             queryset = queryset.filter(user__account_name=account_name)
+        # 本IDで検索
         book_id = self.request.query_params.get('book_id', None)
         if book_id is not None:
             queryset = queryset.filter(book__id=book_id)
+        # 本のタイトルで検索
         title = self.request.query_params.get('title', None)
         if title is not None:
             queryset = queryset.filter(book__title__icontains=title)
+        # 本の著者名で検索
+        author = self.request.query_params.get('author', None)
+        if author is not None:
+            print('著者名での検索はデータ連結の方法わかってなくて未実装')
+            # queryset = queryset.filter(book__author_name__icontains=author)
+        # ユーザー名orアカウント名で検索
+        user = self.request.query_params.get('user', None)
+        if user is not None:
+            queryset = queryset.filter(Q(user__account_name__icontains=user) | Q(user__user_name__icontains=user))
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookCommentListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
     def filter_queryset(self, queryset):

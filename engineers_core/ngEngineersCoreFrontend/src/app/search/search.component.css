@@ -33,15 +33,65 @@ SearchNavigation {
     color: #fff;
     font-weight: bold;
     overflow: hidden;
-    padding-left: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 h1 {
     font-size: 24px;
-    line-height: .8;
     text-rendering: optimizeLegibility;
     margin: 0;
+}
+
+/* ナビゲーションメニュー */
+.MenuNavigation {
+    backface-visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    border-bottom: 1px solid #e6ecf0;
+}
+.MenuNavigation-canopy {
+    background-color: #ffffff;
+    padding: 14px 0;
+}
+.MenuNavigation-textContainer {
+    margin: 0 auto;
+    max-width: 1190px;
+}
+.MenuNavigation-titleText {
+    color: #222222;
+    font-weight: bold;
+    overflow: hidden;
+    font-size: 15px;
+    padding-left: 230px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ul.navigation-menu {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.navigation-menu li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.navigation {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.navigation > a {
+    display: grid;
+    text-align: center;
+}
+ul.navigation > a:hover {
+    list-style: none;
+    margin-bottom: 0 !important;
+    color: #91D2FA;
+    cursor: pointer;
+}
+ul.navigation li {
+    margin-right: 4px;
 }
 
 /* メインコンテンツ */

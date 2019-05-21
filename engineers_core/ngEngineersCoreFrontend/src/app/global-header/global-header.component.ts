@@ -3,6 +3,7 @@ import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 import {UserService} from '../service/user/user.service';
 import {Router} from '@angular/router';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-global-header',
@@ -36,6 +37,14 @@ export class GlobalHeaderComponent implements OnInit {
       this.appComponent.accountName = null;
       this.appComponent.profileImageLink = null;
     });
+  }
+
+  /**
+   * 本のタイトルでLIKE検索し、本のIDで重複除いた結果のコメント一覧を取得する。
+   */
+  search(f: NgForm) {
+    const query = f.value.query;
+    this.router.navigate(['search'], {queryParams: {title: query}});
   }
 
 }

@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'book/:id', component: BookDetailComponent },
   { path: 'bookcomment/:id', component: BookCommentComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'search/:title', component: SearchComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

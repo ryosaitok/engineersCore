@@ -3,18 +3,42 @@
   <div class="SearchNavigation">
     <div class="SearchNavigation-canopy u-bgUserColor">
       <div class="SearchNavigation-textContainer">
-        <h1 class="SearchNavigation-titleText" dir="ltr">
-          <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
-            <ul class="search-form">
-              <li>
-                <div class="form-group"><input type="text" name="query" ngModel required></div>
-              </li>
-              <li class="search-button">
-                <button type="submit" class="btn btn-primary"><strong><b>検索</b></strong></button>
-              </li>
-            </ul>
-          </form>
+        <h1 *ngIf="query !== null && query !== undefined && query !== ''" class="SearchNavigation-titleText" dir="ltr">
+          {{query}}
         </h1>
+        <h1 *ngIf="query === null || query === undefined || query === ''" class="SearchNavigation-titleText" dir="ltr">?</h1>
+      </div>
+    </div>
+  </div>
+  <!-- ナビゲーションメニュー -->
+  <div class="MenuNavigation">
+    <div class="MenuNavigation-canopy">
+      <div class="MenuNavigation-textContainer">
+        <div class="MenuNavigation-titleText" dir="ltr">
+          <ul class="navigation-menu">
+            <li>
+              <ul class="title-search navigation">
+                <a routerLink="/search" [queryParams]="{title: query}">
+                  <li>タイトル</li>
+                </a>
+              </ul>
+            </li>
+            <li>
+              <ul class="author-search navigation">
+                <a routerLink="/search" [queryParams]="{author: query}">
+                  <li>著者名</li>
+                </a>
+              </ul>
+            </li>
+            <li>
+              <ul class="user-search navigation">
+                <a routerLink="/search" [queryParams]="{user: query}">
+                  <li>ユーザー</li>
+                </a>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -16,7 +16,11 @@ export class SearchComponent implements OnInit, OnChanges {
 
   userId: number;
   @Input() bookComments: any[];
-  bookCommentCount: number;
+  bookCommentCount = 0;
+  query: string;
+  isSearchByTitle: boolean;
+  isSearchByAuthor: boolean;
+  isSearchByUser: boolean;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
 
@@ -32,10 +36,28 @@ export class SearchComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getLoginUserId();
-    this.searchBookCommentsByTitle();
+    this.initQueryParameters();
+    this.searchBookComments();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  initQueryParameters(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params.title !== null && params.title !== undefined) {
+        this.isSearchByTitle = true;
+        this.query = params.title;
+      } else if (params.author !== null && params.author !== undefined) {
+        this.isSearchByAuthor = true;
+        this.query = params.author;
+      } else if (params.user !== null && params.user !== undefined) {
+        this.isSearchByUser = true;
+        this.query = params.user;
+      }
+      console.log('query: ' + this.query + ', isSearchByTitle: ' + this.isSearchByTitle + ', isSearchByAuthor: '
+        + this.isSearchByAuthor + ', isSearchByUser: ' + this.isSearchByUser);
+    });
   }
 
   getLoginUserId(): void {
@@ -48,19 +70,63 @@ export class SearchComponent implements OnInit, OnChanges {
    * 本のタイトルでLIKE検索し、本のIDで重複除いた結果のコメント一覧を取得する。
    */
   search(f: NgForm) {
-    const query = f.value.query;
-    this.router.navigate(['search/' + query + '/']);
+    const query = f.value.query.trim();
+    this.router.navigate(['search'], {queryParams: {title: query}});
   }
 
   /**
-   * クエリパラメータに指定されたクエリで検索して検索結果を表示する
+   * 検索して検索結果を表示する。
    */
-  searchBookCommentsByTitle() {
-    const title = this.route.snapshot.paramMap.get('title');
+  searchBookComments() {
+    this.query = this.query.trim();
+    if (this.query === null || this.query === undefined || this.query === '') {
+      return;
+    }
+    if (this.isSearchByTitle) {
+      this.searchBookCommentsByTitle(this.query);
+    } else if (this.isSearchByAuthor) {
+      this.searchBookCommentsByAuthor(this.query);
+    } else if (this.isSearchByUser) {
+      this.searchBookCommentsByUser(this.query);
+    }
+  }
+
+  /**
+   * 本のタイトルで検索して検索結果を表示する
+   */
+  searchBookCommentsByTitle(title: string) {
     this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
+      console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
+        + this.bookCommentCount);
+    });
+  }
+
+  /**
+   * 著者名で検索して検索結果を表示する
+   */
+  searchBookCommentsByAuthor(authorName: string) {
+    this.bookCommentService.getBookCommentsByAuthorName(authorName).subscribe(data => {
+      // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
+      this.bookComments = data;
+      this.bookCommentCount = Object.keys(data).length;
+      console.log('searchBookCommentsByAuthorの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
+        + this.bookCommentCount);
+    });
+  }
+
+  /**
+   * ユーザー名orユーザーアカウント名で検索して検索結果を表示する
+   */
+  searchBookCommentsByUser(user: string) {
+    this.bookCommentService.getBookCommentsByUser(user).subscribe(data => {
+      // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
+      this.bookComments = data;
+      this.bookCommentCount = Object.keys(data).length;
+      console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
+        + this.bookCommentCount);
     });
   }
 

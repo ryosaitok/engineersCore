@@ -34,7 +34,11 @@
               <!-- 検索フォーム -->
               <div class="search-form">
                 <nav>
-                  <a routerLink="/search">検索する</a>
+                  <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
+                    <ul class="search-form">
+                      <li><div class="form-group"><input type="text" name="query" ngModel required></div></li>
+                    </ul>
+                  </form>
                 </nav>
               </div>
               <ul class="nav right-actions">
@@ -47,7 +51,8 @@
                         <a routerLink="/login">{{appComponent.authErrorMessage}}</a>
                       </nav>
                     </div>
-                    <div class="user-profile-image" *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
+                    <div class="user-profile-image"
+                         *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
                       <nav>
                         <a routerLink="/login">
                           <img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}"

@@ -98,7 +98,6 @@ element.style {
 }
 h1 {
     font-size: 24px;
-    line-height: .8;
     text-rendering: optimizeLegibility;
 }
 
@@ -114,14 +113,12 @@ h1 {
     float: left;
 }
 ul {
-    padding: 0;
     display: block;
     list-style: disc none;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0;
     margin-inline-end: 0;
-    padding-inline-start: 40px;
 }
 #global-actions>li {
     /*height: 46px;*/
@@ -147,7 +144,7 @@ li {
     text-align: inherit;
     display: list-item;
     text-align: -webkit-match-parent;
-    margin-left: 5px;
+    margin-right: 20px;
 }
 
 /* pull-right */
@@ -183,7 +180,6 @@ li {
 .nav {
     text-align: left;
 }
-/* user-dropdown, topbar-readbook-btn */
 .nav>li {
     color: #66757f;
 }
@@ -192,6 +188,12 @@ li {
 }
 .global-nav [role=navigation], .nav, .nav>li {
     float: left;
+}
+
+ul.search-form {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
 }
 .dropdown {
     position: relative;
