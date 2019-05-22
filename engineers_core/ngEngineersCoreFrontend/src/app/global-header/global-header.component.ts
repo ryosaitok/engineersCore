@@ -3,7 +3,7 @@ import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 import {UserService} from '../service/user/user.service';
 import {Router} from '@angular/router';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-global-header',
@@ -11,6 +11,8 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./global-header.component.css']
 })
 export class GlobalHeaderComponent implements OnInit {
+
+  displayDropdownMenu = false;
 
   constructor(
     private router: Router,
@@ -30,13 +32,19 @@ export class GlobalHeaderComponent implements OnInit {
         const user = res;
         this.appComponent.userId = user.user_id;
         this.appComponent.accountName = user.account_name;
+        this.appComponent.userName = user.user_name;
         this.appComponent.profileImageLink = user.profile_image_link;
       });
     }, error => {
       this.appComponent.userId = null;
       this.appComponent.accountName = null;
+      this.appComponent.userName = null;
       this.appComponent.profileImageLink = null;
     });
+  }
+
+  clickDropdownMenu(): void {
+    this.displayDropdownMenu = this.displayDropdownMenu === false;
   }
 
   /**
@@ -45,6 +53,16 @@ export class GlobalHeaderComponent implements OnInit {
   search(f: NgForm) {
     const query = f.value.query;
     this.router.navigate(['search'], {queryParams: {title: query}});
+  }
+
+  // ログアウトする（認証トークンをCookieから削除する）。
+  signOut() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('accountName');
+    this.appComponent.userId = null;
+    this.appComponent.accountName = null;
+    this.appComponent.profileImageLink = null;
+    this.router.navigate(['dashboard']);
   }
 
 }

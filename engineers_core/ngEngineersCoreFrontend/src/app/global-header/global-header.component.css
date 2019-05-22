@@ -205,10 +205,40 @@ li {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    cursor: pointer;
 }
 .avatar {
     display: block;
     border-radius: 50%;
     height: 32px;
     width: 32px;
+}
+
+.DashUserDropdown {
+    max-width: 300px;
+    padding: 5px 0;
+    display: table !important;
+    left: 90%;
+}
+ul.user-toggle-menu {
+    list-style: none;
+    padding: 0 20px;
+}
+.dropdown-divider {
+    padding-top: 1px;
+    margin: 5px 1px 6px;
+    border-bottom: 1px solid #e6ecf0;
+}
+li.menu-item {
+    margin-right: 0 !important;
+}
+li.link-menu {
+    padding-top: 5px;
+    cursor: pointer;
+}
+li.link-menu > span:hover {
+    color: #1da1f2;
+}
+.display-none {
+    display: none;
 }

@@ -10,6 +10,7 @@ export class AppComponent {
 
   userId: number;
   accountName: string;
+  userName: string;
   profileImageLink: string;
 
   appName = 'engineersCore';
