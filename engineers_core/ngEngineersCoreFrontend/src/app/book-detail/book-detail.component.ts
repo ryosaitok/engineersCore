@@ -82,7 +82,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   getBookComments(bookId: number): void {
-    this.bookCommentService.getBookComments(bookId).subscribe(data => {
+    this.bookCommentService.getBookCommentsByBookId(bookId).subscribe(data => {
       this.bookComments = data;
       this.bookCommentCount = Object.keys(data).length;
     });

@@ -83,16 +83,15 @@ ul.navigation {
     list-style: none;
     margin-bottom: 0 !important;
 }
-ul.navigation > a {
-    display: grid;
-    text-align: center;
-}
-ul.navigation > a:hover {
+ul.navigation > .link-items:hover {
     list-style: none;
     margin-bottom: 0 !important;
     color: #91D2FA;
+    cursor: pointer;
 }
 ul.navigation li {
+    display: grid;
+    text-align: center;
     margin-right: 4px;
 }
 

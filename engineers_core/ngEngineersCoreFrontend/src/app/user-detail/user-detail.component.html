@@ -30,34 +30,34 @@
           <ul class="navigation-menu">
             <li>
               <ul class="read-books navigation">
-                <a routerLink="/user/{{user.userAccountName}}">
-                  <li>読んだ本</li>
+                <div class="read-books-link link-items">
+                  <li><span (click)="getBookComments()">読んだ本</span></li>
                   <li>{{bookCommentCount}}</li>
-                </a>
+                </div>
               </ul>
             </li>
             <li>
               <ul class="interested-books navigation">
-                <a routerLink="/user/{{user.userAccountName}}/interested">
-                  <li>読みたい本</li>
+                <div class="interested-books-link link-items">
+                  <li><span (click)="getInterestedBookComments()">読みたい本</span></li>
                   <li>{{interestedBookCount}}</li>
-                </a>
+                </div>
               </ul>
             </li>
             <li>
               <ul class="favorite-comments navigation">
-                <a routerLink="/user/{{user.userAccountName}}/favorite">
-                  <li>いいね</li>
+                <div class="favorite-comments-link link-items">
+                  <li><span (click)="getFavoriteBookComments()">いいね</span></li>
                   <li>{{favoriteCommentCount}}</li>
-                </a>
+                </div>
               </ul>
             </li>
             <li>
               <ul class="knowledge-score navigation">
-                <a routerLink="/user/{{user.userAccountName}}/score">
-                  <li>知識スコア</li>
+                <div class="knowledge-score-link link-items">
+                  <li><span (click)="getInterestedBookComments()">知識スコア</span></li>
                   <li>{{knowledgeScore}}</li>
-                </a>
+                </div>
               </ul>
             </li>
           </ul>

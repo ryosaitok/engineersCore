@@ -62,12 +62,30 @@ export class UserDetailComponent implements OnInit {
       this.bookCommentCount = Object.keys(data).length;
       this.knowledgeScore = 0;
       data.forEach(res => {
-        this.knowledgeScore = this.knowledgeScore  + res.book.offer_price;
+        this.knowledgeScore = this.knowledgeScore + res.book.offer_price;
       });
     });
   }
 
-  // TODO: ryo.saito countのAPIに切り替える
+  getInterestedBookComments(): void {
+    // TODO: 興味がある本の一覧取得
+  }
+
+  getFavoriteBookComments(): void {
+    const accountName = this.route.snapshot.paramMap.get('accountName');
+    this.bookCommentService.getBookComments().subscribe(data => {
+        this.bookComments = [];
+        data.forEach(res => {
+          // いいねしているコメントのみ表示する
+          if (res.favorite_users.indexOf(this.userId) >= 0) {
+            this.bookComments.push(res);
+          }
+        });
+      }
+    );
+  }
+
+// TODO: ryo.saito countのAPIに切り替える
   getInterestedBookCount(): void {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.interestedBookService.getInterestedBookByAccountName(accountName).subscribe(data => {
@@ -75,7 +93,7 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  // TODO: ryo.saito countのAPIに切り替える
+// TODO: ryo.saito countのAPIに切り替える
   getFavoriteCommentCount(): void {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.commentFavoriteService.getCommentFavoritesByAccountName(accountName).subscribe(data => {

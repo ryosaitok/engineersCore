@@ -36,7 +36,11 @@ export class BookCommentService {
     return this.http.get<any>(this.bookCommentAPIUrl + bookId + '/');
   }
 
-  getBookComments(bookId: number): Observable<any> {
+  getBookComments(): Observable<any> {
+    return this.http.get<any>(this.bookCommentsAPIUrl);
+  }
+
+  getBookCommentsByBookId(bookId: number): Observable<any> {
     return this.http.get<any>(this.filteredBookCommentsAPIUrl + bookId);
   }
 
