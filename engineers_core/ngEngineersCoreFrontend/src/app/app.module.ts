@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {FormsModule} from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -41,6 +42,7 @@ import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     FontAwesomeModule,
     NgbButtonsModule,
+    ModalModule.forRoot()
   ],
   exports: [],
   providers: [CookieService, AuthGuard],

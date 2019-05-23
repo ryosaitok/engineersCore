@@ -13,6 +13,30 @@
     </a>
   </div>
 
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left"><b>読んだ本として登録する</b></h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="book-action-button">
+        <div>
+          <form #f="ngForm" novalidate>
+            <div class="form-group"><textarea placeholder="本の感想は？" cols='30' rows='3' type="text"
+                                              name="comment" ngModel
+                                              required maxlength="255"></textarea></div>
+            <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
+            <button type="submit" class="btn btn-primary" (click)="registerBookComment(f)">
+              <strong><b>登録する</b></strong>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
       <!-- 左サイドバー(本の情報) -->
@@ -79,16 +103,9 @@
                   <div class="content">
                     <div class="book-read">
                       <div class="book-action-button">
-                        <div>
-                          <form #f="ngForm" (ngSubmit)="registerBookComment(f)" novalidate>
-                            <input type="hidden" [(ngModel)]="book.id" name="bookId" ngModel>
-                            <div class="form-group"><textarea placeholder="本の感想は？" cols='30' rows='3' type="text"
-                                                              name="comment" ngModel
-                                                              required></textarea></div>
-                            <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
-                            <button type="submit" class="btn btn-primary"><strong><b>読んだ本として登録する</b></strong></button>
-                          </form>
-                        </div>
+                        <button type="submit" class="btn btn-primary" (click)="openModal(template)">
+                          <strong><b>読んだ本として登録する</b></strong>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -155,7 +172,8 @@
         <!-- 本の情報 -->
         <div class="module bookComments">
           <div *ngIf="bookComments.length > 0" class="comment-module">
-            <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
+            <div *ngFor="let comment of bookComments; let i = index"
+                 class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <div class="book-comment">
                 <div class="BookCommentItem-context">
@@ -200,12 +218,13 @@
                           <ul class="comment-favorites comment-reaction">
                             <li *ngIf="comment.favorite_users.indexOf(userId) >= 0">
                               <span class="comment-reaction-heart favorite-done"
-                                    (click)="notCommentFavorite(comment.id)">
+                                    (click)="notCommentFavorite(comment.id, i)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                             </li>
                             <li *ngIf="comment.favorite_users.indexOf(userId) == -1">
-                              <span class="comment-reaction-heart favorite-none" (click)="commentFavorite(comment.id)">
+                              <span class="comment-reaction-heart favorite-none"
+                                    (click)="commentFavorite(comment.id, i)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                             </li>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {BookService} from '../service/book/book.service';
 import {Book} from '../book';
 import {ActivatedRoute} from '@angular/router';
@@ -9,6 +9,7 @@ import {NgForm} from '@angular/forms';
 import {BookAuthorService} from '../service/book-author/book-author.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-book-detail',
@@ -28,6 +29,8 @@ export class BookDetailComponent implements OnInit {
   bookInterestedCount: number;
   isInterested: boolean;
 
+  modalRef: BsModalRef;
+
   ngOnInit() {
     this.getLoginUser();
     this.getBook();
@@ -44,6 +47,7 @@ export class BookDetailComponent implements OnInit {
     private interestedBookService: InterestedBookService,
     private commentFavoriteService: CommentFavoriteService,
     private signinService: SigninService,
+    private modalService: BsModalService
   ) {
   }
 
@@ -89,34 +93,34 @@ export class BookDetailComponent implements OnInit {
   }
 
   registerBookComment(f: NgForm): void {
-    const bookId = f.value.bookId;
     const comment = f.value.comment;
     const readDate = f.value.readDate;
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
-      this.bookCommentService.registerBookComment(userId, bookId, comment, readDate).subscribe(
+      this.bookCommentService.registerBookComment(userId, this.bookId, comment, readDate).subscribe(
         (res) => {
-          console.log('読んだコメントを登録しました！book-comment-id: ' + res.id);
+          this.bookCommentService.getBookComment(res.id).subscribe(bookComment => {
+            this.bookComments.unshift(bookComment);
+          });
+          // コメント登録が完了したらモーダルを閉じる。
+          this.modalRef.hide();
         }, (error) => {
-          console.log('読んだコメントの登録に失敗しました！error: ' + error);
+          console.log('読んだコメントの登録に失敗！error: ' + error);
         }
       );
     });
-    // メソッドの呼び出し箇所考える
-    this.getBookComments(this.bookId);
   }
 
   checkInterested(bookId: number): void {
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
-        // dataの方に来るということは、データが見つかった
         (data) => {
           this.isInterested = data[0] !== undefined;
         },
         // errorの方に来るということは、データが見つからなかった。
         (error) => {
-          console.log('checkInterestedでerror: ' + error);
+          console.log('error: ' + error);
           this.isInterested = false;
         });
     });
@@ -139,12 +143,12 @@ export class BookDetailComponent implements OnInit {
               this.isInterested = true;
             },
             (error) => {
-              console.log('interestedでerror: ' + error);
+              console.log('error: ' + error);
             }
           );
           // すでにデータがある場合はメソッドが呼ばれるのおかしい。
         } else {
-          console.log('すでにデータある。メソッドが呼ばれるのおかしい。userId: ' + userId + ' , bookId: ' + bookId);
+          console.log('userId: ' + userId + ' , commentId: ' + bookId);
         }
       });
     });
@@ -162,19 +166,19 @@ export class BookDetailComponent implements OnInit {
               this.isInterested = false;
             },
             (error) => {
-              console.log('notInterestedでerror: ' + error);
+              console.log('error: ' + error);
             }
           );
         } else {
           // まだデータが存在しない場合はデータ変更は無し。
-          console.log('データ最初からない。メソッドが呼ばれるのおかしい。userId: ' + userId + ' , bookId: ' + bookId);
+          console.log('userId: ' + userId + ' , commentId: ' + bookId);
           this.isInterested = false;
         }
       });
     });
   }
 
-  commentFavorite(commentId: number): void {
+  commentFavorite(commentId: number, index: number): void {
     console.log('commentFavorite。commentId ' + commentId);
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
@@ -183,21 +187,20 @@ export class BookDetailComponent implements OnInit {
         if (data === null || data === undefined || data.length === 0) {
           this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
             (res) => {
-              console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
+              this.bookComments[index].favorite_users.push(userId);
             },
             (error) => {
-              console.error('commentFavoriteでerror: ' + error);
+              console.error('error: ' + error);
             }
           );
         } else {
-          console.error('commentFavoriteが呼ばれるのおかしい。userId: ' + userId, 'commentId: ' + commentId);
+          console.error('userId: ' + userId, 'commentId: ' + commentId);
         }
       });
     });
   }
 
-  notCommentFavorite(commentId: number): void {
-    console.log('notCommentFavorite。commentId ' + commentId);
+  notCommentFavorite(commentId: number, index: number): void {
     this.signinService.getAuthUser().subscribe(response => {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
@@ -206,16 +209,21 @@ export class BookDetailComponent implements OnInit {
           const favoriteId = data[0].id;
           this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
             (res) => {
-              console.log('deleteCommentFavoriteしたよ。commentId' + commentId);
+              const userIdIndex = this.bookComments[index].favorite_users.indexOf(userId);
+              this.bookComments[index].favorite_users.splice(userIdIndex,  1);
             },
             (error) => {
-              console.log('notCommentFavoriteでerror: ' + error);
+              console.log('error: ' + error);
             }
           );
         } else {
-          console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+          console.error('commentId: ' + commentId, 'userId: ' + userId);
         }
       });
     });
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }

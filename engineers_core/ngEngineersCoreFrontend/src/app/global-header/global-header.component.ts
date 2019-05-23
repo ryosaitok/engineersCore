@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 import {UserService} from '../service/user/user.service';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-global-header',
@@ -14,11 +16,14 @@ export class GlobalHeaderComponent implements OnInit {
 
   displayDropdownMenu = false;
 
+  modalRef: BsModalRef;
+
   constructor(
     private router: Router,
     private appComponent: AppComponent,
     private signinService: SigninService,
     private userService: UserService,
+    private modalService: BsModalService
   ) {
   }
 
@@ -63,6 +68,10 @@ export class GlobalHeaderComponent implements OnInit {
     this.appComponent.accountName = null;
     this.appComponent.profileImageLink = null;
     this.router.navigate(['dashboard']);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
 }

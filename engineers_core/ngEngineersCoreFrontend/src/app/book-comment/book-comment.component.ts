@@ -11,7 +11,7 @@ import {BookCommentService} from '../service/book-comment/book-comment.service';
 export class BookCommentComponent implements OnInit {
 
   @Input() bookComment: BookComment;
-  bookId = Number(this.route.snapshot.paramMap.get('id'));
+  commentId = Number(this.route.snapshot.paramMap.get('id'));
 
   constructor(
     private route: ActivatedRoute,
@@ -19,11 +19,11 @@ export class BookCommentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getBookComment(this.bookId);
+    this.getBookComment(this.commentId);
   }
 
-  getBookComment(bookId: number): void {
-    this.bookCommentService.getBookComment(bookId).subscribe(response => {
+  getBookComment(commentId: number): void {
+    this.bookCommentService.getBookComment(commentId).subscribe(response => {
       this.bookComment = new BookComment(
           response.id,
           response.user,

@@ -144,7 +144,7 @@ class BookCommentListView(generics.ListCreateAPIView):
 
 class BookCommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookComment.objects.all()
-    serializer_class = BookCommentSerializer
+    serializer_class = BookCommentWithForeignSerializer
 
 
 class CommentFavoriteListView(generics.ListCreateAPIView):
