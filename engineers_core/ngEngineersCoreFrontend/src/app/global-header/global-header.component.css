@@ -7,7 +7,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    color: #1da1f2;
+    color: #337ab7;
     text-decoration: none;
 }
 
@@ -80,7 +80,7 @@ element.style {
 
 /* home-menu */
 .topbar-etched {
-    color: #1da1f2;
+    color: #337ab7;
     cursor: pointer;
     font-size: 21px;
     margin-top: 14px;
@@ -132,7 +132,7 @@ ul {
     top: 1px;
 }
 .nav>li {
-    color: #66757f;
+    color: #337ab7;
 }
 .nav li {
     position: relative;
@@ -181,7 +181,7 @@ li {
     text-align: left;
 }
 .nav>li {
-    color: #66757f;
+    color: #337ab7;
 }
 .nav li {
     position: relative;
@@ -237,7 +237,7 @@ li.link-menu {
     cursor: pointer;
 }
 li.link-menu > span:hover {
-    color: #1da1f2;
+    color: #337ab7;
 }
 .display-none {
     display: none;

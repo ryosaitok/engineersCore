@@ -19,10 +19,10 @@ a:visited {
     top: 46px;
 }
 .u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
-    background-color: #91D2FA !important;
+    background-color: #337ab7 !important;
 }
 .UserNavigation-canopy {
-    background-color: #1da1f2;
+    background-color: #337ab7;
     padding: 14px 0;
 }
 .UserNavigation-textContainer {
@@ -86,7 +86,7 @@ ul.navigation {
 ul.navigation > .link-items:hover {
     list-style: none;
     margin-bottom: 0 !important;
-    color: #91D2FA;
+    color: #337ab7;
     cursor: pointer;
 }
 ul.navigation li {
@@ -178,7 +178,7 @@ ul.navigation li {
     font-size: 14px;
 }
 .user-info-text > a:hover {
-    color: #91D2FA !important;
+    color: #337ab7 !important;
 }
 .user-image {
     padding-bottom: 15px !important;
@@ -270,7 +270,7 @@ ul.book-title-data li {
     margin: 8px 0;
 }
 ul.book-title-data > a:hover {
-    color: #91D2FA !important;
+    color: #337ab7 !important;
 }
 .space-dot {
     color: #ffffff !important;
@@ -293,7 +293,7 @@ ul.book-title-data > a:hover {
     -moz-force-broken-image-icon: 1;
 }
 .comment-user > a:hover {
-    color: #91D2FA !important;
+    color: #337ab7 !important;
 }
 .comment-user {
     float: left;
@@ -323,7 +323,7 @@ ul.comment-reaction li > span {
     color: #cccccc;
 }
 ul.comment-reaction li > span.comment-reaction-reply:hover {
-    color: #1da1f2;
+    color: #337ab7;
     cursor: pointer;
 }
 ul.comment-reaction li > span.comment-reaction-heart:hover {
