@@ -269,3 +269,49 @@ class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = InterestedBook.objects.all()
     serializer_class = InterestedBookSerializer
+
+
+class BookFeatureCategoryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookFeatureCategory.objects.all()
+    serializer_class = BookFeatureCategorySerializer
+
+
+class BookFeatureCategoryListView(generics.ListCreateAPIView):
+    queryset = BookFeatureCategory.objects.all()
+    serializer_class = BookFeatureCategorySerializer
+
+    # 登録処理ではidだけ指定で行いたいので、BookFeatureCategorySerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookFeatureCategorySerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+
+class BookFeatureView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookFeature.objects.all()
+    serializer_class = BookFeatureSerializer
+
+
+class BookFeatureListView(generics.ListCreateAPIView):
+    queryset = BookFeature.objects.all()
+    serializer_class = BookFeatureWithForeignSerializer
+
+    # 登録処理ではcategoryとbookのidだけ指定で行いたいので、BookFeatureSerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookFeatureSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+    def get_queryset(self):
+        queryset = BookFeature.objects.all()
+        book_id = self.request.query_params.get('book_id', None)
+        if book_id is not None:
+            queryset = queryset.filter(book__id=book_id)
+        category_id = self.request.query_params.get('category_id', None)
+        if category_id is not None:
+            queryset = queryset.filter(book_feature_category__id=category_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookFeatureListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset

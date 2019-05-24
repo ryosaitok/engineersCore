@@ -10,6 +10,7 @@ import {AuthGuard} from './guard/auth.guard';
 import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 import {SearchComponent} from './search/search.component';
+import {FeatureBookComponent} from './feature-book/feature-book.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'book/:id', component: BookDetailComponent },
   { path: 'bookcomment/:id', component: BookCommentComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'feature/book', component: FeatureBookComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

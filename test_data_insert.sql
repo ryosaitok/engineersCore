@@ -333,3 +333,41 @@ INSERT INTO interested_book (id, interested_date, created_at, updated_at, book_i
   VALUES (8, CURRENT_DATE(), FALSE, now(), now(), 8, 8);
 INSERT INTO interested_book (id, interested_date, created_at, updated_at, book_id, user_id)
   VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 9, 9);
+
+-- BOOK_FEATURE_CATEGORYデータ
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (1, 'これからReactを始める！', 1, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (2, 'オブジェクト指向、全て理解した', 2, 'NOT', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (3, 'Webエンジニアの入門書たち', 3, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (4, '機械学習...何も分からない...', 4, 'DFT', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (5, '初級エンジニアから中級へ進むために', 5, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (6, 'インフラに興味が出てきたら読む本', 6, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (7, 'デザインも勉強したいエンジニアへ', 7, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (8, '転生したらアーキテクトだった件', 8, 'OPN', now(), now());
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at)
+  VALUES (9, '趣味で個人開発がしたい！', 9, 'OPN', now(), now());
+
+-- BOOK_FEATUREデータ
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (1, 1, now(), now(), 1, 1);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (2, 2, now(), now(), 2, 1);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (3, 1, now(), now(), 9, 3);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (4, 1, now(), now(), 4, 3);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (5, 1, now(), now(), 3, 5);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (6, 1, now(), now(), 5, 5);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (7, 1, now(), now(), 6, 5);
+INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
+  VALUES (8, 1, now(), now(), 8, 5);

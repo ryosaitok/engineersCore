@@ -187,3 +187,37 @@ class InterestedBook(models.Model):
 
     def __str__(self):
         return '【' + self.user.user_name + '】', self.book.title
+
+
+class BookFeatureCategory(models.Model):
+    category_name = models.TextField(max_length=1000)
+    display_order = models.IntegerField(null=True)
+    feature_status_choices = [
+        ['OPN', 'Open'],
+        ['DFT', 'Draft'],
+        ['NOT', 'Not Open'],
+    ]
+    feature_status = models.CharField(choices=feature_status_choices, default='DFT', max_length=8)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'book_feature_category'
+
+    def __str__(self):
+        return self.category_name
+
+
+class BookFeature(models.Model):
+    book_feature_category = models.ForeignKey(BookFeatureCategory, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    display_order = models.IntegerField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'book_feature'
+        unique_together = ("book_feature_category", "book")
+
+    def __str__(self):
+        return self.display_order

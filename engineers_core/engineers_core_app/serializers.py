@@ -158,3 +158,24 @@ class InterestedBookWithForeignSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestedBook
         fields = ('id', 'user', 'book', 'interested_date',)
+
+
+class BookFeatureCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookFeatureCategory
+        fields = ('id', 'category_name', 'display_order', 'feature_status',)
+
+
+class BookFeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookFeature
+        fields = ('id', 'book_feature_category', 'book', 'display_order',)
+
+
+class BookFeatureWithForeignSerializer(serializers.ModelSerializer):
+    book_feature_category = BookFeatureCategorySerializer()
+    book = BookSerializer()
+
+    class Meta:
+        model = BookFeature
+        fields = ('id', 'book_feature_category', 'book', 'display_order',)

@@ -27,4 +27,8 @@ urlpatterns = [
     path('bookauthor/<int:pk>/', BookAuthorView.as_view()),
     path('interestedbooks/', InterestedBookListView.as_view()),
     path('interestedbook/<int:pk>/', InterestedBookView.as_view()),
+    path('bookfeaturecategories/', BookFeatureCategoryListView.as_view()),
+    path('bookfeaturecategory/<int:pk>/', BookFeatureCategoryView.as_view()),
+    path('bookfeatures/', BookFeatureListView.as_view()),
+    path('bookfeature/<int:pk>/', BookFeatureView.as_view()),
 ]

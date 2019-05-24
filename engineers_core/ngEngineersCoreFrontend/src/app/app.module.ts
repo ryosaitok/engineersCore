@@ -20,6 +20,7 @@ import {PageNotFoundComponent} from './error/page-not-found/page-not-found.compo
 import {SearchComponent} from './search/search.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
+import { FeatureBookComponent } from './feature-book/feature-book.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
     BookCommentComponent,
     PageNotFoundComponent,
     SearchComponent,
+    FeatureBookComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,19 +13,20 @@
             <!-- 左メニュー -->
             <div class="left-menu">
               <ul class="nav" id="global-actions">
-                <li id="global-nav-home">
+                <li id="global-nav-feature-books">
                   <nav>
-                    <a routerLink="/dashboard">ホーム</a>
+                    <a routerLink="/feature/book/">
+                      <span class="feature-books"><fa-icon [icon]="faBookOpen"></fa-icon></span>
+                      <b> 本に出会う</b>
+                    </a>
                   </nav>
                 </li>
-                <li id="global-nav-users">
+                <li id="global-nav-score-rank">
                   <nav>
-                    <a routerLink="/users">ユーザー一覧</a>
-                  </nav>
-                </li>
-                <li id="global-nav-books">
-                  <nav>
-                    <a routerLink="/books">技術書一覧</a>
+                    <a routerLink="/dashboard">
+                      <span class="score-rank"><fa-icon [icon]="faSignal"></fa-icon></span>
+                      <b> スコアランク</b>
+                    </a>
                   </nav>
                 </li>
               </ul>
@@ -68,25 +69,25 @@
               </ul>
               <div *ngIf="displayDropdownMenu">
                 <div class="DashUserDropdown dropdown-menu">
-                <ul class="user-toggle-menu">
-                  <li class="user-detail-link menu-item">
-                    <a routerLink="/user/{{appComponent.accountName}}" class="DashUserDropdown-userInfoLink js-nav">
-                      <b class="fullname">{{appComponent.userName}}</b><span class="UserBadges"></span>
-                      <p class="name"><span class="username" dir="ltr">@{{appComponent.accountName}}</span></p>
-                    </a>
-                  </li>
-                  <li class="dropdown-divider" role="presentation"></li>
-                  <li class="user-account-setting-link link-menu menu-item">
-                    <a class="js-nav" href="#">アカウント設定</a>
-                  </li>
-                  <li class="inquiry-link link-menu menu-item">
-                    <a class="js-nav" href="#">お問い合わせ</a>
-                  </li>
-                  <li class="logout-link link-menu menu-item">
-                    <span (click)="signOut()">ログアウト</span>
-                  </li>
-                </ul>
-              </div>
+                  <ul class="user-toggle-menu">
+                    <li class="user-detail-link menu-item">
+                      <a routerLink="/user/{{appComponent.accountName}}" class="DashUserDropdown-userInfoLink js-nav">
+                        <b class="fullname">{{appComponent.userName}}</b><span class="UserBadges"></span>
+                        <p class="name"><span class="username" dir="ltr">@{{appComponent.accountName}}</span></p>
+                      </a>
+                    </li>
+                    <li class="dropdown-divider" role="presentation"></li>
+                    <li class="user-account-setting-link link-menu menu-item">
+                      <a class="js-nav" href="#">アカウント設定</a>
+                    </li>
+                    <li class="inquiry-link link-menu menu-item">
+                      <a class="js-nav" href="#">お問い合わせ</a>
+                    </li>
+                    <li class="logout-link link-menu menu-item">
+                      <span (click)="signOut()">ログアウト</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
