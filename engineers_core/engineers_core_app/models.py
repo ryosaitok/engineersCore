@@ -49,6 +49,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=255, db_index=True)
+    authors = models.ManyToManyField(Author, through='BookAuthor')
     book_status_choices = [
         ['PRE', 'Pre-Sales'],
         ['PUB', 'Published'],

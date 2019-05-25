@@ -41,10 +41,11 @@ class BookSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='data_asin'
     )
+    authors = AuthorSerializer(many=True)
 
     class Meta:
         model = Book
-        fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book')
+        fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book', 'authors')
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
