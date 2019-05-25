@@ -1,0 +1,134 @@
+.page-outer {
+}
+a {
+    color: #222222;
+    text-decoration: none;
+}
+a:visited {
+    color: #222222;
+    text-decoration: none;
+}
+a:hover {
+    color: #337ab7 !important;
+}
+
+/* メインコンテンツ */
+@media screen and (min-width: 1236px) {
+  .AppContainer {
+    /* 中央揃えにならないからコメントアウト */
+    /*max-width: 1190px;*/
+  }
+}
+.AppContainer {
+}
+.AppContent-main {
+    margin: 15px auto 0;
+    min-width: 890px;
+}
+@media screen and (min-width: 1236px) {
+  .u-lg-size1of4, .u-lg-size2of8, .u-lg-size3of12 {
+    width: 25%!important;
+  }
+}
+.u-size1of3, .u-size2of6, .u-size4of12 {
+    width: 33.33333333333333%!important;
+}
+.module ul:first-child li:first-child .list-link, .module .flex-module:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.module .flex-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 15px;
+    line-height: 16px;
+}
+
+.flex-module-inner, .flex-module-footer {
+    color: #222222;
+    font-size: 14px;
+}
+.item {
+    border-bottom: 1px solid #e6ecf0;
+    padding: 10px 0;
+}
+
+/* メインコンテンツ */
+@media (min-width: 1236px) {
+  .FeatureBooksModules {
+    float: none;
+    margin: auto;
+  }
+}
+.FeatureBooksModules {
+    width: 80%;
+}
+.category-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+.feature-book-content {
+    border-bottom: 1px solid #e6ecf0;
+    margin: 5px;
+    padding: 10px 0;
+}
+.feature-book-info {
+    /*float: left;*/
+}
+.CategoryNameItem-context > a:hover {
+    color: #337ab7 !important;
+}
+
+ul.feature-books {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.feature-books li {
+    width: 205px;
+    vertical-align: top;
+    display: inline-block;
+    margin-right: 15px;
+    margin-left: 3px;
+}
+.feature-element {
+    margin-top: 2px;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.book-title {
+    padding-left: 0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    display: inline-block;
+    margin-right: 2px;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+.book-author-data {
+    font-size: 12px;
+}
+ul.book-authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-authors li {
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.no-category-text {
+    text-align: center;
+}

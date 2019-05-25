@@ -21,6 +21,7 @@ import {SearchComponent} from './search/search.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
 import { FeatureBookComponent } from './feature-book/feature-book.component';
+import { FeatureBookDetailComponent } from './feature-book-detail/feature-book-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FeatureBookComponent } from './feature-book/feature-book.component';
     PageNotFoundComponent,
     SearchComponent,
     FeatureBookComponent,
+    FeatureBookDetailComponent,
   ],
   imports: [
     BrowserModule,

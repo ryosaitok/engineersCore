@@ -287,6 +287,13 @@ class BookFeatureCategoryListView(generics.ListCreateAPIView):
         serializer_class.save()
         return Response(serializer_class.data, status=201)
 
+    def get_queryset(self):
+        queryset = BookFeatureCategory.objects.all()
+        queryset = queryset.filter(feature_status='OPN')
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookFeatureCategoryListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
 
 class BookFeatureView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookFeature.objects.all()
@@ -305,7 +312,7 @@ class BookFeatureListView(generics.ListCreateAPIView):
         return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
-        queryset = BookFeature.objects.all()
+        queryset = BookFeature.objects.filter(book_feature_category__feature_status='OPN')
         book_id = self.request.query_params.get('book_id', None)
         if book_id is not None:
             queryset = queryset.filter(book__id=book_id)
@@ -315,3 +322,7 @@ class BookFeatureListView(generics.ListCreateAPIView):
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('BookFeatureListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(BookFeatureListView, self).filter_queryset(queryset)
+        return queryset.order_by('book_feature_category__display_order', 'display_order')

@@ -1,3 +1,70 @@
-<p>
-  feature-book works!
-</p>
+<div class="page-outer">
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- メインメニュー(本の特集一覧) -->
+      <div class="FeatureBooksModules">
+        <div class="module featureBookCategories">
+          <div *ngIf="featureBookCategoryCount > 0" class="category-module">
+            <!-- 本の特集カテゴリの情報 -->
+            <div *ngFor="let category of featureBookCategories"
+                 class="js-feature-books feature-book-content flex-module-inner"
+                 data-section-id="wtf" style="opacity: 1;">
+              <!-- カテゴリの名前 -->
+              <h4 class="feature-book-info">
+                <div class="CategoryNameItem-context">
+                  <a routerLink="/feature/book/{{category.category_cd}}/"><b>{{category.category_name}}</b></a>
+                </div>
+              </h4>
+              <!-- 特集の本の一覧 -->
+              <div class="book-comment">
+                <div class="BookCommentItem-context">
+                  <ul class="feature-books">
+                    <li *ngFor="let book of category.books; let i = index">
+                      <div *ngIf="i < 5">
+                        <div class="book-image feature-element">
+                          <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazon_book}}/"
+                             target="_blank">
+                            <img border="0"
+                                 src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazon_book}}&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                          src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazon_book}}"
+                          width="1"
+                          height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
+                        </div>
+                        <div class="book-title feature-element">
+                          <ul class="book-title-data">
+                            <li>
+                              <a routerLink="/book/{{book.id}}">{{book.title}}</a>
+                            </li>
+                            <li *ngIf="book.sale_date !== null"
+                                class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
+                            <li *ngIf="book.sale_date === null" class="sale-date">{{"発売日不明"}}</li>
+                          </ul>
+                        </div>
+                        <div class="book-author feature-element">
+                          <ul class="book-authors">
+                            <!-- 複数件表示すると縦に並んでしまうので一旦、著者は1人だけ表示 -->
+                            <!--                          <li *ngFor="let author of book.authors" class="book-author-data">-->
+                            <!--                            <a routerLink="/book/author/{{author.id}}">{{author.author_name}}</a>-->
+                            <!--                          </li>-->
+                            <li class="book-author-data">
+                              <a routerLink="/book/author/{{book.authors[0].id}}">{{book.authors[0].author_name}}</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="featureBookCategoryCount === 0" class="category-none-module">
+            <div class="no-category-text">
+              <span>本がありませんでした。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
