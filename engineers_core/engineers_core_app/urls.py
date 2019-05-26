@@ -31,4 +31,9 @@ urlpatterns = [
     path('bookfeaturecategory/<int:pk>/', BookFeatureCategoryView.as_view()),
     path('bookfeatures/', BookFeatureListView.as_view()),
     path('bookfeature/<int:pk>/', BookFeatureView.as_view()),
+    path('bulk/book/', BookBulkListView.as_view()),
+    path('bulk/amazonbook/', AmazonBookBulkListView.as_view()),
+    path('bulk/author/', AuthorBulkListView.as_view()),
+    path('bulk/bookauthor/', BookAuthorBulkListView.as_view()),
+    path('bulk/bookdetail/', BookDetailBulkListView.as_view()),
 ]

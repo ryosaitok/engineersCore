@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 
 from .serializers import *
 from django.db.models import Q
@@ -36,6 +37,16 @@ class BookView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
 
 
+class BookBulkListView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookBulkSerializer
+
+
+class AmazonBookBulkListView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = AmazonBook.objects.all()
+    serializer_class = AmazonBookBulkSerializer
+
+
 class BookDetailListView(generics.ListCreateAPIView):
     queryset = BookDetail.objects.all()
     serializer_class = BookDetailSerializer
@@ -44,6 +55,11 @@ class BookDetailListView(generics.ListCreateAPIView):
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookDetail.objects.all()
     serializer_class = BookDetailSerializer
+
+
+class BookDetailBulkListView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = BookDetail.objects.all()
+    serializer_class = BookDetailBulkSerializer
 
 
 class AuthorListView(generics.ListCreateAPIView):
@@ -61,6 +77,11 @@ class AuthorListView(generics.ListCreateAPIView):
 class AuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+
+class AuthorBulkListView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorBulkSerializer
 
 
 class AuthUserRegisterView(generics.ListCreateAPIView):
@@ -97,6 +118,11 @@ class BookAuthorListView(generics.ListCreateAPIView):
 class BookAuthorView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookAuthor.objects.all()
     serializer_class = BookAuthorSerializer
+
+
+class BookAuthorBulkListView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = BookAuthor.objects.all()
+    serializer_class = BookAuthorBulkSerializer
 
 
 class BookCommentListView(generics.ListCreateAPIView):

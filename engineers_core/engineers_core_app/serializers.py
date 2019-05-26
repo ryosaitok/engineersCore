@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_bulk import BulkListSerializer, BulkSerializerMixin
 from django.contrib.auth.hashers import make_password
 from .models import *
 
@@ -29,10 +30,24 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = ('id', 'author_name',)
 
 
+class AuthorBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        list_serializer_class = BulkListSerializer
+        fields = ('id', 'author_name',)
+
+
 class AmazonBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = AmazonBook
-        fields = ('id', 'data_asin',)
+        fields = ('id', 'book', 'data_asin',)
+
+
+class AmazonBookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = AmazonBook
+        list_serializer_class = BulkListSerializer
+        fields = ('id', 'book', 'data_asin',)
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -48,11 +63,25 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book', 'authors')
 
 
+class BookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        list_serializer_class = BulkListSerializer
+        fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price',)
+
+
 class BookDetailSerializer(serializers.ModelSerializer):
     book = BookSerializer()
 
     class Meta:
         model = BookDetail
+        fields = ('id', 'book', 'summary',)
+
+
+class BookDetailBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = BookDetail
+        list_serializer_class = BulkListSerializer
         fields = ('id', 'book', 'summary',)
 
 
@@ -62,6 +91,13 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookAuthor
+        fields = ('id', 'book', 'author',)
+
+
+class BookAuthorBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = BookAuthor
+        list_serializer_class = BulkListSerializer
         fields = ('id', 'book', 'author',)
 
 
