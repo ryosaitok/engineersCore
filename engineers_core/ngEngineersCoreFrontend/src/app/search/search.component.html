@@ -4,7 +4,7 @@
     <div class="SearchNavigation-canopy u-bgUserColor">
       <div class="SearchNavigation-textContainer">
         <h1 *ngIf="query !== null && query !== undefined && query !== ''" class="SearchNavigation-titleText" dir="ltr">
-          {{query}}
+          <span class="comment-reaction-reply"><fa-icon [icon]="faSearch"></fa-icon></span> {{query}}
         </h1>
         <h1 *ngIf="query === null || query === undefined || query === ''" class="SearchNavigation-titleText" dir="ltr">?</h1>
       </div>

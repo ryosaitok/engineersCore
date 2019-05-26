@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {BookCommentService} from '../service/book-comment/book-comment.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faCommentDots, faHeart, faSearch} from '@fortawesome/free-solid-svg-icons';
 import {SigninService} from '../service/signin/signin.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../service/user/user.service';
@@ -24,6 +24,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
   faHeart = faHeart;
   faCommentDots = faCommentDots;
+  faSearch = faSearch;
   titleSelected = '';
   authorSelected = '';
   userSelected = '';
