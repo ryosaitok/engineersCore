@@ -1,3 +1,101 @@
-<p>
-  feature-book-detail works!
-</p>
+<div class="page-outer">
+  <!-- カテゴリー名 -->
+  <div class="CategoryNameNavigation">
+    <div class="CategoryNameNavigation-canopy u-bgUserColor">
+      <div class="CategoryNameNavigation-textContainer">
+        <h1 class="CategoryNameNavigationText" dir="ltr">{{category.category_name}}</h1>
+      </div>
+    </div>
+  </div>
+  <!-- カテゴリーの基本情報 -->
+  <div class="CategoryNavigation">
+    <div class="CategoryNavigation-canopy">
+      <div class="CategoryNavigation-textContainer">
+        <div class="CategoryNavigation-titleText" dir="ltr">
+          <a routerLink="/user/{{category.producer.account_name}}">
+            <ul class="category-data">
+              <li class="category-producer-image">
+                <div *ngIf="category.producer.profile_image_link !== null" class="user-profile-icon">
+                  <img class="profile-image" src="../../assets/image/profile/{{category.producer.profile_image_link}}"
+                       alt=""/>
+                </div>
+                <div *ngIf="category.producer.profile_image_link === null" class="user-profile-icon">
+                  <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                </div>
+              </li>
+              <li class="producer-name">{{category.producer.user_name}}</li>
+              <li class="producer-account-name">@{{category.producer.account_name}}</li>
+            </ul>
+          </a>
+          <div class="category-description">
+            <div class="category-description-text">{{category.description}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- メインメニュー(特集の本) -->
+      <div class="FeatureBooksModules">
+        <!-- 本の情報 -->
+        <div class="module feature-books">
+          <ul *ngIf="featureBookCount > 0" class="feature-book-module">
+            <li *ngFor="let book of category.books" class="js-feature-books feature-book-content flex-module-inner"
+                data-section-id="wtf" style="opacity: 1;">
+              <!-- 本の情報 -->
+              <div class="book-info">
+                <div class="FeatureBookItem-context">
+                  <!-- 本の基本情報 -->
+                  <div class="context">
+                    <div class="feature-book-content">
+                      <div class="book-image">
+                        <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazon_book}}/"
+                           target="_blank">
+                          <img border="0"
+                               src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazon_book}}&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                        src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazon_book}}"
+                        width="1"
+                        height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
+                      </div>
+                      <div class="book-title feature-element">
+                        <ul class="book-title-data">
+                          <li>
+                            <a routerLink="/book/{{book.id}}">{{book.title}}</a>
+                          </li>
+                          <li *ngIf="book.sale_date !== null"
+                              class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
+                          <li *ngIf="book.sale_date === null" class="sale-date">{{"発売日不明"}}</li>
+                        </ul>
+                      </div>
+                      <div class="book-author feature-element">
+                        <ul class="book-authors">
+                          <!-- 複数件表示すると縦に並んでしまうので一旦、著者は1人だけ表示 -->
+                          <!--                          <li *ngFor="let author of book.authors" class="book-author-data">-->
+                          <!--                            <a routerLink="/book/author/{{author.id}}">{{author.author_name}}</a>-->
+                          <!--                          </li>-->
+                          <li class="book-author-data">
+                            <a routerLink="/book/author/{{book.authors[0].id}}">{{book.authors[0].author_name}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="featureBookCount === 0" class="feature-book-module">
+          <div class="no-comment-text">
+            <span>本がありませんでした。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右サイドバー -->
+
+  </div>
+</div>

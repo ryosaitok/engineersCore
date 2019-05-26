@@ -13,6 +13,8 @@ export class FeatureBookCategoryService {
   bookFeatureCategoriesAPIUrl = this.host + this.bookFeatureCategoriesUrl;
   bookIdBookFeatureCategoriesUrl = 'api/bookfeaturecategories/?book_id=';
   bookIdBookFeatureCategoriesAPIUrl = this.host + this.bookIdBookFeatureCategoriesUrl;
+  categoryCdBookFeatureCategoriesUrl = 'api/bookfeaturecategories/?category_cd=';
+  categoryCdBookFeatureCategoriesAPIUrl = this.host + this.categoryCdBookFeatureCategoriesUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -28,8 +30,13 @@ export class FeatureBookCategoryService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
-  getBookFeatureCaetgories(): Observable<any> {
+  getBookFeatureCategories(): Observable<any> {
     const url = this.bookFeatureCategoriesAPIUrl;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getBookFeatureCategoryByCd(categoryCd: string): Observable<any> {
+    const url = this.categoryCdBookFeatureCategoriesAPIUrl + categoryCd;
     return this.http.get<any>(url, this.httpOptions);
   }
 

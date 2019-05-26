@@ -163,10 +163,11 @@ class InterestedBookWithForeignSerializer(serializers.ModelSerializer):
 
 class BookFeatureCategorySerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True)
+    producer = UserSerializer()
 
     class Meta:
         model = BookFeatureCategory
-        fields = ('id', 'category_cd', 'category_name', 'display_order', 'feature_status', 'books')
+        fields = ('id', 'category_cd', 'category_name', 'display_order', 'feature_status', 'description', 'producer', 'books',)
 
 
 class BookFeatureSerializer(serializers.ModelSerializer):

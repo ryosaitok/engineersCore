@@ -288,8 +288,10 @@ class BookFeatureCategoryListView(generics.ListCreateAPIView):
         return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
-        queryset = BookFeatureCategory.objects.all()
-        queryset = queryset.filter(feature_status='OPN')
+        queryset = BookFeatureCategory.objects.filter(feature_status='OPN')
+        category_cd = self.request.query_params.get('category_cd', None)
+        if category_cd is not None:
+            queryset = queryset.filter(category_cd=category_cd)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('BookFeatureCategoryListViewのSQL: ' + str(compiler.as_sql()))
         return queryset

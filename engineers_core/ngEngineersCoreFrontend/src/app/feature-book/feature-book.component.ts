@@ -8,10 +8,6 @@ import {FeatureBookCategoryService} from '../service/feature-book-category/featu
 })
 export class FeatureBookComponent implements OnInit {
 
-  // 2次元配列とする。
-  // [[featureBookCategoryの1個目のfeatureBookの1個目, featureBookCategoryの1個目のfeatureBookの2個目, ...],
-  //  [featureBookCategoryの2個目のfeatureBookの1個目, featureBookCategoryの2個目のfeatureBookの2個目, ...], ...
-  // ]
   featureBookCategories: any[];
   featureBookCategoryCount: number;
 
@@ -25,10 +21,9 @@ export class FeatureBookComponent implements OnInit {
   }
 
   getFeatureBookCategories(): void {
-    this.featureBookCategoryService.getBookFeatureCaetgories().subscribe(data => {
+    this.featureBookCategoryService.getBookFeatureCategories().subscribe(data => {
       this.featureBookCategories = data;
       this.featureBookCategoryCount = Object.keys(data).length;
     });
   }
-
 }

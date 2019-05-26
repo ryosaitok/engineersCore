@@ -11,6 +11,7 @@ import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 import {SearchComponent} from './search/search.component';
 import {FeatureBookComponent} from './feature-book/feature-book.component';
+import {FeatureBookDetailComponent} from './feature-book-detail/feature-book-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'bookcomment/:id', component: BookCommentComponent },
   { path: 'search', component: SearchComponent },
   { path: 'feature/book', component: FeatureBookComponent },
+  { path: 'feature/book/:categoryCd', component: FeatureBookDetailComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

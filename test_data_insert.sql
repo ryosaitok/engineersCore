@@ -347,24 +347,27 @@ INSERT INTO interested_book (id, interested_date, created_at, updated_at, book_i
   VALUES (9, CURRENT_DATE(), FALSE, now(), now(), 9, 9);
 
 -- BOOK_FEATURE_CATEGORYデータ
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (1, 'これからReactを始める！', 1, 'OPN', now(), now(), 'react_beginner');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (2, 'オブジェクト指向、全て理解した', 2, 'NOT', now(), now(), 'object_driven_development_beginner');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (3, 'Webエンジニアの入門書たち', 3, 'OPN', now(), now(), 'web_engineer_beginner');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (4, '機械学習...何も分からない...', 4, 'DFT', now(), now(), 'machine_learning_intermediate');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (5, '初級エンジニアから中級へ進むために', 5, 'OPN', now(), now(), 'intermediate_engineer');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (6, 'インフラに興味が出てきたら読む本', 6, 'OPN', now(), now(), 'infrastructure_beginner');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (7, 'デザインも勉強したいエンジニアへ', 7, 'OPN', now(), now(), 'study_design');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (8, '転生したらアーキテクトだった件', 8, 'OPN', now(), now(), 'architecture_engineer_beginner');
-INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd)
-  VALUES (9, '趣味で個人開発がしたい！', 9, 'OPN', now(), now(), 'programming_with_hobbies');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (1, 'これからReactを始める！', 1, 'OPN', now(), now(), 'react_beginner', 'Reactそろときましょうか。');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (2, 'オブジェクト指向、全て理解した', 2, 'NOT', now(), now(), 'object_driven_development_beginner', 'オブジェクト指向のチュートリアルを終えた状態になれます。');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (3, 'Webエンジニアの入門書たち', 3, 'OPN', now(), now(), 'web_engineer_beginner', 'これからWebエンジニアになる人は、これは読んどけ！');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (4, '機械学習...何も分からない...', 4, 'DFT', now(), now(), 'machine_learning_intermediate', '機械学習の入門は終わった。...しかし何も分からない...。');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (5, '初級エンジニアから中級へ進むために', 5, 'OPN', now(), now(), 'intermediate_engineer', '初級エンジニアから中級エンジニアに進む上で読んでおきたい本たち。');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (6, 'インフラに興味が出てきたら読む本', 6, 'OPN', now(), now(), 'infrastructure_beginner', 'そろそろインフラも触れるようになりたいな？' ||
+   '' ||
+    'と思った頃に読む本をまとめました！');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (7, 'デザインも勉強したいエンジニアへ', 7, 'OPN', now(), now(), 'study_design', 'エンジニアだけどデザインもしたい！' ||
+   'そんなあなたにオススメの本をまとめました。');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (8, '転生したらアーキテクトだった件', 8, 'OPN', now(), now(), 'architecture_engineer_beginner', '突然路上で通り魔に刺されて死んでしまった、37歳のナイスガイ。意識が戻って自分の身体を確かめたら、アーキテクトエンジニアになっていた！');
+INSERT INTO book_feature_category (id, category_name, display_order, feature_status, created_at, updated_at, category_cd, description)
+  VALUES (9, '趣味で個人開発がしたい！', 9, 'OPN', now(), now(), 'programming_with_hobbies', '趣味の時間でも個人でWebサービス開発がしたい！！と思っている方必見の本をまとめました。');
 
 -- BOOK_FEATUREデータ
 INSERT INTO book_feature (id, display_order, created_at, updated_at, book_id, book_feature_category_id)
