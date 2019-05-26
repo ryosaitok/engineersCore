@@ -9,12 +9,33 @@
             <div *ngFor="let category of featureBookCategories"
                  class="js-feature-books feature-book-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
-              <!-- カテゴリの名前 -->
-              <h4 class="feature-book-info">
-                <div class="CategoryNameItem-context">
-                  <a routerLink="/feature/book/{{category.category_cd}}/"><b>{{category.category_name}}</b></a>
-                </div>
-              </h4>
+              <ul class="category-basic-info">
+                <li>
+                  <!-- カテゴリの作成者 -->
+                  <div class="producer-info">
+                    <a routerLink="/user/{{category.producer.account_name}}">
+                      <div class="producer-icon">
+                        <div *ngIf="category.producer.profile_image_link !== null" class="user-profile-icon">
+                          <img class="profile-image"
+                               src="../../assets/image/profile/{{category.producer.profile_image_link}}"
+                               alt=""/>
+                        </div>
+                        <div *ngIf="category.producer.profile_image_link === null" class="user-profile-icon">
+                          <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <!-- カテゴリの名前 -->
+                  <h4 class="feature-book-info">
+                    <div class="CategoryNameItem-context">
+                      <a routerLink="/feature/book/{{category.category_cd}}/"><b>{{category.category_name}}</b></a>
+                    </div>
+                  </h4>
+                </li>
+              </ul>
               <!-- 特集の本の一覧 -->
               <div class="book-comment">
                 <div class="BookCommentItem-context">
