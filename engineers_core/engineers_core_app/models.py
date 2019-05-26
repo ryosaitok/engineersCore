@@ -192,7 +192,7 @@ class InterestedBook(models.Model):
 
 class BookFeatureCategory(models.Model):
     category_name = models.TextField(max_length=1000)
-    category_cd = models.CharField(max_length=128, null=True, unique=True)
+    category_cd = models.CharField(max_length=128, unique=True)
     display_order = models.IntegerField(null=True)
     feature_status_choices = [
         ['OPN', 'Open'],
@@ -202,7 +202,7 @@ class BookFeatureCategory(models.Model):
     feature_status = models.CharField(choices=feature_status_choices, default='DFT', max_length=8)
     description = models.TextField(max_length=1000, null=True)
     books = models.ManyToManyField(Book, through='BookFeature')
-    producer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    producer = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
