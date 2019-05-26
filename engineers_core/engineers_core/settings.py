@@ -122,6 +122,9 @@ DATABASES = {
         'PASSWORD': 'virYotual',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
 }
 
