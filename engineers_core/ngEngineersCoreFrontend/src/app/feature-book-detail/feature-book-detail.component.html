@@ -12,9 +12,9 @@
     <div class="CategoryNavigation-canopy">
       <div class="CategoryNavigation-textContainer">
         <div class="CategoryNavigation-titleText" dir="ltr">
-          <a routerLink="/user/{{category.producer.account_name}}">
-            <ul class="category-data">
-              <li class="category-producer-image">
+          <ul class="category-data">
+            <li class="category-producer-image">
+              <a routerLink="/user/{{category.producer.account_name}}">
                 <div *ngIf="category.producer.profile_image_link !== null" class="user-profile-icon">
                   <img class="profile-image" src="../../assets/image/profile/{{category.producer.profile_image_link}}"
                        alt=""/>
@@ -22,11 +22,13 @@
                 <div *ngIf="category.producer.profile_image_link === null" class="user-profile-icon">
                   <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
                 </div>
-              </li>
+              </a>
+            </li>
+            <a routerLink="/user/{{category.producer.account_name}}">
               <li class="producer-name">{{category.producer.user_name}}</li>
               <li class="producer-account-name">@{{category.producer.account_name}}</li>
-            </ul>
-          </a>
+            </a>
+          </ul>
           <div class="category-description">
             <div class="category-description-text">{{category.description}}</div>
           </div>
