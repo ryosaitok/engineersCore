@@ -143,6 +143,10 @@ h1 {
 .BookImageItem-context > .content {
     text-align: center;
 }
+.amazon-book-image {
+    width: 180px;
+    height: 248px;
+}
 
 .item {
     border-bottom: 1px solid #e6ecf0;

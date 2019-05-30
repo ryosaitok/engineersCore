@@ -235,6 +235,10 @@ b {
 .book-image {
     text-align: center;
 }
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+}
 .book-comment {
     display: inline-block;
     vertical-align: top;
