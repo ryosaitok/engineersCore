@@ -59,7 +59,7 @@ class Book(models.Model):
                    default='PUB',
                    max_length=10)
     sale_date = models.DateField(null=True)
-    pages_count = models.IntegerField()
+    pages_count = models.IntegerField(null=True)
     # 一旦税込価格とする
     offer_price = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
