@@ -6,6 +6,7 @@ import {faCommentDots, faHeart, faSearch} from '@fortawesome/free-solid-svg-icon
 import {SigninService} from '../service/signin/signin.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../service/user/user.service';
+import {BookService} from '../service/book/book.service';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,9 @@ export class SearchComponent implements OnInit, OnChanges {
 
   userId: number;
   @Input() bookComments: any[];
+  @Input() books: any[];
   bookCommentCount = 0;
+  bookCount = 0;
   query: string;
   isSearchByTitle: boolean;
   isSearchByAuthor: boolean;
@@ -32,6 +35,7 @@ export class SearchComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private bookService: BookService,
     private bookCommentService: BookCommentService,
     private signinService: SigninService,
     private userService: UserService,
@@ -92,15 +96,17 @@ export class SearchComponent implements OnInit, OnChanges {
     }
     if (this.isSearchByTitle) {
       this.searchBookCommentsByTitle(this.query);
+      this.searchBooksByTitle(this.query);
     } else if (this.isSearchByAuthor) {
       this.searchBookCommentsByAuthor(this.query);
+      this.searchBooksByAuthorName(this.query);
     } else if (this.isSearchByUser) {
       this.searchBookCommentsByUser(this.query);
     }
   }
 
   /**
-   * 本のタイトルで検索して検索結果を表示する
+   * 本のタイトルでコメントを検索して検索結果を表示する
    */
   searchBookCommentsByTitle(title: string) {
     this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
@@ -110,6 +116,18 @@ export class SearchComponent implements OnInit, OnChanges {
       this.addSelected(true, false, false);
       console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
+    });
+  }
+
+  /**
+   * 本のタイトルで本を検索して検索結果を表示する
+   */
+  searchBooksByTitle(title: string) {
+    this.bookService.getBooksLikeTitle(title).subscribe(data => {
+      this.books = data;
+      this.bookCount = Object.keys(data).length;
+      this.addSelected(true, false, false);
+      console.log('searchBooksByTitleの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
     });
   }
 
@@ -128,6 +146,18 @@ export class SearchComponent implements OnInit, OnChanges {
   }
 
   /**
+   * 本の著者名で本を検索して検索結果を表示する
+   */
+  searchBooksByAuthorName(authorName: string) {
+    this.bookService.getBooksLikeAuthorName(authorName).subscribe(data => {
+      this.books = data;
+      this.bookCount = Object.keys(data).length;
+      this.addSelected(false, true, false);
+      console.log('searchBooksByAuthorNameの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
+    });
+  }
+
+  /**
    * ユーザー名orユーザーアカウント名で検索して検索結果を表示する
    */
   searchBookCommentsByUser(user: string) {
@@ -139,6 +169,8 @@ export class SearchComponent implements OnInit, OnChanges {
       console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
     });
+    this.books = null;
+    this.bookCount = null;
   }
 
   /**

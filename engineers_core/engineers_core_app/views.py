@@ -24,12 +24,15 @@ class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    # def get_queryset(self):
-    #     queryset = Author.objects.all()
-    #     author_id = self.request.query_params.get('author_id', None)
-    #     if author_id is not None:
-    #         queryset = queryset.filter(author__author_id=author_id)
-    #     return queryset
+    def get_queryset(self):
+        queryset = Book.objects.all()
+        title = self.request.query_params.get('title', None)
+        if title is not None:
+            queryset = queryset.filter(title__icontains=title)
+        author_name = self.request.query_params.get('author_name', None)
+        if author_name is not None:
+            queryset = queryset.filter(author__author_name__icontains=author_name)
+        return queryset
 
 
 class BookView(generics.RetrieveUpdateDestroyAPIView):
