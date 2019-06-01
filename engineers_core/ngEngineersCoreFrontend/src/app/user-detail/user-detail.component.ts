@@ -58,10 +58,10 @@ export class UserDetailComponent implements OnInit {
   getBookComments(): void {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.bookCommentService.getBookCommentsByAccountName(accountName).subscribe(data => {
-      this.bookComments = data;
-      this.bookCommentCount = Object.keys(data).length;
+      this.bookComments = data.results;
+      this.bookCommentCount = data.count;
       this.knowledgeScore = 0;
-      data.forEach(res => {
+      data.results.forEach(res => {
         this.knowledgeScore = this.knowledgeScore + res.book.offer_price;
       });
     });
@@ -75,7 +75,7 @@ export class UserDetailComponent implements OnInit {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.bookCommentService.getBookComments().subscribe(data => {
         this.bookComments = [];
-        data.forEach(res => {
+        data.results.forEach(res => {
           // いいねしているコメントのみ表示する
           if (res.favorite_users.indexOf(this.userId) >= 0) {
             this.bookComments.push(res);
@@ -89,7 +89,7 @@ export class UserDetailComponent implements OnInit {
   getInterestedBookCount(): void {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.interestedBookService.getInterestedBookByAccountName(accountName).subscribe(data => {
-      this.interestedBookCount = Object.keys(data).length;
+      this.interestedBookCount = data.count;
     });
   }
 
@@ -97,7 +97,7 @@ export class UserDetailComponent implements OnInit {
   getFavoriteCommentCount(): void {
     const accountName = this.route.snapshot.paramMap.get('accountName');
     this.commentFavoriteService.getCommentFavoritesByAccountName(accountName).subscribe(data => {
-      this.favoriteCommentCount = Object.keys(data).length;
+      this.favoriteCommentCount = data.count;
     });
   }
 
@@ -107,7 +107,7 @@ export class UserDetailComponent implements OnInit {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.length === 0) {
+        if (data === null || data === undefined || data.count === 0) {
           this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
             (res) => {
               console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
@@ -129,8 +129,8 @@ export class UserDetailComponent implements OnInit {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.length !== 0) {
-          const favoriteId = data[0].id;
+        if (data !== null && data !== undefined && data.count !== 0) {
+          const favoriteId = data.results[0].id;
           this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
             (res) => {
               console.log('deleteCommentFavoriteしたよ。commentId' + commentId);

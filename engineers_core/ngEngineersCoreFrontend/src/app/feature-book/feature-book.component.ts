@@ -22,8 +22,8 @@ export class FeatureBookComponent implements OnInit {
 
   getFeatureBookCategories(): void {
     this.featureBookCategoryService.getBookFeatureCategories().subscribe(data => {
-      this.featureBookCategories = data;
-      this.featureBookCategoryCount = Object.keys(data).length;
+      this.featureBookCategories = data.results;
+      this.featureBookCategoryCount = data.count;
     });
   }
 }

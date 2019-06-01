@@ -111,8 +111,8 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByTitle(title: string) {
     this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data;
-      this.bookCommentCount = Object.keys(data).length;
+      this.bookComments = data.results;
+      this.bookCommentCount = data.count;
       this.addSelected(true, false, false);
       console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -124,8 +124,8 @@ export class SearchComponent implements OnInit, OnChanges {
    */
   searchBooksByTitle(title: string) {
     this.bookService.getBooksLikeTitle(title).subscribe(data => {
-      this.books = data;
-      this.bookCount = Object.keys(data).length;
+      this.books = data.results;
+      this.bookCount = data.count;
       this.addSelected(true, false, false);
       console.log('searchBooksByTitleの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
     });
@@ -137,8 +137,8 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByAuthor(authorName: string) {
     this.bookCommentService.getBookCommentsByAuthorName(authorName).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data;
-      this.bookCommentCount = Object.keys(data).length;
+      this.bookComments = data.results;
+      this.bookCommentCount = data.count;
       this.addSelected(false, true, false);
       console.log('searchBookCommentsByAuthorの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -150,8 +150,8 @@ export class SearchComponent implements OnInit, OnChanges {
    */
   searchBooksByAuthorName(authorName: string) {
     this.bookService.getBooksLikeAuthorName(authorName).subscribe(data => {
-      this.books = data;
-      this.bookCount = Object.keys(data).length;
+      this.books = data.results;
+      this.bookCount = data.count;
       this.addSelected(false, true, false);
       console.log('searchBooksByAuthorNameの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
     });
@@ -163,8 +163,8 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByUser(user: string) {
     this.bookCommentService.getBookCommentsByUser(user).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data;
-      this.bookCommentCount = Object.keys(data).length;
+      this.bookComments = data.results;
+      this.bookCommentCount = data.count;
       this.addSelected(false, false, true);
       console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -198,7 +198,7 @@ export class SearchComponent implements OnInit, OnChanges {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.length === 0) {
+        if (data === null || data === undefined || data.count === 0) {
           this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
             (res) => {
               console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
@@ -220,8 +220,8 @@ export class SearchComponent implements OnInit, OnChanges {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.length !== 0) {
-          const favoriteId = data[0].id;
+        if (data !== null && data !== undefined && data.count !== 0) {
+          const favoriteId = data.results[0].id;
           this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
             (res) => {
               console.log('deleteCommentFavoriteしたよ。commentId' + commentId);

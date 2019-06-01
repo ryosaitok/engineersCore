@@ -27,9 +27,9 @@ export class FeatureBookDetailComponent implements OnInit {
 
   getFeatureBookCategory(): void {
     this.featureBookCategoryService.getBookFeatureCategoryByCd(this.categoryCd).subscribe(data => {
-      if (data[0] !== undefined && data[0] !== null) {
-        this.category = data[0];
-        this.featureBookCount = Object.keys(data[0].books).length;
+      if (data.results[0] !== undefined && data.results[0] !== null) {
+        this.category = data.results[0];
+        this.featureBookCount = Object.keys(data.results[0].books).length;
       }
     });
   }

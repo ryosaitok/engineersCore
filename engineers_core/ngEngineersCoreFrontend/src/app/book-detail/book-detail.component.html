@@ -202,7 +202,7 @@
       <div class="BookCommentsModules">
         <!-- 本の情報 -->
         <div class="module bookComments">
-          <div *ngIf="bookComments.length > 0" class="comment-module">
+          <div *ngIf="bookCommentCount > 0" class="comment-module">
             <div *ngFor="let comment of bookComments; let i = index"
                  class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
@@ -269,7 +269,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="bookComments.length === 0" class="comment-module">
+          <div *ngIf="bookCommentCount === 0" class="comment-module">
             <div class="no-comment-text">
               <span>まだ読んだコメントはありません。</span>
             </div>

@@ -64,7 +64,7 @@ export class BookDetailComponent implements OnInit {
     const bookId = this.route.snapshot.paramMap.get('id');
     this.bookAuthorService.getBookAuthors(bookId).subscribe(
       (data) => {
-        const bookAuthor = data[0];
+        const bookAuthor = data.results[0];
         if (bookAuthor !== undefined) {
           this.book = new Book(
             bookAuthor.book.id,
@@ -87,8 +87,8 @@ export class BookDetailComponent implements OnInit {
 
   getBookComments(bookId: number): void {
     this.bookCommentService.getBookCommentsByBookId(bookId).subscribe(data => {
-      this.bookComments = data;
-      this.bookCommentCount = Object.keys(data).length;
+      this.bookComments = data.results;
+      this.bookCommentCount = data.count;
     });
   }
 
@@ -116,7 +116,7 @@ export class BookDetailComponent implements OnInit {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(
         (data) => {
-          this.isInterested = data[0] !== undefined;
+          this.isInterested = data.results[0] !== undefined;
         },
         // errorの方に来るということは、データが見つからなかった。
         (error) => {
@@ -128,7 +128,7 @@ export class BookDetailComponent implements OnInit {
 
   getInterestedCount(bookId: number): void {
     this.interestedBookService.getBookInterested(bookId).subscribe(data => {
-      this.bookInterestedCount = Object.keys(data).length;
+      this.bookInterestedCount = data.count;
     });
   }
 
@@ -137,7 +137,7 @@ export class BookDetailComponent implements OnInit {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.length === 0) {
+        if (data === null || data === undefined || data.count === 0) {
           this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
             (res) => {
               this.isInterested = true;
@@ -159,8 +159,8 @@ export class BookDetailComponent implements OnInit {
       const userId = response.user_id;
       this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
         // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.length !== 0) {
-          const interestedId = data[0].id;
+        if (data !== null && data !== undefined && data.count !== 0) {
+          const interestedId = data.results[0].id;
           this.interestedBookService.deleteInterestedBook(interestedId).subscribe(
             (res) => {
               this.isInterested = false;
@@ -184,7 +184,7 @@ export class BookDetailComponent implements OnInit {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.length === 0) {
+        if (data === null || data === undefined || data.count === 0) {
           this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
             (res) => {
               this.bookComments[index].favorite_users.push(userId);
@@ -205,8 +205,8 @@ export class BookDetailComponent implements OnInit {
       const userId = response.user_id;
       this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
         // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.length !== 0) {
-          const favoriteId = data[0].id;
+        if (data !== null && data !== undefined && data.count !== 0) {
+          const favoriteId = data.results[0].id;
           this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
             (res) => {
               const userIdIndex = this.bookComments[index].favorite_users.indexOf(userId);
