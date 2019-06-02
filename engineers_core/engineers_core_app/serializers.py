@@ -193,25 +193,25 @@ class InterestedBookWithForeignSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'book', 'interested_date',)
 
 
-class BookFeatureCategorySerializer(serializers.ModelSerializer):
+class ShelfSerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True)
     producer = UserSerializer()
 
     class Meta:
-        model = BookFeatureCategory
-        fields = ('id', 'category_cd', 'category_name', 'display_order', 'feature_status', 'description', 'producer', 'books',)
+        model = Shelf
+        fields = ('id', 'producer', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',)
 
 
-class BookFeatureSerializer(serializers.ModelSerializer):
+class ShelfBookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BookFeature
-        fields = ('id', 'book_feature_category', 'book', 'display_order',)
+        model = ShelfBook
+        fields = ('id', 'shelf', 'book', 'display_order',)
 
 
-class BookFeatureWithForeignSerializer(serializers.ModelSerializer):
-    book_feature_category = BookFeatureCategorySerializer()
+class ShelfBookWithForeignSerializer(serializers.ModelSerializer):
+    shelf = ShelfSerializer()
     book = BookSerializer()
 
     class Meta:
-        model = BookFeature
-        fields = ('id', 'book_feature_category', 'book', 'display_order',)
+        model = ShelfBook
+        fields = ('id', 'shelf', 'book', 'display_order',)
