@@ -19,12 +19,12 @@ export class BookService {
     return this.http.get<any>(this.host + this.booksUrl);
   }
 
-  getBooksLikeTitle(title): Observable<any> {
-    return this.http.get<any>(this.host + this.titleBooksUrl + title);
+  getBooksLikeTitle(title, sort): Observable<any> {
+    return this.http.get<any>(this.host + this.titleBooksUrl + title + '&sort=' + sort);
   }
 
-  getBooksLikeAuthorName(authorName): Observable<any> {
-    return this.http.get<any>(this.host + this.authorNameBooksUrl + authorName);
+  getBooksLikeAuthorName(authorName, sort): Observable<any> {
+    return this.http.get<any>(this.host + this.authorNameBooksUrl + authorName + '&sort=' + sort);
   }
 
   getBook(id): Observable<any> {

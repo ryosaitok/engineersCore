@@ -19,7 +19,7 @@ export class BooksComponent implements OnInit {
 
   getBooks(): void {
     this.bookService.getBooks().subscribe(response => {
-      response.forEach(book => {
+      response.results.forEach(book => {
         this.books.push(new Book(
           book.id,
           book.title,

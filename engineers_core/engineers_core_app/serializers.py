@@ -40,22 +40,18 @@ class AuthorBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
 class AmazonBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = AmazonBook
-        fields = ('id', 'book', 'data_asin',)
+        fields = ('id', 'book', 'data_asin', 'sales_rank')
 
 
 class AmazonBookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     class Meta:
         model = AmazonBook
         list_serializer_class = BulkListSerializer
-        fields = ('id', 'book', 'data_asin',)
+        fields = ('id', 'book', 'data_asin', 'sales_rank')
 
 
 class BookSerializer(serializers.ModelSerializer):
-    amazon_book = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='data_asin'
-    )
+    amazon_book = AmazonBookSerializer(many=True, read_only=True)
     authors = AuthorSerializer(many=True)
 
     class Meta:

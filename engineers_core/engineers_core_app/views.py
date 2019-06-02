@@ -4,6 +4,7 @@ from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 
 from .serializers import *
 from django.db.models import Q
+from django.db.models import F
 
 
 class AuthInfoGetView(generics.RetrieveAPIView):
@@ -33,6 +34,14 @@ class BookListView(generics.ListCreateAPIView):
         if author_name is not None:
             queryset = queryset.filter(author__author_name__icontains=author_name)
         return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(BookListView, self).filter_queryset(queryset)
+        sort = self.request.query_params.get('sort', None)
+        if sort is not None:
+            if sort == 'sale_date':
+                return queryset.order_by(F('sale_date').desc(nulls_last=True))
+        return queryset.order_by(F('amazon_book__sales_rank').asc(nulls_last=True))
 
 
 class BookView(generics.RetrieveUpdateDestroyAPIView):

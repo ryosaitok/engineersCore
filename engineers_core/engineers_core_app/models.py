@@ -102,6 +102,7 @@ class BookDetail(models.Model):
 class AmazonBook(models.Model):
     book = models.ForeignKey(Book, related_name='amazon_book', on_delete=models.CASCADE)
     data_asin = models.CharField(max_length=64, db_index=True)
+    sales_rank = models.IntegerField(null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

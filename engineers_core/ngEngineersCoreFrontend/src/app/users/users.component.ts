@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers().subscribe(response => {
-      response.forEach(user => {
+      response.results.forEach(user => {
         this.users.push(new User(user.id, user.user_name, user.account_name, user.description, user.account_name));
       });
     });

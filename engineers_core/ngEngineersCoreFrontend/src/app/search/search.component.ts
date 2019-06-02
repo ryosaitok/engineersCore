@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit, OnChanges {
   bookCommentCount = 0;
   bookCount = 0;
   query: string;
+  sort: string;
   isSearchByTitle: boolean;
   isSearchByAuthor: boolean;
   isSearchByUser: boolean;
@@ -67,6 +68,9 @@ export class SearchComponent implements OnInit, OnChanges {
         this.query = params.user;
         this.addSelected(false, false, true);
       }
+      if (params.sort !== null && params.sort !== undefined) {
+        this.sort = params.sort;
+      }
       console.log('query: ' + this.query + ', isSearchByTitle: ' + this.isSearchByTitle + ', isSearchByAuthor: '
         + this.isSearchByAuthor + ', isSearchByUser: ' + this.isSearchByUser);
     });
@@ -96,10 +100,10 @@ export class SearchComponent implements OnInit, OnChanges {
     }
     if (this.isSearchByTitle) {
       this.searchBookCommentsByTitle(this.query);
-      this.searchBooksByTitle(this.query);
+      this.searchBooksByTitle(this.query, this.sort);
     } else if (this.isSearchByAuthor) {
       this.searchBookCommentsByAuthor(this.query);
-      this.searchBooksByAuthorName(this.query);
+      this.searchBooksByAuthorName(this.query, this.sort);
     } else if (this.isSearchByUser) {
       this.searchBookCommentsByUser(this.query);
     }
@@ -122,8 +126,8 @@ export class SearchComponent implements OnInit, OnChanges {
   /**
    * 本のタイトルで本を検索して検索結果を表示する
    */
-  searchBooksByTitle(title: string) {
-    this.bookService.getBooksLikeTitle(title).subscribe(data => {
+  searchBooksByTitle(title: string, sort: string) {
+    this.bookService.getBooksLikeTitle(title, sort).subscribe(data => {
       this.books = data.results;
       this.bookCount = data.count;
       this.addSelected(true, false, false);
@@ -148,8 +152,8 @@ export class SearchComponent implements OnInit, OnChanges {
   /**
    * 本の著者名で本を検索して検索結果を表示する
    */
-  searchBooksByAuthorName(authorName: string) {
-    this.bookService.getBooksLikeAuthorName(authorName).subscribe(data => {
+  searchBooksByAuthorName(authorName: string, sort: string) {
+    this.bookService.getBooksLikeAuthorName(authorName, sort).subscribe(data => {
       this.books = data.results;
       this.bookCount = data.count;
       this.addSelected(false, true, false);
