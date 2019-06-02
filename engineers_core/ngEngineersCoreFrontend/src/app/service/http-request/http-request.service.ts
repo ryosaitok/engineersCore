@@ -9,10 +9,10 @@ export class HttpRequestService {
   }
 
   appendUrlConditions(url: string, sort: string, page: string): string {
-    if (sort !== undefined) {
+    if (sort !== undefined && sort !== null) {
       url += '&sort=' + sort;
     }
-    if (page !== undefined) {
+    if (page !== undefined && page !== null) {
       url += '&page=' + page;
     }
     return url;

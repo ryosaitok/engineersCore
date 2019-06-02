@@ -249,6 +249,18 @@ b {
     padding: 10px;
     line-height: 16px;
 }
+ul.sort-condition {
+    list-style: none;
+    padding: 10px 0 5px 0 !important;
+}
+ul.sort-condition > li {
+    display: inline-block;
+    padding-left: 15px !important;
+}
+.sort-condition-button:hover {
+    cursor: pointer;
+    color: #337ab7;
+}
 ul.book-list {
     list-style: none;
     margin-bottom: 0 !important;

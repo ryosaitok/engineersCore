@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FeatureBookCategoryService} from '../service/feature-book-category/feature-book-category.service';
 import {ActivatedRoute} from '@angular/router';
-import {faBookOpen} from '@fortawesome/free-solid-svg-icons';
+import {faBookOpen, faBookReader} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-feature-book-detail',
@@ -14,6 +14,7 @@ export class FeatureBookDetailComponent implements OnInit {
   category: any;
   featureBookCount: number;
   faBookOpen = faBookOpen;
+  faBookReader = faBookReader;
 
   constructor(
     private route: ActivatedRoute,

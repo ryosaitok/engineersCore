@@ -20,21 +20,21 @@
             <li>
               <ul class="title-search navigation">
                 <!--                <a routerLink="/search" [queryParams]="{title: query}">-->
-                <li class="title-search navigation" [class]="titleSelected" (click)="searchBookCommentsByTitle(query)">
+                <li class="title-search navigation" [class]="titleSelected" (click)="searchBooksByTitle(query, null, null)">
                   <span class="search-books icon"><fa-icon [icon]="faBookOpen"></fa-icon> タイトル</span>
                 </li>
               </ul>
             </li>
             <li>
               <ul class="author-search navigation">
-                <li class="user-search navigation" [class]="authorSelected" (click)="searchBookCommentsByAuthor(query)">
+                <li class="user-search navigation" [class]="authorSelected" (click)="searchBooksByAuthorName(query, null, null)">
                   <span class="search-books icon"><fa-icon [icon]="faBookOpen"></fa-icon> 著者</span>
                 </li>
               </ul>
             </li>
             <li>
               <ul class="user-search navigation">
-                <li class="user-search navigation" [class]="userSelected" (click)="searchBookCommentsByUser(query)">
+                <li class="user-search navigation" [class]="userSelected" (click)="searchUsers(query)">
                   <span class="search-users icon"><fa-icon [icon]="faUser"></fa-icon> ユーザー</span>
                 </li>
               </ul>
@@ -93,6 +93,14 @@
           <!-- 本の情報 -->
           <div class="module books">
             <div class="book-module" *ngIf="bookCount > 0">
+              <ul class="sort-condition">
+                <li>
+                  <span class="sort-condition-button" (click)="searchBookComments(undefined, 'sale_rank')">人気順</span>
+                </li>
+                <li>
+                  <span class="sort-condition-button" (click)="searchBookComments(undefined, 'sale_date')">新しい順</span>
+                </li>
+              </ul>
               <ul class="book-list">
                 <li *ngFor="let book of books" class="js-books book-content flex-module-inner" data-section-id="wtf"
                     style="opacity: 1;">
@@ -110,7 +118,7 @@
                     </div>
                     <ul class="book-title-data">
                       <a routerLink="/book/{{book.id}}">
-                        <li class="book-title">{{book.title | slice: 0 :35}}</li>
+                        <li class="book-title">{{book.title | slice: 0 :40}}</li>
                       </a>
                       <li>{{book.sale_date}}</li>
                       <ul class="authors">
@@ -127,13 +135,13 @@
               </ul>
               <ul class="pagination">
                 <li *ngIf="mainPagePre !== undefined && mainPagePre !== null">
-                  <button class="page-link" (click)="searchBookComments(page - 1)"><</button>
+                  <button class="page-link" (click)="searchBookComments(page - 1, sort)"><</button>
                 </li>
                 <li *ngIf="mainPagePre === undefined || mainPagePre === null">
                   <button class="page-link" style="pointer-events: none;"><</button>
                 </li>
                 <li *ngIf="mainPageNext !== undefined && mainPageNext !== null">
-                  <button class="page-link" (click)="searchBookComments(page + 1)">></button>
+                  <button class="page-link" (click)="searchBookComments(page + 1, sort)">></button>
                 </li>
                 <li *ngIf="mainPageNext === undefined || mainPageNext === null">
                   <button class="page-link" style="pointer-events: none;">></button>
@@ -185,17 +193,6 @@
                   </div>
                 </li>
               </ul>
-              <ul class="pagination">
-                <li>
-                  <button class="page-link" (click)="searchBookComments(1)">1</button>
-                </li>
-                <li>
-                  <button class="page-link" (click)="searchBookComments(2)">2</button>
-                </li>
-                <li>
-                  <button class="page-link" (click)="searchBookComments(3)">3</button>
-                </li>
-              </ul>
             </div>
             <div *ngIf="userCount === 0" class="user-module">
               <div class="no-content-text">
@@ -231,7 +228,7 @@
                       </div>
                       <ul class="book-title-data">
                         <a routerLink="/book/{{comment.book.id}}">
-                          <li class="book-title">{{comment.book.title | slice: 0 :35}}</li>
+                          <li class="book-title">{{comment.book.title | slice: 0 :40}}</li>
                         </a>
                         <li>{{comment.book.sale_date}}</li>
                         <ul class="authors">

@@ -144,8 +144,12 @@ ul.feature-book-module li {
     width: 120px;
     height: 165px;
 }
+.feature-element {
+    font-size: 13px;
+}
 .book-title {
     padding-left: 0;
+    margin-bottom: 2px;
 }
 ul.book-title-data {
     list-style: none;
@@ -163,12 +167,14 @@ ul.book-title-data li {
 .book-author-data {
     font-size: 12px;
 }
-ul.book-authors {
+ul.authors {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
-ul.book-authors li {
-    display: inline-block;
-    margin: 2px 0 0 0;
+ul.authors li {
+    display: inline;
+}
+.author_name {
+    margin: 4px 0 0 0 !important;
 }

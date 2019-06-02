@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getLoginUserId();
     this.initQueryParameters();
-    this.searchBookComments(1);
+    this.searchBookComments(1, this.sort);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -103,9 +103,12 @@ export class SearchComponent implements OnInit, OnChanges {
   /**
    * 検索して検索結果を表示する。
    */
-  searchBookComments(page: number) {
+  searchBookComments(page: number, sort: string) {
     if (page !== undefined) {
       this.page = page;
+    }
+    if (sort !== undefined) {
+      this.sort = sort;
     }
     this.query = this.query.trim();
     if (this.query === null || this.query === undefined || this.query === '') {
@@ -204,6 +207,7 @@ export class SearchComponent implements OnInit, OnChanges {
       this.userCount = data.count;
       this.mainPagePre = data.previous;
       this.mainPageNext = data.next;
+      this.addSelected(false, false, true);
       window.scrollTo(0, 0);
       console.log('searchUsersの結果。this.users: ' + this.users + 'this.userCount: ' + this.userCount);
     });
@@ -217,14 +221,23 @@ export class SearchComponent implements OnInit, OnChanges {
       this.titleSelected = 'selected';
       this.authorSelected = '';
       this.userSelected = '';
+      this.isSearchByTitle = true;
+      this.isSearchByAuthor = false;
+      this.isSearchByUser = false;
     } else if (authorSelected) {
       this.titleSelected = '';
       this.authorSelected = 'selected';
       this.userSelected = '';
+      this.isSearchByTitle = false;
+      this.isSearchByAuthor = true;
+      this.isSearchByUser = false;
     } else {
       this.titleSelected = '';
       this.authorSelected = '';
       this.userSelected = 'selected';
+      this.isSearchByTitle = false;
+      this.isSearchByAuthor = false;
+      this.isSearchByUser = true;
     }
   }
 
