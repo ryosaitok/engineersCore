@@ -139,13 +139,15 @@ h1 {
 .book-title, .book-sale-date {
     margin-bottom: 3px
 }
-
+.book-image {
+    padding-top: 0 !important;
+}
 .BookImageItem-context > .content {
     text-align: center;
 }
 .amazon-book-image {
-    width: 180px;
-    height: 248px;
+    width: 210px;
+    height: 275px;
 }
 
 .item {
