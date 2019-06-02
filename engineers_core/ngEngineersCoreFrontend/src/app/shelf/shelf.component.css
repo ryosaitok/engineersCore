@@ -48,38 +48,34 @@ a:hover {
     color: #222222;
     font-size: 14px;
 }
-.item {
-    border-bottom: 1px solid #e6ecf0;
-    padding: 10px 0;
-}
 
 /* メインコンテンツ */
 @media (min-width: 1236px) {
-  .FeatureBooksModules {
+  .ShelfsModules {
     float: none;
     margin: auto;
   }
 }
-.FeatureBooksModules {
+.ShelfsModules {
     width: 80%;
 }
-.category-module {
-  background-color: #fff;
+.shelf-module {
+    background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
 }
-.feature-book-content {
+.shelf-books-content {
     border-bottom: 1px solid #e6ecf0;
     margin: 5px;
     padding: 10px 0;
 }
-ul.category-basic-info {
+ul.shelf-basic-info {
     list-style: none;
     margin-bottom: 8px !important;
     padding-left: 0;
 }
-ul.category-basic-info li {
+ul.shelf-basic-info li {
     display: inline-block;
     margin: 0 8px 0 0;
 }
@@ -88,26 +84,23 @@ ul.category-basic-info li {
     width: 32px;
     border-radius: 50%;
 }
-.feature-book-info {
-    /*float: left;*/
-}
-.CategoryNameItem-context > a:hover {
+.ShelfNameItem-context > a:hover {
     color: #337ab7 !important;
 }
 
-ul.feature-books {
+ul.shelf-books {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
-ul.feature-books li {
+ul.shelf-books li {
     width: 205px;
     vertical-align: top;
     display: inline-block;
     margin-right: 15px;
     margin-left: 3px;
 }
-.feature-element {
+.shelf-element {
     margin-top: 2px;
 }
 .book-image {
@@ -147,6 +140,6 @@ ul.book-authors li {
     margin-right: 2px;
 }
 
-.no-category-text {
+.no-shelf-text {
     text-align: center;
 }

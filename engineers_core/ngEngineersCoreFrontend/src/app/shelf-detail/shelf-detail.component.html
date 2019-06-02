@@ -1,39 +1,39 @@
 <div class="page-outer">
-  <!-- カテゴリー名 -->
-  <div class="CategoryNameNavigation">
-    <div class="CategoryNameNavigation-canopy u-bgUserColor">
-      <div class="CategoryNameNavigation-textContainer">
-        <h1 class="CategoryNameNavigationText" dir="ltr">
+  <!-- 本棚名 -->
+  <div class="ShelfNameNavigation">
+    <div class="ShelfNameNavigation-canopy u-bgUserColor">
+      <div class="ShelfNameNavigation-textContainer">
+        <h1 class="ShelfNameNavigationText" dir="ltr">
           <span class="comment-reaction-reply"><fa-icon
-            [icon]="faBookReader"></fa-icon></span> {{category.category_name}}
+            [icon]="faBookReader"></fa-icon></span> {{shelf.shelf_name}}
         </h1>
       </div>
     </div>
   </div>
-  <!-- カテゴリーの基本情報 -->
-  <div class="CategoryNavigation">
-    <div class="CategoryNavigation-canopy">
-      <div class="CategoryNavigation-textContainer">
-        <div class="CategoryNavigation-titleText" dir="ltr">
-          <ul class="category-data">
-            <li class="category-producer-image">
-              <a routerLink="/user/{{category.producer.account_name}}">
-                <div *ngIf="category.producer.profile_image_link !== null" class="user-profile-icon">
-                  <img class="profile-image" src="../../assets/image/profile/{{category.producer.profile_image_link}}"
+  <!-- 本棚の基本情報 -->
+  <div class="ShelfNavigation">
+    <div class="ShelfNavigation-canopy">
+      <div class="ShelfNavigation-textContainer">
+        <div class="ShelfNavigation-titleText" dir="ltr">
+          <ul class="shelf-data">
+            <li class="shelf-producer-image">
+              <a routerLink="/user/{{shelf.producer.account_name}}">
+                <div *ngIf="shelf.producer.profile_image_link !== null" class="user-profile-icon">
+                  <img class="profile-image" src="../../assets/image/profile/{{shelf.producer.profile_image_link}}"
                        alt=""/>
                 </div>
-                <div *ngIf="category.producer.profile_image_link === null" class="user-profile-icon">
+                <div *ngIf="shelf.producer.profile_image_link === null" class="user-profile-icon">
                   <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </a>
             </li>
-            <a routerLink="/user/{{category.producer.account_name}}">
-              <li class="producer-name">{{category.producer.user_name}}</li>
-              <li class="producer-account-name">@{{category.producer.account_name}}</li>
+            <a routerLink="/user/{{shelf.producer.account_name}}">
+              <li class="producer-name">{{shelf.producer.user_name}}</li>
+              <li class="producer-account-name">@{{shelf.producer.account_name}}</li>
             </a>
           </ul>
-          <div class="category-description">
-            <div class="category-description-text">{{category.description}}</div>
+          <div class="shelf-description">
+            <div class="shelf-description-text">{{shelf.description}}</div>
           </div>
         </div>
       </div>
@@ -42,19 +42,19 @@
 
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
-      <!-- メインメニュー(特集の本) -->
-      <div class="FeatureBooksModules">
+      <!-- メインメニュー(本棚の本) -->
+      <div class="ShelfBooksModules">
         <!-- 本の情報 -->
-        <div class="module feature-books">
-          <ul *ngIf="featureBookCount > 0" class="feature-book-module">
-            <li *ngFor="let book of category.books" class="js-feature-books feature-book-content flex-module-inner"
+        <div class="module shelf-books">
+          <ul *ngIf="shelfCount > 0" class="shelf-book-module">
+            <li *ngFor="let book of shelf.books" class="js-shelf-books shelf-book-content flex-module-inner"
                 data-section-id="wtf" style="opacity: 1;">
               <!-- 本の情報 -->
               <div class="book-info">
-                <div class="FeatureBookItem-context">
+                <div class="ShelfBookItem-context">
                   <!-- 本の基本情報 -->
                   <div class="context">
-                    <div class="feature-book-content">
+                    <div class="shelf-book-content">
                       <div class="book-image">
                         <a class="amazon-book-detail"
                            href="https://www.amazon.co.jp/dp/{{book.amazon_book[0].data_asin}}/"
@@ -65,7 +65,7 @@
                         width="1"
                         height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
                       </div>
-                      <div class="book-title feature-element">
+                      <div class="book-title shelf-element">
                         <ul class="book-title-data">
                           <li>
                             <a routerLink="/book/{{book.id}}">{{book.title | slice: 0 :40}}</a>
@@ -74,7 +74,7 @@
                               class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
                         </ul>
                       </div>
-                      <div class="book-author feature-element">
+                      <div class="book-author shelf-element">
                         <ul class="authors">
                           <li *ngFor="let author of book.authors; let i = index" class="author_name">
                             <a *ngIf="i === 0" [routerLink]="['/search/']"
@@ -91,7 +91,7 @@
             </li>
           </ul>
         </div>
-        <div *ngIf="featureBookCount === 0" class="feature-book-module">
+        <div *ngIf="shelfCount === 0" class="shelf-book-module">
           <div class="no-comment-text">
             <span>本がありませんでした。</span>
           </div>

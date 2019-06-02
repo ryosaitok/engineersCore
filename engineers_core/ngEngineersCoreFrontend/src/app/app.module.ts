@@ -20,8 +20,8 @@ import {PageNotFoundComponent} from './error/page-not-found/page-not-found.compo
 import {SearchComponent} from './search/search.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
-import {FeatureBookComponent} from './feature-book/feature-book.component';
-import {FeatureBookDetailComponent} from './feature-book-detail/feature-book-detail.component';
+import {ShelfComponent} from './shelf/shelf.component';
+import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +36,8 @@ import {FeatureBookDetailComponent} from './feature-book-detail/feature-book-det
     BookCommentComponent,
     PageNotFoundComponent,
     SearchComponent,
-    FeatureBookComponent,
-    FeatureBookDetailComponent,
+    ShelfComponent,
+    ShelfDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,22 +14,22 @@ a:hover {
     text-decoration: none;
 }
 
-/* カテゴリ名ナビ */
-.CategoryNameNavigation {
+/* 本棚名ナビ */
+.ShelfNameNavigation {
 }
 .u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
     background-color: #337ab7 !important;
 }
-.CategoryNameNavigation-canopy {
+.ShelfNameNavigation-canopy {
     background-color: #337ab7;
     padding: 14px 0;
 }
-.CategoryNameNavigation-textContainer {
+.ShelfNameNavigation-textContainer {
     color: #fff;
     margin: 0 auto;
     max-width: 1190px;
 }
-.CategoryNameNavigation-titleText {
+.ShelfNameNavigation-titleText {
     color: #fff;
     font-weight: bold;
     overflow: hidden;
@@ -43,43 +43,43 @@ h1 {
     margin: 0;
 }
 
-/* カテゴリーの基本情報 */
-.CategoryNavigation {
+/* 本棚の基本情報 */
+.ShelfNavigation {
     border-bottom: 1px solid #e6ecf0;
 }
-.CategoryNavigation-canopy {
+.ShelfNavigation-canopy {
     background-color: #ffffff;
     padding: 10px 0;
 }
-.CategoryNavigation-textContainer {
+.ShelfNavigation-textContainer {
     color: #222222;
     margin: 0 auto;
     max-width: 1190px;
 }
-.CategoryNavigation-titleText {
+.ShelfNavigation-titleText {
     overflow: hidden;
     font-size: 15px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-ul.category-data {
+ul.shelf-data {
     float: left;
     list-style: none;
     margin-bottom: 0 !important;
     width: 200px;
     padding-left: 0;
 }
-ul.category-data li {
+ul.shelf-data li {
     margin-right: 10px;
 }
-.category-producer-image {
+.shelf-producer-image {
 }
 .profile-image {
     height: 32px;
     width: 32px;
     border-radius: 50%;
 }
-.category-producer-image, .producer-name, .producer-account-name {
+.shelf-producer-image, .producer-name, .producer-account-name {
     float: left;
 }
 .producer-name, .producer-account-name {
@@ -89,10 +89,10 @@ ul.category-data li {
 .producer-account-name {
     color: #657786;
 }
-.category-description {
+.shelf-description {
     margin-left: 220px;
 }
-.category-description-text {
+.shelf-description-text {
     word-wrap: break-word;
     white-space: normal;
 }
@@ -112,27 +112,27 @@ ul.category-data li {
     min-width: 890px;
 }
 @media (min-width: 1236px) {
-  .FeatureBooksModules {
+  .ShelfBooksModules {
     float: none;
     margin: auto;
   }
 }
-.FeatureBooksModules {
+.ShelfBooksModules {
     width: 100%;
     background-color: #fff;
     border: 1px solid #e6ecf0;
 }
-ul.feature-book-module {
+ul.shelf-book-module {
     list-style: none;
     margin-bottom: 0 !important;
 }
-ul.feature-book-module li {
+ul.shelf-book-module li {
     width: 205px;
     vertical-align: top;
     display: inline-block;
     margin: 12px;
 }
-.feature-book-module {
+.shelf-book-module {
     padding: 10px;
     line-height: 16px;
 }
@@ -144,7 +144,7 @@ ul.feature-book-module li {
     width: 120px;
     height: 165px;
 }
-.feature-element {
+.shelf-element {
     font-size: 13px;
 }
 .book-title {
