@@ -323,60 +323,60 @@ class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = InterestedBookSerializer
 
 
-class BookFeatureCategoryView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BookFeatureCategory.objects.all()
-    serializer_class = BookFeatureCategorySerializer
+class ShelfView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Shelf.objects.all()
+    serializer_class = ShelfSerializer
 
 
-class BookFeatureCategoryListView(generics.ListCreateAPIView):
-    queryset = BookFeatureCategory.objects.all()
-    serializer_class = BookFeatureCategorySerializer
+class ShelfListView(generics.ListCreateAPIView):
+    queryset = Shelf.objects.all()
+    serializer_class = ShelfSerializer
 
     # 登録処理ではidだけ指定で行いたいので、BookFeatureCategorySerializerを使う。
     def post(self, request, *args, **kwargs):
-        serializer_class = BookFeatureCategorySerializer(data=request.data)
+        serializer_class = ShelfSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=True)
         serializer_class.save()
         return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
-        queryset = BookFeatureCategory.objects.filter(feature_status='OPN')
-        category_cd = self.request.query_params.get('category_cd', None)
-        if category_cd is not None:
-            queryset = queryset.filter(category_cd=category_cd)
+        queryset = Shelf.objects.filter(shelf_status='OPN')
+        shelf_cd = self.request.query_params.get('shelf_cd', None)
+        if shelf_cd is not None:
+            queryset = queryset.filter(shelf_cd=shelf_cd)
         compiler = queryset.query.get_compiler(using=queryset.db)
-        print('BookFeatureCategoryListViewのSQL: ' + str(compiler.as_sql()))
+        print('ShelfListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
 
-class BookFeatureView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BookFeature.objects.all()
-    serializer_class = BookFeatureSerializer
+class ShelfBookView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfBook.objects.all()
+    serializer_class = ShelfBookSerializer
 
 
-class BookFeatureListView(generics.ListCreateAPIView):
-    queryset = BookFeature.objects.all()
-    serializer_class = BookFeatureWithForeignSerializer
+class ShelfBookListView(generics.ListCreateAPIView):
+    queryset = ShelfBook.objects.all()
+    serializer_class = ShelfBookWithForeignSerializer
 
     # 登録処理ではcategoryとbookのidだけ指定で行いたいので、BookFeatureSerializerを使う。
     def post(self, request, *args, **kwargs):
-        serializer_class = BookFeatureSerializer(data=request.data)
+        serializer_class = ShelfBookSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=True)
         serializer_class.save()
         return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
-        queryset = BookFeature.objects.filter(book_feature_category__feature_status='OPN')
+        queryset = ShelfBook.objects.filter(shelf__shelf_status='OPN')
         book_id = self.request.query_params.get('book_id', None)
         if book_id is not None:
             queryset = queryset.filter(book__id=book_id)
-        category_id = self.request.query_params.get('category_id', None)
-        if category_id is not None:
-            queryset = queryset.filter(book_feature_category__id=category_id)
+        shelf_id = self.request.query_params.get('shelf_id', None)
+        if shelf_id is not None:
+            queryset = queryset.filter(shelf_book__shelf_id=shelf_id)
         compiler = queryset.query.get_compiler(using=queryset.db)
-        print('BookFeatureListViewのSQL: ' + str(compiler.as_sql()))
+        print('ShelfBookListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
     def filter_queryset(self, queryset):
-        queryset = super(BookFeatureListView, self).filter_queryset(queryset)
-        return queryset.order_by('book_feature_category__display_order', 'display_order')
+        queryset = super(ShelfBookListView, self).filter_queryset(queryset)
+        return queryset.order_by('shelf_book__display_order', 'display_order')

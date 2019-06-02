@@ -191,39 +191,39 @@ class InterestedBook(models.Model):
         return '【' + self.user.user_name + '】', self.book.title
 
 
-class BookFeatureCategory(models.Model):
-    category_name = models.TextField(max_length=1000)
-    category_cd = models.CharField(max_length=128, unique=True)
+class Shelf(models.Model):
+    producer = models.ForeignKey(User, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book, through='ShelfBook')
+    shelf_name = models.TextField(max_length=1000)
+    shelf_cd = models.CharField(max_length=128, unique=True)
     display_order = models.IntegerField(null=True)
-    feature_status_choices = [
+    shelf_status_choices = [
         ['OPN', 'Open'],
         ['DFT', 'Draft'],
         ['NOT', 'Not Open'],
     ]
-    feature_status = models.CharField(choices=feature_status_choices, default='DFT', max_length=8)
+    shelf_status = models.CharField(choices=shelf_status_choices, default='DFT', max_length=8)
     description = models.TextField(max_length=1000, null=True)
-    books = models.ManyToManyField(Book, through='BookFeature')
-    producer = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'book_feature_category'
+        db_table = 'shelf'
 
     def __str__(self):
-        return self.category_name
+        return self.shelf_name
 
 
-class BookFeature(models.Model):
-    book_feature_category = models.ForeignKey(BookFeatureCategory, on_delete=models.CASCADE)
+class ShelfBook(models.Model):
+    shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     display_order = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'book_feature'
-        unique_together = ("book_feature_category", "book")
+        db_table = 'shelf_book'
+        unique_together = ("shelf", "book")
 
     def __str__(self):
         return str(self.display_order)
