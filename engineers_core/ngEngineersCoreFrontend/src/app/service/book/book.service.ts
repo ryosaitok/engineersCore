@@ -23,13 +23,13 @@ export class BookService {
     return this.http.get<any>(this.host + this.booksUrl);
   }
 
-  getBooksLikeTitle(title, sort, page): Observable<any> {
+  getBooksLikeTitle(title: string, sort: string, page: string): Observable<any> {
     let url = this.host + this.titleBooksUrl + title;
     url = this.httpRequestService.appendUrlConditions(url, sort, page);
     return this.http.get<any>(url);
   }
 
-  getBooksLikeAuthorName(authorName, sort, page): Observable<any> {
+  getBooksLikeAuthorName(authorName: string, sort: string, page: string): Observable<any> {
     let url = this.host + this.authorNameBooksUrl + authorName;
     url = this.httpRequestService.appendUrlConditions(url, sort, page);
     return this.http.get<any>(url);

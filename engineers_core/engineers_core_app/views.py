@@ -106,6 +106,20 @@ class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_queryset(self):
+        queryset = User.objects.all()
+        # ユーザー名orアカウント名で検索
+        user = self.request.query_params.get('user', None)
+        if user is not None:
+            queryset = queryset.filter(Q(account_name__icontains=user) | Q(user_name__icontains=user))
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('UserListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(UserListView, self).filter_queryset(queryset)
+        return queryset.order_by('id')
+
 
 class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()

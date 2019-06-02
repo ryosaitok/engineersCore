@@ -226,13 +226,9 @@ b {
     margin: 0 10px;
   }
 }
-
 .SearchModules {
     width: 850px;
     position: unset;
-}
-.BookModules {
-    margin-left: 300px;
 }
 .book-info {
     width: 25%;
@@ -247,29 +243,21 @@ b {
     width: 120px;
     height: 165px;
 }
-.book-comment {
-    display: inline-block;
-    vertical-align: top;
-    width: 68%;
-    margin: 10px;
-}
-.comment-module {
-  background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    line-height: 16px;
-}
-.book-comment-content {
-    border-bottom: 1px solid #e6ecf0;
-    /* ↓コメント詳細を開けるようにしたら有効にする */
-    /*cursor: pointer;*/
-    margin: 5px;
-}
 .book-module {
     background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
+}
+ul.book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+ul.book-list > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
 }
 .book-content {
     font-size: 12px;
@@ -302,14 +290,6 @@ ul.authors li {
 .author-name {
     width: auto !important;
 }
-.comment-content {
-    margin-left: 58px;
-}
-.comment-text, .comment-reaction {
-    padding-top: 5px;
-    white-space: pre-line;
-    line-height: normal;
-}
 .avatar {
     float: left;
     position: absolute;
@@ -327,6 +307,69 @@ ul.authors li {
 }
 .user-name {
     font-weight: bold;
+}
+
+.user-info {
+    width: 25%;
+    margin: 0 8px;
+    display: inline-block;
+}
+.user-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+ul.user-module {
+    list-style: none;
+    margin-bottom: 0 !important;
+}
+ul.user-module > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
+}
+.user-content {
+    font-size: 12px;
+    margin: 5px 45px 5px 70px;
+    padding: 10px 0;
+}
+.user-description {
+    margin-top: 10px;
+}
+
+.no-content-text {
+    text-align: center;
+}
+
+.BookCommentModules {
+    margin-left: 300px;
+}
+.book-comment {
+    display: inline-block;
+    vertical-align: top;
+    width: 68%;
+    margin: 10px;
+}
+.comment-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+.book-comment-content {
+    border-bottom: 1px solid #e6ecf0;
+    /* ↓コメント詳細を開けるようにしたら有効にする */
+    /*cursor: pointer;*/
+    margin: 5px;
+}
+.comment-content {
+    margin-left: 58px;
+}
+.comment-text, .comment-reaction {
+    padding-top: 5px;
+    white-space: pre-line;
+    line-height: normal;
 }
 ul.comment-reactions {
     list-style: none;
@@ -359,18 +402,4 @@ ul.comment-reaction li > span.comment-reaction-heart:hover {
 }
 ul.comment-reaction li > span.favorite-done {
     color: #f08080;
-}
-
-ul.book-module {
-    list-style: none;
-    margin-bottom: 0 !important;
-}
-ul.book-module > li {
-    width: 145px;
-    vertical-align: top;
-    display: inline-block;
-}
-
-.no-content-text {
-    text-align: center;
 }

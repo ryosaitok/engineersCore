@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {BookCommentService} from '../service/book-comment/book-comment.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {faCommentDots, faHeart, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faBookOpen, faCommentDots, faHeart, faSearch, faUser} from '@fortawesome/free-solid-svg-icons';
 import {SigninService} from '../service/signin/signin.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../service/user/user.service';
@@ -18,17 +18,23 @@ export class SearchComponent implements OnInit, OnChanges {
   userId: number;
   @Input() bookComments: any[];
   @Input() books: any[];
+  @Input() users: any[];
   bookCommentCount = 0;
   bookCount = 0;
+  userCount = 0;
   query: string;
   sort: string;
-  page: string;
+  page: number;
+  mainPagePre: string;
+  mainPageNext: string;
   isSearchByTitle: boolean;
   isSearchByAuthor: boolean;
   isSearchByUser: boolean;
 
   faHeart = faHeart;
   faCommentDots = faCommentDots;
+  faBookOpen = faBookOpen;
+  faUser = faUser;
   faSearch = faSearch;
   titleSelected = '';
   authorSelected = '';
@@ -48,7 +54,7 @@ export class SearchComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getLoginUserId();
     this.initQueryParameters();
-    this.searchBookComments();
+    this.searchBookComments(1);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -97,19 +103,23 @@ export class SearchComponent implements OnInit, OnChanges {
   /**
    * 検索して検索結果を表示する。
    */
-  searchBookComments() {
+  searchBookComments(page: number) {
+    if (page !== undefined) {
+      this.page = page;
+    }
     this.query = this.query.trim();
     if (this.query === null || this.query === undefined || this.query === '') {
       return;
     }
     if (this.isSearchByTitle) {
       this.searchBookCommentsByTitle(this.query);
-      this.searchBooksByTitle(this.query, this.sort, this.page);
+      this.searchBooksByTitle(this.query, this.sort, this.page.toString());
     } else if (this.isSearchByAuthor) {
       this.searchBookCommentsByAuthor(this.query);
-      this.searchBooksByAuthorName(this.query, this.sort, this.page);
+      this.searchBooksByAuthorName(this.query, this.sort, this.page.toString());
     } else if (this.isSearchByUser) {
       this.searchBookCommentsByUser(this.query);
+      this.searchUsers(this.query);
     }
   }
 
@@ -134,6 +144,9 @@ export class SearchComponent implements OnInit, OnChanges {
     this.bookService.getBooksLikeTitle(title, sort, page).subscribe(data => {
       this.books = data.results;
       this.bookCount = data.count;
+      this.mainPagePre = data.previous;
+      this.mainPageNext = data.next;
+      window.scrollTo(0, 0);
       this.addSelected(true, false, false);
       console.log('searchBooksByTitleの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
     });
@@ -160,6 +173,9 @@ export class SearchComponent implements OnInit, OnChanges {
     this.bookService.getBooksLikeAuthorName(authorName, sort, page).subscribe(data => {
       this.books = data.results;
       this.bookCount = data.count;
+      this.mainPagePre = data.previous;
+      this.mainPageNext = data.next;
+      window.scrollTo(0, 0);
       this.addSelected(false, true, false);
       console.log('searchBooksByAuthorNameの結果。this.books: ' + this.books + 'this.bookCount: ' + this.bookCount);
     });
@@ -177,8 +193,20 @@ export class SearchComponent implements OnInit, OnChanges {
       console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
     });
-    this.books = null;
-    this.bookCount = null;
+  }
+
+  /**
+   * ユーザー名orユーザーアカウント名で検索して検索結果を表示する
+   */
+  searchUsers(user: string) {
+    this.userService.getUsersLikeName(user).subscribe(data => {
+      this.users = data.results;
+      this.userCount = data.count;
+      this.mainPagePre = data.previous;
+      this.mainPageNext = data.next;
+      window.scrollTo(0, 0);
+      console.log('searchUsersの結果。this.users: ' + this.users + 'this.userCount: ' + this.userCount);
+    });
   }
 
   /**

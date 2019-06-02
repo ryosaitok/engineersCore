@@ -8,7 +8,7 @@ export class HttpRequestService {
   constructor() {
   }
 
-  appendUrlConditions(url: string, sort, page): string {
+  appendUrlConditions(url: string, sort: string, page: string): string {
     if (sort !== undefined) {
       url += '&sort=' + sort;
     }

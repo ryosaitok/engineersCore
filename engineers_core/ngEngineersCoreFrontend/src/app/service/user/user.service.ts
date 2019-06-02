@@ -14,6 +14,8 @@ export class UserService {
   userApiUrl = this.host + this.userUrl;
   usersUrl = 'api/users/';
   usersApiUrl = this.host + this.usersUrl;
+  filteredUsersUrl = 'api/users/?user=';
+  filteredUsersApiUrl = this.host + this.filteredUsersUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -22,6 +24,10 @@ export class UserService {
 
   getUsers(): Observable<any> {
     return this.http.get<any>(this.usersApiUrl);
+  }
+
+  getUsersLikeName(user: string): Observable<any> {
+    return this.http.get<any>(this.filteredUsersApiUrl + user);
   }
 
   registerUser(authUserId: number, accountName: string, userName: string, description: string, imageLink: string): Observable<any> {
