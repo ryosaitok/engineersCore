@@ -61,12 +61,11 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
+    'MAX_PAGINATE_BY': 40,
     # 'NON_FIELD_ERRORS_KEY': 'detail',
     # 'TEST_REQUEST_DEFAULT_FORMAT': 'json'
     # 'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    # 'PAGE_SIZE': 5,
 }
 
 # SIMPLE_JWT = {

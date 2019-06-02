@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {FormsModule} from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -20,8 +20,8 @@ import {PageNotFoundComponent} from './error/page-not-found/page-not-found.compo
 import {SearchComponent} from './search/search.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
-import { FeatureBookComponent } from './feature-book/feature-book.component';
-import { FeatureBookDetailComponent } from './feature-book-detail/feature-book-detail.component';
+import {FeatureBookComponent} from './feature-book/feature-book.component';
+import {FeatureBookDetailComponent} from './feature-book-detail/feature-book-detail.component';
 
 @NgModule({
   declarations: [

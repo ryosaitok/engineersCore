@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 
 from .serializers import *
@@ -30,9 +31,9 @@ class BookListView(generics.ListCreateAPIView):
         title = self.request.query_params.get('title', None)
         if title is not None:
             queryset = queryset.filter(title__icontains=title)
-        author_name = self.request.query_params.get('author_name', None)
+        author_name = self.request.query_params.get('author', None)
         if author_name is not None:
-            queryset = queryset.filter(author__author_name__icontains=author_name)
+            queryset = queryset.filter(authors__author_name__icontains=author_name)
         return queryset
 
     def filter_queryset(self, queryset):
@@ -165,8 +166,7 @@ class BookCommentListView(generics.ListCreateAPIView):
         # 本の著者名で検索
         author = self.request.query_params.get('author', None)
         if author is not None:
-            print('著者名での検索はデータ連結の方法わかってなくて未実装')
-            # queryset = queryset.filter(book__author_name__icontains=author)
+            queryset = queryset.filter(book__authors__author_name__icontains=author)
         # ユーザー名orアカウント名で検索
         user = self.request.query_params.get('user', None)
         if user is not None:
