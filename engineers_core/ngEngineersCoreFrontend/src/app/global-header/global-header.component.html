@@ -52,7 +52,10 @@
                   <div class="login-state">
                     <div *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
                       <nav>
-                        <a routerLink="/login">{{appComponent.authErrorMessage}}</a>
+                        <span class="" (click)="clickDropdownMenu()">
+                          <img class="avatar" src="../../assets/image/profile/default_profile_image.png"
+                               alt=""/>
+                        </span>
                       </nav>
                     </div>
                     <div class="user-profile-image"
@@ -83,7 +86,13 @@
                     <li class="inquiry-link link-menu menu-item">
                       <a class="js-nav" href="#">お問い合わせ</a>
                     </li>
-                    <li class="logout-link link-menu menu-item">
+                    <li *ngIf="!appComponent.isLoggedIn" class="login-link link-menu menu-item">
+                      <a routerLink="/login/">ログイン</a>
+                    </li>
+                    <li *ngIf="!appComponent.isLoggedIn" class="signup-link link-menu menu-item">
+                      <a routerLink="/signup/">新規登録</a>
+                    </li>
+                    <li *ngIf="appComponent.isLoggedIn" class="logout-link link-menu menu-item">
                       <span (click)="signOut()">ログアウト</span>
                     </li>
                   </ul>

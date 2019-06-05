@@ -12,10 +12,7 @@ export class AppComponent {
   accountName: string;
   userName: string;
   profileImageLink: string;
-
-  appName = 'engineersCore';
-  authErrorMessage = 'ログインする。';
-  authMessage = 'ログイン中です。';
+  isLoggedIn: boolean;
 
   constructor(public auth: AuthGuard) {
     // this.username = auth.getObservable();

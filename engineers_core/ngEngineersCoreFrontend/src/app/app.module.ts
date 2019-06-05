@@ -22,6 +22,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
 import {ShelfComponent} from './shelf/shelf.component';
 import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
     SearchComponent,
     ShelfComponent,
     ShelfDetailComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

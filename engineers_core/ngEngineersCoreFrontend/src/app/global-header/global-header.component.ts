@@ -42,12 +42,14 @@ export class GlobalHeaderComponent implements OnInit {
         this.appComponent.accountName = user.account_name;
         this.appComponent.userName = user.user_name;
         this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
       });
     }, error => {
       this.appComponent.userId = null;
       this.appComponent.accountName = null;
       this.appComponent.userName = null;
       this.appComponent.profileImageLink = null;
+      this.appComponent.isLoggedIn = false;
     });
   }
 
