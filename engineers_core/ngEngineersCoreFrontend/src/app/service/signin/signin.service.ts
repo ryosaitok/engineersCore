@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthUser} from '../../auth-user';
+import {Router} from "@angular/router";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,8 @@ export class SigninService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
+    private userService: UserService,
   ) {
   }
 
@@ -46,15 +50,6 @@ export class SigninService {
       password
     };
     return this.http.post<any>(this.authApiUrl, body, this.httpOptions);
-  }
-
-  getLoggedInUser(): any {
-    this.getAuthUser().subscribe(response => {
-      return new AuthUser(response.user_id, response.account_name, response.email);
-    }, error => {
-      console.log('getLoggedInUserで認証ユーザー情報取得できませんでした。error: ' + error);
-      return null;
-    });
   }
 
   getAuthUser(): Observable<any> {

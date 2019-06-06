@@ -1,4 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../user';
 import {UserService} from '../service/user/user.service';
@@ -27,6 +27,7 @@ export class UserDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
     private bookCommentService: BookCommentService,
     private interestedBookService: InterestedBookService,
@@ -104,45 +105,53 @@ export class UserDetailComponent implements OnInit {
   commentFavorite(commentId: number): void {
     console.log('commentFavorite。commentId ' + commentId);
     this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.count === 0) {
-          this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
-            (res) => {
-              console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
-            },
-            (error) => {
-              console.error('commentFavoriteでerror: ' + error);
-            }
-          );
-        } else {
-          console.error('commentFavoriteが呼ばれるのおかしい。userId: ' + userId, 'commentId: ' + commentId);
-        }
+      this.userService.getUser(response.account_name).subscribe(r => {
+        const userId = r.id;
+        this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
+          // まだデータが存在しない場合は作成する。
+          if (data === null || data === undefined || data.count === 0) {
+            this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
+              (res) => {
+                console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
+              },
+              (error) => {
+                console.error('commentFavoriteでerror: ' + error);
+              }
+            );
+          } else {
+            console.error('commentFavoriteが呼ばれるのおかしい。userId: ' + userId, 'commentId: ' + commentId);
+          }
+        });
       });
+    }, e => {
+      this.router.navigate(['login']);
     });
   }
 
   notCommentFavorite(commentId: number): void {
     console.log('notCommentFavorite。commentId ' + commentId);
     this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.count !== 0) {
-          const favoriteId = data.results[0].id;
-          this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
-            (res) => {
-              console.log('deleteCommentFavoriteしたよ。commentId' + commentId);
-            },
-            (error) => {
-              console.log('notCommentFavoriteでerror: ' + error);
-            }
-          );
-        } else {
-          console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
-        }
+      this.userService.getUser(response.account_name).subscribe(r => {
+        const userId = r.id;
+        this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
+          // データがある場合は削除する。
+          if (data !== null && data !== undefined && data.count !== 0) {
+            const favoriteId = data.results[0].id;
+            this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
+              (res) => {
+                console.log('deleteCommentFavoriteしたよ。commentId' + commentId);
+              },
+              (error) => {
+                console.log('notCommentFavoriteでerror: ' + error);
+              }
+            );
+          } else {
+            console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+          }
+        });
       });
+    }, e => {
+      this.router.navigate(['login']);
     });
   }
 }
