@@ -49,7 +49,7 @@
               <ul class="nav right-actions">
                 <!-- ログインユーザーメニュー -->
                 <div class="login-user-menu">
-                  <div class="login-state">
+                  <div *ngIf="appComponent.isLoggedIn" class="login-state">
                     <div *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
                       <nav>
                         <span class="" (click)="clickDropdownMenu()">
@@ -68,12 +68,19 @@
                       </nav>
                     </div>
                   </div>
+                  <div *ngIf="!appComponent.isLoggedIn" class="login-state">
+                    <nav>
+                        <span (click)="clickDropdownMenu()">
+                          <fa-icon [icon]="faBars"></fa-icon>
+                        </span>
+                    </nav>
+                  </div>
                 </div>
               </ul>
               <div *ngIf="displayDropdownMenu">
                 <div class="DashUserDropdown dropdown-menu">
                   <ul class="user-toggle-menu">
-                    <li class="user-detail-link menu-item">
+                    <li *ngIf="appComponent.isLoggedIn" class="user-detail-link menu-item">
                       <a routerLink="/user/{{appComponent.accountName}}" class="DashUserDropdown-userInfoLink js-nav">
                         <b class="fullname">{{appComponent.userName}}</b><span class="UserBadges"></span>
                         <p class="name"><span class="username" dir="ltr">@{{appComponent.accountName}}</span></p>

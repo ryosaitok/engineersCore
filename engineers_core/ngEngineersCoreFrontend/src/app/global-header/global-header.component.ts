@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
-import {faBookOpen, faSignal, faBookReader} from '@fortawesome/free-solid-svg-icons';
+import {faBookOpen, faSignal, faBookReader, faBars} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-global-header',
@@ -18,6 +18,7 @@ export class GlobalHeaderComponent implements OnInit {
   displayDropdownMenu = false;
   modalRef: BsModalRef;
   faBookOpen = faBookOpen;
+  faBars = faBars;
   faSignal = faSignal;
   faBookReader = faBookReader;
 

@@ -42,6 +42,7 @@ export class SigninComponent implements OnInit {
           this.appComponent.userId = res.user_id;
           this.appComponent.accountName = accountName;
           this.appComponent.profileImageLink = res.profile_image_link;
+          this.appComponent.isLoggedIn = true;
           const url = 'user/' + accountName;
           this.router.navigate([url]);
         }
@@ -82,6 +83,7 @@ export class SigninComponent implements OnInit {
         this.appComponent.userId = user.user_id;
         this.appComponent.accountName = user.account_name;
         this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
       });
   }
 
@@ -92,6 +94,7 @@ export class SigninComponent implements OnInit {
     this.appComponent.userId = null;
     this.appComponent.accountName = null;
     this.appComponent.profileImageLink = null;
+    this.appComponent.isLoggedIn = false;
     this.router.navigate(['dashboard']);
   }
 

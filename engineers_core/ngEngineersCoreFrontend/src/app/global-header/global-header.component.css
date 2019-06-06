@@ -201,6 +201,9 @@ ul.search-form {
 li {
     text-align: inherit;
 }
+.login-user-menu {
+    cursor: pointer;
+}
 .user-profile-image {
     position: absolute;
     top: 50%;
