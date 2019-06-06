@@ -41,14 +41,6 @@
                 </div>
               </ul>
             </li>
-            <li>
-              <ul class="knowledge-score navigation">
-                <div class="knowledge-score-link link-items">
-                  <li><span (click)="getInterestedBookComments()">知識スコア</span></li>
-                  <li>{{knowledgeScore}}</li>
-                </div>
-              </ul>
-            </li>
           </ul>
         </div>
       </div>
@@ -100,41 +92,6 @@
                     <div class="user-info-text description">
                       <span>{{user.description}}</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 知識スコア -->
-        <div class="module register">
-          <div class="flex-module">
-            <div class="flex-module-header">
-              <strong>知識スコア</strong>
-            </div>
-            <div class="js-user-knowledge-score-sum dashboard-user-knowledge-score-sum flex-module-inner"
-                 data-section-id="wtf" style="opacity: 1;">
-              <div class="user-knowledge-score-sum item">
-                <div class="UserKnowledgeScoreSum-context">
-                  <div class="content">
-                    <ul class="knowledge-score-sum">
-                      <li>合計</li>
-                      <li>{{knowledgeScore}}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="js-user-knowledge-score-week dashboard-user-knowledge-score-week flex-module-inner"
-                 data-section-id="wtf" style="opacity: 1;">
-              <div class="user-knowledge-score-week item">
-                <div class="UserKnowledgeScoreWeek-context">
-                  <div class="content">
-                    <ul class="knowledge-score-week">
-                      <li>今週</li>
-                      <!-- TODO:ryo.saito 修正 -->
-                      <li>{{knowledgeScore}}</li>
-                    </ul>
                   </div>
                 </div>
               </div>
