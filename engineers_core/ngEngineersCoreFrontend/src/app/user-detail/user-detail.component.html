@@ -105,7 +105,7 @@
         <!-- 本の情報 -->
         <div class="module bookComments">
           <div *ngIf="bookCommentCount > 0" class="comment-module">
-            <div *ngFor="let comment of bookComments" class="js-book-comments book-comment-content flex-module-inner"
+            <div *ngFor="let comment of bookComments; let i = index" class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <!-- 本の情報 -->
               <div class="book-info">
@@ -176,13 +176,13 @@
                           </li>
                           <li>
                             <ul class="comment-favorites comment-reaction">
-                              <li *ngIf="comment.favorite_users.indexOf(userId) >= 0">
+                              <li *ngIf="comment.favorite_users.indexOf(appComponent.userId) >= 0">
                                 <span class="comment-reaction-heart favorite-done"
-                                      (click)="notCommentFavorite(comment.id)"><fa-icon
+                                      (click)="notCommentFavorite(comment.id, i)"><fa-icon
                                   [icon]="faHeart"></fa-icon></span>
                               </li>
-                              <li *ngIf="comment.favorite_users.indexOf(userId) == -1">
-                              <span class="comment-reaction-heart favorite-none" (click)="commentFavorite(comment.id)">
+                              <li *ngIf="comment.favorite_users.indexOf(appComponent.userId) == -1">
+                              <span class="comment-reaction-heart favorite-none" (click)="commentFavorite(comment.id, i)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                               </li>

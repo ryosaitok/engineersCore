@@ -14,7 +14,6 @@ import {BookDetailComponent} from './book-detail/book-detail.component';
 import {BooksComponent} from './books/books.component';
 import {SigninComponent} from './signin/signin.component';
 import {GlobalHeaderComponent} from './global-header/global-header.component';
-import {AuthGuard} from './guard/auth.guard';
 import {BookCommentComponent} from './book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 import {SearchComponent} from './search/search.component';
@@ -23,6 +22,7 @@ import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
 import {ShelfComponent} from './shelf/shelf.component';
 import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 import {SignupComponent} from './signup/signup.component';
+import {SigninService} from './service/signin/signin.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import {SignupComponent} from './signup/signup.component';
     ModalModule.forRoot()
   ],
   exports: [],
-  providers: [CookieService, AuthGuard],
+  providers: [CookieService, SigninService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

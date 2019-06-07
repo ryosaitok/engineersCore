@@ -10,6 +10,8 @@ import {BookAuthorService} from '../service/book-author/book-author.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {UserService} from '../service/user/user.service';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-book-detail',
@@ -31,6 +33,20 @@ export class BookDetailComponent implements OnInit {
 
   modalRef: BsModalRef;
 
+  constructor(
+    private route: ActivatedRoute,
+    private appComponent: AppComponent,
+    private bookService: BookService,
+    private bookAuthorService: BookAuthorService,
+    private bookCommentService: BookCommentService,
+    private interestedBookService: InterestedBookService,
+    private commentFavoriteService: CommentFavoriteService,
+    private signinService: SigninService,
+    private userService: UserService,
+    private modalService: BsModalService
+  ) {
+  }
+
   ngOnInit() {
     this.getLoginUser();
     this.getBook();
@@ -39,23 +55,22 @@ export class BookDetailComponent implements OnInit {
     this.getInterestedCount(this.bookId);
   }
 
-  constructor(
-    private route: ActivatedRoute,
-    private bookService: BookService,
-    private bookAuthorService: BookAuthorService,
-    private bookCommentService: BookCommentService,
-    private interestedBookService: InterestedBookService,
-    private commentFavoriteService: CommentFavoriteService,
-    private signinService: SigninService,
-    private modalService: BsModalService
-  ) {
-  }
-
   getLoginUser(): void {
     this.signinService.getAuthUser().subscribe(response => {
-      const user = response;
-      this.userId = user.user_id;
-      this.accountName = user.account_name;
+      this.userService.getUser(response.account_name).subscribe(res => {
+        const user = res;
+        this.appComponent.userId = user.id;
+        this.appComponent.accountName = user.account_name;
+        this.appComponent.userName = user.user_name;
+        this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
+      });
+    }, error => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+      this.appComponent.userName = null;
+      this.appComponent.profileImageLink = null;
+      this.appComponent.isLoggedIn = false;
     });
   }
 
@@ -179,47 +194,42 @@ export class BookDetailComponent implements OnInit {
   }
 
   commentFavorite(commentId: number, index: number): void {
-    console.log('commentFavorite。commentId ' + commentId);
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.count === 0) {
-          this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
-            (res) => {
-              this.bookComments[index].favorite_users.push(userId);
-            },
-            (error) => {
-              console.error('error: ' + error);
-            }
-          );
-        } else {
-          console.error('userId: ' + userId, 'commentId: ' + commentId);
-        }
-      });
+    const loggedInUserId = this.appComponent.userId;
+    this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
+          (res) => {
+            this.bookComments[index].favorite_users.push(loggedInUserId);
+          },
+          (error) => {
+            console.error('commentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('commentFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentId: ' + commentId);
+      }
     });
   }
 
   notCommentFavorite(commentId: number, index: number): void {
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.count !== 0) {
-          const favoriteId = data.results[0].id;
-          this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
-            (res) => {
-              const userIdIndex = this.bookComments[index].favorite_users.indexOf(userId);
-              this.bookComments[index].favorite_users.splice(userIdIndex,  1);
-            },
-            (error) => {
-              console.log('error: ' + error);
-            }
-          );
-        } else {
-          console.error('commentId: ' + commentId, 'userId: ' + userId);
-        }
-      });
+    const loggedInUserId = this.appComponent.userId;
+    this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const favoriteId = data.results[0].id;
+        this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
+          (res) => {
+            const userIdIndex = this.bookComments[index].favorite_users.indexOf(loggedInUserId);
+            this.bookComments[index].favorite_users.splice(userIdIndex, 1);
+          },
+          (error) => {
+            console.log('notCommentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+      }
     });
   }
 

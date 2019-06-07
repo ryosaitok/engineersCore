@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthGuard} from './guard/auth.guard';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,6 @@ export class AppComponent {
   profileImageLink: string;
   isLoggedIn: boolean;
 
-  constructor(public auth: AuthGuard) {
-    // this.username = auth.getObservable();
+  constructor() {
   }
 }

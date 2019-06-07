@@ -7,6 +7,7 @@ import {SigninService} from '../service/signin/signin.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../service/user/user.service';
 import {BookService} from '../service/book/book.service';
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-search',
@@ -43,6 +44,7 @@ export class SearchComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private appComponent: AppComponent,
     private bookService: BookService,
     private bookCommentService: BookCommentService,
     private signinService: SigninService,
@@ -52,7 +54,7 @@ export class SearchComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.getLoginUserId();
+    this.getLoginUser();
     this.initQueryParameters();
     this.searchBookComments(1, this.sort);
   }
@@ -86,9 +88,22 @@ export class SearchComponent implements OnInit, OnChanges {
     });
   }
 
-  getLoginUserId(): void {
+  getLoginUser(): void {
     this.signinService.getAuthUser().subscribe(response => {
-      this.userId = response.user_id;
+      this.userService.getUser(response.account_name).subscribe(res => {
+        const user = res;
+        this.appComponent.userId = user.id;
+        this.appComponent.accountName = user.account_name;
+        this.appComponent.userName = user.user_name;
+        this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
+      });
+    }, error => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+      this.appComponent.userName = null;
+      this.appComponent.profileImageLink = null;
+      this.appComponent.isLoggedIn = false;
     });
   }
 

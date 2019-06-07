@@ -33,7 +33,7 @@ export class GlobalHeaderComponent implements OnInit {
     this.signinService.getAuthUser().subscribe(response => {
       this.userService.getUser(response.account_name).subscribe(res => {
         const user = res;
-        this.appComponent.userId = user.user_id;
+        this.appComponent.userId = user.id;
         this.appComponent.accountName = user.account_name;
         this.appComponent.userName = user.user_name;
         this.appComponent.profileImageLink = user.profile_image_link;
