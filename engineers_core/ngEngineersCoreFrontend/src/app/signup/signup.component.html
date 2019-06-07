@@ -1,3 +1,12 @@
-<p>
-  signup works!
-</p>
+<h2>新規登録</h2>
+<div class="signup">
+  <form #form="ngForm" (ngSubmit)="signUp(form)" novalidate>
+    <ul>
+      <li>アカウント名(英数字)：<input name="accountName" ngModel required></li>
+      <li>ユーザー表示名：<input name="username" ngModel required></li>
+      <li>メールアドレス：<input name="email" ngModel required></li>
+      <li>パスワード：<input name="password" ngModel required></li>
+    </ul>
+    <button>送信</button>
+  </form>
+</div>

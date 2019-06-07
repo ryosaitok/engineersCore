@@ -1,11 +1,9 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {SigninService} from '../service/signin/signin.service';
 import {UserService} from '../service/user/user.service';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {faBars, faBookReader} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,7 +14,6 @@ import {faBars, faBookReader} from '@fortawesome/free-solid-svg-icons';
 export class GlobalHeaderComponent implements OnInit {
 
   displayDropdownMenu = false;
-  modalRef: BsModalRef;
   faBars = faBars;
   faBookReader = faBookReader;
 
@@ -25,7 +22,6 @@ export class GlobalHeaderComponent implements OnInit {
     private appComponent: AppComponent,
     private signinService: SigninService,
     private userService: UserService,
-    private modalService: BsModalService
   ) {
   }
 

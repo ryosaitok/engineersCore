@@ -51,45 +51,4 @@ export class SigninComponent implements OnInit {
     });
     this.router.navigate(['login']);
   }
-
-  // 新規ユーザー登録する
-  // TODO:認証ユーザーとユーザーを同一トランザクションで扱えるようにする
-  signUp(f: NgForm) {
-    const accountName = f.value.accountName;
-    const username = f.value.username;
-    const email = f.value.email;
-    const description = f.value.description;
-    const imageLink = f.value.imageLink;
-    const password = f.value.password;
-    this.signInService.registerUser(accountName, email, password).subscribe(res => {
-      const authUserId = res.id;
-      if (authUserId !== null) {
-        this.userService.registerUser(authUserId, accountName, username, description, imageLink).subscribe(r => {
-          this.signInService.getAuthToken(f.value.username, f.value.password).subscribe(response => {
-            localStorage.setItem('authToken', response.token);
-            this.appComponent.userId = r.id;
-            this.appComponent.accountName = accountName;
-            this.appComponent.userName = username;
-            this.appComponent.profileImageLink = imageLink;
-            this.appComponent.isLoggedIn = true;
-            const url = 'user/' + accountName + '/';
-            this.router.navigate([url]);
-          });
-        });
-      }
-    });
-    this.router.navigate(['login']);
-  }
-
-  // ログアウトする（認証トークンをCookieから削除する）。
-  signOut() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('accountName');
-    this.appComponent.userId = null;
-    this.appComponent.accountName = null;
-    this.appComponent.userName = null;
-    this.appComponent.profileImageLink = null;
-    this.appComponent.isLoggedIn = false;
-    this.router.navigate(['dashboard']);
-  }
 }
