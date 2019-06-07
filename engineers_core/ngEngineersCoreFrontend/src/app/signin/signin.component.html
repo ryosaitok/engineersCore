@@ -22,14 +22,3 @@
     <button>送信</button>
   </form>
 </div>
-<div>
-  <form (ngSubmit)="signOut()">
-    <button>ログアウトする</button>
-  </form>
-</div>
-<div>
-  <form (ngSubmit)="reloadUser()">
-    <button>ログイン中ユーザーの情報取得</button>
-    <p>ログイン中のアカウント名:{{appComponent.accountName}}(ユーザーID:{{appComponent.userId}})</p>
-  </form>
-</div>
