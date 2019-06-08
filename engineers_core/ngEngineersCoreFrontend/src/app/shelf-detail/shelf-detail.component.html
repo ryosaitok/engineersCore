@@ -65,23 +65,20 @@
                         width="1"
                         height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
                       </div>
-                      <div class="book-title shelf-element">
+                      <div class="book-content shelf-element">
                         <ul class="book-title-data">
-                          <li>
-                            <a routerLink="/book/{{book.id}}">{{book.title | slice: 0 :40}}</a>
-                          </li>
-                          <li *ngIf="book.sale_date !== null"
-                              class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
-                        </ul>
-                      </div>
-                      <div class="book-author shelf-element">
-                        <ul class="authors">
-                          <li *ngFor="let author of book.authors; let i = index" class="author_name">
-                            <a *ngIf="i === 0" [routerLink]="['/search/']"
-                               [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
-                            <a *ngIf="i > 0" [routerLink]="['/search/']"
-                               [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
-                          </li>
+                          <a routerLink="/book/{{book.id}}">
+                            <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                          </a>
+                          <li class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
+                          <ul class="authors">
+                            <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                              <a *ngIf="i === 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
+                              <a *ngIf="i > 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
+                            </li>
+                          </ul>
                         </ul>
                       </div>
                     </div>

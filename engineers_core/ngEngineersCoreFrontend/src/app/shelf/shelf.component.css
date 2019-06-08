@@ -102,6 +102,7 @@ ul.shelf-books li {
 }
 .shelf-element {
     margin-top: 2px;
+    font-size: 12px;
 }
 .book-image {
     text-align: center;
@@ -111,24 +112,17 @@ ul.shelf-books li {
     width: 120px;
     height: 165px;
 }
-.book-title {
-    padding-left: 0;
-}
 ul.book-title-data {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
 ul.book-title-data li {
-    display: inline-block;
-    margin-right: 2px;
+    margin: 1px 0;
 }
-.sale-date {
-    font-size: 12px;
-    color: #657786 !important;
-}
-.book-author-data {
-    font-size: 12px;
+.book-title {
+    font-weight: bold;
+    word-wrap: break-word;
 }
 ul.authors {
     list-style: none;
@@ -137,10 +131,13 @@ ul.authors {
 }
 ul.authors li {
     display: inline;
-    margin-right: 0;
 }
 .author-name {
     width: auto !important;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
 }
 
 .no-shelf-text {

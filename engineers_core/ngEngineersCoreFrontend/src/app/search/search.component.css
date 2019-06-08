@@ -293,6 +293,11 @@ ul.authors li {
 .author-name {
     width: auto !important;
 }
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+
 .avatar {
     float: left;
     position: absolute;

@@ -110,7 +110,7 @@
                       <a routerLink="/book/{{book.id}}">
                         <li class="book-title">{{book.title | slice: 0 :40}}</li>
                       </a>
-                      <li>{{book.sale_date}}</li>
+                      <li class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
                       <ul class="authors">
                         <li *ngFor="let author of book.authors; let i = index" class="author_name">
                           <a *ngIf="i === 0" [routerLink]="['/search/']"

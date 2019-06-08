@@ -55,7 +55,7 @@ h1 {
 }
 .MenuNavigation-canopy {
     background-color: #ffffff;
-    padding: 4px 0;
+    padding: 8px 0;
 }
 .MenuNavigation-textContainer {
     margin: 0 auto;
@@ -261,23 +261,39 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
     margin: 5px;
     padding: 10px 0;
 }
+.book-content {
+    font-size: 12px;
+    margin: 0 10px;
+    padding: 5px 0;
+}
 ul.book-title-data {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
 ul.book-title-data li {
-    margin: 3px 0;
+    margin: 1px 0;
 }
 .book-title {
-    margin: 8px 0;
+    font-weight: bold;
+    word-wrap: break-word;
 }
-ul.book-title-data > a:hover {
-    color: #337ab7 !important;
+ul.authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
 }
-.space-dot {
-    color: #ffffff !important;
+ul.authors li {
+    display: inline;
 }
+.author-name {
+    width: auto !important;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+
 .comment-content {
     margin-left: 58px;
 }
