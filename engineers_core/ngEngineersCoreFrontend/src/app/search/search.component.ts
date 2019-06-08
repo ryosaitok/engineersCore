@@ -121,9 +121,13 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookComments(page: number, sort: string) {
     if (page !== undefined) {
       this.page = page;
+    } else {
+      this.page = 1;
     }
     if (sort !== undefined) {
       this.sort = sort;
+    } else {
+      this.sort = undefined;
     }
     this.query = this.query.trim();
     if (this.query === null || this.query === undefined || this.query === '') {
