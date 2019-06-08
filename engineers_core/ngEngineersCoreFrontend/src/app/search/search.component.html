@@ -82,13 +82,13 @@
             <div class="book-module" *ngIf="bookCount > 0">
               <ul class="sort-condition">
                 <li>
-                  {{pageStart}}~ / {{bookCount}}
+                  {{pageStart}}~ / <b>{{bookCount}}</b>
                 </li>
-                <li>
-                  <span class="sort-condition-button" (click)="searchBookComments(undefined, 'sale_rank')">人気順</span>
+                <li class="sort-condition-button">
+                  <span [class]="rankSelected" (click)="searchBookComments(undefined, 'sale_rank')">人気順</span>
                 </li>
-                <li>
-                  <span class="sort-condition-button" (click)="searchBookComments(undefined, 'sale_date')">新しい順</span>
+                <li class="sort-condition-button">
+                  <span [class]="dateSelected" (click)="searchBookComments(undefined, 'sale_date')">新しい順</span>
                 </li>
               </ul>
               <ul class="book-list">
@@ -123,20 +123,31 @@
                   </div>
                 </li>
               </ul>
-              <ul class="pagination">
-                <li *ngIf="mainPagePre !== undefined && mainPagePre !== null">
-                  <button class="page-link" (click)="searchBookComments(page - 1, sort)"><</button>
-                </li>
-                <li *ngIf="mainPagePre === undefined || mainPagePre === null">
-                  <button class="page-link" style="pointer-events: none;"><</button>
-                </li>
-                <li *ngIf="mainPageNext !== undefined && mainPageNext !== null">
-                  <button class="page-link" (click)="searchBookComments(page + 1, sort)">></button>
-                </li>
-                <li *ngIf="mainPageNext === undefined || mainPageNext === null">
-                  <button class="page-link" style="pointer-events: none;">></button>
-                </li>
-              </ul>
+              <nav aria-label="Page navigation" class="navigation">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="mainPagePre !== undefined && mainPagePre !== null">
+                    <a class="page-link" (click)="searchBookComments(page - 1, sort)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPagePre === undefined || mainPagePre === null">
+                    <a class="page-link" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" *ngIf="mainPageNext !== undefined && mainPageNext !== null">
+                    <a class="page-link" (click)="searchBookComments(page + 1, sort)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPageNext === undefined || mainPageNext === null">
+                    <a class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
             </div>
             <div *ngIf="bookCount === 0" class="book-module">
               <div class="no-content-text">

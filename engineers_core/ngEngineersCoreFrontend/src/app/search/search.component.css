@@ -11,19 +11,14 @@ a:visited {
 }
 a:hover {
     color: #337ab7 !important;
+    cursor: pointer;
+}
+.selected {
+    color: #337ab7;
+    font-weight: bold;
 }
 
 /* 検索タイトルナビ */
-SearchNavigation {
-    backface-visibility: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 46px;
-}
-.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
-    background-color: #337ab7 !important;
-}
 .SearchNavigation-canopy {
     background-color: #337ab7;
     padding: 14px 0;
@@ -86,9 +81,6 @@ ul.navigation {
 ul.navigation > li {
     display: grid;
     text-align: center;
-}
-ul.navigation > li.selected {
-    color: #337ab7;
 }
 ul.navigation > li:hover {
     list-style: none;
@@ -251,7 +243,8 @@ b {
 }
 ul.sort-condition {
     list-style: none;
-    padding: 10px 0 5px 0 !important;
+    padding: 10px 0 15px 0 !important;
+    border-bottom: 1px solid #e6ecf0;
 }
 ul.sort-condition > li {
     display: inline-block;
@@ -284,9 +277,6 @@ ul.book-title-data {
 ul.book-title-data li {
     margin: 1px 0;
 }
-ul.book-title-data > a:hover {
-    color: #337ab7 !important;
-}
 .book-title {
     font-weight: bold;
     word-wrap: break-word;
@@ -310,9 +300,6 @@ ul.authors li {
     margin-left: -58px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 1;
-}
-.comment-user > a:hover {
-    color: #337ab7 !important;
 }
 .comment-user {
     float: left;
@@ -414,4 +401,9 @@ ul.comment-reaction li > span.comment-reaction-heart:hover {
 }
 ul.comment-reaction li > span.favorite-done {
     color: #f08080;
+}
+.navigation {
+    padding: 0 10px !important;
+    border-top: 1px solid #e6ecf0;
+    margin-top: 5px;
 }

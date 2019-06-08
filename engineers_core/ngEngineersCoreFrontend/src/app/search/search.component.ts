@@ -8,7 +8,7 @@ import {CommentFavoriteService} from '../service/comment-favorite/comment-favori
 import {UserService} from '../service/user/user.service';
 import {BookService} from '../service/book/book.service';
 import {AppComponent} from '../app.component';
-import {AuthGuard} from "../guard/auth.guard";
+import {AuthGuard} from '../guard/auth.guard';
 
 @Component({
   selector: 'app-search',
@@ -33,6 +33,8 @@ export class SearchComponent implements OnInit, OnChanges {
   isSearchByTitle: boolean;
   isSearchByAuthor: boolean;
   isSearchByUser: boolean;
+  rankSelected: string;
+  dateSelected: string;
 
   faHeart = faHeart;
   faCommentDots = faCommentDots;
@@ -132,8 +134,17 @@ export class SearchComponent implements OnInit, OnChanges {
     }
     if (sort !== undefined) {
       this.sort = sort;
+      if (sort === 'sale_rank') {
+        this.rankSelected = 'selected';
+        this.dateSelected = '';
+      } else if (sort === 'sale_date') {
+        this.rankSelected = '';
+        this.dateSelected = 'selected';
+      }
     } else {
       this.sort = undefined;
+      this.rankSelected = 'selected';
+      this.dateSelected = '';
     }
     this.query = this.query.trim();
     if (this.query === null || this.query === undefined || this.query === '') {
