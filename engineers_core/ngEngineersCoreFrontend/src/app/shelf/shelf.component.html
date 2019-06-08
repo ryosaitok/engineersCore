@@ -6,7 +6,7 @@
         <div class="module shelfs">
           <div *ngIf="shelfCount > 0" class="shelf-module">
             <!-- 本棚の情報 -->
-            <div *ngFor="let shelf of shelfs"
+            <div *ngFor="let shelf of shelfs; let i = index"
                  class="js-shelf-books shelf-books-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <ul class="shelf-basic-info">
@@ -34,6 +34,36 @@
                       <a routerLink="/shelf/{{shelf.shelf_cd}}/"><b>{{shelf.shelf_name}}</b></a>
                     </div>
                   </h4>
+                  <div class="comment-reaction">
+                    <ul class="comment-reactions">
+                      <li>
+                        <ul class="comment-replies comment-reaction">
+                          <li>
+                              <span class="comment-reaction-reply">
+                                <fa-icon [icon]="faCommentDots"></fa-icon>
+                              </span>
+                          </li>
+                          <li>{{shelf.comment_users.length}}</li>
+                        </ul>
+                      </li>
+                      <li>
+                        <ul class="comment-favorites comment-reaction">
+                          <li *ngIf="shelf.favorite_users.indexOf(appComponent.userId) >= 0">
+                                <span class="comment-reaction-heart favorite-done"
+                                      (click)="undoShelfFavorite(shelf.id, i)"><fa-icon
+                                  [icon]="faHeart"></fa-icon></span>
+                          </li>
+                          <li *ngIf="shelf.favorite_users.indexOf(appComponent.userId) == -1">
+                              <span class="comment-reaction-heart favorite-none"
+                                    (click)="shelfFavorite(shelf.id, i)">
+                                <fa-icon [icon]="faHeart"></fa-icon>
+                              </span>
+                          </li>
+                          <li>{{shelf.favorite_users.length}}</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
               </ul>
               <!-- 特集の本の一覧 -->

@@ -74,8 +74,8 @@ ul.shelf-data li {
 .shelf-producer-image {
 }
 .profile-image {
-    height: 32px;
-    width: 32px;
+    height: 42px;
+    width: 42px;
     border-radius: 50%;
 }
 .shelf-producer-image, .producer-name, .producer-account-name {
@@ -94,6 +94,38 @@ ul.shelf-data li {
 .shelf-description-text {
     word-wrap: break-word;
     white-space: normal;
+}
+ul.comment-reactions {
+    list-style: none;
+    padding-left: 0;
+    margin: 5px 0 0 220px !important;
+}
+ul.comment-reactions li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.comment-reaction {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.comment-reaction li {
+    display: inline-block;
+    margin-right: 4px;
+}
+ul.comment-reaction li > span {
+    color: #cccccc;
+}
+ul.comment-reaction li > span.comment-reaction-reply:hover {
+    color: #337ab7;
+    cursor: pointer;
+}
+ul.comment-reaction li > span.comment-reaction-heart:hover {
+    color: #f08080;
+    cursor: pointer;
+}
+ul.comment-reaction li > span.favorite-done {
+    color: #f08080;
 }
 
 /* メインコンテンツ */
