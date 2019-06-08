@@ -23,11 +23,15 @@
     <div class="modal-body">
       <div class="book-action-button">
         <div>
-          <form #f="ngForm" novalidate>
-            <div class="form-group"><textarea placeholder="本の感想は？" cols='30' rows='3' type="text"
-                                              name="comment" ngModel
-                                              required maxlength="255"></textarea></div>
-            <div class="form-group">読んだ日：<input type="date" name="readDate" ngModel required></div>
+          <form #f="ngForm">
+            <div class="form-group">
+              <label for="message-text" class="control-label col-md-2">本の感想:</label>
+              <textarea ngModel class="form-control" style="width:80%;" name="comment" id="message-text" placeholder="本の感想は？" required maxlength="255"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="control-label col-md-2">読んだ日:</label>
+              <input ngModel type="date" class="form-control" style="width:30%;" name="readDate">
+            </div>
             <button type="submit" class="btn btn-primary" (click)="registerBookComment(f)">
               <strong><b>登録する</b></strong>
             </button>
@@ -244,7 +248,7 @@
                           <ul class="comment-replies comment-reaction">
                             <li>
                               <span class="comment-reaction-reply" data-sample="buttonだよ" data-id="{{comment.id}}"
-                                    (click)="openModal(repliesTemplate)">
+                                    (click)="openModal(repliesTemplate, comment.id)">
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
                             </li>

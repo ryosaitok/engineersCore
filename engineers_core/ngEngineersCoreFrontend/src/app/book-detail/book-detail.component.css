@@ -257,3 +257,6 @@ ul.comment-reaction li > span.favorite-done {
   text-align: center;
 }
 
+bs-datepicker-container {
+    z-index: 10000;
+}

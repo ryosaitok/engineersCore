@@ -22,6 +22,7 @@ import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 import {SignupComponent} from './signup/signup.component';
 import {SigninService} from './service/signin/signin.service';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
     FontAwesomeModule,
     NgbButtonsModule,
     ModalModule.forRoot(),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   exports: [],
   providers: [CookieService, SigninService],

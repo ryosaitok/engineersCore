@@ -31,6 +31,7 @@ export class BookDetailComponent implements OnInit {
   bookCommentCount: number;
   bookInterestedCount: number;
   isInterested: boolean;
+  today: string;
 
   modalRef: BsModalRef;
 
@@ -50,6 +51,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setToday();
     this.getLoginUser();
     this.getBook();
     this.getBookComments(this.bookId);
@@ -111,6 +113,7 @@ export class BookDetailComponent implements OnInit {
     const comment = f.value.comment;
     const readDate = f.value.readDate;
     const loggedInUserId = this.appComponent.userId;
+    console.log('comment: {}, readDate: {}, loggedInUserId: {}' + comment, readDate, loggedInUserId);
     this.bookCommentService.registerBookComment(loggedInUserId, this.bookId, comment, readDate).subscribe(
       (res) => {
         this.bookCommentService.getBookComment(res.id).subscribe(bookComment => {
@@ -241,5 +244,13 @@ export class BookDetailComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  setToday(): void {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2);
+    const day = ('0' + now.getDate()).slice(-2);
+    this.today = year + '-' + month + '-' + day;
   }
 }
