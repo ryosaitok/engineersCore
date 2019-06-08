@@ -81,16 +81,16 @@ export class BookDetailComponent implements OnInit {
     const bookId = this.route.snapshot.paramMap.get('id');
     this.bookService.getBook(bookId).subscribe(
       (res) => {
-          this.book = new Book(
-            res.id,
-            res.title,
-            res.book_status,
-            res.sale_date,
-            res.pages_count,
-            res.offer_price,
-            res.amazon_book,
-            res.authors
-          );
+        this.book = new Book(
+          res.id,
+          res.title,
+          res.book_status,
+          res.sale_date,
+          res.pages_count,
+          res.offer_price,
+          res.amazon_book,
+          res.authors
+        );
       },
       (error) => {
         // 404表示する？
@@ -105,22 +105,23 @@ export class BookDetailComponent implements OnInit {
   }
 
   registerBookComment(f: NgForm): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const comment = f.value.comment;
     const readDate = f.value.readDate;
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.bookCommentService.registerBookComment(userId, this.bookId, comment, readDate).subscribe(
-        (res) => {
-          this.bookCommentService.getBookComment(res.id).subscribe(bookComment => {
-            this.bookComments.unshift(bookComment);
-          });
-          // コメント登録が完了したらモーダルを閉じる。
-          this.modalRef.hide();
-        }, (error) => {
-          console.log('読んだコメントの登録に失敗！error: ' + error);
-        }
-      );
-    });
+    const loggedInUserId = this.appComponent.userId;
+    this.bookCommentService.registerBookComment(loggedInUserId, this.bookId, comment, readDate).subscribe(
+      (res) => {
+        this.bookCommentService.getBookComment(res.id).subscribe(bookComment => {
+          this.bookComments.unshift(bookComment);
+        });
+        // コメント登録が完了したらモーダルを閉じる。
+        this.modalRef.hide();
+      }, (error) => {
+        console.log('読んだコメントの登録に失敗！error: ' + error);
+      }
+    );
   }
 
   checkInterested(bookId: number): void {
@@ -145,48 +146,50 @@ export class BookDetailComponent implements OnInit {
   }
 
   interested(bookId: number): void {
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
-        // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.count === 0) {
-          this.interestedBookService.registerInterestedBook(userId, bookId).subscribe(
-            (res) => {
-              this.isInterested = true;
-            },
-            (error) => {
-              console.log('error: ' + error);
-            }
-          );
-          // すでにデータがある場合はメソッドが呼ばれるのおかしい。
-        } else {
-          console.log('userId: ' + userId + ' , commentId: ' + bookId);
-        }
-      });
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.interestedBookService.getInterestedBook(loggedInUserId, bookId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.interestedBookService.registerInterestedBook(loggedInUserId, bookId).subscribe(
+          (res) => {
+            this.isInterested = true;
+          },
+          (error) => {
+            console.log('error: ' + error);
+          }
+        );
+        // すでにデータがある場合はメソッドが呼ばれるのおかしい。
+      } else {
+        console.log('loggedInUserId: ' + loggedInUserId + ' , commentId: ' + bookId);
+      }
     });
   }
 
   notInterested(bookId: number): void {
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.interestedBookService.getInterestedBook(userId, bookId).subscribe(data => {
-        // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.count !== 0) {
-          const interestedId = data.results[0].id;
-          this.interestedBookService.deleteInterestedBook(interestedId).subscribe(
-            (res) => {
-              this.isInterested = false;
-            },
-            (error) => {
-              console.log('error: ' + error);
-            }
-          );
-        } else {
-          // まだデータが存在しない場合はデータ変更は無し。
-          console.log('userId: ' + userId + ' , commentId: ' + bookId);
-          this.isInterested = false;
-        }
-      });
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.interestedBookService.getInterestedBook(loggedInUserId, bookId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const interestedId = data.results[0].id;
+        this.interestedBookService.deleteInterestedBook(interestedId).subscribe(
+          (res) => {
+            this.isInterested = false;
+          },
+          (error) => {
+            console.log('error: ' + error);
+          }
+        );
+      } else {
+        // まだデータが存在しない場合はデータ変更は無し。
+        console.log('loggedInUserId: ' + loggedInUserId + ' , commentId: ' + bookId);
+        this.isInterested = false;
+      }
     });
   }
 
