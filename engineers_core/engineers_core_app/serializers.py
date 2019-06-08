@@ -201,10 +201,16 @@ class ShelfSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='user_id'
     )
+    comment_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
 
     class Meta:
         model = Shelf
-        fields = ('id', 'user', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description', 'favorite_users',)
+        fields = ('id', 'user', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',
+                  'favorite_users', 'comment_users',)
 
 
 class ShelfBookSerializer(serializers.ModelSerializer):
@@ -223,12 +229,6 @@ class ShelfBookWithForeignSerializer(serializers.ModelSerializer):
 
 
 class ShelfFavoriteSerializer(serializers.ModelSerializer):
-    favorite_users = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='user_id'
-    )
-
     class Meta:
         model = ShelfFavorite
         fields = ('id', 'shelf', 'user', 'favorite_date',)
@@ -241,3 +241,18 @@ class ShelfFavoriteWithForeignSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelfFavorite
         fields = ('id', 'shelf', 'user', 'favorite_date',)
+
+
+class ShelfCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShelfComment
+        fields = ('id', 'user', 'shelf', 'favorite_date',)
+
+
+class ShelfCommentWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    shelf = ShelfSerializer()
+
+    class Meta:
+        model = ShelfComment
+        fields = ('id', 'user', 'shelf', 'favorite_date',)
