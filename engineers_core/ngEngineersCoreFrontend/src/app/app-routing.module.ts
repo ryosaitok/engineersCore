@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {UsersComponent} from './users/users.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {BooksComponent} from './books/books.component';
@@ -15,10 +14,9 @@ import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 import {SignupComponent} from './signup/signup.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '', redirectTo: '/shelfs', pathMatch: 'full'},
   {path: 'login', component: SigninComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'dashboard', component: DashboardComponent},
   {path: 'users', component: UsersComponent},
   {path: 'user/:accountName', component: UserDetailComponent},
   {path: 'books', component: BooksComponent, canActivate: [AuthGuard]},

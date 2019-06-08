@@ -69,6 +69,6 @@ export class GlobalHeaderComponent implements OnInit {
     this.appComponent.userName = null;
     this.appComponent.profileImageLink = null;
     this.appComponent.isLoggedIn = false;
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['/']);
   }
 }

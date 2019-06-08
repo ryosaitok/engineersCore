@@ -9,7 +9,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {UsersComponent} from './users/users.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {BookDetailComponent} from './book-detail/book-detail.component';
 import {BooksComponent} from './books/books.component';
 import {SigninComponent} from './signin/signin.component';
@@ -30,7 +29,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
     AppComponent,
     UsersComponent,
     UserDetailComponent,
-    DashboardComponent,
     BookDetailComponent,
     BooksComponent,
     SigninComponent,
