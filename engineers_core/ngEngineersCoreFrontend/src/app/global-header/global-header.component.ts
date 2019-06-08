@@ -13,7 +13,6 @@ import {faBars, faBookReader} from '@fortawesome/free-solid-svg-icons';
 })
 export class GlobalHeaderComponent implements OnInit {
 
-  displayDropdownMenu = false;
   faBars = faBars;
   faBookReader = faBookReader;
 
@@ -46,10 +45,6 @@ export class GlobalHeaderComponent implements OnInit {
       this.appComponent.profileImageLink = null;
       this.appComponent.isLoggedIn = false;
     });
-  }
-
-  clickDropdownMenu(): void {
-    this.displayDropdownMenu = this.displayDropdownMenu === false;
   }
 
   /**

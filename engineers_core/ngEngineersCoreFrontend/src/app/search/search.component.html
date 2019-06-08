@@ -19,7 +19,6 @@
           <ul class="navigation-menu">
             <li>
               <ul class="title-search navigation">
-                <!--                <a routerLink="/search" [queryParams]="{title: query}">-->
                 <li class="title-search navigation" [class]="titleSelected"
                     (click)="searchBooksByTitle(query, null, null)">
                   <span class="search-books icon"><fa-icon [icon]="faBookOpen"></fa-icon> タイトル</span>
@@ -41,20 +40,6 @@
                 </li>
               </ul>
             </li>
-            <!--            <li>-->
-            <!--              <ul class="comment-search navigation">-->
-            <!--                <li class="comment-search navigation" [class]="userSelected">-->
-            <!--                  <span class="search-comments icon"><fa-icon [icon]="faCommentDots"></fa-icon> タイトル</span>-->
-            <!--                </li>-->
-            <!--              </ul>-->
-            <!--            </li>-->
-            <!--            <li>-->
-            <!--              <ul class="comment-search navigation">-->
-            <!--                <li class="comment-search navigation" [class]="userSelected">-->
-            <!--                  <span class="search-comments icon"><fa-icon [icon]="faCommentDots"></fa-icon> 著者</span>-->
-            <!--                </li>-->
-            <!--              </ul>-->
-            <!--            </li>-->
           </ul>
         </div>
       </div>
