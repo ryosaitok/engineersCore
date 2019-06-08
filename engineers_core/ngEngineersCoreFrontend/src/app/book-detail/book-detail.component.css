@@ -8,6 +8,9 @@ a:visited {
     color: #222222;
     text-decoration: none;
 }
+a:hover {
+    color: #337ab7 !important;
+}
 
 /* 本のタイトルナビ */
 .BookNavigation {
@@ -16,9 +19,6 @@ a:visited {
     left: 0;
     right: 0;
     top: 46px;
-}
-.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
-    background-color: #337ab7 !important;
 }
 .BookNavigation-canopy {
     background-color: #337ab7;
@@ -127,12 +127,9 @@ h1 {
     font-size: 14px;
 }
 
-.book-info-text > a:hover {
-    color: #337ab7 !important;
-}
-
 .book-title {
     font-size: 14px;
+    margin-bottom: 5px;
 }
 
 .book-title, .book-sale-date {
@@ -147,6 +144,17 @@ h1 {
 .amazon-book-image {
     width: 210px;
     height: 275px;
+}
+ul.authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.authors li {
+    display: inline;
+}
+.author-name {
+    width: auto !important;
 }
 
 .item {
@@ -206,9 +214,6 @@ b {
     margin-left: -58px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 1;
-}
-.comment-user > a:hover {
-    color: #337ab7 !important;
 }
 .comment-user {
     float: left;

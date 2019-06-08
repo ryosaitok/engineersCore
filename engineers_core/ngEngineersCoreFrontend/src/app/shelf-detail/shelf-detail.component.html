@@ -80,7 +80,7 @@
                             <a *ngIf="i === 0" [routerLink]="['/search/']"
                                [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
                             <a *ngIf="i > 0" [routerLink]="['/search/']"
-                               [queryParams]="{ author : author.author_name }">、{{author.author_name}}</a>
+                               [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
                           </li>
                         </ul>
                       </div>

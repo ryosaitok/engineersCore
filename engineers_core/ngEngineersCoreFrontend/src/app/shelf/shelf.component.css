@@ -130,14 +130,17 @@ ul.book-title-data li {
 .book-author-data {
     font-size: 12px;
 }
-ul.book-authors {
+ul.authors {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
-ul.book-authors li {
-    display: inline-block;
-    margin-right: 2px;
+ul.authors li {
+    display: inline;
+    margin-right: 0;
+}
+.author-name {
+    width: auto !important;
 }
 
 .no-shelf-text {

@@ -100,9 +100,14 @@
                         <strong><b>{{book.title}}</b></strong>
                       </a>
                     </div>
-                    <div class="book-info-text book-author">
-                      <span><b>{{book.authorName}}</b></span>
-                    </div>
+                    <ul class="authors">
+                      <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                        <a *ngIf="i === 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
+                        <a *ngIf="i > 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -238,7 +243,8 @@
                         <li>
                           <ul class="comment-replies comment-reaction">
                             <li>
-                              <span class="comment-reaction-reply" data-sample="buttonだよ" data-id="{{comment.id}}" (click)="openModal(repliesTemplate)">
+                              <span class="comment-reaction-reply" data-sample="buttonだよ" data-id="{{comment.id}}"
+                                    (click)="openModal(repliesTemplate)">
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
                             </li>

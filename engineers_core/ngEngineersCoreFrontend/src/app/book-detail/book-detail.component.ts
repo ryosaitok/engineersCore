@@ -77,23 +77,18 @@ export class BookDetailComponent implements OnInit {
   // TODO: ryo.saito Authorの配列をもてるようにする。
   getBook(): void {
     const bookId = this.route.snapshot.paramMap.get('id');
-    this.bookAuthorService.getBookAuthors(bookId).subscribe(
-      (data) => {
-        const bookAuthor = data.results[0];
-        if (bookAuthor !== undefined) {
+    this.bookService.getBook(bookId).subscribe(
+      (res) => {
           this.book = new Book(
-            bookAuthor.book.id,
-            bookAuthor.book.title,
-            bookAuthor.book.book_status,
-            bookAuthor.book.sale_date,
-            bookAuthor.book.pages_count,
-            bookAuthor.book.offer_price,
-            bookAuthor.book.amazon_book,
-            bookAuthor.author.author_name
+            res.id,
+            res.title,
+            res.book_status,
+            res.sale_date,
+            res.pages_count,
+            res.offer_price,
+            res.amazon_book,
+            res.authors
           );
-        } else {
-          // 404表示する？
-        }
       },
       (error) => {
         // 404表示する？

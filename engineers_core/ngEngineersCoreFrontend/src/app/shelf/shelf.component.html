@@ -43,7 +43,8 @@
                     <li *ngFor="let book of shelf.books; let i = index">
                       <div *ngIf="i < 5">
                         <div class="book-image shelf-element">
-                          <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazon_book[0].data_asin}}/"
+                          <a class="amazon-book-detail"
+                             href="https://www.amazon.co.jp/dp/{{book.amazon_book[0].data_asin}}/"
                              target="_blank">
                             <img class="amazon-book-image" border="0"
                                  src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazon_book[0].data_asin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
@@ -62,9 +63,12 @@
                           </ul>
                         </div>
                         <div class="book-author shelf-element">
-                          <ul class="book-authors">
-                            <li class="book-author-data">
-                              <a routerLink="/book/author/{{book.authors[0].id}}">{{book.authors[0].author_name}}</a>
+                          <ul class="authors">
+                            <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                              <a *ngIf="i === 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
+                              <a *ngIf="i > 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
                             </li>
                           </ul>
                         </div>
