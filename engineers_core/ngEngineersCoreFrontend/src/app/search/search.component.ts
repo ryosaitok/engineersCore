@@ -26,6 +26,7 @@ export class SearchComponent implements OnInit, OnChanges {
   query: string;
   sort: string;
   page: number;
+  pageStart: number;
   mainPagePre: string;
   mainPageNext: string;
   isSearchByTitle: boolean;
@@ -82,6 +83,7 @@ export class SearchComponent implements OnInit, OnChanges {
       }
       if (params.page !== null && params.page !== undefined) {
         this.page = params.page;
+        this.setPageRange(Number(params.page));
       }
       console.log('query: ' + this.query + ', isSearchByTitle: ' + this.isSearchByTitle + ', isSearchByAuthor: '
         + this.isSearchByAuthor + ', isSearchByUser: ' + this.isSearchByUser);
@@ -121,8 +123,10 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookComments(page: number, sort: string) {
     if (page !== undefined) {
       this.page = page;
+      this.setPageRange(Number(page));
     } else {
       this.page = 1;
+      this.setPageRange(1);
     }
     if (sort !== undefined) {
       this.sort = sort;
@@ -298,5 +302,13 @@ export class SearchComponent implements OnInit, OnChanges {
         console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
       }
     });
+  }
+
+  setPageRange(page: number): void {
+    if (page === 1) {
+      this.pageStart = 1;
+    } else {
+      this.pageStart = 20 * (page - 1) + 1;
+    }
   }
 }

@@ -82,6 +82,9 @@
             <div class="book-module" *ngIf="bookCount > 0">
               <ul class="sort-condition">
                 <li>
+                  {{pageStart}}~ / {{bookCount}}
+                </li>
+                <li>
                   <span class="sort-condition-button" (click)="searchBookComments(undefined, 'sale_rank')">人気順</span>
                 </li>
                 <li>
@@ -132,9 +135,6 @@
                 </li>
                 <li *ngIf="mainPageNext === undefined || mainPageNext === null">
                   <button class="page-link" style="pointer-events: none;">></button>
-                </li>
-                <li>
-                  {{bookCount}}件中 1 - 20件を表示中
                 </li>
               </ul>
             </div>
