@@ -2,9 +2,13 @@
 <div class="signup">
   <form #form="ngForm" (ngSubmit)="signUp(form)" novalidate>
     <ul>
+      <!--   入力は20文字までとする   -->
       <li>アカウント名(英数字)：<input name="accountName" ngModel required></li>
+      <!--   入力は20文字までとする   -->
       <li>ユーザー表示名：<input name="username" ngModel required></li>
+      <!--   バリでつける   -->
       <li>メールアドレス：<input name="email" ngModel required></li>
+      <!--   バリでつける   -->
       <li>パスワード：<input name="password" ngModel required></li>
     </ul>
     <button>送信</button>

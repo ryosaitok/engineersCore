@@ -1,7 +1,9 @@
 header {
   padding-bottom: 46px;
 }
-
+p {
+    margin: 0;
+}
 a {
     color: #222222;
     text-decoration: none;
@@ -83,7 +85,7 @@ element.style {
     color: #337ab7;
     cursor: pointer;
     font-size: 21px;
-    margin-top: 14px;
+    margin-top: 12px;
     display: inline-block;
     transition: all .25s ease-in-out;
     font-weight: bold;
@@ -94,7 +96,6 @@ element.style {
     font-style: normal;
     vertical-align: baseline;
     position: relative;
-    margin-right: 60px;
 }
 h1 {
     font-size: 24px;
@@ -112,7 +113,7 @@ h1 {
 .nav, .nav>li {
     float: left;
 }
-ul {
+ul.nav, ul.search-form {
     display: block;
     list-style: disc none;
     margin-block-start: 1em;
@@ -140,12 +141,12 @@ ul {
 .nav, .nav>li {
     float: left;
 }
-li {
-    text-align: inherit;
-    display: list-item;
-    text-align: -webkit-match-parent;
-    margin-right: 20px;
-}
+/*li {*/
+/*    text-align: inherit;*/
+/*    display: list-item;*/
+/*    text-align: -webkit-match-parent;*/
+/*    margin-right: 20px;*/
+/*}*/
 
 /* pull-right */
 .pull-right {
@@ -203,6 +204,7 @@ li {
 }
 .login-user-menu {
     cursor: pointer;
+    margin: 0 6px;
 }
 .user-profile-image {
     position: absolute;
@@ -217,31 +219,11 @@ li {
     width: 32px;
 }
 
-.DashUserDropdown {
-    max-width: 300px;
-    padding: 5px 0;
-    display: table !important;
-    left: 90%;
-}
-ul.user-toggle-menu {
-    list-style: none;
-    padding: 0 20px;
+ul.dropdown-menu {
+    left: -130px !important;
 }
 .dropdown-divider {
     padding-top: 1px;
     margin: 5px 1px 6px;
     border-bottom: 1px solid #e6ecf0;
-}
-li.menu-item {
-    margin-right: 0 !important;
-}
-li.link-menu {
-    padding-top: 5px;
-    cursor: pointer;
-}
-li.link-menu > span:hover {
-    color: #337ab7;
-}
-.display-none {
-    display: none;
 }

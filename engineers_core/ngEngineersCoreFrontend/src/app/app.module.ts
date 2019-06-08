@@ -23,6 +23,7 @@ import {ShelfComponent} from './shelf/shelf.component';
 import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 import {SignupComponent} from './signup/signup.component';
 import {SigninService} from './service/signin/signin.service';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {SigninService} from './service/signin/signin.service';
     FormsModule,
     FontAwesomeModule,
     NgbButtonsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   exports: [],
   providers: [CookieService, SigninService],

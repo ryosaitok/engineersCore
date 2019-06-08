@@ -7,7 +7,7 @@ import {SigninService} from '../service/signin/signin.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../service/user/user.service';
 import {BookService} from '../service/book/book.service';
-import {AppComponent} from "../app.component";
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-search',
@@ -256,48 +256,43 @@ export class SearchComponent implements OnInit, OnChanges {
     }
   }
 
-  commentFavorite(commentId: number): void {
-    console.log('commentFavorite。commentId ' + commentId);
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // まだデータが存在しない場合は作成する。
-        if (data === null || data === undefined || data.count === 0) {
-          this.commentFavoriteService.registerCommentFavorite(userId, commentId).subscribe(
-            (res) => {
-              console.log('registerCommentFavoriteしたよ。commentId: ' + commentId);
-            },
-            (error) => {
-              console.error('commentFavoriteでerror: ' + error);
-            }
-          );
-        } else {
-          console.error('commentFavoriteが呼ばれるのおかしい。userId: ' + userId, 'commentId: ' + commentId);
-        }
-      });
+  commentFavorite(commentId: number, index: number): void {
+    const loggedInUserId = this.appComponent.userId;
+    this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
+          (res) => {
+            this.bookComments[index].favorite_users.push(loggedInUserId);
+          },
+          (error) => {
+            console.error('commentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('commentFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentId: ' + commentId);
+      }
     });
   }
 
-  notCommentFavorite(commentId: number): void {
-    console.log('notCommentFavorite。commentId ' + commentId);
-    this.signinService.getAuthUser().subscribe(response => {
-      const userId = response.user_id;
-      this.commentFavoriteService.getCommentFavorite(userId, commentId).subscribe(data => {
-        // データがある場合は削除する。
-        if (data !== null && data !== undefined && data.count !== 0) {
-          const favoriteId = data.results[0].id;
-          this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
-            (res) => {
-              console.log('deleteCommentFavoriteしたよ。commentId' + commentId);
-            },
-            (error) => {
-              console.log('notCommentFavoriteでerror: ' + error);
-            }
-          );
-        } else {
-          console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
-        }
-      });
+  notCommentFavorite(commentId: number, index: number): void {
+    const loggedInUserId = this.appComponent.userId;
+    this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const favoriteId = data.results[0].id;
+        this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
+          (res) => {
+            const userIdIndex = this.bookComments[index].favorite_users.indexOf(loggedInUserId);
+            this.bookComments[index].favorite_users.splice(userIdIndex, 1);
+          },
+          (error) => {
+            console.log('notCommentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+      }
     });
   }
 }
