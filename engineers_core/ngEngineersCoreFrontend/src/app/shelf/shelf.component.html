@@ -13,14 +13,14 @@
                 <li>
                   <!-- カテゴリの作成者 -->
                   <div class="producer-info">
-                    <a routerLink="/user/{{shelf.producer.account_name}}">
+                    <a routerLink="/user/{{shelf.user.account_name}}">
                       <div class="producer-icon">
-                        <div *ngIf="shelf.producer.profile_image_link !== null" class="user-profile-icon">
+                        <div *ngIf="shelf.user.profile_image_link !== null" class="user-profile-icon">
                           <img class="profile-image"
-                               src="../../assets/image/profile/{{shelf.producer.profile_image_link}}"
+                               src="../../assets/image/profile/{{shelf.user.profile_image_link}}"
                                alt=""/>
                         </div>
-                        <div *ngIf="shelf.producer.profile_image_link === null" class="user-profile-icon">
+                        <div *ngIf="shelf.user.profile_image_link === null" class="user-profile-icon">
                           <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
                         </div>
                       </div>

@@ -17,19 +17,19 @@
         <div class="ShelfNavigation-titleText" dir="ltr">
           <ul class="shelf-data">
             <li class="shelf-producer-image">
-              <a routerLink="/user/{{shelf.producer.account_name}}">
-                <div *ngIf="shelf.producer.profile_image_link !== null" class="user-profile-icon">
-                  <img class="profile-image" src="../../assets/image/profile/{{shelf.producer.profile_image_link}}"
+              <a routerLink="/user/{{shelf.user.account_name}}">
+                <div *ngIf="shelf.user.profile_image_link !== null" class="user-profile-icon">
+                  <img class="profile-image" src="../../assets/image/profile/{{shelf.user.profile_image_link}}"
                        alt=""/>
                 </div>
-                <div *ngIf="shelf.producer.profile_image_link === null" class="user-profile-icon">
+                <div *ngIf="shelf.user.profile_image_link === null" class="user-profile-icon">
                   <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </a>
             </li>
-            <a routerLink="/user/{{shelf.producer.account_name}}">
-              <li class="producer-name">{{shelf.producer.user_name}}</li>
-              <li class="producer-account-name">@{{shelf.producer.account_name}}</li>
+            <a routerLink="/user/{{shelf.user.account_name}}">
+              <li class="producer-name">{{shelf.user.user_name}}</li>
+              <li class="producer-account-name">@{{shelf.user.account_name}}</li>
             </a>
           </ul>
           <div class="shelf-description">

@@ -380,3 +380,35 @@ class ShelfBookListView(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ShelfBookListView, self).filter_queryset(queryset)
         return queryset.order_by('shelf_book__display_order', 'display_order')
+
+
+class ShelfFavoriteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfFavorite.objects.all()
+    serializer_class = ShelfFavoriteSerializer
+
+
+class ShelfFavoriteListView(generics.ListCreateAPIView):
+    queryset = ShelfFavorite.objects.all()
+    serializer_class = ShelfFavoriteWithForeignSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfFavoriteSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+    def get_queryset(self):
+        queryset = ShelfFavorite.objects.filter(shelf__shelf_status='OPN')
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        shelf_cd = self.request.query_params.get('shelf_cd', None)
+        if shelf_cd is not None:
+            queryset = queryset.filter(shelf__shelf_cd=shelf_cd)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('ShelfFavoriteListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(ShelfFavoriteListView, self).filter_queryset(queryset)
+        return queryset.order_by('shelf__display_order')

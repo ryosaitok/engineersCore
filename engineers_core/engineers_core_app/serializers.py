@@ -195,11 +195,16 @@ class InterestedBookWithForeignSerializer(serializers.ModelSerializer):
 
 class ShelfSerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True)
-    producer = UserSerializer()
+    user = UserSerializer()
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
 
     class Meta:
         model = Shelf
-        fields = ('id', 'producer', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',)
+        fields = ('id', 'user', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description', 'favorite_users',)
 
 
 class ShelfBookSerializer(serializers.ModelSerializer):
@@ -215,3 +220,24 @@ class ShelfBookWithForeignSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelfBook
         fields = ('id', 'shelf', 'book', 'display_order',)
+
+
+class ShelfFavoriteSerializer(serializers.ModelSerializer):
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+
+    class Meta:
+        model = ShelfFavorite
+        fields = ('id', 'shelf', 'user', 'favorite_date',)
+
+
+class ShelfFavoriteWithForeignSerializer(serializers.ModelSerializer):
+    shelf = ShelfSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = ShelfFavorite
+        fields = ('id', 'shelf', 'user', 'favorite_date',)

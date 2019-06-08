@@ -192,7 +192,7 @@ class InterestedBook(models.Model):
 
 
 class Shelf(models.Model):
-    producer = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     books = models.ManyToManyField(Book, through='ShelfBook')
     shelf_name = models.TextField(max_length=1000)
     shelf_cd = models.CharField(max_length=128, unique=True)
@@ -227,3 +227,18 @@ class ShelfBook(models.Model):
 
     def __str__(self):
         return str(self.display_order)
+
+
+class ShelfFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shelf = models.ForeignKey(Shelf, related_name='favorite_users', on_delete=models.CASCADE)
+    favorite_date = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "shelf")
+        db_table = 'shelf_favorite'
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.shelf.shelf_name
