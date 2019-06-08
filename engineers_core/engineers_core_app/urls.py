@@ -35,6 +35,8 @@ urlpatterns = [
     path('shelf/favorite/<int:pk>/', ShelfFavoriteView.as_view()),
     path('shelf/comments/', ShelfCommentListView.as_view()),
     path('shelf/comment/<int:pk>/', ShelfCommentView.as_view()),
+    path('shelf/comment/favorites/', ShelfCommentFavoriteListView.as_view()),
+    path('shelf/comment/favorite/<int:pk>/', ShelfCommentFavoriteView.as_view()),
     path('bulk/book/', BookBulkListView.as_view()),
     path('bulk/amazonbook/', AmazonBookBulkListView.as_view()),
     path('bulk/author/', AuthorBulkListView.as_view()),

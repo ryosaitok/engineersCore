@@ -444,3 +444,35 @@ class ShelfCommentListView(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ShelfCommentListView, self).filter_queryset(queryset)
         return queryset.order_by('shelf__display_order')
+
+
+class ShelfCommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfCommentFavorite.objects.all()
+    serializer_class = ShelfCommentFavoriteSerializer
+
+
+class ShelfCommentFavoriteListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentFavorite.objects.all()
+    serializer_class = ShelfCommentFavoriteWithForeignSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentFavoriteSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+    def get_queryset(self):
+        queryset = ShelfCommentFavorite.objects.filter(shelf_comment__shelf__shelf_status='OPN')
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        comment_id = self.request.query_params.get('comment_id', None)
+        if comment_id is not None:
+            queryset = queryset.filter(shelf_comment__id=comment_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('ShelfCommentFavoriteListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(ShelfCommentFavoriteListView, self).filter_queryset(queryset)
+        return queryset.order_by('favorite_date')
