@@ -12,6 +12,7 @@ import {CommentFavoriteService} from '../service/comment-favorite/comment-favori
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {UserService} from '../service/user/user.service';
 import {AppComponent} from '../app.component';
+import {AuthGuard} from '../guard/auth.guard';
 
 @Component({
   selector: 'app-book-detail',
@@ -35,6 +36,7 @@ export class BookDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authGuard: AuthGuard,
     private appComponent: AppComponent,
     private bookService: BookService,
     private bookAuthorService: BookAuthorService,
@@ -189,6 +191,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   commentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // まだデータが存在しない場合は作成する。
@@ -208,6 +213,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   notCommentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // データがある場合は削除する。

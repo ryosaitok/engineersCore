@@ -8,6 +8,7 @@ import {CommentFavoriteService} from '../service/comment-favorite/comment-favori
 import {UserService} from '../service/user/user.service';
 import {BookService} from '../service/book/book.service';
 import {AppComponent} from '../app.component';
+import {AuthGuard} from "../guard/auth.guard";
 
 @Component({
   selector: 'app-search',
@@ -45,6 +46,7 @@ export class SearchComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private authGuard: AuthGuard,
     private appComponent: AppComponent,
     private bookService: BookService,
     private bookCommentService: BookCommentService,
@@ -265,6 +267,9 @@ export class SearchComponent implements OnInit, OnChanges {
   }
 
   commentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // まだデータが存在しない場合は作成する。
@@ -284,6 +289,9 @@ export class SearchComponent implements OnInit, OnChanges {
   }
 
   notCommentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // データがある場合は削除する。

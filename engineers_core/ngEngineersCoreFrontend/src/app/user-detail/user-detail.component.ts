@@ -7,7 +7,8 @@ import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {InterestedBookService} from '../service/interested-book/interested-book.service';
 import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
 import {SigninService} from '../service/signin/signin.service';
-import {AppComponent} from "../app.component";
+import {AppComponent} from '../app.component';
+import {AuthGuard} from "../guard/auth.guard";
 
 @Component({
   selector: 'app-user-detail',
@@ -29,6 +30,7 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private authGuard: AuthGuard,
     private appComponent: AppComponent,
     private userService: UserService,
     private bookCommentService: BookCommentService,
@@ -124,6 +126,9 @@ export class UserDetailComponent implements OnInit {
   }
 
   commentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // まだデータが存在しない場合は作成する。
@@ -143,6 +148,9 @@ export class UserDetailComponent implements OnInit {
   }
 
   notCommentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const loggedInUserId = this.appComponent.userId;
     this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
       // データがある場合は削除する。
