@@ -69,26 +69,27 @@ h1 {
 ul.navigation-menu {
     list-style: none;
     margin-bottom: 0 !important;
+    cursor: pointer;
 }
 ul.navigation-menu li {
     display: inline-block;
     margin-right: 10px;
 }
-ul.navigation {
+ul.title-search {
     list-style: none;
     margin-bottom: 0 !important;
 }
-ul.navigation > li {
+ul.title-search > li {
     display: grid;
     text-align: center;
 }
-ul.navigation > li:hover {
+ul.title-search > li:hover {
     list-style: none;
     margin-bottom: 0 !important;
     color: #337ab7;
     cursor: pointer;
 }
-ul.navigation li {
+ul.title-search li {
     margin-right: 4px;
 }
 
@@ -402,7 +403,7 @@ ul.comment-reaction li > span.comment-reaction-heart:hover {
 ul.comment-reaction li > span.favorite-done {
     color: #f08080;
 }
-.navigation {
+.paging-navigation {
     padding: 0 10px !important;
     border-top: 1px solid #e6ecf0;
     margin-top: 5px;
