@@ -241,6 +241,7 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
 .amazon-book-image {
     width: 120px;
     height: 165px;
+    border: 1px solid #e6ecf0;
 }
 .book-comment {
     display: inline-block;

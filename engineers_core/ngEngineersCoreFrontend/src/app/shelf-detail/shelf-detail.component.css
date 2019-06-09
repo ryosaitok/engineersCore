@@ -174,6 +174,7 @@ ul.shelf-book-module li {
 .amazon-book-image {
     width: 120px;
     height: 165px;
+    border: 1px solid #e6ecf0;
 }
 .shelf-element {
     font-size: 12px;

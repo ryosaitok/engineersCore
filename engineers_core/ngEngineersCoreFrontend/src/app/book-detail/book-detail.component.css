@@ -144,6 +144,7 @@ h1 {
 .amazon-book-image {
     width: 210px;
     height: 275px;
+    border: 1px solid #e6ecf0;
 }
 ul.authors {
     list-style: none;
