@@ -28,12 +28,12 @@ a:hover {
 }
 
 @media (min-width: 1236px) {
-  .ShelfsModules {
+  .ShelvesModules {
     float: left;
     margin: auto;
   }
 }
-.ShelfsModules {
+.ShelvesModules {
     width: 850px;
     position: unset;
     background-color: #fff;

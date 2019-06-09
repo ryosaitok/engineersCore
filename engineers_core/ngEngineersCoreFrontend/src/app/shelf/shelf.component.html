@@ -2,11 +2,11 @@
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
       <!-- メインメニュー(本棚一覧) -->
-      <div class="ShelfsModules">
-        <div class="module shelfs">
+      <div class="ShelvesModules">
+        <div class="module shelves">
           <div *ngIf="shelfCount > 0" class="shelf-module">
             <!-- 本棚の情報 -->
-            <div *ngFor="let shelf of shelfs; let i = index"
+            <div *ngFor="let shelf of shelves; let i = index"
                  class="js-shelf-books shelf-books-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
               <ul class="shelf-basic-info">
@@ -41,7 +41,7 @@
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
                           </li>
-                          <li>{{shelf.commentUserIds.length}}</li>
+                          <li>{{shelf.commentUserCount}}</li>
                         </ul>
                       </li>
                       <li>
@@ -57,7 +57,7 @@
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                           </li>
-                          <li>{{shelf.favoriteUserIds.length}}</li>
+                          <li>{{shelf.favoriteUserCount}}</li>
                         </ul>
                       </li>
                     </ul>

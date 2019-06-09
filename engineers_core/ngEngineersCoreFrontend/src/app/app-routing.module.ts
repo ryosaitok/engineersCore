@@ -12,7 +12,7 @@ import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
 import {SignupComponent} from './signup/signup.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/shelfs', pathMatch: 'full'},
+  {path: '', redirectTo: '/shelves', pathMatch: 'full'},
   {path: 'login', component: SigninComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'users', component: UsersComponent},
@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'book/:id', component: BookDetailComponent},
   {path: 'bookcomment/:id', component: BookCommentComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'shelfs', component: ShelfComponent},
+  {path: 'shelves', component: ShelfComponent},
   {path: 'shelf/:shelfCd', component: ShelfDetailComponent},
   {path: '**', component: PageNotFoundComponent},
 ];

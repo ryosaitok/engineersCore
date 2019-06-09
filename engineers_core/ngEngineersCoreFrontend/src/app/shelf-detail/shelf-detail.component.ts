@@ -5,6 +5,7 @@ import {ShelfService} from '../service/shelf/shelf.service';
 import {AuthGuard} from '../guard/auth.guard';
 import {AppComponent} from '../app.component';
 import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.service';
+import {Shelf} from '../shelf';
 
 @Component({
   selector: 'app-shelf-detail',
@@ -14,7 +15,7 @@ import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.ser
 export class ShelfDetailComponent implements OnInit {
 
   shelfCd = this.route.snapshot.paramMap.get('shelfCd');
-  shelf: any;
+  shelf: Shelf;
   shelfBookCount: number;
 
   faBookReader = faBookReader;
@@ -35,9 +36,10 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   getShelf(): void {
-    this.shelfService.getShelfsByShelfCd(this.shelfCd).subscribe(data => {
+    this.shelfService.getShelvesByShelfCd(this.shelfCd).subscribe(data => {
       if (data.results[0] !== undefined && data.results[0] !== null) {
-        this.shelf = data.results[0];
+        const shelves = data.results;
+        this.shelf = this.shelfService.convertShelves(shelves, 20)[0];
         this.shelfBookCount = Object.keys(data.results[0].books).length;
       }
     });
@@ -53,7 +55,8 @@ export class ShelfDetailComponent implements OnInit {
       if (data === null || data === undefined || data.count === 0) {
         this.shelfFavoriteService.registerShelfFavorite(loggedInUserId, shelfId).subscribe(
           (res) => {
-            this.shelf.favorite_users.push(loggedInUserId);
+            this.shelf.favoriteUserIds.push(loggedInUserId);
+            this.shelf.favoriteUserCount += 1;
           },
           (error) => {
             console.error('shelfFavoriteでerror: ' + error);
@@ -76,8 +79,9 @@ export class ShelfDetailComponent implements OnInit {
         const favoriteId = data.results[0].id;
         this.shelfFavoriteService.deleteShelfFavorite(favoriteId).subscribe(
           (res) => {
-            const userIdIndex = this.shelf.favorite_users.indexOf(loggedInUserId);
-            this.shelf.favorite_users.splice(userIdIndex, 1);
+            const userIdIndex = this.shelf.favoriteUserIds.indexOf(loggedInUserId);
+            this.shelf.favoriteUserIds.splice(userIdIndex, 1);
+            this.shelf.favoriteUserCount -= 1;
           },
           (error) => {
             console.log('undoShelfFavoriteでerror: ' + error);
