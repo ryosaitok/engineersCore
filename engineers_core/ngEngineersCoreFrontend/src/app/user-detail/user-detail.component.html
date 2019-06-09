@@ -17,10 +17,10 @@
       <div class="MenuNavigation-textContainer">
         <div class="MenuNavigation-titleText" dir="ltr">
           <ul class="navigation-menu">
-            <li>
-              <ul class="read-books navigation">
+            <li [class]="readBookSelected">
+              <ul class="read-books navigation" (click)="getBookComments()">
                 <div class="read-books-link link-items">
-                  <li><span (click)="getBookComments()">読んだ本</span></li>
+                  <li>読んだ本</li>
                   <li>{{bookCommentCount}}</li>
                 </div>
               </ul>
@@ -33,10 +33,10 @@
                 </div>
               </ul>
             </li>
-            <li>
-              <ul class="favorite-comments navigation">
+            <li [class]="favoriteCommentSelected">
+              <ul class="favorite-comments navigation" (click)="getFavoriteBookComments()">
                 <div class="favorite-comments-link link-items">
-                  <li><span (click)="getFavoriteBookComments()">いいね</span></li>
+                  <li>いいね</li>
                   <li>{{favoriteCommentCount}}</li>
                 </div>
               </ul>

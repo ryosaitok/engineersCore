@@ -8,6 +8,13 @@ a:visited {
     color: #222222;
     text-decoration: none;
 }
+a:hover {
+    color: #337ab7 !important;
+}
+.selected {
+    color: #337ab7;
+    font-weight: bold;
+}
 
 /* 本のタイトルナビ */
 .UserNavigation {
@@ -16,9 +23,6 @@ a:visited {
     left: 0;
     right: 0;
     top: 46px;
-}
-.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
-    background-color: #337ab7 !important;
 }
 .UserNavigation-canopy {
     background-color: #337ab7;

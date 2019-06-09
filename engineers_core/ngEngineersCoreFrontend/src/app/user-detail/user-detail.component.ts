@@ -17,6 +17,9 @@ import {AuthGuard} from "../guard/auth.guard";
 })
 export class UserDetailComponent implements OnInit {
 
+  faHeart = faHeart;
+  faCommentDots = faCommentDots;
+
   userId: number;
   @Input() user: User;
   bookComments: any[];
@@ -24,8 +27,8 @@ export class UserDetailComponent implements OnInit {
   interestedBookCount: number;
   favoriteCommentCount: number;
   knowledgeScore: number;
-  faHeart = faHeart;
-  faCommentDots = faCommentDots;
+  readBookSelected = 'selected';
+  favoriteCommentSelected = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -90,6 +93,8 @@ export class UserDetailComponent implements OnInit {
         this.knowledgeScore = this.knowledgeScore + res.book.offer_price;
       });
     });
+    this.readBookSelected = 'selected';
+    this.favoriteCommentSelected = '';
   }
 
   getInterestedBookComments(): void {
@@ -107,6 +112,8 @@ export class UserDetailComponent implements OnInit {
         });
       }
     );
+    this.readBookSelected = '';
+    this.favoriteCommentSelected = 'selected';
   }
 
 // TODO: ryo.saito countのAPIに切り替える
