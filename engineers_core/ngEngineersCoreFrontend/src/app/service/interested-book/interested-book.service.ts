@@ -83,7 +83,6 @@ export class InterestedBookService {
         new InterestedBook(interested.id, userForInterested, bookForInterested, interested.interested_date)
       );
     });
-    console.log('convertedInterestedBooks: ' + JSON.stringify(convertedInterestedBooks));
     return convertedInterestedBooks;
   }
 }

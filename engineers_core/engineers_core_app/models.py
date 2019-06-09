@@ -147,7 +147,7 @@ class CommentFavorite(models.Model):
 
 class BookCommentReply(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(BookComment, related_name='reply_ids', on_delete=models.CASCADE)
+    comment = models.ForeignKey(BookComment, related_name='reply_users', on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=10000)
     comment_date = models.DateField(auto_now=True)
     tweet_flag = models.BooleanField(default=False)

@@ -1,15 +1,17 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
+import {AuthGuard} from '../../guard/auth.guard';
+import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+
+import {AppComponent} from '../../app.component';
+import {InterestedBook} from '../../dto/interested-book/interested-book';
+import {BookComment} from '../../dto/book-comment/book-comment';
 import {User} from '../../dto/user/user';
 import {UserService} from '../../service/user/user.service';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
-import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {InterestedBookService} from '../../service/interested-book/interested-book.service';
 import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
 import {SigninService} from '../../service/signin/signin.service';
-import {AppComponent} from '../../app.component';
-import {AuthGuard} from '../../guard/auth.guard';
-import {InterestedBook} from '../../dto/interested-book/interested-book';
 
 @Component({
   selector: 'app-user-detail',
@@ -22,9 +24,8 @@ export class UserDetailComponent implements OnInit {
   faCommentDots = faCommentDots;
 
   accountName = this.route.snapshot.paramMap.get('accountName');
-  userId: number;
   @Input() user: User;
-  bookComments: any[];
+  bookComments: BookComment[];
   bookCommentCount: number;
   interestedBooks: InterestedBook[];
   interestedBookCount: number;
@@ -58,11 +59,10 @@ export class UserDetailComponent implements OnInit {
   getLoginUser(): void {
     this.signinService.getAuthUser().subscribe(response => {
       this.userService.getUser(response.account_name).subscribe(res => {
-        const user = res;
-        this.appComponent.userId = user.id;
-        this.appComponent.accountName = user.account_name;
-        this.appComponent.userName = user.user_name;
-        this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.userId = res.id;
+        this.appComponent.accountName = res.account_name;
+        this.appComponent.userName = res.user_name;
+        this.appComponent.profileImageLink = res.profile_image_link;
         this.appComponent.isLoggedIn = true;
       });
     }, error => {
@@ -76,20 +76,16 @@ export class UserDetailComponent implements OnInit {
 
   getUser(): void {
     this.userService.getUser(this.accountName).subscribe(response => {
-      this.userId = response.id;
-      this.user = new User(
-        response.id,
-        response.user_name,
-        response.account_name,
-        response.description,
-        response.profile_image_link);
+      this.user = new User(response.id, response.user_name, response.account_name, response.description, response.profile_image_link);
     });
   }
 
   getReadBookComments(): void {
     this.bookCommentService.getBookCommentsByAccountName(this.accountName).subscribe(data => {
-      this.bookComments = data.results;
       this.bookCommentCount = data.count;
+      if (data.count > 0) {
+        this.bookComments = this.bookCommentService.convertBookComments(data.results);
+      }
       this.knowledgeScore = 0;
       data.results.forEach(res => {
         this.knowledgeScore = this.knowledgeScore + res.book.offer_price;
@@ -114,11 +110,15 @@ export class UserDetailComponent implements OnInit {
 
   getFavoriteBookComments(): void {
     this.bookCommentService.getBookComments().subscribe(data => {
-        this.bookComments = [];
-        data.results.forEach(res => {
-          // いいねしているコメントのみ表示する
-          if (res.favorite_users.indexOf(this.userId) >= 0) {
-            this.bookComments.push(res);
+        this.favoriteCommentCount = data.count;
+        if (data.count === 0) {
+          return;
+        }
+        const bookComments = this.bookCommentService.convertBookComments(data.results);
+        bookComments.forEach(comment => {
+          // 指定したユーザーがいいねしているコメントのみ表示する
+          if (comment.favoriteUserIds.indexOf(this.user.id) >= 0) {
+            this.bookComments.push(comment);
           }
         });
       }
@@ -152,7 +152,8 @@ export class UserDetailComponent implements OnInit {
       if (data === null || data === undefined || data.count === 0) {
         this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
           (res) => {
-            this.bookComments[index].favorite_users.push(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.push(loggedInUserId);
+            this.bookComments[index].favoriteUserCount += 1;
           },
           (error) => {
             console.error('commentFavoriteでerror: ' + error);
@@ -175,8 +176,9 @@ export class UserDetailComponent implements OnInit {
         const favoriteId = data.results[0].id;
         this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
           (res) => {
-            const userIdIndex = this.bookComments[index].favorite_users.indexOf(loggedInUserId);
-            this.bookComments[index].favorite_users.splice(userIdIndex, 1);
+            const userIdIndex = this.bookComments[index].favoriteUserIds.indexOf(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.splice(userIdIndex, 1);
+            this.bookComments[index].favoriteUserCount -= 1;
           },
           (error) => {
             console.log('notCommentFavoriteでerror: ' + error);

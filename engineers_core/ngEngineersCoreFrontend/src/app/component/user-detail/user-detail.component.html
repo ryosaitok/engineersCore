@@ -115,11 +115,11 @@
                     <div class="book-data">
                       <div class="book-image">
                         <a class="amazon-book-detail"
-                           href="https://www.amazon.co.jp/dp/{{comment.book.amazon_book[0].data_asin}}/"
+                           href="https://www.amazon.co.jp/dp/{{comment.book.amazonBook.dataAsin}}/"
                            target="_blank">
                           <img class="amazon-book-image" border="0"
-                               src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{comment.book.amazon_book[0].data_asin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
-                        src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{comment.book.amazon_book[0].data_asin}}"
+                               src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{comment.book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                        src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{comment.book.amazonBook.dataAsin}}"
                         width="1"
                         height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
                       </div>
@@ -128,13 +128,13 @@
                           <a routerLink="/book/{{comment.book.id}}">
                             <li class="book-title">{{comment.book.title | slice: 0 :40}}</li>
                           </a>
-                          <li class="sale-date">{{comment.book.sale_date | date:"yyyy年M月d日"}}</li>
+                          <li class="sale-date">{{comment.book.saleDate | date:"yyyy年M月d日"}}</li>
                           <ul class="authors">
                             <li *ngFor="let author of comment.book.authors; let i = index" class="author_name">
                               <a *ngIf="i === 0" [routerLink]="['/search/']"
-                                 [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
+                                 [queryParams]="{ author : author.authorName }">{{author.authorName}}</a>
                               <a *ngIf="i > 0" [routerLink]="['/search/']"
-                                 [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
+                                 [queryParams]="{ author : author.authorName }">, {{author.authorName}}</a>
                             </li>
                           </ul>
                         </ul>
@@ -150,26 +150,26 @@
                   <div class="context">
                     <div class="comment-content">
                       <div class="comment-user">
-                        <a routerLink="/user/{{comment.user.account_name}}">
+                        <a routerLink="/user/{{comment.user.userAccountName}}">
                           <div class="comment-user">
-                            <div *ngIf="comment.user.profile_image_link !== null" class="user-icon">
-                              <img class="avatar" src="../../assets/image/profile/{{comment.user.profile_image_link}}"
+                            <div *ngIf="comment.user.profileImageLink !== null" class="user-icon">
+                              <img class="avatar" src="../../assets/image/profile/{{comment.user.profileImageLink}}"
                                    alt=""/>
                             </div>
-                            <div *ngIf="comment.user.profile_image_link === null" class="user-icon">
+                            <div *ngIf="comment.user.profileImageLink === null" class="user-icon">
                               <img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
                             </div>
                             <div class="user-name">
-                              {{comment.user.user_name}}(@{{comment.user.account_name}})
+                              {{comment.user.userName}}(@{{comment.user.userAccountName}})
                             </div>
                           </div>
                         </a>
                       </div>
                       <div class="comment-date">
-                        ・{{comment.comment_date | date:"yyyy年M月d日" }}
+                        ・{{comment.commentDate | date:"yyyy年M月d日" }}
                       </div>
                       <div class="comment-text pre-wrap">
-                        {{comment.comment_text}}
+                        {{comment.commentText}}
                       </div>
                       <div class="comment-reaction">
                         <ul class="comment-reactions">
@@ -180,23 +180,23 @@
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
                               </li>
-                              <li>{{comment.reply_ids.length}}</li>
+                              <li>{{comment.replyUserCount}}</li>
                             </ul>
                           </li>
                           <li>
                             <ul class="comment-favorites comment-reaction">
-                              <li *ngIf="comment.favorite_users.indexOf(appComponent.userId) >= 0">
+                              <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
                                 <span class="comment-reaction-heart favorite-done"
                                       (click)="notCommentFavorite(comment.id, i)"><fa-icon
                                   [icon]="faHeart"></fa-icon></span>
                               </li>
-                              <li *ngIf="comment.favorite_users.indexOf(appComponent.userId) == -1">
+                              <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
                               <span class="comment-reaction-heart favorite-none"
                                     (click)="commentFavorite(comment.id, i)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                               </li>
-                              <li>{{comment.favorite_users.length}}</li>
+                              <li>{{comment.favoriteUserCount}}</li>
                             </ul>
                           </li>
                         </ul>
