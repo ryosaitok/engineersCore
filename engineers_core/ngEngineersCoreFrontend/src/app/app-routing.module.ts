@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UsersComponent} from './users/users.component';
-import {UserDetailComponent} from './user-detail/user-detail.component';
-import {BookDetailComponent} from './book-detail/book-detail.component';
-import {SigninComponent} from './signin/signin.component';
-import {BookCommentComponent} from './book-comment/book-comment.component';
+import {UsersComponent} from './component/users/users.component';
+import {UserDetailComponent} from './component/user-detail/user-detail.component';
+import {BookDetailComponent} from './component/book-detail/book-detail.component';
+import {SigninComponent} from './component/signin/signin.component';
+import {BookCommentComponent} from './component/book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
-import {SearchComponent} from './search/search.component';
-import {ShelfComponent} from './shelf/shelf.component';
-import {ShelfDetailComponent} from './shelf-detail/shelf-detail.component';
-import {SignupComponent} from './signup/signup.component';
+import {SearchComponent} from './component/search/search.component';
+import {ShelfComponent} from './component/shelf/shelf.component';
+import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
+import {SignupComponent} from './component/signup/signup.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/shelves', pathMatch: 'full'},
@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'bookcomment/:id', component: BookCommentComponent},
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},
-  {path: 'shelf/:shelfCd', component: ShelfDetailComponent},
+  {path: 'shelf/:shelfId', component: ShelfDetailComponent},
   {path: '**', component: PageNotFoundComponent},
 ];
 

@@ -3,10 +3,10 @@ import {CookieService} from 'ngx-cookie-service';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 
-import {AppComponent} from '../app.component';
-import {SigninService} from '../service/signin/signin.service';
+import {AppComponent} from '../../app.component';
+import {SigninService} from '../../service/signin/signin.service';
 import {Router} from '@angular/router';
-import {UserService} from '../service/user/user.service';
+import {UserService} from '../../service/user/user.service';
 
 @Component({
   selector: 'app-signin',

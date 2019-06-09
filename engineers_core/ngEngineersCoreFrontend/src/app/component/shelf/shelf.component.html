@@ -20,7 +20,7 @@
                              alt=""/>
                       </div>
                       <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="../../assets/image/profile/default_profile_image.png" alt=""/>
+                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
                       </div>
                     </div>
                   </a>
@@ -29,7 +29,7 @@
                   <!-- 本棚の名前 -->
                   <h4 class="shelf-book-info">
                     <div class="ShelfNameItem-context">
-                      <a routerLink="/shelf/{{shelf.shelfCd}}/"><b>{{shelf.shelfName}}</b></a>
+                      <a routerLink="/shelf/{{shelf.shelfId}}/"><b>{{shelf.shelfName}}</b></a>
                     </div>
                   </h4>
                   <div class="comment-reaction">

@@ -341,9 +341,6 @@ class ShelfListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Shelf.objects.filter(shelf_status='OPN')
-        shelf_cd = self.request.query_params.get('shelf_cd', None)
-        if shelf_cd is not None:
-            queryset = queryset.filter(shelf_cd=shelf_cd)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('ShelfListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
@@ -370,9 +367,9 @@ class ShelfBookListView(generics.ListCreateAPIView):
         book_id = self.request.query_params.get('book_id', None)
         if book_id is not None:
             queryset = queryset.filter(book__id=book_id)
-        shelf_cd = self.request.query_params.get('shelf_cd', None)
-        if shelf_cd is not None:
-            queryset = queryset.filter(shelf_book__shelf_cd=shelf_cd)
+        shelf_id = self.request.query_params.get('shelf_id', None)
+        if shelf_id is not None:
+            queryset = queryset.filter(shelf_book__shelf_id=shelf_id)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('ShelfBookListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
@@ -434,9 +431,9 @@ class ShelfCommentListView(generics.ListCreateAPIView):
         user_id = self.request.query_params.get('user_id', None)
         if user_id is not None:
             queryset = queryset.filter(user__id=user_id)
-        shelf_cd = self.request.query_params.get('shelf_cd', None)
-        if shelf_cd is not None:
-            queryset = queryset.filter(shelf__shelf_cd=shelf_cd)
+        shelf_id = self.request.query_params.get('shelf_id', None)
+        if shelf_id is not None:
+            queryset = queryset.filter(shelf=shelf_id)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('ShelfCommentListViewのSQL: ' + str(compiler.as_sql()))
         return queryset

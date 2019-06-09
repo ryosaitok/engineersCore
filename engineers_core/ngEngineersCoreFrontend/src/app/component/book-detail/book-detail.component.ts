@@ -1,18 +1,18 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {BookService} from '../service/book/book.service';
-import {Book} from '../book';
+import {BookService} from '../../service/book/book.service';
+import {Book} from '../../dto/book';
 import {ActivatedRoute} from '@angular/router';
-import {BookCommentService} from '../service/book-comment/book-comment.service';
-import {SigninService} from '../service/signin/signin.service';
-import {InterestedBookService} from '../service/interested-book/interested-book.service';
+import {BookCommentService} from '../../service/book-comment/book-comment.service';
+import {SigninService} from '../../service/signin/signin.service';
+import {InterestedBookService} from '../../service/interested-book/interested-book.service';
 import {NgForm} from '@angular/forms';
-import {BookAuthorService} from '../service/book-author/book-author.service';
+import {BookAuthorService} from '../../service/book-author/book-author.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
-import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
+import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {UserService} from '../service/user/user.service';
-import {AppComponent} from '../app.component';
-import {AuthGuard} from '../guard/auth.guard';
+import {UserService} from '../../service/user/user.service';
+import {AppComponent} from '../../app.component';
+import {AuthGuard} from '../../guard/auth.guard';
 
 @Component({
   selector: 'app-book-detail',

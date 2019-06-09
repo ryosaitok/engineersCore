@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AppComponent} from '../app.component';
+import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
 
-import {SigninService} from '../service/signin/signin.service';
-import {UserService} from '../service/user/user.service';
+import {SigninService} from '../../service/signin/signin.service';
+import {UserService} from '../../service/user/user.service';
 
 @Component({
   selector: 'app-signup',

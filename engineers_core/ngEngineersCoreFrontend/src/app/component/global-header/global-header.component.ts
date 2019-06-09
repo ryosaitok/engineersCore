@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AppComponent} from '../app.component';
-import {SigninService} from '../service/signin/signin.service';
-import {UserService} from '../service/user/user.service';
+import {AppComponent} from '../../app.component';
+import {SigninService} from '../../service/signin/signin.service';
+import {UserService} from '../../service/user/user.service';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {faBars, faBookReader} from '@fortawesome/free-solid-svg-icons';

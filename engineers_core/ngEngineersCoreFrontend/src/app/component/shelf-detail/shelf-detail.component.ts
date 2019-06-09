@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
-import {ShelfService} from '../service/shelf/shelf.service';
-import {AuthGuard} from '../guard/auth.guard';
-import {AppComponent} from '../app.component';
-import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.service';
-import {Shelf} from '../shelf';
+import {AuthGuard} from '../../guard/auth.guard';
+import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+
+import {AppComponent} from '../../app.component';
+import {Shelf} from '../../dto/shelf';
+import {ShelfComment} from '../../dto/shelf-comment';
+import {ShelfService} from '../../service/shelf/shelf.service';
+import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
+import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';
 
 @Component({
   selector: 'app-shelf-detail',
@@ -14,9 +17,11 @@ import {Shelf} from '../shelf';
 })
 export class ShelfDetailComponent implements OnInit {
 
-  shelfCd = this.route.snapshot.paramMap.get('shelfCd');
+  shelfId = Number(this.route.snapshot.paramMap.get('shelfId'));
   shelf: Shelf;
   shelfBookCount: number;
+  shelfComments: ShelfComment[];
+  shelfCommentCount: number;
 
   faBookReader = faBookReader;
   faHeart = faHeart;
@@ -27,20 +32,31 @@ export class ShelfDetailComponent implements OnInit {
     private authGuard: AuthGuard,
     private appComponent: AppComponent,
     private shelfService: ShelfService,
+    private shelfCommentService: ShelfCommentService,
     private shelfFavoriteService: ShelfFavoriteService,
   ) {
   }
 
   ngOnInit() {
     this.getShelf();
+    this.getShelfComments();
   }
 
   getShelf(): void {
-    this.shelfService.getShelvesByShelfCd(this.shelfCd).subscribe(data => {
-      if (data.results[0] !== undefined && data.results[0] !== null) {
-        const shelves = data.results;
-        this.shelf = this.shelfService.convertShelves(shelves, 20)[0];
-        this.shelfBookCount = Object.keys(data.results[0].books).length;
+    this.shelfService.getShelf(this.shelfId).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        this.shelf = this.shelfService.convertShelf(res, 20);
+        this.shelfBookCount = Object.keys(this.shelf.books).length;
+      }
+    });
+  }
+
+  getShelfComments(): void {
+    this.shelfCommentService.getShelfCommentsByShelfId(this.shelfId).subscribe(data => {
+      if (data.results !== undefined && data.results !== null && data.count !== 0) {
+        const shelfComments = data.results;
+        this.shelfComments = this.shelfCommentService.convertShelfComments(shelfComments);
+        this.shelfCommentCount = data.count;
       }
     });
   }

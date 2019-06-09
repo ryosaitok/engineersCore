@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {BookComment} from '../book-comment';
-import {BookCommentService} from '../service/book-comment/book-comment.service';
+import {BookComment} from '../../dto/book-comment';
+import {BookCommentService} from '../../service/book-comment/book-comment.service';
 
 @Component({
   selector: 'app-book-comment',

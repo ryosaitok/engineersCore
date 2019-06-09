@@ -1,14 +1,14 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../user';
-import {UserService} from '../service/user/user.service';
-import {BookCommentService} from '../service/book-comment/book-comment.service';
+import {User} from '../../dto/user';
+import {UserService} from '../../service/user/user.service';
+import {BookCommentService} from '../../service/book-comment/book-comment.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
-import {InterestedBookService} from '../service/interested-book/interested-book.service';
-import {CommentFavoriteService} from '../service/comment-favorite/comment-favorite.service';
-import {SigninService} from '../service/signin/signin.service';
-import {AppComponent} from '../app.component';
-import {AuthGuard} from "../guard/auth.guard";
+import {InterestedBookService} from '../../service/interested-book/interested-book.service';
+import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
+import {SigninService} from '../../service/signin/signin.service';
+import {AppComponent} from '../../app.component';
+import {AuthGuard} from "../../guard/auth.guard";
 
 @Component({
   selector: 'app-user-detail',

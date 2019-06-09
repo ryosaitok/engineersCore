@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AuthGuard} from '../guard/auth.guard';
+import {AuthGuard} from '../../guard/auth.guard';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
-import {AppComponent} from '../app.component';
-import {ShelfService} from '../service/shelf/shelf.service';
-import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.service';
-import {SigninService} from '../service/signin/signin.service';
-import {UserService} from '../service/user/user.service';
-import {Shelf} from '../shelf';
+import {AppComponent} from '../../app.component';
+import {ShelfService} from '../../service/shelf/shelf.service';
+import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
+import {SigninService} from '../../service/signin/signin.service';
+import {UserService} from '../../service/user/user.service';
+import {Shelf} from '../../dto/shelf';
 
 @Component({
   selector: 'app-shelf',

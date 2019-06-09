@@ -262,7 +262,6 @@ class ShelfCommentWithForeignSerializer(serializers.ModelSerializer):
         slug_field='user_id'
     )
     user = UserSerializer()
-    shelf = ShelfSerializer()
 
     class Meta:
         model = ShelfComment
