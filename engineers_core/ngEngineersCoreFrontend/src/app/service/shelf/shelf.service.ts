@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Shelf} from '../../dto/shelf';
-import {User} from '../../dto/user';
-import {AmazonBook} from '../../dto/amazon-book';
-import {Author} from '../../dto/author';
-import {Book} from '../../dto/book';
+import {Shelf} from '../../dto/shelf/shelf';
+import {User} from '../../dto/user/user';
+import {AmazonBook} from '../../dto/amazon-book/amazon-book';
+import {Author} from '../../dto/author/author';
+import {Book} from '../../dto/book/book';
 
 @Injectable({
   providedIn: 'root'

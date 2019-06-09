@@ -7,7 +7,7 @@ import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
-import {Shelf} from '../../dto/shelf';
+import {Shelf} from '../../dto/shelf/shelf';
 
 @Component({
   selector: 'app-shelf',

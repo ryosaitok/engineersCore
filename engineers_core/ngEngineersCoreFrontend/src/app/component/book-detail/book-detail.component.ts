@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {BookService} from '../../service/book/book.service';
-import {Book} from '../../dto/book';
+import {Book} from '../../dto/book/book';
 import {ActivatedRoute} from '@angular/router';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
 import {SigninService} from '../../service/signin/signin.service';

@@ -1,5 +1,5 @@
-import {AmazonBook} from './amazon-book';
-import {Author} from './author';
+import {AmazonBook} from '../amazon-book/amazon-book';
+import {Author} from '../author/author';
 
 export class Book {
   id: number;

@@ -4,8 +4,8 @@ import {AuthGuard} from '../../guard/auth.guard';
 import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
-import {Shelf} from '../../dto/shelf';
-import {ShelfComment} from '../../dto/shelf-comment';
+import {Shelf} from '../../dto/shelf/shelf';
+import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
 import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';

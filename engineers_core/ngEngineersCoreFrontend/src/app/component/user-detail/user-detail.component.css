@@ -225,18 +225,27 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
 
 /* メインコンテンツ */
 @media (min-width: 1236px) {
-  .ReadBookModules {
+  .ContentsModules {
     float: left;
     margin: 0 10px;
   }
 }
 
-.ReadBookModules {
-    width: 800px;
+.ContentsModules {
+    width: 850px;
+}
+.comment-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+.book-data {
+    font-size: 12px;
 }
 .book-info {
     width: 25%;
-    margin: 0 8px;
+    margin: 0 5px;
     display: inline-block;
 }
 .book-image {
@@ -253,23 +262,12 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
     width: 68%;
     margin: 10px;
 }
-.comment-module {
-  background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    line-height: 16px;
-}
 .book-comment-content {
     border-bottom: 1px solid #e6ecf0;
     /* ↓コメント詳細を開けるようにしたら有効にする */
     /*cursor: pointer;*/
     margin: 5px;
     padding: 10px 0;
-}
-.book-content {
-    font-size: 12px;
-    margin: 0 10px;
-    padding: 5px 0;
 }
 ul.book-title-data {
     list-style: none;
@@ -359,4 +357,67 @@ ul.comment-reaction li > span.favorite-done {
 }
 .no-comment-text {
     text-align: center;
+}
+
+.book-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
+}
+ul.book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+ul.book-list > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
+}
+.book-content {
+    font-size: 12px;
+    margin: 5px 10px;
+    padding: 10px 0;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+    border: 1px solid #e6ecf0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    margin: 1px 0;
+}
+.book-title {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+ul.authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.authors li {
+    display: inline;
+}
+.author-name {
+    width: auto !important;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+
+.no-book-text {
+    padding: 10px;
+    line-height: 16px;
 }

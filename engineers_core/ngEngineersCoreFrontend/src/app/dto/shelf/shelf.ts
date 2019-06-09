@@ -1,5 +1,5 @@
-import {User} from './user';
-import {Book} from './book';
+import {User} from '../user/user';
+import {Book} from '../book/book';
 
 export class Shelf {
   shelfId: number;

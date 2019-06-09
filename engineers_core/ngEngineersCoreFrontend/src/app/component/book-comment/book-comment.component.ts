@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {BookComment} from '../../dto/book-comment';
+import {BookComment} from '../../dto/book-comment/book-comment';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
 
 @Component({

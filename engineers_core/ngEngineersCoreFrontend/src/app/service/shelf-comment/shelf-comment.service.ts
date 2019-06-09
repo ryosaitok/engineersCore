@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-import {User} from '../../dto/user';
-import {ShelfComment} from '../../dto/shelf-comment';
+import {User} from '../../dto/user/user';
+import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 
 @Injectable({
   providedIn: 'root'

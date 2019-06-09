@@ -1,6 +1,6 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../dto/user';
+import {User} from '../../dto/user/user';
 import {UserService} from '../../service/user/user.service';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,8 @@ import {InterestedBookService} from '../../service/interested-book/interested-bo
 import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
 import {SigninService} from '../../service/signin/signin.service';
 import {AppComponent} from '../../app.component';
-import {AuthGuard} from "../../guard/auth.guard";
+import {AuthGuard} from '../../guard/auth.guard';
+import {InterestedBook} from '../../dto/interested-book/interested-book';
 
 @Component({
   selector: 'app-user-detail',
@@ -20,14 +21,17 @@ export class UserDetailComponent implements OnInit {
   faHeart = faHeart;
   faCommentDots = faCommentDots;
 
+  accountName = this.route.snapshot.paramMap.get('accountName');
   userId: number;
   @Input() user: User;
   bookComments: any[];
   bookCommentCount: number;
+  interestedBooks: InterestedBook[];
   interestedBookCount: number;
   favoriteCommentCount: number;
   knowledgeScore: number;
   readBookSelected = 'selected';
+  interestedBookSelected = '';
   favoriteCommentSelected = '';
 
   constructor(
@@ -46,7 +50,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.getLoginUser();
     this.getUser();
-    this.getBookComments();
+    this.getReadBookComments();
     this.getInterestedBookCount();
     this.getFavoriteCommentCount();
   }
@@ -71,8 +75,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    const userAccountName = this.route.snapshot.paramMap.get('accountName');
-    this.userService.getUser(userAccountName).subscribe(response => {
+    this.userService.getUser(this.accountName).subscribe(response => {
       this.userId = response.id;
       this.user = new User(
         response.id,
@@ -83,9 +86,8 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  getBookComments(): void {
-    const accountName = this.route.snapshot.paramMap.get('accountName');
-    this.bookCommentService.getBookCommentsByAccountName(accountName).subscribe(data => {
+  getReadBookComments(): void {
+    this.bookCommentService.getBookCommentsByAccountName(this.accountName).subscribe(data => {
       this.bookComments = data.results;
       this.bookCommentCount = data.count;
       this.knowledgeScore = 0;
@@ -94,11 +96,20 @@ export class UserDetailComponent implements OnInit {
       });
     });
     this.readBookSelected = 'selected';
+    this.interestedBookSelected = '';
     this.favoriteCommentSelected = '';
   }
 
-  getInterestedBookComments(): void {
-    // TODO: 興味がある本の一覧取得
+  getInterestedBooks(): void {
+    this.interestedBookService.getInterestedBookByAccountName(this.accountName).subscribe(data => {
+      this.interestedBookCount = data.count;
+      if (this.interestedBookCount > 0) {
+        this.interestedBooks = this.interestedBookService.convertInterestedBooks(data.results);
+      }
+    });
+    this.readBookSelected = '';
+    this.interestedBookSelected = 'selected';
+    this.favoriteCommentSelected = '';
   }
 
   getFavoriteBookComments(): void {
@@ -113,21 +124,20 @@ export class UserDetailComponent implements OnInit {
       }
     );
     this.readBookSelected = '';
+    this.interestedBookSelected = '';
     this.favoriteCommentSelected = 'selected';
   }
 
 // TODO: ryo.saito countのAPIに切り替える
   getInterestedBookCount(): void {
-    const accountName = this.route.snapshot.paramMap.get('accountName');
-    this.interestedBookService.getInterestedBookByAccountName(accountName).subscribe(data => {
+    this.interestedBookService.getInterestedBookByAccountName(this.accountName).subscribe(data => {
       this.interestedBookCount = data.count;
     });
   }
 
 // TODO: ryo.saito countのAPIに切り替える
   getFavoriteCommentCount(): void {
-    const accountName = this.route.snapshot.paramMap.get('accountName');
-    this.commentFavoriteService.getCommentFavoritesByAccountName(accountName).subscribe(data => {
+    this.commentFavoriteService.getCommentFavoritesByAccountName(this.accountName).subscribe(data => {
       this.favoriteCommentCount = data.count;
     });
   }
