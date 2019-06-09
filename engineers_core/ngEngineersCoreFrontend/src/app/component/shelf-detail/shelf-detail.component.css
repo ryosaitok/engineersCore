@@ -229,7 +229,7 @@ ul.authors li {
 
 ul.add-comment {
     list-style: none;
-    margin: 15px !important;
+    margin: 25px 15px !important;
     padding-left: 0;
 }
 ul.add-comment li {
