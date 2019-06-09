@@ -1,15 +1,13 @@
 <div class="page-outer" *ngIf="user">
   <!-- サブヘッダー(ユーザー名) -->
   <div class="UserNavigation">
-    <a routerLink="/user/{{user.userAccountName}}">
-      <div class="UserNavigation-canopy u-bgUserColor">
-        <div class="UserNavigation-textContainer">
-          <h1 class="UserNavigation-titleText" dir="ltr">
-            {{user.userName}}(@{{user.userAccountName}})
-          </h1>
-        </div>
+    <div class="UserNavigation-canopy u-bgUserColor">
+      <div class="UserNavigation-textContainer">
+        <h1 class="UserNavigation-titleText" dir="ltr">
+          {{user.userName}}(@{{user.userAccountName}})
+        </h1>
       </div>
-    </a>
+    </div>
   </div>
   <!-- ナビゲーションメニュー -->
   <div class="MenuNavigation">
@@ -64,7 +62,8 @@
                         <img class="profile-image" src="../../assets/image/profile/{{user.profileImageLink}}" alt=""/>
                       </div>
                       <div *ngIf="user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                             alt=""/>
                       </div>
                     </a>
                   </div>
