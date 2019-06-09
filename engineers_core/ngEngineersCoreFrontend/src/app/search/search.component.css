@@ -223,26 +223,7 @@ b {
     width: 850px;
     position: unset;
 }
-.book-info {
-    width: 25%;
-    margin: 0 8px;
-    display: inline-block;
-}
-.book-image {
-    text-align: center;
-    margin-bottom: 5px;
-}
-.amazon-book-image {
-    width: 120px;
-    height: 165px;
-    border: 1px solid #e6ecf0;
-}
-.book-module {
-    background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    line-height: 16px;
-}
+
 ul.sort-condition {
     list-style: none;
     padding: 10px 0 15px 0 !important;
@@ -255,6 +236,13 @@ ul.sort-condition > li {
 .sort-condition-button:hover {
     cursor: pointer;
     color: #337ab7;
+}
+
+.book-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
 }
 ul.book-list {
     list-style: none;
@@ -275,6 +263,15 @@ ul.book-title-data {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+    border: 1px solid #e6ecf0;
 }
 ul.book-title-data li {
     margin: 1px 0;

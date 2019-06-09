@@ -152,47 +152,120 @@ ul.comment-reaction li > span.favorite-done {
     max-width: 1190px;
     min-width: 890px;
 }
+
+@media (min-width: 1236px) {
+  .SearchModules {
+    float: left;
+    margin: 0 10px;
+  }
+}
+.SearchModules {
+    width: 850px;
+    position: unset;
+}
 @media (min-width: 1236px) {
   .ShelfBooksModules {
-    float: none;
+    float: left;
     margin: auto;
   }
 }
 .ShelfBooksModules {
-    width: 100%;
+    width: 850px;
+    position: unset;
     background-color: #fff;
     border: 1px solid #e6ecf0;
 }
-ul.shelf-book-module {
+ul.shelf-books {
     list-style: none;
     margin-bottom: 0 !important;
 }
-ul.shelf-book-module li {
+ul.shelf-books li {
     width: 205px;
     vertical-align: top;
     display: inline-block;
     margin: 12px;
 }
-.shelf-book-module {
+.no-comment-text {
     padding: 10px;
     line-height: 16px;
 }
-.book-image {
-    text-align: center;
-    margin-bottom: 7px;
-}
-.amazon-book-image {
-    width: 120px;
-    height: 165px;
+
+
+/*.book-image {*/
+/*    text-align: center;*/
+/*    margin-bottom: 7px;*/
+/*}*/
+/*.amazon-book-image {*/
+/*    width: 120px;*/
+/*    height: 165px;*/
+/*    border: 1px solid #e6ecf0;*/
+/*}*/
+/*.shelf-element {*/
+/*    font-size: 12px;*/
+/*}*/
+/*ul.book-title-data {*/
+/*    list-style: none;*/
+/*    margin-bottom: 0 !important;*/
+/*    padding-left: 0;*/
+/*}*/
+/*ul.book-title-data li {*/
+/*    margin: 1px 0;*/
+/*}*/
+/*.book-title {*/
+/*    font-weight: bold;*/
+/*    word-wrap: break-word;*/
+/*}*/
+/*ul.authors {*/
+/*    list-style: none;*/
+/*    margin-bottom: 0 !important;*/
+/*    padding-left: 0;*/
+/*}*/
+/*ul.authors li {*/
+/*    display: inline;*/
+/*}*/
+/*.author-name {*/
+/*    width: auto !important;*/
+/*}*/
+/*.sale-date {*/
+/*    font-size: 12px;*/
+/*    color: #657786 !important;*/
+/*}*/
+
+
+.book-module {
+    background-color: #fff;
     border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
 }
-.shelf-element {
+ul.book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+ul.book-list > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
+}
+.book-content {
     font-size: 12px;
+    margin: 5px 10px;
+    padding: 10px 0;
 }
 ul.book-title-data {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+    border: 1px solid #e6ecf0;
 }
 ul.book-title-data li {
     margin: 1px 0;

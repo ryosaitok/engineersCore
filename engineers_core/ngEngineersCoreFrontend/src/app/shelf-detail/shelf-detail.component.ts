@@ -15,7 +15,7 @@ export class ShelfDetailComponent implements OnInit {
 
   shelfCd = this.route.snapshot.paramMap.get('shelfCd');
   shelf: any;
-  shelfCount: number;
+  shelfBookCount: number;
 
   faBookReader = faBookReader;
   faHeart = faHeart;
@@ -38,7 +38,7 @@ export class ShelfDetailComponent implements OnInit {
     this.shelfService.getShelfsByShelfCd(this.shelfCd).subscribe(data => {
       if (data.results[0] !== undefined && data.results[0] !== null) {
         this.shelf = data.results[0];
-        this.shelfCount = Object.keys(data.results[0].books).length;
+        this.shelfBookCount = Object.keys(data.results[0].books).length;
       }
     });
   }

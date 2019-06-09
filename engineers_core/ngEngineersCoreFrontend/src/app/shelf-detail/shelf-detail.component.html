@@ -29,8 +29,12 @@
             </li>
             <li>
               <ul class="producer-name-space">
-                <a routerLink="/user/{{shelf.user.account_name}}"><li class="producer-name">{{shelf.user.user_name}}</li></a>
-                <a routerLink="/user/{{shelf.user.account_name}}"><li class="producer-account-name">@{{shelf.user.account_name}}</li></a>
+                <a routerLink="/user/{{shelf.user.account_name}}">
+                  <li class="producer-name">{{shelf.user.user_name}}</li>
+                </a>
+                <a routerLink="/user/{{shelf.user.account_name}}">
+                  <li class="producer-account-name">@{{shelf.user.account_name}}</li>
+                </a>
               </ul>
             </li>
           </ul>
@@ -74,51 +78,44 @@
       <div class="ShelfBooksModules">
         <!-- 本の情報 -->
         <div class="module shelf-books">
-          <ul *ngIf="shelfCount > 0" class="shelf-book-module">
-            <li *ngFor="let book of shelf.books" class="js-shelf-books shelf-book-content flex-module-inner"
-                data-section-id="wtf" style="opacity: 1;">
-              <!-- 本の情報 -->
-              <div class="book-info">
-                <div class="ShelfBookItem-context">
-                  <!-- 本の基本情報 -->
-                  <div class="context">
-                    <div class="shelf-book-content">
-                      <div class="book-image">
-                        <a class="amazon-book-detail"
-                           href="https://www.amazon.co.jp/dp/{{book.amazon_book[0].data_asin}}/"
-                           target="_blank">
-                          <img class="amazon-book-image" border="0"
-                               src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazon_book[0].data_asin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
-                        src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazon_book[0].data_asin}}"
-                        width="1"
-                        height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
-                      </div>
-                      <div class="book-content shelf-element">
-                        <ul class="book-title-data">
-                          <a routerLink="/book/{{book.id}}">
-                            <li class="book-title">{{book.title | slice: 0 :40}}</li>
-                          </a>
-                          <li class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
-                          <ul class="authors">
-                            <li *ngFor="let author of book.authors; let i = index" class="author_name">
-                              <a *ngIf="i === 0" [routerLink]="['/search/']"
-                                 [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
-                              <a *ngIf="i > 0" [routerLink]="['/search/']"
-                                 [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
-                            </li>
-                          </ul>
-                        </ul>
-                      </div>
-                    </div>
+          <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
+            <ul class="book-list">
+              <li *ngFor="let book of shelf.books" class="js-books book-content flex-module-inner" data-section-id="wtf"
+                  style="opacity: 1;">
+                <!-- 本の情報 -->
+                <div class="context">
+                  <div class="book-image">
+                    <a class="amazon-book-detail"
+                       href="https://www.amazon.co.jp/dp/{{book.amazon_book[0].data_asin}}/"
+                       target="_blank">
+                      <img class="amazon-book-image" border="0"
+                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazon_book[0].data_asin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
+                    src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazon_book[0].data_asin}}"
+                    width="1"
+                    height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
                   </div>
+                  <ul class="book-title-data">
+                    <a routerLink="/book/{{book.id}}">
+                      <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                    </a>
+                    <li class="sale-date">{{book.sale_date | date:"yyyy年M月d日"}}</li>
+                    <ul class="authors">
+                      <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                        <a *ngIf="i === 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.author_name }">{{author.author_name}}</a>
+                        <a *ngIf="i > 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.author_name }">, {{author.author_name}}</a>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div *ngIf="shelfCount === 0" class="shelf-book-module">
-          <div class="no-comment-text">
-            <span>本がありませんでした。</span>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="shelfBookCount === 0" class="shelf-books">
+            <div class="no-comment-text">
+              <span>まだ本棚に本が登録されていません。</span>
+            </div>
           </div>
         </div>
       </div>
