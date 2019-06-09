@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 import {UsersComponent} from './component/users/users.component';
 import {UserDetailComponent} from './component/user-detail/user-detail.component';
 import {BookDetailComponent} from './component/book-detail/book-detail.component';
 import {SigninComponent} from './component/signin/signin.component';
-import {BookCommentComponent} from './component/book-comment/book-comment.component';
 import {PageNotFoundComponent} from './error/page-not-found/page-not-found.component';
 import {SearchComponent} from './component/search/search.component';
 import {ShelfComponent} from './component/shelf/shelf.component';
@@ -18,7 +18,6 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent},
   {path: 'user/:accountName', component: UserDetailComponent},
   {path: 'book/:id', component: BookDetailComponent},
-  {path: 'bookcomment/:id', component: BookCommentComponent},
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},
   {path: 'shelf/:shelfId', component: ShelfDetailComponent},

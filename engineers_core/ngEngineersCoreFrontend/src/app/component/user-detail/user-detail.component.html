@@ -103,7 +103,7 @@
       <div class="ContentsModules">
         <!-- コメント -->
         <div *ngIf="readBookSelected || favoriteCommentSelected" class="module bookComments">
-          <div *ngIf="bookCommentCount > 0" class="comment-module">
+          <div *ngIf="(readBookSelected && bookCommentCount > 0) || (favoriteCommentSelected && favoriteCommentCount > 0)" class="comment-module">
             <div *ngFor="let comment of bookComments; let i = index"
                  class="js-book-comments book-comment-content flex-module-inner"
                  data-section-id="wtf" style="opacity: 1;">
@@ -207,9 +207,14 @@
               </div>
             </div>
           </div>
-          <div *ngIf="bookCommentCount === 0" class="comment-module">
+          <div *ngIf="readBookSelected && bookCommentCount === 0" class="comment-module">
             <div class="no-comment-text">
-              <span>検索結果がありませんでした。</span>
+              <span>まだ読んだ本がありません。</span>
+            </div>
+          </div>
+          <div *ngIf="favoriteCommentSelected && favoriteCommentCount === 0" class="comment-module">
+            <div class="no-comment-text">
+              <span>まだいいねしたコメントがありません。</span>
             </div>
           </div>
         </div>

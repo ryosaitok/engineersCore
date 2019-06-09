@@ -1,18 +1,20 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {BookService} from '../../service/book/book.service';
-import {Book} from '../../dto/book/book';
 import {ActivatedRoute} from '@angular/router';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {AuthGuard} from '../../guard/auth.guard';
+import {NgForm} from '@angular/forms';
+import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+
+import {AppComponent} from '../../app.component';
+import {Book} from '../../dto/book/book';
+import {BookComment} from '../../dto/book-comment/book-comment';
+import {BookService} from '../../service/book/book.service';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
 import {SigninService} from '../../service/signin/signin.service';
 import {InterestedBookService} from '../../service/interested-book/interested-book.service';
-import {NgForm} from '@angular/forms';
 import {BookAuthorService} from '../../service/book-author/book-author.service';
-import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {UserService} from '../../service/user/user.service';
-import {AppComponent} from '../../app.component';
-import {AuthGuard} from '../../guard/auth.guard';
 
 @Component({
   selector: 'app-book-detail',
@@ -27,7 +29,7 @@ export class BookDetailComponent implements OnInit {
   faCommentDots = faCommentDots;
   userId: number;
   accountName: string;
-  bookComments: any[];
+  bookComments: BookComment[];
   bookCommentCount: number;
   bookInterestedCount: number;
   isInterested: boolean;
@@ -81,28 +83,19 @@ export class BookDetailComponent implements OnInit {
   // TODO: ryo.saito Authorの配列をもてるようにする。
   getBook(): void {
     const bookId = this.route.snapshot.paramMap.get('id');
-    this.bookService.getBook(bookId).subscribe(
-      (res) => {
-        this.book = new Book(
-          res.id,
-          res.title,
-          res.book_status,
-          res.sale_date,
-          res.pages_count,
-          res.offer_price,
-          res.amazon_book,
-          res.authors
-        );
-      },
-      (error) => {
-        // 404表示する？
-      });
+    this.bookService.getBook(bookId).subscribe(res => {
+      this.book = this.bookService.convertBook(res);
+    });
   }
 
   getBookComments(bookId: number): void {
     this.bookCommentService.getBookCommentsByBookId(bookId).subscribe(data => {
-      this.bookComments = data.results;
       this.bookCommentCount = data.count;
+      if (data.count > 0) {
+        this.bookComments = this.bookCommentService.convertBookComments(data.results);
+      } else {
+        this.bookComments = [];
+      }
     });
   }
 
@@ -113,11 +106,12 @@ export class BookDetailComponent implements OnInit {
     const comment = f.value.comment;
     const readDate = f.value.readDate;
     const loggedInUserId = this.appComponent.userId;
-    console.log('comment: {}, readDate: {}, loggedInUserId: {}' + comment, readDate, loggedInUserId);
     this.bookCommentService.registerBookComment(loggedInUserId, this.bookId, comment, readDate).subscribe(
       (res) => {
         this.bookCommentService.getBookComment(res.id).subscribe(bookComment => {
-          this.bookComments.unshift(bookComment);
+          const convertedComment = this.bookCommentService.convertBookComment(bookComment);
+          this.bookComments.unshift(convertedComment);
+          this.bookCommentCount += 1;
         });
         // コメント登録が完了したらモーダルを閉じる。
         this.modalRef.hide();
@@ -206,7 +200,8 @@ export class BookDetailComponent implements OnInit {
       if (data === null || data === undefined || data.count === 0) {
         this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
           (res) => {
-            this.bookComments[index].favorite_users.push(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.push(loggedInUserId);
+            this.bookComments[index].favoriteUserCount += 1;
           },
           (error) => {
             console.error('commentFavoriteでerror: ' + error);
@@ -229,8 +224,9 @@ export class BookDetailComponent implements OnInit {
         const favoriteId = data.results[0].id;
         this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
           (res) => {
-            const userIdIndex = this.bookComments[index].favorite_users.indexOf(loggedInUserId);
-            this.bookComments[index].favorite_users.splice(userIdIndex, 1);
+            const userIdIndex = this.bookComments[index].favoriteUserIds.indexOf(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.splice(userIdIndex, 1);
+            this.bookComments[index].favoriteUserCount -= 1;
           },
           (error) => {
             console.log('notCommentFavoriteでerror: ' + error);

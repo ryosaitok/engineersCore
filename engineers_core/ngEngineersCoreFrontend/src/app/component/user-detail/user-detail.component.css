@@ -356,6 +356,8 @@ ul.comment-reaction li > span.favorite-done {
     color: #f08080;
 }
 .no-comment-text {
+    padding: 10px;
+    line-height: 16px;
     text-align: center;
 }
 
@@ -420,4 +422,5 @@ ul.authors li {
 .no-book-text {
     padding: 10px;
     line-height: 16px;
+    text-align: center;
 }

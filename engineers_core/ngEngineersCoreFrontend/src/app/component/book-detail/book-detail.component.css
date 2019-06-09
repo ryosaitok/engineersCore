@@ -255,7 +255,9 @@ ul.comment-reaction li > span.favorite-done {
     color: #f08080;
 }
 .no-comment-text {
-  text-align: center;
+    padding: 10px;
+    line-height: 16px;
+    text-align: center;
 }
 
 bs-datepicker-container {

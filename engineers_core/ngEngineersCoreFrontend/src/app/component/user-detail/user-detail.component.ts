@@ -81,6 +81,8 @@ export class UserDetailComponent implements OnInit {
   }
 
   getReadBookComments(): void {
+    this.bookComments = [];
+    this.bookCommentCount = 0;
     this.bookCommentService.getBookCommentsByAccountName(this.accountName).subscribe(data => {
       this.bookCommentCount = data.count;
       if (data.count > 0) {
@@ -109,20 +111,18 @@ export class UserDetailComponent implements OnInit {
   }
 
   getFavoriteBookComments(): void {
-    this.bookCommentService.getBookComments().subscribe(data => {
-        this.favoriteCommentCount = data.count;
-        if (data.count === 0) {
-          return;
-        }
-        const bookComments = this.bookCommentService.convertBookComments(data.results);
-        bookComments.forEach(comment => {
-          // 指定したユーザーがいいねしているコメントのみ表示する
-          if (comment.favoriteUserIds.indexOf(this.user.id) >= 0) {
-            this.bookComments.push(comment);
-          }
+    this.bookComments = [];
+    this.favoriteCommentCount = 0;
+    this.commentFavoriteService.getCommentFavoritesByAccountName(this.accountName).subscribe(data => {
+      this.favoriteCommentCount = data.count;
+      if (data.count > 0) {
+        const comments = [];
+        data.results.forEach(favorite => {
+          comments.push(favorite.comment);
         });
+        this.bookComments = this.bookCommentService.convertBookComments(comments);
       }
-    );
+    });
     this.readBookSelected = '';
     this.interestedBookSelected = '';
     this.favoriteCommentSelected = 'selected';
