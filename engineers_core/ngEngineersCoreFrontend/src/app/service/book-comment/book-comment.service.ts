@@ -83,7 +83,6 @@ export class BookCommentService {
       comment_text: comment,
       read_date: readDate,
     };
-    console.log('body: ' + JSON.stringify(body));
     return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
   }
 

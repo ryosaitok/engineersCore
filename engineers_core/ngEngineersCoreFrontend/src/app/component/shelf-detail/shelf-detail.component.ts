@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {AuthGuard} from '../../guard/auth.guard';
 import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
@@ -106,6 +107,20 @@ export class ShelfDetailComponent implements OnInit {
       } else {
         console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
       }
+    });
+  }
+
+  registerComment(f: NgForm) {
+    const comment = f.value.comment;
+    // const tweetFlag = f.value.tweetFlag;
+    const tweetFlag = false;
+    this.shelfCommentService.registerShelfComment(this.appComponent.userId, this.shelf.shelfId, comment, tweetFlag).subscribe(res => {
+      this.shelfCommentService.getShelfComment(res.id).subscribe(response => {
+        if (response.id !== undefined) {
+          const shelfComment = this.shelfCommentService.convertShelfComment(response);
+          this.shelfComments.unshift(shelfComment);
+        }
+      });
     });
   }
 }

@@ -413,7 +413,7 @@ class ShelfFavoriteListView(generics.ListCreateAPIView):
 
 class ShelfCommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfComment.objects.all()
-    serializer_class = ShelfCommentSerializer
+    serializer_class = ShelfCommentWithForeignSerializer
 
 
 class ShelfCommentListView(generics.ListCreateAPIView):
@@ -440,7 +440,7 @@ class ShelfCommentListView(generics.ListCreateAPIView):
 
     def filter_queryset(self, queryset):
         queryset = super(ShelfCommentListView, self).filter_queryset(queryset)
-        return queryset.order_by('shelf__display_order')
+        return queryset.order_by('-id')
 
 
 class ShelfCommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):

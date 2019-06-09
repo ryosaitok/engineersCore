@@ -254,7 +254,6 @@ class ShelfComment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ("user", "shelf")
         db_table = 'shelf_comment'
 
     def __str__(self):

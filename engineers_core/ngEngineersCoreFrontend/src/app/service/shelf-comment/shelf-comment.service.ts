@@ -28,14 +28,34 @@ export class ShelfCommentService {
   ) {
   }
 
-  getShelfComment(shelfId: number): Observable<any> {
-    const url = this.shelfCommentAPIUrl + shelfId + '/';
+  getShelfComment(commentId: number): Observable<any> {
+    const url = this.shelfCommentAPIUrl + commentId + '/';
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getShelfComments(): Observable<any> {
     const url = this.shelfCommentsAPIUrl;
     return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getShelfCommentsByShelfId(shelfId: number): Observable<any> {
+    const url = this.shelfIdShelfCommentsAPIUrl + shelfId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getFilteredShelfComment(userId: number, shelfId: number): Observable<any> {
+    const url = this.shelfCommentsAPIUrl + '?user_id=' + userId + '&shelf_id=' + shelfId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  registerShelfComment(userId: number, shelfId: number, comment: string, tweetFlag: boolean) {
+    const body = {
+      user: userId,
+      shelf: shelfId,
+      comment_text: comment,
+      tweet_flag: tweetFlag,
+    };
+    return this.http.post<any>(this.shelfCommentsAPIUrl, body, this.httpOptions);
   }
 
   convertShelfComments(shelfComments: any[]): ShelfComment[] {
@@ -53,8 +73,12 @@ export class ShelfCommentService {
     return convertedShelfComments;
   }
 
-  getShelfCommentsByShelfId(shelfId: number): Observable<any> {
-    const url = this.shelfIdShelfCommentsAPIUrl + shelfId;
-    return this.http.get<any>(url, this.httpOptions);
+  convertShelfComment(shelfComment: any): ShelfComment {
+    const user = shelfComment.user;
+    const userForComment = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
+    const shelfIdForComment = shelfComment.shelf;
+    const favoriteUserCount = Object.keys(shelfComment.favorite_users).length;
+    return new ShelfComment(shelfComment.id, userForComment, shelfIdForComment, shelfComment.comment_text, shelfComment.comment_date,
+      shelfComment.tweet_flag, shelfComment.favorite_users, favoriteUserCount);
   }
 }
