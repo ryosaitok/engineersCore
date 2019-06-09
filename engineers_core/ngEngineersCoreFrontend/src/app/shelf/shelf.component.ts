@@ -1,11 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {ShelfService} from '../service/shelf/shelf.service';
-import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
-import {AppComponent} from '../app.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthGuard} from '../guard/auth.guard';
+import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+
+import {AppComponent} from '../app.component';
+import {ShelfService} from '../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.service';
-import {SigninService} from "../service/signin/signin.service";
-import {UserService} from "../service/user/user.service";
+import {SigninService} from '../service/signin/signin.service';
+import {UserService} from '../service/user/user.service';
+import {Shelf} from '../shelf';
+import {User} from '../user';
+import {Book} from '../book';
+import {AmazonBook} from "../amazon-book";
+import {Author} from "../author";
 
 @Component({
   selector: 'app-shelf',
@@ -14,7 +20,7 @@ import {UserService} from "../service/user/user.service";
 })
 export class ShelfComponent implements OnInit {
 
-  shelfs: any[];
+  @Input() shelfs: Shelf[];
   shelfCount: number;
 
   faHeart = faHeart;
@@ -32,7 +38,7 @@ export class ShelfComponent implements OnInit {
 
   ngOnInit() {
     this.getLoginUser();
-    this.getFeatureBookCategories();
+    this.getShelfs();
   }
 
   getLoginUser(): void {
@@ -54,9 +60,29 @@ export class ShelfComponent implements OnInit {
     });
   }
 
-  getFeatureBookCategories(): void {
+  getShelfs(): void {
     this.shelfService.getShelfs().subscribe(data => {
-      this.shelfs = data.results;
+      const shelfs = data.results;
+      this.shelfs = [];
+      shelfs.forEach(shelf => {
+        const user = shelf.user;
+        const userForShelf = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
+        const booksForShelf = [];
+        shelf.books.forEach((book, index) => {
+          if (index < 5) {
+            const amazonBook = book.amazon_book[0];
+            const amazonBookForShelf = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
+            const authorsForShelf = [];
+            book.authors.forEach(author => authorsForShelf.push(new Author(author.id, author.author_name)));
+            booksForShelf.push(new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
+              book.offer_price, amazonBookForShelf, authorsForShelf));
+          }
+        });
+        this.shelfs.push(
+          new Shelf(shelf.id, userForShelf, booksForShelf, shelf.shelf_cd, shelf.shelf_name, shelf.display_order,
+            shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users)
+        );
+      });
       this.shelfCount = data.count;
     });
   }
@@ -71,7 +97,7 @@ export class ShelfComponent implements OnInit {
       if (data === null || data === undefined || data.count === 0) {
         this.shelfFavoriteService.registerShelfFavorite(loggedInUserId, shelfId).subscribe(
           (res) => {
-            this.shelfs[index].favorite_users.push(loggedInUserId);
+            // this.shelfs[index].favorite_users.push(loggedInUserId);
           },
           (error) => {
             console.error('shelfFavoriteでerror: ' + error);
@@ -94,8 +120,8 @@ export class ShelfComponent implements OnInit {
         const favoriteId = data.results[0].id;
         this.shelfFavoriteService.deleteShelfFavorite(favoriteId).subscribe(
           (res) => {
-            const userIdIndex = this.shelfs[index].favorite_users.indexOf(loggedInUserId);
-            this.shelfs[index].favorite_users.splice(userIdIndex, 1);
+            // const userIdIndex = this.shelfs[index].favorite_users.indexOf(loggedInUserId);
+            // this.shelfs[index].favorite_users.splice(userIdIndex, 1);
           },
           (error) => {
             console.log('undoShelfFavoriteでerror: ' + error);

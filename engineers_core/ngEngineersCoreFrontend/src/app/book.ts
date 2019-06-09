@@ -1,3 +1,6 @@
+import {AmazonBook} from './amazon-book';
+import {Author} from './author';
+
 export class Book {
   id: number;
   title: string;
@@ -5,11 +8,11 @@ export class Book {
   saleDate: string;
   pagesCount: number;
   offerPrice: number;
-  amazonBook: string;
-  authors: [];
+  amazonBook: AmazonBook;
+  authors: Author[];
 
   constructor(id: number, title: string, bookStatus: string, saleDate: string, pagesCount: number,
-              offerPrice: number, amazonBook: string, authors: []) {
+              offerPrice: number, amazonBook: AmazonBook, authors: Author[]) {
     this.id = id;
     this.title = title;
     this.bookStatus = bookStatus;
