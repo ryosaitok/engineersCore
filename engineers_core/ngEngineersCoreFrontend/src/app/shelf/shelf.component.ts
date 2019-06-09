@@ -4,6 +4,8 @@ import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {AppComponent} from '../app.component';
 import {AuthGuard} from '../guard/auth.guard';
 import {ShelfFavoriteService} from '../service/shelf-favorite/shelf-favorite.service';
+import {SigninService} from "../service/signin/signin.service";
+import {UserService} from "../service/user/user.service";
 
 @Component({
   selector: 'app-shelf',
@@ -23,11 +25,33 @@ export class ShelfComponent implements OnInit {
     private appComponent: AppComponent,
     private shelfService: ShelfService,
     private shelfFavoriteService: ShelfFavoriteService,
+    private signinService: SigninService,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit() {
+    this.getLoginUser();
     this.getFeatureBookCategories();
+  }
+
+  getLoginUser(): void {
+    this.signinService.getAuthUser().subscribe(response => {
+      this.userService.getUser(response.account_name).subscribe(res => {
+        const user = res;
+        this.appComponent.userId = user.id;
+        this.appComponent.accountName = user.account_name;
+        this.appComponent.userName = user.user_name;
+        this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
+      });
+    }, error => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+      this.appComponent.userName = null;
+      this.appComponent.profileImageLink = null;
+      this.appComponent.isLoggedIn = false;
+    });
   }
 
   getFeatureBookCategories(): void {

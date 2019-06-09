@@ -402,9 +402,9 @@ class ShelfFavoriteListView(generics.ListCreateAPIView):
         user_id = self.request.query_params.get('user_id', None)
         if user_id is not None:
             queryset = queryset.filter(user__id=user_id)
-        shelf_cd = self.request.query_params.get('shelf_cd', None)
-        if shelf_cd is not None:
-            queryset = queryset.filter(shelf__shelf_cd=shelf_cd)
+        shelf_id = self.request.query_params.get('shelf_id', None)
+        if shelf_id is not None:
+            queryset = queryset.filter(shelf__id=shelf_id)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('ShelfFavoriteListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
