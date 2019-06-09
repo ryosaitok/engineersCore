@@ -27,10 +27,12 @@
                 </div>
               </a>
             </li>
-            <a routerLink="/user/{{shelf.user.account_name}}">
-              <li class="producer-name">{{shelf.user.user_name}}</li>
-              <li class="producer-account-name">@{{shelf.user.account_name}}</li>
-            </a>
+            <li>
+              <ul class="producer-name-space">
+                <a routerLink="/user/{{shelf.user.account_name}}"><li class="producer-name">{{shelf.user.user_name}}</li></a>
+                <a routerLink="/user/{{shelf.user.account_name}}"><li class="producer-account-name">@{{shelf.user.account_name}}</li></a>
+              </ul>
+            </li>
           </ul>
           <div class="shelf-description">
             <div class="shelf-description-text">{{shelf.description}}</div>

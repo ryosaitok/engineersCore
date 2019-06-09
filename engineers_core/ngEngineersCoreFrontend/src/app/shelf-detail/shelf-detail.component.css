@@ -74,16 +74,26 @@ ul.shelf-data li {
 .shelf-producer-image {
 }
 .profile-image {
-    height: 42px;
-    width: 42px;
+    height: 45px;
+    width: 45px;
     border-radius: 50%;
+    vertical-align: text-top !important;
 }
 .shelf-producer-image, .producer-name, .producer-account-name {
     float: left;
 }
+ul.producer-name-space {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.producer-name-space li {
+    display: inline-block;
+    margin-right: 4px;
+}
 .producer-name, .producer-account-name {
     margin-top: 0;
-    font-size: 12px;
+    font-size: 14px;
 }
 .producer-account-name {
     color: #657786;

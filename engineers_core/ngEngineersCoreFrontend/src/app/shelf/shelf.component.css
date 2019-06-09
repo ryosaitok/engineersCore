@@ -70,6 +70,13 @@ a:hover {
     margin: 5px;
     padding: 10px 0;
 }
+h4 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+.producer-info {
+    vertical-align: top !important;
+}
 ul.shelf-basic-info {
     list-style: none;
     margin-bottom: 8px !important;
@@ -77,11 +84,11 @@ ul.shelf-basic-info {
 }
 ul.shelf-basic-info li {
     display: inline-block;
-    margin: 0 8px 0 0;
+    margin: 0 12px 0 0;
 }
 .profile-image {
-    height: 42px;
-    width: 42px;
+    height: 45px;
+    width: 45px;
     border-radius: 50%;
     vertical-align: sub !important;
     margin-bottom: 10px;
