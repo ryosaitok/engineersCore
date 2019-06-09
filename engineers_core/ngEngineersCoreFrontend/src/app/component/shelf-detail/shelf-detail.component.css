@@ -91,6 +91,9 @@ ul.producer-name-space li {
     display: inline-block;
     margin-right: 4px;
 }
+.producer-name {
+    font-weight: bold;
+}
 .producer-name, .producer-account-name {
     margin-top: 0;
     font-size: 14px;
