@@ -52,4 +52,17 @@ export class BookService {
     return new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
       book.offer_price, amazonBookForComment, authorsForComment);
   }
+
+  convertBooks(books: any[]): Book[] {
+    const convertedBooks = [];
+    books.forEach(book => {
+      const amazonBook = book.amazon_book[0];
+      const amazonBookForComment = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
+      const authorsForComment = [];
+      book.authors.forEach(author => authorsForComment.push(new Author(author.id, author.author_name)));
+      convertedBooks.push(new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
+        book.offer_price, amazonBookForComment, authorsForComment));
+    });
+    return convertedBooks;
+  }
 }

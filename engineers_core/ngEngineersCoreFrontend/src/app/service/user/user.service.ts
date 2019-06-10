@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Book} from "../../dto/book/book";
+import {AmazonBook} from "../../dto/amazon-book/amazon-book";
+import {Author} from "../../dto/author/author";
+import {User} from "../../dto/user/user";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -43,5 +47,17 @@ export class UserService {
 
   getUser(userAccountName): Observable<any> {
     return this.http.get<any>(this.userApiUrl + userAccountName + '/');
+  }
+
+  convertUser(user: any): User {
+    return new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
+  }
+
+  convertUsers(users: any[]): User[] {
+    const convertedUsers = [];
+    users.forEach(user => {
+      convertedUsers.push(new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link));
+    });
+    return convertedUsers;
   }
 }

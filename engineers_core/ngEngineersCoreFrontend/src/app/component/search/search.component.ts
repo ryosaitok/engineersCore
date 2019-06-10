@@ -9,6 +9,9 @@ import {UserService} from '../../service/user/user.service';
 import {BookService} from '../../service/book/book.service';
 import {AppComponent} from '../../app.component';
 import {AuthGuard} from '../../guard/auth.guard';
+import {BookComment} from '../../dto/book-comment/book-comment';
+import {Book} from '../../dto/book/book';
+import {User} from '../../dto/user/user';
 
 @Component({
   selector: 'app-search',
@@ -18,9 +21,9 @@ import {AuthGuard} from '../../guard/auth.guard';
 export class SearchComponent implements OnInit, OnChanges {
 
   userId: number;
-  @Input() bookComments: any[];
-  @Input() books: any[];
-  @Input() users: any[];
+  @Input() bookComments: BookComment[];
+  @Input() books: Book[];
+  @Input() users: User[];
   bookCommentCount = 0;
   bookCount = 0;
   userCount = 0;
@@ -168,8 +171,12 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByTitle(title: string) {
     this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data.results;
       this.bookCommentCount = data.count;
+      if (data.count > 0) {
+        this.bookComments = this.bookCommentService.convertBookComments(data.results);
+      } else {
+        this.bookComments = [];
+      }
       this.addSelected(true, false, false);
       console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -181,8 +188,12 @@ export class SearchComponent implements OnInit, OnChanges {
    */
   searchBooksByTitle(title: string, sort: string, page: string) {
     this.bookService.getBooksLikeTitle(title, sort, page).subscribe(data => {
-      this.books = data.results;
       this.bookCount = data.count;
+      if (data.count > 0) {
+        this.books = this.bookService.convertBooks(data.results);
+      } else {
+        this.books = [];
+      }
       this.mainPagePre = data.previous;
       this.mainPageNext = data.next;
       window.scrollTo(0, 0);
@@ -197,8 +208,12 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByAuthor(authorName: string) {
     this.bookCommentService.getBookCommentsByAuthorName(authorName).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data.results;
       this.bookCommentCount = data.count;
+      if (data.count > 0) {
+        this.bookComments = this.bookCommentService.convertBookComments(data.results);
+      } else {
+        this.bookComments = [];
+      }
       this.addSelected(false, true, false);
       console.log('searchBookCommentsByAuthorの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -210,8 +225,12 @@ export class SearchComponent implements OnInit, OnChanges {
    */
   searchBooksByAuthorName(authorName: string, sort: string, page: string) {
     this.bookService.getBooksLikeAuthorName(authorName, sort, page).subscribe(data => {
-      this.books = data.results;
       this.bookCount = data.count;
+      if (data.count > 0) {
+        this.books = this.bookService.convertBooks(data.results);
+      } else {
+        this.books = [];
+      }
       this.mainPagePre = data.previous;
       this.mainPageNext = data.next;
       window.scrollTo(0, 0);
@@ -226,8 +245,12 @@ export class SearchComponent implements OnInit, OnChanges {
   searchBookCommentsByUser(user: string) {
     this.bookCommentService.getBookCommentsByUser(user).subscribe(data => {
       // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-      this.bookComments = data.results;
       this.bookCommentCount = data.count;
+      if (data.count > 0) {
+        this.bookComments = this.bookCommentService.convertBookComments(data.results);
+      } else {
+        this.bookComments = [];
+      }
       this.addSelected(false, false, true);
       console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
         + this.bookCommentCount);
@@ -239,8 +262,12 @@ export class SearchComponent implements OnInit, OnChanges {
    */
   searchUsers(user: string) {
     this.userService.getUsersLikeName(user).subscribe(data => {
-      this.users = data.results;
       this.userCount = data.count;
+      if (data.count > 0) {
+        this.users = this.userService.convertUsers(data.results);
+      } else {
+        this.users = [];
+      }
       this.mainPagePre = data.previous;
       this.mainPageNext = data.next;
       this.addSelected(false, false, true);
@@ -287,7 +314,8 @@ export class SearchComponent implements OnInit, OnChanges {
       if (data === null || data === undefined || data.count === 0) {
         this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
           (res) => {
-            this.bookComments[index].favorite_users.push(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.push(loggedInUserId);
+            this.bookComments[index].favoriteUserCount += 1;
           },
           (error) => {
             console.error('commentFavoriteでerror: ' + error);
@@ -310,8 +338,9 @@ export class SearchComponent implements OnInit, OnChanges {
         const favoriteId = data.results[0].id;
         this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
           (res) => {
-            const userIdIndex = this.bookComments[index].favorite_users.indexOf(loggedInUserId);
-            this.bookComments[index].favorite_users.splice(userIdIndex, 1);
+            const userIdIndex = this.bookComments[index].favoriteUserIds.indexOf(loggedInUserId);
+            this.bookComments[index].favoriteUserIds.splice(userIdIndex, 1);
+            this.bookComments[index].favoriteUserCount -= 1;
           },
           (error) => {
             console.log('notCommentFavoriteでerror: ' + error);

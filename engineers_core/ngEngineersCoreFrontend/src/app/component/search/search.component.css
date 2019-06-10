@@ -342,6 +342,8 @@ ul.user-module > li {
 }
 
 .no-content-text {
+    padding: 10px;
+    line-height: 16px;
     text-align: center;
 }
 
