@@ -2,7 +2,7 @@
 <ul class="users">
   <li *ngFor="let user of users">
     <a routerLink="/user/{{user.userAccountName}}">
-      <span class="badge">{{user.id}}</span> {{user.userName}}(@{{user.userAccountName}})
+      <span class="badge">{{user.id}}</span> {{user.userName}} @{{user.userAccountName}}
     </a>
   </li>
 </ul>
