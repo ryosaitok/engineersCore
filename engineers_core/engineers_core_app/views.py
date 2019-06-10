@@ -118,6 +118,10 @@ class UserListView(generics.ListCreateAPIView):
 
     def filter_queryset(self, queryset):
         queryset = super(UserListView, self).filter_queryset(queryset)
+        sort = self.request.query_params.get('sort', None)
+        if sort is not None:
+            if sort == 'new':
+                return queryset.order_by('-id')
         return queryset.order_by('id')
 
 

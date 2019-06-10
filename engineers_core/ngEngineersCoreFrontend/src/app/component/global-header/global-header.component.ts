@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AppComponent} from '../../app.component';
+import {Router} from '@angular/router';
+import {faBars, faBookReader, faSearch} from '@fortawesome/free-solid-svg-icons';
+
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
-import {Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
-import {faBars, faBookReader} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-global-header',
@@ -15,6 +15,7 @@ export class GlobalHeaderComponent implements OnInit {
 
   faBars = faBars;
   faBookReader = faBookReader;
+  faSearch = faSearch;
 
   constructor(
     private router: Router,
@@ -45,14 +46,6 @@ export class GlobalHeaderComponent implements OnInit {
       this.appComponent.profileImageLink = null;
       this.appComponent.isLoggedIn = false;
     });
-  }
-
-  /**
-   * 本のタイトルでLIKE検索し、本のIDで重複除いた結果のコメント一覧を取得する。
-   */
-  search(f: NgForm) {
-    const query = f.value.query;
-    this.router.navigate(['search'], {queryParams: {title: query}});
   }
 
   // ログアウトする（認証トークンをCookieから削除する）。

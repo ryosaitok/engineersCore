@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
-
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Book} from "../../dto/book/book";
-import {AmazonBook} from "../../dto/amazon-book/amazon-book";
-import {Author} from "../../dto/author/author";
-import {User} from "../../dto/user/user";
+
+import {User} from '../../dto/user/user';
+import {HttpRequestService} from '../http-request/http-request.service';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
 
   constructor(
     private http: HttpClient,
+    private httpRequestService: HttpRequestService,
   ) {}
   host = 'http://127.0.0.1:8000/';
   userUrl = 'api/user/';
@@ -30,8 +29,10 @@ export class UserService {
     return this.http.get<any>(this.usersApiUrl);
   }
 
-  getUsersLikeName(user: string): Observable<any> {
-    return this.http.get<any>(this.filteredUsersApiUrl + user);
+  getUsersLikeName(user: string, sort: string, page: string): Observable<any> {
+    let url = this.filteredUsersApiUrl + user;
+    url = this.httpRequestService.appendUrlConditions(url, sort, page);
+    return this.http.get<any>(url);
   }
 
   registerUser(authUserId: number, accountName: string, userName: string, description: string, imageLink: string): Observable<any> {

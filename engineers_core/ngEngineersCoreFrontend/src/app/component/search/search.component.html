@@ -3,11 +3,20 @@
   <div class="SearchNavigation">
     <div class="SearchNavigation-canopy u-bgUserColor">
       <div class="SearchNavigation-textContainer">
-        <h1 *ngIf="query !== null && query !== undefined && query !== ''" class="SearchNavigation-titleText" dir="ltr">
-          <span class="comment-reaction-reply"><fa-icon [icon]="faSearch"></fa-icon></span> {{query}}
-        </h1>
-        <h1 *ngIf="query === null || query === undefined || query === ''" class="SearchNavigation-titleText" dir="ltr">
-          ?</h1>
+        <!-- 検索フォーム -->
+        <div class="search-form">
+          <nav>
+            <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
+              <ul class="search-form">
+                <li>
+                  <div class="form-group">
+                    <input class="form-control" type="text" name="query" ngModel placeholder="検索する...">
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
@@ -35,7 +44,7 @@
             </li>
             <li>
               <ul class="user-search">
-                <li class="user-search" [class]="userSelected" (click)="searchUsers(query)">
+                <li class="user-search" [class]="userSelected" (click)="searchUsersByUser(query, null, null)">
                   <span class="search-users icon"><fa-icon [icon]="faUser"></fa-icon> ユーザー</span>
                 </li>
               </ul>
@@ -48,47 +57,21 @@
 
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
-      <!-- 左サイドバー(本の情報) -->
-      <div class="SidebarBookModules">
-        <!-- よく売れている本の情報 -->
-        <div class="module selling-well-book">
-          <div class="flex-module">
-            <div class="flex-module-header">
-              <strong>よく読まれている技術書</strong>
-            </div>
-            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
-            </div>
-          </div>
-        </div>
-        <!-- 新着本の情報 -->
-        <div class="module new-book">
-          <div class="flex-module">
-            <div class="flex-module-header">
-              <strong>新着の技術書</strong>
-            </div>
-            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- メインメニュー(本orユーザーの検索結果) -->
       <div *ngIf="isSearchByTitle || isSearchByAuthor">
         <div class="SearchModules BookModules">
           <!-- 本の情報 -->
           <div class="module books">
-            <div class="book-module" *ngIf="bookCount > 0">
+            <div class="content-module" *ngIf="bookCount > 0">
               <ul class="sort-condition">
                 <li>
                   {{pageStart}}~ / <b>{{bookCount}}</b>
                 </li>
                 <li class="sort-condition-button">
-                  <span [class]="rankSelected" (click)="searchBookComments(undefined, 'sale_rank')">人気順</span>
+                  <span [class]="rankSelected" (click)="searchBooks(null, null, 'sale_rank')">人気順</span>
                 </li>
                 <li class="sort-condition-button">
-                  <span [class]="dateSelected" (click)="searchBookComments(undefined, 'sale_date')">新しい順</span>
+                  <span [class]="dateSelected" (click)="searchBooks(null, null, 'sale_date')">新しい順</span>
                 </li>
               </ul>
               <ul class="book-list">
@@ -100,11 +83,10 @@
                       <a class="amazon-book-detail"
                          href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
                          target="_blank">
-                        <img class="amazon-book-image" border="0"
+                        <img class="amazon-book-image"
                              src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"></a><img
                       src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
-                      width="1"
-                      height="1" border="0" alt="" style="border:none !important; margin:0 !important;"/>
+                      width="1" height="1" alt="" style="border:none !important; margin:0 !important;"/>
                     </div>
                     <ul class="book-title-data">
                       <a routerLink="/book/{{book.id}}">
@@ -128,7 +110,7 @@
                 aria-label="Page navigation" class="paging-navigation">
                 <ul class="pagination">
                   <li class="page-item" *ngIf="mainPagePre !== undefined && mainPagePre !== null">
-                    <a class="page-link" (click)="searchBookComments(page - 1, sort)" aria-label="Previous">
+                    <a class="page-link" (click)="searchBooks(page, -1, sort)" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
                     </a>
                   </li>
@@ -138,7 +120,7 @@
                     </a>
                   </li>
                   <li class="page-item" *ngIf="mainPageNext !== undefined && mainPageNext !== null">
-                    <a class="page-link" (click)="searchBookComments(page + 1, sort)" aria-label="Next">
+                    <a class="page-link" (click)="searchBooks(page, 1, sort)" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
                     </a>
                   </li>
@@ -151,7 +133,7 @@
               </nav>
 
             </div>
-            <div *ngIf="bookCount === 0" class="book-module">
+            <div *ngIf="bookCount === 0" class="content-module">
               <div class="no-content-text">
                 <span>検索結果がありませんでした。</span>
               </div>
@@ -163,41 +145,130 @@
         <div class="SearchModules UserModules">
           <!-- ユーザーの情報 -->
           <div class="module users">
-            <div *ngIf="userCount > 0">
+            <div *ngIf="userCount > 0" class="content-module">
+              <ul class="sort-condition">
+                <li>
+                  {{pageStart}}~ / <b>{{userCount}}</b>
+                </li>
+                <li class="sort-condition-button">
+                  <span [class]="oldSelected" (click)="searchUsers(null, null, 'old')">初期登録順</span>
+                </li>
+                <li class="sort-condition-button">
+                  <span [class]="newSelected" (click)="searchUsers(null, null, 'new')">新規順</span>
+                </li>
+              </ul>
               <ul class="user-module">
                 <li *ngFor="let user of users" class="js-users user-content flex-module-inner" data-section-id="wtf"
                     style="opacity: 1;">
                   <!-- ユーザーの情報 -->
                   <div class="context">
                     <div class="user">
-                      <div class="user">
-                        <a routerLink="/user/{{user.userAccountName}}">
-                          <div *ngIf="user.profileImageLink !== null" class="user-icon">
-                            <img class="avatar" src="../../assets/image/profile/{{user.profileImageLink}}"
-                                 alt=""/>
-                          </div>
-                          <div *ngIf="user.profileImageLink === null" class="user-icon">
-                            <img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
-                          </div>
-                        </a>
-                        <a routerLink="/user/{{user.userAccountName}}">
-                          <div class="user-name">
-                            {{user.userName}} @{{user.userName}}
-                          </div>
-                        </a>
-                        <div class="user-description">
-                          {{user.description}}
+                      <a routerLink="/user/{{user.userAccountName}}">
+                        <div *ngIf="user.profileImageLink !== null" class="user-icon">
+                          <img class="avatar" src="../../assets/image/profile/{{user.profileImageLink}}"
+                               alt=""/>
                         </div>
+                        <div *ngIf="user.profileImageLink === null" class="user-icon">
+                          <img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                        </div>
+                      </a>
+                      <a routerLink="/user/{{user.userAccountName}}">
+                        <div class="user-name">
+                          {{user.userName}} @{{user.userName}}
+                        </div>
+                      </a>
+                      <div class="user-description">
+                        {{user.description}}
                       </div>
                     </div>
                   </div>
                 </li>
               </ul>
+
+              <nav
+                *ngIf="(mainPagePre !== undefined && mainPagePre !== null) || (mainPageNext !== undefined && mainPageNext !== null)"
+                aria-label="Page navigation" class="paging-navigation">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="mainPagePre !== undefined && mainPagePre !== null">
+                    <a class="page-link" (click)="searchBooks(page, -1, sort)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPagePre === undefined || mainPagePre === null">
+                    <a class="page-link" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" *ngIf="mainPageNext !== undefined && mainPageNext !== null">
+                    <a class="page-link" (click)="searchBooks(page, 1, sort)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPageNext === undefined || mainPageNext === null">
+                    <a class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+              <nav
+                *ngIf="(mainPagePre !== undefined && mainPagePre !== null) || (mainPageNext !== undefined && mainPageNext !== null)"
+                aria-label="Page navigation" class="paging-navigation">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="mainPagePre !== undefined && mainPagePre !== null">
+                    <a class="page-link" (click)="searchUsers(page, -1, sort)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPagePre === undefined || mainPagePre === null">
+                    <a class="page-link" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" *ngIf="mainPageNext !== undefined && mainPageNext !== null">
+                    <a class="page-link" (click)="searchUsers(page, 1, sort)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item disabled" *ngIf="mainPageNext === undefined || mainPageNext === null">
+                    <a class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
             <div *ngIf="userCount === 0" class="user-module">
               <div class="no-content-text">
                 <span>検索結果がありませんでした。</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 左サイドバー(本の情報) -->
+      <div class="SidebarBookModules">
+        <!-- よく売れている本の情報 -->
+        <div class="module selling-well-book">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>よく読まれている技術書</strong>
+            </div>
+            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+            </div>
+          </div>
+        </div>
+        <!-- 新着本の情報 -->
+        <div class="module new-book">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>新着の技術書</strong>
+            </div>
+            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
             </div>
           </div>
         </div>

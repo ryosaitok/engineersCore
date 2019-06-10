@@ -20,7 +20,7 @@ a:hover {
 
 /* 検索タイトルナビ */
 .SearchNavigation-canopy {
-    background-color: #337ab7;
+    background-color: #fff;
     padding: 14px 0;
 }
 .SearchNavigation-textContainer {
@@ -38,6 +38,9 @@ h1 {
     font-size: 24px;
     text-rendering: optimizeLegibility;
     margin: 0;
+}
+ul.search-form {
+    padding-left: 10px !important;
 }
 
 /* ナビゲーションメニュー */
@@ -62,7 +65,7 @@ h1 {
     font-weight: bold;
     overflow: hidden;
     font-size: 15px;
-    padding-left: 230px;
+    padding-left: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -70,10 +73,14 @@ ul.navigation-menu {
     list-style: none;
     margin-bottom: 0 !important;
     cursor: pointer;
+    padding-left: 0 !important;
 }
 ul.navigation-menu li {
     display: inline-block;
-    margin-right: 10px;
+    margin: 0 10px 0 0 !important;
+}
+ul.title-search, ul.author-search, ul.user-search {
+    padding: 0 15px 0 10px !important;
 }
 ul.title-search {
     list-style: none;
@@ -100,7 +107,7 @@ ul.title-search li {
   }
 }
 .AppContainer {
-    margin: 70px auto;
+    margin: 45px auto;
 }
 .AppContent-main {
     margin: 15px auto 0;
@@ -154,6 +161,18 @@ ul.search-form li {
     color: #222222 !important;
     margin-bottom: 0;
     margin-right: 10px;
+}
+.form-control {
+    height: 40px;
+    width: 850px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #222222;
+    border: 0 solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
 }
 .search-button {
     transform: translateY(-10%);
@@ -222,6 +241,12 @@ b {
 .SearchModules {
     width: 850px;
     position: unset;
+}
+.content-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    line-height: 16px;
 }
 
 ul.sort-condition {
@@ -318,10 +343,7 @@ ul.authors li {
     display: inline-block;
 }
 .user-module {
-    background-color: #fff;
-    border: 1px solid #e6ecf0;
     padding: 10px;
-    line-height: 16px;
 }
 ul.user-module {
     list-style: none;
@@ -355,12 +377,6 @@ ul.user-module > li {
     vertical-align: top;
     width: 68%;
     margin: 10px;
-}
-.comment-module {
-  background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    line-height: 16px;
 }
 .book-comment-content {
     border-bottom: 1px solid #e6ecf0;
