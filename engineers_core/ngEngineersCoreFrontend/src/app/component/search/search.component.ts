@@ -10,7 +10,6 @@ import {Book} from '../../dto/book/book';
 import {User} from '../../dto/user/user';
 import {SigninService} from '../../service/signin/signin.service';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
-import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
 import {UserService} from '../../service/user/user.service';
 import {BookService} from '../../service/book/book.service';
 
@@ -25,7 +24,6 @@ export class SearchComponent implements OnInit {
   @Input() bookComments: BookComment[];
   @Input() books: Book[];
   @Input() users: User[];
-  bookCommentCount = 0;
   bookCount = 0;
   userCount = 0;
   query: string;
@@ -57,7 +55,6 @@ export class SearchComponent implements OnInit {
     private bookCommentService: BookCommentService,
     private signinService: SigninService,
     private userService: UserService,
-    private commentFavoriteService: CommentFavoriteService,
   ) {
   }
 
@@ -303,106 +300,4 @@ export class SearchComponent implements OnInit {
       this.pageStart = 20 * (page - 1) + 1;
     }
   }
-
-  // /**
-  //  * 本のタイトルでコメントを検索して検索結果を表示する
-  //  */
-  // searchBookCommentsByTitle(title: string) {
-  //   this.bookCommentService.getBookCommentsByTitle(title).subscribe(data => {
-  //     // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-  //     this.bookCommentCount = data.count;
-  //     if (data.count > 0) {
-  //       this.bookComments = this.bookCommentService.convertBookComments(data.results);
-  //     } else {
-  //       this.bookComments = [];
-  //     }
-  //     this.addSelected(true, false, false);
-  //     console.log('searchBookCommentsByTitleの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
-  //       + this.bookCommentCount);
-  //   });
-  // }
-
-  // /**
-  //  * 著者名で検索して検索結果を表示する
-  //  */
-  // searchBookCommentsByAuthor(authorName: string) {
-  //   this.bookCommentService.getBookCommentsByAuthorName(authorName).subscribe(data => {
-  //     // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-  //     this.bookCommentCount = data.count;
-  //     if (data.count > 0) {
-  //       this.bookComments = this.bookCommentService.convertBookComments(data.results);
-  //     } else {
-  //       this.bookComments = [];
-  //     }
-  //     this.addSelected(false, true, false);
-  //     console.log('searchBookCommentsByAuthorの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
-  //       + this.bookCommentCount);
-  //   });
-  // }
-
-  // /**
-  //  * ユーザー名orユーザーアカウント名で検索して検索結果を表示する
-  //  */
-  // searchBookCommentsByUser(user: string) {
-  //   this.bookCommentService.getBookCommentsByUser(user).subscribe(data => {
-  //     // TODO:ryo.saito 1つの本につき1つのコメントが取得できればいいので、本の重複を除く。
-  //     this.bookCommentCount = data.count;
-  //     if (data.count > 0) {
-  //       this.bookComments = this.bookCommentService.convertBookComments(data.results);
-  //     } else {
-  //       this.bookComments = [];
-  //     }
-  //     this.addSelected(false, false, true);
-  //     console.log('searchBookCommentsByUserの結果。this.bookComments: ' + this.bookComments + 'this.bookCommentCount: '
-  //       + this.bookCommentCount);
-  //   });
-  // }
-  //
-  // commentFavorite(commentId: number, index: number): void {
-  //   if (!this.authGuard.canActivate()) {
-  //     return;
-  //   }
-  //   const loggedInUserId = this.appComponent.userId;
-  //   this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
-  //     // まだデータが存在しない場合は作成する。
-  //     if (data === null || data === undefined || data.count === 0) {
-  //       this.commentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
-  //         (res) => {
-  //           this.bookComments[index].favoriteUserIds.push(loggedInUserId);
-  //           this.bookComments[index].favoriteUserCount += 1;
-  //         },
-  //         (error) => {
-  //           console.error('commentFavoriteでerror: ' + error);
-  //         }
-  //       );
-  //     } else {
-  //       console.error('commentFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentId: ' + commentId);
-  //     }
-  //   });
-  // }
-  //
-  // notCommentFavorite(commentId: number, index: number): void {
-  //   if (!this.authGuard.canActivate()) {
-  //     return;
-  //   }
-  //   const loggedInUserId = this.appComponent.userId;
-  //   this.commentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
-  //     // データがある場合は削除する。
-  //     if (data !== null && data !== undefined && data.count !== 0) {
-  //       const favoriteId = data.results[0].id;
-  //       this.commentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
-  //         (res) => {
-  //           const userIdIndex = this.bookComments[index].favoriteUserIds.indexOf(loggedInUserId);
-  //           this.bookComments[index].favoriteUserIds.splice(userIdIndex, 1);
-  //           this.bookComments[index].favoriteUserCount -= 1;
-  //         },
-  //         (error) => {
-  //           console.log('notCommentFavoriteでerror: ' + error);
-  //         }
-  //       );
-  //     } else {
-  //       console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
-  //     }
-  //   });
-  // }
 }
