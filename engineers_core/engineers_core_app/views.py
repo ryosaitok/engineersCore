@@ -2,10 +2,14 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
-
 from .serializers import *
 from django.db.models import Q
 from django.db.models import F
+from django.db.models import Count
+from datetime import date
+
+
+TODAY = date.today()
 
 
 class AuthInfoGetView(generics.RetrieveAPIView):
@@ -37,17 +41,23 @@ class BookListView(generics.ListCreateAPIView):
         return queryset
 
     def filter_queryset(self, queryset):
-        queryset = super(BookListView, self).filter_queryset(queryset)
+        queryset = super(BookListView, self).filter_queryset(queryset).annotate(comment_count=Count('book_comments'))
         sort = self.request.query_params.get('sort', None)
         if sort is not None:
             if sort == 'sale_date':
-                return queryset.order_by(F('sale_date').desc(nulls_last=True))
+                return queryset.filter(sale_date__lte=TODAY).order_by(F('sale_date').desc(nulls_last=True))
+            if sort == 'popular':
+                return queryset.order_by(F('comment_count').desc(nulls_last=True))
         return queryset.order_by(F('amazon_book__sales_rank').asc(nulls_last=True))
 
 
 class BookView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+    def get_queryset(self):
+        queryset = Book.objects.all().annotate(comment_count=Count('book_comments'))
+        return queryset
 
 
 class BookBulkListView(ListBulkCreateUpdateDestroyAPIView):

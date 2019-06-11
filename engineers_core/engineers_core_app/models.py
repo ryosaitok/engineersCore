@@ -115,7 +115,7 @@ class AmazonBook(models.Model):
 
 class BookComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, related_name='book_comments', on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=10000)
     comment_date = models.DateField(auto_now=True)
     read_date = models.DateField(auto_now=True)

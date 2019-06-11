@@ -53,10 +53,20 @@ class AmazonBookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer)
 class BookSerializer(serializers.ModelSerializer):
     amazon_book = AmazonBookSerializer(many=True, read_only=True)
     authors = AuthorSerializer(many=True)
+    book_comments = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='id'
+    )
+    comment_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Book
-        fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book', 'authors')
+        fields = ('id', 'title', 'book_status', 'sale_date', 'pages_count', 'offer_price', 'amazon_book', 'authors',
+                  'book_comments', 'comment_count')
+
+    def get_comment_count(self, obj):
+        return obj.book_comments.count()
 
 
 class BookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
@@ -111,7 +121,7 @@ class BookCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookComment
-        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users')
+        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users',)
 
 
 class BookCommentWithForeignSerializer(serializers.ModelSerializer):
@@ -130,7 +140,7 @@ class BookCommentWithForeignSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookComment
-        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users')
+        fields = ('id', 'user', 'book', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users',)
 
 
 class CommentFavoriteSerializer(serializers.ModelSerializer):
