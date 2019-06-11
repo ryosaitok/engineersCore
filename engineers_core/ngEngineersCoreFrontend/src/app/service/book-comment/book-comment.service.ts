@@ -2,11 +2,10 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {User} from '../../dto/user/user';
-import {AmazonBook} from '../../dto/amazon-book/amazon-book';
-import {Author} from '../../dto/author/author';
-import {Book} from '../../dto/book/book';
 import {BookComment} from '../../dto/book-comment/book-comment';
+import {HttpRequestService} from '../http-request/http-request.service';
+import {BookService} from '../book/book.service';
+import {UserService} from '../user/user.service';
 
 @Injectable({providedIn: 'root'})
 export class BookCommentService {
@@ -34,6 +33,9 @@ export class BookCommentService {
 
   constructor(
     private http: HttpClient,
+    private httpRequestService: HttpRequestService,
+    private bookService: BookService,
+    private userService: UserService,
   ) {
   }
 
@@ -43,6 +45,12 @@ export class BookCommentService {
 
   getBookComments(): Observable<any> {
     return this.http.get<any>(this.bookCommentsAPIUrl);
+  }
+
+  getBookCommentPaging(sort: string, page: string): Observable<any> {
+    let url = this.bookCommentsAPIUrl;
+    url = this.httpRequestService.addUrlConditions(url, sort, page);
+    return this.http.get<any>(url);
   }
 
   getBookCommentsByBookId(bookId: number): Observable<any> {
@@ -87,45 +95,23 @@ export class BookCommentService {
     return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
   }
 
-  convertBookComments(bookComments: any[]): BookComment[] {
-    const convertedBookComments = [];
-    bookComments.forEach(comment => {
-      const user = comment.user;
-      const userForComment = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-      const book = comment.book;
-      const amazonBook = book.amazon_book[0];
-      const amazonBookForComment = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
-      const authorsForComment = [];
-      book.authors.forEach(author => authorsForComment.push(new Author(author.id, author.author_name)));
-      const bookForComment = new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
-        book.offer_price, amazonBookForComment, authorsForComment);
-      const favoriteUsers = comment.favorite_users;
-      const favoriteUserCount = Object.keys(favoriteUsers).length;
-      const replyUsers = comment.reply_users;
-      const replyUserCount = Object.keys(replyUsers).length;
-      convertedBookComments.push(
-        new BookComment(comment.id, userForComment, bookForComment, comment.comment_text, comment.comment_date, comment.tweet_flag,
-          favoriteUsers, favoriteUserCount, replyUsers, replyUserCount)
-      );
-    });
-    return convertedBookComments;
-  }
-
   convertBookComment(bookComment: any): BookComment {
-    const user = bookComment.user;
-    const userForComment = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-    const book = bookComment.book;
-    const amazonBook = book.amazon_book[0];
-    const amazonBookForComment = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
-    const authorsForComment = [];
-    book.authors.forEach(author => authorsForComment.push(new Author(author.id, author.author_name)));
-    const bookForComment = new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
-      book.offer_price, amazonBookForComment, authorsForComment);
+    const userForComment = this.userService.convertUser(bookComment.user);
+    const bookForComment = this.bookService.convertBook(bookComment.book);
     const favoriteUsers = bookComment.favorite_users;
     const favoriteUserCount = Object.keys(favoriteUsers).length;
     const replyUsers = bookComment.reply_users;
     const replyUserCount = Object.keys(replyUsers).length;
     return new BookComment(bookComment.id, userForComment, bookForComment, bookComment.comment_text,
       bookComment.comment_date, bookComment.tweet_flag, favoriteUsers, favoriteUserCount, replyUsers, replyUserCount);
+  }
+
+  convertBookComments(bookComments: any[]): BookComment[] {
+    const convertedBookComments = [];
+    bookComments.forEach(comment => {
+      const bookComment = this.convertBookComment(comment);
+      convertedBookComments.push(bookComment);
+    });
+    return convertedBookComments;
   }
 }

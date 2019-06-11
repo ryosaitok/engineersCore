@@ -6,6 +6,8 @@ import {User} from '../../dto/user/user';
 import {AmazonBook} from '../../dto/amazon-book/amazon-book';
 import {Author} from '../../dto/author/author';
 import {Book} from '../../dto/book/book';
+import {BookService} from '../book/book.service';
+import {UserService} from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,8 @@ export class ShelfService {
 
   constructor(
     private http: HttpClient,
+    private bookService: BookService,
+    private userService: UserService,
   ) {
   }
 
@@ -42,52 +46,6 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
-  convertShelves(shelves: any[], bookCount: number): Shelf[] {
-    const convertedShelves = [];
-    shelves.forEach(shelf => {
-      const user = shelf.user;
-      const userForShelf = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-      const booksForShelf = [];
-      shelf.books.forEach((book, index) => {
-        if (index < bookCount) {
-          const amazonBook = book.amazon_book[0];
-          const amazonBookForShelf = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
-          const authorsForShelf = [];
-          book.authors.forEach(author => authorsForShelf.push(new Author(author.id, author.author_name)));
-          booksForShelf.push(new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
-            book.offer_price, amazonBookForShelf, authorsForShelf));
-        }
-      });
-      const favoriteUserCount = Object.keys(shelf.favorite_users).length;
-      const commentUserCount = Object.keys(shelf.comment_users).length;
-      convertedShelves.push(
-        new Shelf(shelf.id, userForShelf, booksForShelf, shelf.shelf_cd, shelf.shelf_name, shelf.display_order,
-          shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users, favoriteUserCount, commentUserCount)
-      );
-    });
-    return convertedShelves;
-  }
-
-  convertShelf(shelf: any, bookCount: number): Shelf {
-    const user = shelf.user;
-    const userForShelf = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-    const booksForShelf = [];
-    shelf.books.forEach((book, index) => {
-      if (index < bookCount) {
-        const amazonBook = book.amazon_book[0];
-        const amazonBookForShelf = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
-        const authorsForShelf = [];
-        book.authors.forEach(author => authorsForShelf.push(new Author(author.id, author.author_name)));
-        booksForShelf.push(new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
-          book.offer_price, amazonBookForShelf, authorsForShelf));
-      }
-    });
-    const favoriteUserCount = Object.keys(shelf.favorite_users).length;
-    const commentUserCount = Object.keys(shelf.comment_users).length;
-    return new Shelf(shelf.id, userForShelf, booksForShelf, shelf.shelf_cd, shelf.shelf_name, shelf.display_order,
-      shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users, favoriteUserCount, commentUserCount);
-  }
-
   getShelvesByBookId(bookId: number): Observable<any> {
     const url = this.bookIdShelvesAPIUrl + bookId;
     return this.http.get<any>(url, this.httpOptions);
@@ -96,5 +54,29 @@ export class ShelfService {
   getShelvesByShelfId(shelfId: string): Observable<any> {
     const url = this.shelfIdShelvesAPIUrl + shelfId;
     return this.http.get<any>(url, this.httpOptions);
+  }
+
+  convertShelf(shelf: any, bookCount: number): Shelf {
+    const userForShelf = this.userService.convertUser(shelf.user);
+    const booksForShelf = [];
+    shelf.books.forEach((book, index) => {
+      if (index < bookCount) {
+        const convertedBook = this.bookService.convertBook(book);
+        booksForShelf.push(convertedBook);
+      }
+    });
+    const favoriteUserCount = Object.keys(shelf.favorite_users).length;
+    const commentUserCount = Object.keys(shelf.comment_users).length;
+    return new Shelf(shelf.id, userForShelf, booksForShelf, shelf.shelf_cd, shelf.shelf_name, shelf.display_order,
+      shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users, favoriteUserCount, commentUserCount);
+  }
+
+  convertShelves(shelves: any[], bookCount: number): Shelf[] {
+    const convertedShelves = [];
+    shelves.forEach(shelf => {
+      const convertedShelf = this.convertShelf(shelf, bookCount);
+      convertedShelves.push(convertedShelf);
+    });
+    return convertedShelves;
   }
 }

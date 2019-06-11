@@ -184,7 +184,6 @@ ul.search-form li {
     background-clip: padding-box;
     border: 0;
     position: relative;
-    margin-bottom: 10px;
 }
 
 .module ul:first-child li:first-child .list-link, .module .flex-module:first-child {
@@ -347,4 +346,42 @@ ul.user-module > li {
 .SidebarBookModules {
     float: left;
     width: 290px;
+}
+.flex-module-header {
+    margin: 3px 0 8px 0;
+}
+.popular-book {
+    margin-bottom: 10px;
+}
+.sub-book-content {
+    font-size: 12px;
+    margin: 0;
+    padding: 10px 0 ;
+    border-bottom: 1px solid #e6ecf0;
+}
+ul.sub-book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+ul.sub-book-list > li {
+    vertical-align: top;
+    display: inline-block;
+}
+ul.context {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.context > li {
+    display: table-cell;
+}
+li.sub-book-info {
+    padding-left: 8px;
+    vertical-align: top;
+}
+.min-amazon-book-image {
+    width: 100px;
+    height: 140px;
+    border: 1px solid #e6ecf0;
 }

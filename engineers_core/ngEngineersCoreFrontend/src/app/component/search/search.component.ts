@@ -40,6 +40,9 @@ export class SearchComponent implements OnInit {
   oldSelected: string;
   newSelected: string;
 
+  popularBooks: Book[];
+  newBooks: Book[];
+
   faBookOpen = faBookOpen;
   faUser = faUser;
   titleSelected = '';
@@ -59,6 +62,8 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getPopularBooks();
+    this.getNewBooks();
     this.getLoginUser();
     this.initQueryParameters();
     this.searchBooks(null, null, this.sort);
@@ -83,6 +88,9 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  // ----------------------------------------
+  //                                     検索
+  // ----------------------------------------
   initQueryParameters(): void {
     this.route.queryParams.subscribe(params => {
       if (params.title !== null && params.title !== undefined) {
@@ -299,5 +307,38 @@ export class SearchComponent implements OnInit {
     } else {
       this.pageStart = 20 * (page - 1) + 1;
     }
+  }
+
+  // ------------------------------------------
+  //                          サイドバーおすすめ本
+  // ------------------------------------------
+  getPopularBooks(): void {
+    this.popularBooks = [];
+    this.bookService.getBooksPaging('popular', '1').subscribe(data => {
+      if (data.count > 0) {
+        this.bookService.convertBooks(data.results).forEach((book, index) => {
+          // 画面表示に使うのは3つだけ
+          if (index < 3) {
+            this.popularBooks.push(book);
+          }
+        });
+        console.log('JSON.stringify(this.popularBooks)' + JSON.stringify(this.popularBooks));
+      }
+    });
+  }
+
+  getNewBooks(): void {
+    this.newBooks = [];
+    this.bookService.getBooksPaging('sale_date', '1').subscribe(data => {
+      if (data.count > 0) {
+        this.bookService.convertBooks(data.results).forEach((book, index) => {
+          // 画面表示に使うのは3つだけ
+          if (index < 3) {
+            this.newBooks.push(book);
+          }
+        });
+        console.log('JSON.stringify(this.newBooks)' + JSON.stringify(this.newBooks));
+      }
+    });
   }
 }

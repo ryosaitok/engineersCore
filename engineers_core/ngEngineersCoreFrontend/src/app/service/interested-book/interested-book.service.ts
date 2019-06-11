@@ -8,6 +8,8 @@ import {Author} from '../../dto/author/author';
 import {Book} from '../../dto/book/book';
 import {InterestedBook} from '../../dto/interested-book/interested-book';
 import {SigninService} from '../signin/signin.service';
+import {UserService} from '../user/user.service';
+import {BookService} from '../book/book.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,8 @@ export class InterestedBookService {
   constructor(
     private http: HttpClient,
     private signinService: SigninService,
+    private userService: UserService,
+    private bookService: BookService,
   ) {
   }
 
@@ -67,21 +71,17 @@ export class InterestedBookService {
     return this.http.delete<any>(url, {headers: jwtHeader});
   }
 
+  convertInterestedBook(interestedBook: any): InterestedBook {
+    const userForInterested = this.userService.convertUser(interestedBook.user);
+    const bookForInterested = this.bookService.convertBook(interestedBook.book);
+    return new InterestedBook(interestedBook.id, userForInterested, bookForInterested, interestedBook.interested_date);
+  }
+
   convertInterestedBooks(interestedBooks: any[]): InterestedBook[] {
     const convertedInterestedBooks = [];
     interestedBooks.forEach(interested => {
-      const user = interested.user;
-      const book = interested.book;
-      const userForInterested = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-      const amazonBook = book.amazon_book[0];
-      const amazonBookForInterested = new AmazonBook(amazonBook.id, amazonBook.book, amazonBook.data_asin, amazonBook.sales_rank);
-      const authorsForShelf = [];
-      book.authors.forEach(author => authorsForShelf.push(new Author(author.id, author.author_name)));
-      const bookForInterested = new Book(book.id, book.title, book.book_status, book.sale_date, book.pages_count,
-        book.offer_price, amazonBookForInterested, authorsForShelf);
-      convertedInterestedBooks.push(
-        new InterestedBook(interested.id, userForInterested, bookForInterested, interested.interested_date)
-      );
+      const interestedBook = this.convertInterestedBook(interested);
+      convertedInterestedBooks.push(interestedBook);
     });
     return convertedInterestedBooks;
   }
