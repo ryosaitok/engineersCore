@@ -73,33 +73,19 @@ a:hover {
     margin: 0 auto;
 }
 
-
-element.style {
-    display: inline-block;
-    width: 24px;
-    height: 21px;
-}
-
 /* home-menu */
-.topbar-etched {
-    color: #337ab7;
-    cursor: pointer;
-    font-size: 21px;
-    margin-top: 12px;
-    display: inline-block;
-    transition: all .25s ease-in-out;
-    font-weight: bold;
-}
-.Icon {
-    background: transparent;
+.Icon--engineersCore {
     display: inline-block;
     font-style: normal;
-    vertical-align: baseline;
-    position: relative;
-}
-h1 {
     font-size: 24px;
+    font-weight: bold;
+    color: #337ab7;
     text-rendering: optimizeLegibility;
+    position: relative;
+    margin: 12px 200px 0 0;
+    cursor: pointer;
+    background: transparent;
+    transition: all .25s ease-in-out;
 }
 
 /* left-menu */
