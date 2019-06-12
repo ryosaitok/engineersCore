@@ -228,7 +228,7 @@ ul.authors li {
 }
 
 .form-control {
-    height: 25px;
+    height: 45px;
     width: 100%;
     color: #222222;
     border: 0 solid #ccc !important;
@@ -288,4 +288,5 @@ ul.comment-user-name-space {
 }
 .comment {
     padding-left: 55px;
+    white-space: pre-line;
 }
