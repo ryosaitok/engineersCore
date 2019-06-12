@@ -1,10 +1,22 @@
 <h2>ログイン</h2>
 <div class="signin">
-  <form #f="ngForm" (ngSubmit)="signIn(f)" novalidate>
-    <ul>
-      <li>アカウント名：<input name="accountName" ngModel required></li>
-      <li>パスワード：<input name="password" ngModel required></li>
-    </ul>
-    <button>送信</button>
+  <form #f="ngForm" class="signin-form" (ngSubmit)="signIn(f)">
+    <div class="form-group" style="width:90%;">
+      <label for="accountName">
+        <span>アカウント名</span>
+      </label>
+      <textarea ngModel class="form-control" name="accountName" id=accountName required maxlength="255">
+    </textarea>
+      <textarea ngModel class="form-control" name="email" id="email" required maxlength="255">
+    </textarea>
+      <label for="password">
+        <span>パスワード</span>
+      </label>
+      <textarea ngModel class="form-control" name="password" id="password" required maxlength="255">
+    </textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <b>新規登録</b>
+    </button>
   </form>
 </div>

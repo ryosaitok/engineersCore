@@ -1,16 +1,47 @@
-<h2>新規登録</h2>
-<div class="signup">
-  <form #form="ngForm" (ngSubmit)="signUp(form)" novalidate>
-    <ul>
-      <!--   入力は20文字までとする   -->
-      <li>アカウント名(英数字)：<input name="accountName" ngModel required></li>
-      <!--   入力は20文字までとする   -->
-      <li>ユーザー表示名：<input name="username" ngModel required></li>
-      <!--   バリでつける   -->
-      <li>メールアドレス：<input name="email" ngModel required></li>
-      <!--   バリでつける   -->
-      <li>パスワード：<input name="password" ngModel required></li>
-    </ul>
-    <button>送信</button>
-  </form>
+<div class="AppContainer">
+  <div class="AppContent-main u-cf">
+    <!-- メインメニュー(本orユーザーの検索結果) -->
+    <div class="SignupModules">
+      <div class="content-module">
+        <h3 class="signup-title">新規登録</h3>
+        <div class="service-signup">
+          <div class="twitter-signup">
+            <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>
+          </div>
+          <div class="google-signup">
+            <button class="btn btn-default service-signup-button"><b>Googleで登録する</b></button>
+          </div>
+          <div class="github-signup">
+            <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>
+          </div>
+        </div>
+        <div class="email-signup">
+          <form #f="ngForm" class="signup-form" (ngSubmit)="signUp(f)">
+            <div class="form-group">
+              <label for="account-name">
+                <span>アカウント名</span>
+              </label>
+              <input ngModel type="text" class="form-control" name="accountName" id="account-name" required placeholder="例: virtual_texhX"
+                     maxlength="255">
+              <label for="user-name">
+                <span>ユーザー名</span>
+              </label>
+              <input ngModel type="text" class="form-control" name="username" id="user-name" required maxlength="255" placeholder="例: 仮想サーファー">
+              <label for="email">
+                <span>メールアドレス</span>
+              </label>
+              <input ngModel type="email" class="form-control" name="email" id="email" required maxlength="255">
+              <label for="password">
+                <span>パスワード</span>
+              </label>
+              <input ngModel type="password" class="form-control" name="password" id="password" required maxlength="255">
+            </div>
+            <button type="submit" class="btn btn-primary signup-button">
+              <b>同意して登録</b>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

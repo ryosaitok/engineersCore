@@ -1,0 +1,78 @@
+/* メインコンテンツ */
+@media screen and (min-width: 1236px) {
+  .AppContainer {
+    max-width: 890px;
+  }
+}
+.AppContainer {
+    margin: 45px auto;
+}
+.AppContent-main {
+    margin: 15px auto 0;
+    max-width: 890px;
+    min-width: 890px;
+}
+.content-module {
+  background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+}
+.signup-title {
+    font-weight: bold;
+    text-align: center;
+}
+
+.service-signup {
+    float: left;
+}
+.btn-default {
+    width: 300px;
+    height: 50px;
+    font-size: 16px;
+}
+.service-signup-button {
+    margin: 10px 25px 5px 100px;
+}
+.twitter-signup > button {
+    color: #fff;
+    background-color: #55ACEE;
+    border-color: #55ACEE;
+}
+.github-signup > button {
+    color: #fff;
+    background-color: #24292e;
+    border-color: #24292e;
+}
+.google-signup > button {
+    background-color: #fff;
+    border-color: #ddd;
+    color: #333;
+}
+.signup-button {
+    padding: 12px 18px;
+    font-size: 16px;
+}
+
+.signup-form {
+    width: 40%;
+    margin: 20px 20px 20px 475px;
+}
+.form-group {
+}
+.form-control {
+    color: #222222;
+    border: 0 solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+}
+.label {
+    margin-bottom: 0;
+}
+.button {
+    text-align: center;
+}
