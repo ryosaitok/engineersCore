@@ -218,13 +218,13 @@ li {
 .avatar {
     display: block;
     border-radius: 50%;
-    height: 32px;
-    width: 32px;
+    height: 38px;
+    width: 38px;
 }
 
 ul.dropdown-menu {
     left: -130px !important;
-    top: 25px !important;
+    top: 35px !important;
 }
 .dropdown-divider {
     padding-top: 1px;
