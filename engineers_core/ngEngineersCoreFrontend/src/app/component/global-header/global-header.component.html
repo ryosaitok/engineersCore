@@ -40,15 +40,11 @@
                 <div class="login-user-menu">
                   <div class="btn-group" dropdown [insideClick]="true">
                     <div dropdownToggle class="dropdown-toggle login-state" *ngIf="appComponent.isLoggedIn">
-                      <div
-                        *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
-                        <nav><img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
-                        </nav>
+                      <div class="user-profile-image"  *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
+                        <nav><img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/></nav>
                       </div>
-                      <div class="user-profile-image"
-                           *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
-                        <nav><img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
-                                  alt=""/></nav>
+                      <div class="user-profile-image" *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
+                        <nav><img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/></nav>
                       </div>
                     </div>
                     <div dropdownToggle class="dropdown-toggle login-state" *ngIf="!appComponent.isLoggedIn">
