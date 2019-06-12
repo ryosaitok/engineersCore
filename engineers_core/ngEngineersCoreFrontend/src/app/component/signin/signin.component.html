@@ -1,22 +1,38 @@
-<h2>ログイン</h2>
-<div class="signin">
-  <form #f="ngForm" class="signin-form" (ngSubmit)="signIn(f)">
-    <div class="form-group" style="width:90%;">
-      <label for="accountName">
-        <span>アカウント名</span>
-      </label>
-      <textarea ngModel class="form-control" name="accountName" id=accountName required maxlength="255">
-    </textarea>
-      <textarea ngModel class="form-control" name="email" id="email" required maxlength="255">
-    </textarea>
-      <label for="password">
-        <span>パスワード</span>
-      </label>
-      <textarea ngModel class="form-control" name="password" id="password" required maxlength="255">
-    </textarea>
+<div class="AppContainer">
+  <div class="AppContent-main u-cf">
+    <!-- メインメニュー -->
+    <div class="SigninModules">
+      <div class="content-module">
+        <h3 class="signin-title">ログイン</h3>
+        <div class="service-signin">
+          <div class="twitter-signin">
+            <button class="btn btn-default service-signin-button"><b>Twitterでログインする</b></button>
+          </div>
+          <div class="google-signin">
+            <button class="btn btn-default service-signin-button"><b>Googleでログインする</b></button>
+          </div>
+          <div class="github-signin">
+            <button class="btn btn-default service-signin-button"><b>Githubでログインする</b></button>
+          </div>
+        </div>
+        <div class="email-signin">
+          <form #f="ngForm" class="signin-form" (ngSubmit)="signIn(f)">
+            <div class="form-group">
+              <label for="account-name">
+                <span>アカウント名</span>
+              </label>
+              <input ngModel type="text" class="form-control" name="accountName" id="account-name" required placeholder="例: virtual_texhX" maxlength="255">
+              <label for="password">
+                <span>パスワード</span>
+              </label>
+              <input ngModel type="password" class="form-control" name="password" id="password" required maxlength="255">
+            </div>
+            <button type="submit" class="btn btn-primary signin-button">
+              <b>ログイン</b>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">
-      <b>新規登録</b>
-    </button>
-  </form>
+  </div>
 </div>
