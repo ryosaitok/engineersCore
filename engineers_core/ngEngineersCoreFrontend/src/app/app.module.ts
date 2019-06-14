@@ -5,6 +5,8 @@ import {CookieService} from 'ngx-cookie-service';
 import {FormsModule} from '@angular/forms';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AppRoutingModule} from './app-routing.module';
+import {SocialLoginModule, AuthServiceConfig} from "angularx-social-login";
+import {GoogleLoginProvider, FacebookLoginProvider} from "angularx-social-login";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -22,6 +24,21 @@ import {ShelfComponent} from './component/shelf/shelf.component';
 import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
 import {SignupComponent} from './component/signup/signup.component';
 import {SigninService} from './service/signin/signin.service';
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('423549286343-rtcdq6blghfv63o8tr2mhadrrp0655ee.apps.googleusercontent.com')
+  },
+  // {
+  //   id: FacebookLoginProvider.PROVIDER_ID,
+  //   provider: new FacebookLoginProvider("Facebook-App-Id")
+  // }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -41,6 +58,7 @@ import {SigninService} from './service/signin/signin.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    SocialLoginModule,
     FormsModule,
     FontAwesomeModule,
     NgbButtonsModule,
@@ -49,7 +67,13 @@ import {SigninService} from './service/signin/signin.service';
     BsDatepickerModule.forRoot()
   ],
   exports: [],
-  providers: [CookieService, SigninService],
+  providers: [CookieService, SigninService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

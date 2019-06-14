@@ -2,6 +2,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
+import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
 
 import {AppComponent} from '../../app.component';
 import {SigninService} from '../../service/signin/signin.service';
@@ -19,6 +20,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private cookieService: CookieService,
     private http: HttpClient,
+    private authService: AuthService,
     private appComponent: AppComponent,
     private signInService: SigninService,
     private userService: UserService,
@@ -51,4 +53,11 @@ export class SigninComponent implements OnInit {
     });
     this.router.navigate(['login']);
   }
+
+  // signInWithGoogle(): void {
+  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(user => {
+  //     console.log('user: ', user);
+  //     this.authService.signOut(true);
+  //   });
+  // }
 }

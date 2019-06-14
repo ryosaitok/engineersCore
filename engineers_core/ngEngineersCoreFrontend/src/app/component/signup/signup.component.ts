@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
+import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angularx-social-login';
 
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
@@ -15,6 +16,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private appComponent: AppComponent,
     private signinService: SigninService,
     private userService: UserService,
@@ -48,6 +50,18 @@ export class SignupComponent implements OnInit {
       }
     });
     this.router.navigate(['login']);
+  }
+
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signOut(): void {
+    this.authService.signOut();
   }
 
 }
