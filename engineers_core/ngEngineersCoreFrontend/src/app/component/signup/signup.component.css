@@ -13,9 +13,10 @@
     min-width: 890px;
 }
 .content-module {
-  background-color: #fff;
+    background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
+    height: 350px;
 }
 .signup-title {
     font-weight: bold;
@@ -74,5 +75,11 @@
     margin-bottom: 0;
 }
 .button {
+    text-align: center;
+}
+.email-signup {
+    margin-bottom: 100px;
+}
+.signin-link {
     text-align: center;
 }

@@ -16,6 +16,7 @@
   background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
+    height: 350px;
 }
 .signin-title {
     font-weight: bold;
@@ -53,6 +54,10 @@
     font-size: 16px;
 }
 
+.email-signin {
+    margin-bottom: 5px;
+}
+
 .signin-form {
     width: 40%;
     margin: 20px 20px 20px 475px;
@@ -74,5 +79,8 @@
     margin-bottom: 0;
 }
 .button {
+    text-align: center;
+}
+.signup-link {
     text-align: center;
 }

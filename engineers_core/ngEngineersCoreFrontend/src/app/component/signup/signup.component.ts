@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angularx-social-login';
+import {AuthService} from 'angularx-social-login';
 
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
@@ -52,16 +52,11 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.authService.signOut();
+  sendEmailVerification(f: NgForm): void {
+    const email = f.value.email;
+    // メールを送信するAPI叩く
+    // メール送信処理に成功した場合はメール送信成功画面を表示
+    // メール送信処理に失敗した場合はメール送信失敗画面を表示
   }
 
 }
