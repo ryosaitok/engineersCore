@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
-import {AuthService} from 'angularx-social-login';
+import {NgForm} from '@angular/forms';
 
+import {AppComponent} from '../../app.component';
+import {AuthService} from 'angularx-social-login';
 import {SigninService} from '../../service/signin/signin.service';
 import {SignupService} from '../../service/signup/signup.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-password-reminder',
+  templateUrl: './password-reminder.component.html',
+  styleUrls: ['./password-reminder.component.css']
 })
-export class SignupComponent implements OnInit {
+export class PasswordReminderComponent implements OnInit {
 
   sentMail = false;
   sentMailFailed = false;
@@ -30,13 +30,13 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendEmailVerification(f: NgForm): void {
+  sendPasswordReminder(f: NgForm): void {
     const email = f.value.email;
     // メールを送信するAPI叩く
     this.signupService.emailVerificationSend(email).subscribe(res => {
-      // メール送信処理に成功した場合はメール送信成功画面を表示
-      this.sentMail = true;
+      // メール送信処理に成功した場合は送信完了画面を表示
       this.emailAddress = res.email;
+      this.sentMail = true;
     }, error => {
       // メール送信処理に失敗した場合はメール送信失敗画面を表示
       this.sentMailFailed = true;

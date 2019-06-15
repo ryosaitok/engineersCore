@@ -10,8 +10,13 @@ export class SigninService {
   host = 'http://127.0.0.1:8000/';
   authUrl = 'api/auth/';
   authApiUrl = this.host + this.authUrl;
-  userUrl = 'api/auth/me/';
-  authUserApiUrl = this.host + this.userUrl;
+  authUserUrl = 'api/auth/user/';
+  authUserApiUrl = this.host + this.authUserUrl;
+  authUsersUrl = 'api/auth/users/';
+  authUsersApiUrl = this.host + this.authUsersUrl;
+  authUserByEmailApiUrl = this.authUsersApiUrl + '?email=';
+  authUserMeUrl = 'api/auth/me/';
+  authUserMeApiUrl = this.host + this.authUserMeUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -37,7 +42,19 @@ export class SigninService {
 
   getAuthUser(): Observable<any> {
     const jwtHeader = this.createJwtHeaderFromLocalStorage();
-    return this.http.get<any>(this.authUserApiUrl, {headers: jwtHeader});
+    return this.http.get<any>(this.authUserMeApiUrl, {headers: jwtHeader});
+  }
+
+  getAuthUsersByEmail(email: string): Observable<any> {
+    const url = this.authUserByEmailApiUrl + email;
+    return this.http.get<any>(url);
+  }
+
+  updatePassword(authUserId: number, password: string): Observable<any> {
+    const url = this.authUserApiUrl + authUserId + '/';
+    const body = {password};
+    const jwtHeader = this.createJwtHeaderFromLocalStorage();
+    return this.http.put<any>(url, body, {headers: jwtHeader});
   }
 
   // LocalStorageから認証トークンを取得する

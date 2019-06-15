@@ -11,18 +11,22 @@ import {ShelfComponent} from './component/shelf/shelf.component';
 import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
 import {SignupComponent} from './component/signup/signup.component';
 import {VerifyEmailComponent} from './component/verify-email/verify-email.component';
+import {PasswordReminderComponent} from './component/password-reminder/password-reminder.component';
+import {PasswordResetComponent} from './password-reset/password-reset.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/shelves', pathMatch: 'full'},
   {path: 'login', component: SigninComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'signup/:token', component: VerifyEmailComponent},
+  {path: 'password/reminder', component: PasswordReminderComponent},
+  {path: 'password/reset/:token', component: PasswordResetComponent},
   {path: 'users', component: UsersComponent},
   {path: 'user/:accountName', component: UserDetailComponent},
   {path: 'book/:id', component: BookDetailComponent},
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},
   {path: 'shelf/:shelfId', component: ShelfDetailComponent},
-  {path: 'signup/:token', component: VerifyEmailComponent},
   {path: '**', component: PageNotFoundComponent},
 ];
 
