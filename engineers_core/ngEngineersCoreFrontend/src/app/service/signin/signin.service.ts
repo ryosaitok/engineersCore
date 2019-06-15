@@ -8,8 +8,6 @@ import {Observable} from 'rxjs';
 export class SigninService {
 
   host = 'http://127.0.0.1:8000/';
-  userRegisterUrl = 'api/authuser/register/';
-  userRegisterApiUrl = this.host + this.userRegisterUrl;
   authUrl = 'api/auth/';
   authApiUrl = this.host + this.authUrl;
   userUrl = 'api/auth/me/';
@@ -24,16 +22,6 @@ export class SigninService {
   constructor(
     private http: HttpClient,
   ) {
-  }
-
-  // 認証ユーザーを新規登録する。
-  registerUser(username, email, password): Observable<any> {
-    const body = {
-      username,
-      email,
-      password
-    };
-    return this.http.post<any>(this.userRegisterApiUrl, body, this.httpOptions);
   }
 
   // 認証トークンを取得する。

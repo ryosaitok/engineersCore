@@ -10,6 +10,7 @@ import {SearchComponent} from './component/search/search.component';
 import {ShelfComponent} from './component/shelf/shelf.component';
 import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
 import {SignupComponent} from './component/signup/signup.component';
+import {VerifyEmailComponent} from './component/verify-email/verify-email.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/shelves', pathMatch: 'full'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},
   {path: 'shelf/:shelfId', component: ShelfDetailComponent},
+  {path: 'signup/:token', component: VerifyEmailComponent},
   {path: '**', component: PageNotFoundComponent},
 ];
 

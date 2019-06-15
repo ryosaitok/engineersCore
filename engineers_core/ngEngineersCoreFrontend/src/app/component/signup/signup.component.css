@@ -16,7 +16,7 @@
     background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
-    height: 350px;
+    height: 500px;
 }
 .signup-title {
     font-weight: bold;
@@ -82,4 +82,9 @@
 }
 .signin-link {
     text-align: center;
+}
+
+.sent-mail-message {
+    text-align: center;
+    margin-top: 60px;
 }

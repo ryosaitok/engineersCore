@@ -24,6 +24,7 @@ import {ShelfComponent} from './component/shelf/shelf.component';
 import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
 import {SignupComponent} from './component/signup/signup.component';
 import {SigninService} from './service/signin/signin.service';
+import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 
 const config = new AuthServiceConfig([
   {
@@ -53,6 +54,7 @@ export function provideConfig() {
     ShelfComponent,
     ShelfDetailComponent,
     SignupComponent,
+    VerifyEmailComponent,
   ],
   imports: [
     BrowserModule,

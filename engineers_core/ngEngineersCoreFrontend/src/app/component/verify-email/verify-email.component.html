@@ -1,0 +1,49 @@
+<div class="AppContainer">
+  <div class="AppContent-main u-cf">
+    <!-- メインメニュー -->
+    <div class="SignupModules">
+      <div *ngIf="verified" class="content-module">
+        <h3 class="signup-title">新規登録</h3>
+        <!-- メール認証後登録画面 -->
+        <div *ngIf="verifySuccess" class="verified-email-signup-view">
+          <div class="email-signup">
+            <form #f="ngForm" class="signup-form" (ngSubmit)="signUp(f)">
+              <div class="form-group">
+                <label>
+                  <span>メールアドレス</span>
+                </label>
+                <div class="verified-email">
+                  {{verifiedEmail}}
+                </div>
+                <label for="username">
+                  <span>ユーザー名</span>
+                </label>
+                <input ngModel type="text" class="form-control" name="username" id="username" required minlength="4"
+                       placeholder="例: 山田太郎">
+                <label for="password">
+                  <span>パスワード</span>
+                </label>
+                <input ngModel type="password" class="form-control" name="password" id="password" required minlength="8">
+                <label for="password2">
+                  <span>パスワード(確認用)</span>
+                </label>
+                <input ngModel type="password" class="form-control" name="password2" id="password2" required minlength="8">
+              </div>
+              <button type="submit" class="btn btn-primary signup-button">
+                <b>同意して登録</b>
+              </button>
+            </form>
+          </div>
+          <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
+        </div>
+        <!-- 無効なトークンの場合 -->
+        <div *ngIf="!verifySuccess" class="not-verified-email-view">
+          <p><b>メール認証の期限が切れているか無効なリンクにアクセスしました。</b></p>
+          <p><b>再度メールアドレスを登録していただくか、ログインしてください。</b></p>
+          <br>
+          <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,31 +4,54 @@
     <div class="SignupModules">
       <div class="content-module">
         <h3 class="signup-title">新規登録</h3>
-        <div class="service-signup">
-          <div class="twitter-signup">
-            <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>
-          </div>
-          <div class="google-signup">
-            <button class="btn btn-default service-signup-button"><b>Googleで登録する</b></button>
-          </div>
-          <div class="github-signup">
-            <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>
-          </div>
-        </div>
-        <div class="email-signup">
-          <form #f="ngForm" class="signup-form" (ngSubmit)="signUp(f)">
-            <div class="form-group">
-              <label for="email">
-                <span>メールアドレス</span>
-              </label>
-              <input ngModel type="email" class="form-control" name="email" id="email" required maxlength="255" placeholder="例: engineers-core@example.com">
+        <!-- 初期登録画面 -->
+        <div *ngIf="!sentMail" class="first-signup-view">
+          <div class="service-signup">
+            <div class="twitter-signup">
+              <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>
             </div>
-            <button type="submit" class="btn btn-primary signup-button">
-              <b>メールアドレスで登録</b>
-            </button>
-          </form>
+            <div class="google-signup">
+              <button class="btn btn-default service-signup-button"><b>Googleで登録する</b></button>
+            </div>
+            <div class="github-signup">
+              <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>
+            </div>
+          </div>
+          <div class="email-signup">
+            <form #f="ngForm" class="signup-form" (ngSubmit)="sendEmailVerification(f)">
+              <div class="form-group">
+                <label for="email">
+                  <span>メールアドレス</span>
+                </label>
+                <input ngModel type="email" class="form-control" name="email" id="email" required minlength="4"
+                       placeholder="例: engineers-core@example.com" #email="ngModel">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                  <div *ngIf="email.errors.required">メールアドレスを入力してください。</div>
+                  <div *ngIf="email.errors.minlength">メールアドレスが短すぎます。</div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary signup-button">
+                <b>メールアドレスで登録</b>
+              </button>
+            </form>
+          </div>
+          <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
         </div>
-        <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
+        <!-- メールアドレス登録メール送信後画面 -->
+        <div *ngIf="sentMail" class="sent-mail-message">
+          <p><b>「{{emailAddress}}」宛に確認メールを送信しました。</b></p>
+          <p><b>メールに記載されたリンクをクリックし、本登録を行ってください。</b></p>
+          <br>
+          <p>※メールが届かない場合は、迷惑メールボックスに入っていないか、</p>
+          <p>またご自身のメールアカウントの受信設定をご確認ください。</p>
+          <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
+        </div>
+        <div *ngIf="sentMailFailed" class="sent-mail-message">
+          <p><b>「{{emailAddress}}」宛へのメール送信に失敗しました。</b></p>
+          <p><b>入力したメールアドレスの形式が正しいことをご確認いただき、再度メールアドレスをご登録ください。</b></p>
+          <br>
+          <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
+        </div>
       </div>
     </div>
   </div>
