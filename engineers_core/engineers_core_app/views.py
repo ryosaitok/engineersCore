@@ -12,6 +12,26 @@ from datetime import date
 TODAY = date.today()
 
 
+class AuthUserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AuthUser.objects.all()
+    serializer_class = AuthUserSerializer
+
+
+class AuthUserListView(generics.ListCreateAPIView):
+    queryset = AuthUser.objects.all()
+    serializer_class = AuthUserSerializer
+
+    def get_queryset(self):
+        queryset = AuthUser.objects.all()
+        # ユーザー名orアカウント名で検索
+        email = self.request.query_params.get('email', None)
+        if email is not None:
+            queryset = queryset.filter(email=email)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('AuthUserListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+
 class AuthInfoGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.all()
@@ -105,11 +125,6 @@ class AuthorView(generics.RetrieveUpdateDestroyAPIView):
 class AuthorBulkListView(ListBulkCreateUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorBulkSerializer
-
-
-class AuthUserRegisterView(generics.ListCreateAPIView):
-    queryset = AuthUser.objects.all()
-    serializer_class = AuthUserSerializer
 
 
 class UserListView(generics.ListCreateAPIView):
