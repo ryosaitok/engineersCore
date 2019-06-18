@@ -32,11 +32,15 @@ export class SignupComponent implements OnInit {
 
   sendEmailVerification(f: NgForm): void {
     const email = f.value.email;
+    this.emailAddress = email;
     // メールを送信するAPI叩く
     this.signupService.emailVerificationSend(email).subscribe(res => {
-      // メール送信処理に成功した場合はメール送信成功画面を表示
-      this.sentMail = true;
-      this.emailAddress = res.email;
+      if (res.sent === true) {
+        // メール送信処理に成功した場合はメール送信成功画面を表示
+        this.sentMail = true;
+      } else {
+        this.sentMailFailed = true;
+      }
     }, error => {
       // メール送信処理に失敗した場合はメール送信失敗画面を表示
       this.sentMailFailed = true;

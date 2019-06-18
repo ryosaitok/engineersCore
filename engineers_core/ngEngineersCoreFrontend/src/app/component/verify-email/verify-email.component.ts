@@ -35,10 +35,10 @@ export class VerifyEmailComponent implements OnInit {
   verifyEmail(): void {
     const token = this.route.snapshot.paramMap.get('token');
     // トークンでメールアドレスを認証する。
-    this.signupService.verifyEmail(token).subscribe(res => {
+    this.signupService.verifyEmail(token).subscribe(data => {
       // トークンで有効なメールアドレス取得できた
-      if (res.email !== null && res.email !== undefined) {
-        this.verifiedEmail = res.email;
+      if (data.count === 1) {
+        this.verifiedEmail = data.results[0].email;
         this.verifySuccess = true;
         this.verified = true;
       }

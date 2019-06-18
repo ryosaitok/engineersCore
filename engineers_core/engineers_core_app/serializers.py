@@ -4,6 +4,12 @@ from django.contrib.auth.hashers import make_password
 from .models import *
 
 
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailVerification
+        fields = ('id', 'email', 'token',)
+
+
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AuthUser

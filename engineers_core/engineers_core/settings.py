@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',  # AngularからAPIにアクセス可能とする
 ]
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,

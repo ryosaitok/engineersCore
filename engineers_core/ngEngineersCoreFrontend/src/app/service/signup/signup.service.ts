@@ -33,13 +33,17 @@ export class SignupService {
 
   // 認証ユーザーを新規登録する。
   emailVerificationSend(email: string): Observable<any> {
-    const body = {email};
+    // tokenはサーバーサイド側で書き換えるので何を送ってもよい
+    const token = 'token';
+    const body = {email, token};
     return this.http.post<any>(this.emailVerificationSendApiUrl, body, this.httpOptions);
   }
 
   // メールアドレス認証をトークンで行う。
   verifyEmail(token: string): Observable<any> {
-    const body = {token};
-    return this.http.post<any>(this.verifyEmailApiUrl, body, this.httpOptions);
+    const email = 'email';
+    // const body = {email, token};
+    const url = this.verifyEmailApiUrl + '?token=' + token;
+    return this.http.get<any>(url, this.httpOptions);
   }
 }

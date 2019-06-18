@@ -7,9 +7,93 @@ from django.db.models import Q
 from django.db.models import F
 from django.db.models import Count
 from datetime import date
-
+from django.core.mail import send_mail
+import binascii
+import os
 
 TODAY = date.today()
+
+
+class EmailVerificationView(generics.CreateAPIView):
+    serializer_class = EmailVerificationSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = EmailVerificationSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+
+        email = serializer_class.validated_data.get('email', None)
+        # すでに登録済みユーザーのメアドが指定された場合は登録済みとレスポンス
+        if email_address_exists(email):
+            message = '指定されたメールアドレスは、すでに登録されています。'
+            data = {'email': email, 'message': message, 'sent': False}
+            return Response(data=data, status=400)
+        # まだ登録されていないメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
+        token = generate_key()
+        success = send_email_confirmation(email, 'info@engineers-core.mail', token)
+        if success:
+            # メールアドレス認証前のメールアドレス・トークンの保存
+            serializer_class.validated_data['token'] = token
+            serializer_class.is_valid(raise_exception=True)
+            print('serializer_class.validated_data: ', serializer_class.validated_data)
+            serializer_class.save()
+            # アドレス+メール送信成功した場合はメール送信成功の旨を返す
+            print('serializer_class.data: ', serializer_class.data)
+            message = 'メール送信処理に成功しました。'
+            data = {'email': email, 'message': message, 'sent': True}
+            return Response(data=data, status=201)
+        else:
+            message = 'メール送信処理に失敗しました。'
+            data = {'email': email, 'message': message, 'sent': False}
+            return Response(data=data, status=500)
+
+
+def email_address_exists(email):
+    users = AuthUser.objects
+    is_exist = users.filter(email=email).exists()
+    if is_exist:
+        print('email_address_exists:true')
+        return True
+    else:
+        print('email_address_exists:false')
+        return False
+
+
+def generate_key():
+    return binascii.hexlify(os.urandom(20)).decode()
+
+
+def send_email_confirmation(email_address, from_address, token):
+    try:
+        if email_address is not None:
+            subject = "【engineersCore】仮登録が完了しました。こちらのメールから本登録できます。"
+            message = "こちらから本登録を完了させると、ログインしてサービスをご利用いただけます。\n" \
+                      "http://127.0.0.1:4200/signup/{}".format(token)
+            from_email = from_address
+            recipient_list = [email_address]
+            sent_count = send_mail(subject, message, from_email, recipient_list)
+            if sent_count == 1:
+                return True
+            else:
+                return False
+    except Exception as e:
+        print(e)
+        return False
+
+
+class EmailVerifyView(generics.ListCreateAPIView):
+    serializer_class = EmailVerificationSerializer
+
+    def get_queryset(self):
+        # トークンをもとにレコード取得
+        token = self.request.query_params.get('token', None)
+        queryset = EmailVerification.objects.filter(token=token)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('EmailVerifyViewのSQL: ' + str(compiler.as_sql()))
+        print('queryset: ', queryset)
+        if queryset:
+            return queryset
+        else:
+            return Response('トークンが無効', status=400)
 
 
 class AuthUserView(generics.RetrieveUpdateDestroyAPIView):

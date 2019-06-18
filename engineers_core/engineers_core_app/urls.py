@@ -6,6 +6,8 @@ from .views import *
 urlpatterns = [
     path('auth/', obtain_jwt_token),
     path('auth/me/', AuthInfoGetView.as_view()),
+    path('email/verification/send/', EmailVerificationView.as_view()),
+    path('verify/email/', EmailVerifyView.as_view()),
     path('books/', BookListView.as_view()),
     path('book/<int:pk>/', BookView.as_view()),
     path('authors/', AuthorListView.as_view()),
