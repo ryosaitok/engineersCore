@@ -8,6 +8,7 @@ from django.db.models import F
 from django.db.models import Count
 from datetime import date
 from django.core.mail import send_mail
+from django.contrib.auth import password_validation
 import binascii
 import os
 
@@ -104,9 +105,7 @@ class PasswordReminderView(generics.CreateAPIView):
         email = serializer_class.validated_data.get('email', None)
         # 登録されていないメアドが指定された場合は未登録エラーのレスポンス
         if not email_address_exists(email):
-            message = '指定されたメールアドレスのユーザーは、登録されていません。'
-            data = {'email': email, 'message': message, 'sent': False}
-            return Response(data=data, status=400)
+            return Response(data={'email': email, 'message': '指定されたメールアドレスのユーザーは、登録されていません。', 'success': False}, status=400)
         # 登録済みメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
         token = generate_key()
         success = send_password_reminder(email, 'info@engineers-core.mail', token)
@@ -118,13 +117,9 @@ class PasswordReminderView(generics.CreateAPIView):
             serializer_class.save()
             # アドレス+メール送信成功した場合はメール送信成功の旨を返す
             print('serializer_class.data: ', serializer_class.data)
-            message = 'メール送信処理に成功しました。'
-            data = {'email': email, 'message': message, 'sent': True}
-            return Response(data=data, status=201)
+            return Response(data={'email': email, 'message': 'メール送信処理に成功しました。', 'success': True}, status=201)
         else:
-            message = 'メール送信処理に失敗しました。'
-            data = {'email': email, 'message': message, 'sent': False}
-            return Response(data=data, status=500)
+            return Response(data={'email': email, 'message': 'メール送信処理に失敗しました。', 'success': False}, status=500)
 
 
 def send_password_reminder(email_address, from_address, token):
@@ -178,9 +173,16 @@ class PasswordResetView(generics.UpdateAPIView):
         auth_user = AuthUser.objects.filter(email=email).first()
         if auth_user is None:
             return Response(data={'message': 'トークンが無効です。', 'success': False}, status=400)
-        # パスワードを暗号化
+        # パスワードの形式をチェックし、問題がなければ暗号化
         password = serializer_class.validated_data.get('password', None)
+        print('password: ', password)
+        try:
+            password_validation.validate_password(password)
+        except Exception as e:
+            print('password_validation.validate_password(password)のe: ', e)
+            return Response(data={'message': 'パスワードの形式が正しくありません。', 'success': False, 'reasons': e}, status=400)
         auth_user.password = make_password(password)
+        print('auth_user.password: ', auth_user.password)
         try:
             # パスワードを更新したインスタンスでDB更新
             auth_user.save()

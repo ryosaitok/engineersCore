@@ -19,6 +19,7 @@ export class PasswordResetComponent implements OnInit {
   verified = false;
   verifySuccess = false;
   updatedPassword = false;
+  validationErrors: string[];
   updatePasswordFailed = false;
 
   constructor(
@@ -57,13 +58,17 @@ export class PasswordResetComponent implements OnInit {
   resetPassword(f: NgForm) {
     const password = f.value.password;
     this.signinService.resetPassword(this.token, password).subscribe(res => {
-      // パスワード変更に成功した場合は成功した画面を出す
-      this.verifySuccess = false;
-      this.updatedPassword = true;
+      if (res.success) {
+        // パスワード変更に成功した場合は成功した画面を出す
+        this.verifySuccess = false;
+        this.updatedPassword = true;
+      } else {
+        this.updatePasswordFailed = true;
+      }
     }, error => {
       // パスワード変更に失敗した場合は失敗メッセージ出す
-      this.verifySuccess = false;
       this.updatePasswordFailed = true;
+      this.validationErrors = error.error.reasons;
     });
   }
 }

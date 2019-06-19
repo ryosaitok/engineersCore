@@ -29,12 +29,17 @@ export class PasswordReminderComponent implements OnInit {
   }
 
   sendPasswordReminder(f: NgForm): void {
-    const email = f.value.email;
+    this.emailAddress = f.value.email;
+    this.sentMailFailed = false;
+    this.sentMail = false;
     // メールを送信するAPI叩く
-    this.signinService.passwordReminderSend(email).subscribe(res => {
-      // メール送信処理に成功した場合は送信完了画面を表示
-      this.emailAddress = res.email;
-      this.sentMail = true;
+    this.signinService.passwordReminderSend(this.emailAddress).subscribe(res => {
+      if (res.success) {
+        // メール送信処理に成功した場合は送信完了画面を表示
+        this.sentMail = true;
+      } else {
+        this.sentMailFailed = true;
+      }
     }, error => {
       // メール送信処理に失敗した場合はメール送信失敗画面を表示
       this.sentMailFailed = true;
