@@ -5,7 +5,6 @@ import {NgForm} from '@angular/forms';
 import {AppComponent} from '../../app.component';
 import {AuthService} from 'angularx-social-login';
 import {SigninService} from '../../service/signin/signin.service';
-import {SignupService} from '../../service/signup/signup.service';
 
 @Component({
   selector: 'app-password-reminder',
@@ -23,7 +22,6 @@ export class PasswordReminderComponent implements OnInit {
     private authService: AuthService,
     private appComponent: AppComponent,
     private signinService: SigninService,
-    private signupService: SignupService,
   ) {
   }
 
@@ -33,7 +31,7 @@ export class PasswordReminderComponent implements OnInit {
   sendPasswordReminder(f: NgForm): void {
     const email = f.value.email;
     // メールを送信するAPI叩く
-    this.signupService.emailVerificationSend(email).subscribe(res => {
+    this.signinService.passwordReminderSend(email).subscribe(res => {
       // メール送信処理に成功した場合は送信完了画面を表示
       this.emailAddress = res.email;
       this.sentMail = true;

@@ -10,6 +10,20 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'token',)
 
 
+class PasswordReminderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PasswordReminder
+        fields = ('id', 'email', 'token',)
+
+
+class PasswordResetSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AuthUser
+        fields = ('password',)
+
+    write_only_fields = (['password'])
+
+
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AuthUser

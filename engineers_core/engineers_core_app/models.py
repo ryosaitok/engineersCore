@@ -18,6 +18,19 @@ class EmailVerification(models.Model):
         return self.email
 
 
+class PasswordReminder(models.Model):
+    email = models.CharField(max_length=128, db_index=True)
+    token = models.CharField(max_length=128, unique=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'password_reminder'
+
+    def __str__(self):
+        return self.email
+
+
 class AuthUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:

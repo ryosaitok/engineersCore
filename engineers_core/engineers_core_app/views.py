@@ -51,10 +51,8 @@ def email_address_exists(email):
     users = AuthUser.objects
     is_exist = users.filter(email=email).exists()
     if is_exist:
-        print('email_address_exists:true')
         return True
     else:
-        print('email_address_exists:false')
         return False
 
 
@@ -94,6 +92,102 @@ class EmailVerifyView(generics.ListCreateAPIView):
             return queryset
         else:
             return Response('トークンが無効', status=400)
+
+
+class PasswordReminderView(generics.CreateAPIView):
+    serializer_class = PasswordReminderSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = PasswordReminderSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+
+        email = serializer_class.validated_data.get('email', None)
+        # 登録されていないメアドが指定された場合は未登録エラーのレスポンス
+        if not email_address_exists(email):
+            message = '指定されたメールアドレスのユーザーは、登録されていません。'
+            data = {'email': email, 'message': message, 'sent': False}
+            return Response(data=data, status=400)
+        # 登録済みメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
+        token = generate_key()
+        success = send_password_reminder(email, 'info@engineers-core.mail', token)
+        if success:
+            # パスワード変更前のメールアドレス・トークンの保存
+            serializer_class.validated_data['token'] = token
+            serializer_class.is_valid(raise_exception=True)
+            print('serializer_class.validated_data: ', serializer_class.validated_data)
+            serializer_class.save()
+            # アドレス+メール送信成功した場合はメール送信成功の旨を返す
+            print('serializer_class.data: ', serializer_class.data)
+            message = 'メール送信処理に成功しました。'
+            data = {'email': email, 'message': message, 'sent': True}
+            return Response(data=data, status=201)
+        else:
+            message = 'メール送信処理に失敗しました。'
+            data = {'email': email, 'message': message, 'sent': False}
+            return Response(data=data, status=500)
+
+
+def send_password_reminder(email_address, from_address, token):
+    try:
+        if email_address is not None:
+            subject = "【engineersCore】こちらのメールからパスワード変更ができます。"
+            message = "こちらからパスワード変更ができます。\n" \
+                      "http://127.0.0.1:4200/password/reset/{}".format(token)
+            from_email = from_address
+            recipient_list = [email_address]
+            sent_count = send_mail(subject, message, from_email, recipient_list)
+            if sent_count == 1:
+                return True
+            else:
+                return False
+    except Exception as e:
+        print(e)
+        return False
+
+
+class VerifyPasswordReminderView(generics.ListCreateAPIView):
+    serializer_class = AuthUserSerializer
+
+    def get_queryset(self):
+        # トークンをもとにレコード取得
+        token = self.request.query_params.get('token', None)
+        queryset = PasswordReminder.objects.filter(token=token)
+        print('queryset: ', queryset)
+        email = queryset[0].email
+        print('queryset[0].email: ', queryset[0].email)
+        authUsers = AuthUser.objects.filter(email=email)
+        print('authUsers: ', authUsers)
+        if authUsers:
+            return authUsers
+        else:
+            return Response('トークンが無効', status=400)
+
+
+class PasswordResetView(generics.UpdateAPIView):
+
+    def put(self, request, *args, **kwargs):
+        serializer_class = PasswordResetSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+
+        # パスワードリマインダーメールのtokenでメールを照合し、メールで認証ユーザーを特定し、パスワード更新
+        token = self.request.query_params.get('token', None)
+        reminders = PasswordReminder.objects.filter(token=token)
+        if len(reminders) != 1:
+            return Response(data={'message': 'トークンが無効です。', 'success': False}, status=400)
+        email = reminders.first().email
+        auth_user = AuthUser.objects.filter(email=email).first()
+        if auth_user is None:
+            return Response(data={'message': 'トークンが無効です。', 'success': False}, status=400)
+        # パスワードを暗号化
+        password = serializer_class.validated_data.get('password', None)
+        auth_user.password = make_password(password)
+        try:
+            # パスワードを更新したインスタンスでDB更新
+            auth_user.save()
+            return Response(data={'message': 'パスワード更新処理が成功しました。', 'success': True}, status=200)
+        except Exception as e:
+            print('PasswordResetView パスワード更新処理でerror: ', e)
+            return Response(data={'message': 'PasswordResetView パスワード更新処理でerror', 'success': False}, status=500)
 
 
 class AuthUserView(generics.RetrieveUpdateDestroyAPIView):

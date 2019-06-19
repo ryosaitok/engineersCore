@@ -31,7 +31,7 @@ export class SignupService {
     return this.http.post<any>(this.authUsersApiUrl, body, this.httpOptions);
   }
 
-  // 認証ユーザーを新規登録する。
+  // 認証メールを送信する。
   emailVerificationSend(email: string): Observable<any> {
     // tokenはサーバーサイド側で書き換えるので何を送ってもよい
     const token = 'token';
