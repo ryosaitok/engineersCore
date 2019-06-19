@@ -17,6 +17,8 @@ export class SignupComponent implements OnInit {
   sentMail = false;
   sentMailFailed = false;
   emailAddress: string;
+  errorMessage: string;
+  validationErrors: string[];
 
   constructor(
     private router: Router,
@@ -35,15 +37,13 @@ export class SignupComponent implements OnInit {
     this.emailAddress = email;
     // メールを送信するAPI叩く
     this.signupService.emailVerificationSend(email).subscribe(res => {
-      if (res.sent === true) {
-        // メール送信処理に成功した場合はメール送信成功画面を表示
-        this.sentMail = true;
-      } else {
-        this.sentMailFailed = true;
-      }
+      // メール送信処理に成功した場合はメール送信成功画面を表示
+      this.sentMail = true;
     }, error => {
       // メール送信処理に失敗した場合はメール送信失敗画面を表示
       this.sentMailFailed = true;
+      this.errorMessage = error.error.message;
+      this.validationErrors = error.error.reasons;
     });
   }
 }

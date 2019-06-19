@@ -9,6 +9,7 @@ from django.db.models import Count
 from datetime import date
 from django.core.mail import send_mail
 from django.contrib.auth import password_validation
+from django.core.validators import validate_email
 import binascii
 import os
 
@@ -23,11 +24,14 @@ class EmailVerificationView(generics.CreateAPIView):
         serializer_class.is_valid(raise_exception=True)
 
         email = serializer_class.validated_data.get('email', None)
+        try:
+            validate_email(email)
+        except Exception as e:
+            print('EmailValidatorのe: ', e)
+            return Response(data={'message': 'メールアドレスの形式が正しくありません。', 'reasons': e}, status=400)
         # すでに登録済みユーザーのメアドが指定された場合は登録済みとレスポンス
         if email_address_exists(email):
-            message = '指定されたメールアドレスは、すでに登録されています。'
-            data = {'email': email, 'message': message, 'sent': False}
-            return Response(data=data, status=400)
+            return Response(data={'email': email, 'message': '指定されたメールアドレスは、すでに登録されています。'}, status=400)
         # まだ登録されていないメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
         token = generate_key()
         success = send_email_confirmation(email, 'info@engineers-core.mail', token)
@@ -39,13 +43,9 @@ class EmailVerificationView(generics.CreateAPIView):
             serializer_class.save()
             # アドレス+メール送信成功した場合はメール送信成功の旨を返す
             print('serializer_class.data: ', serializer_class.data)
-            message = 'メール送信処理に成功しました。'
-            data = {'email': email, 'message': message, 'sent': True}
-            return Response(data=data, status=201)
+            return Response(data={'email': email, 'message': 'メール送信処理に成功しました。'}, status=201)
         else:
-            message = 'メール送信処理に失敗しました。'
-            data = {'email': email, 'message': message, 'sent': False}
-            return Response(data=data, status=500)
+            return Response(data={'email': email, 'message': 'メール送信処理に失敗しました。'}, status=500)
 
 
 def email_address_exists(email):

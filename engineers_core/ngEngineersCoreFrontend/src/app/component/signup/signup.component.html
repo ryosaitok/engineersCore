@@ -37,6 +37,15 @@
             </form>
           </div>
           <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
+          <div *ngIf="sentMailFailed" class="sent-mail-message">
+          <p><b>「{{emailAddress}}」宛へのメール送信に失敗しました。</b></p>
+          <p><b>{{errorMessage}}</b></p>
+          <div *ngFor="let error of validationErrors">
+            {{error}}
+          </div>
+          <br>
+          <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
+        </div>
         </div>
         <!-- メールアドレス登録メール送信後画面 -->
         <div *ngIf="sentMail" class="sent-mail-message">
@@ -45,12 +54,6 @@
           <br>
           <p>※メールが届かない場合は、迷惑メールボックスに入っていないか、</p>
           <p>またご自身のメールアカウントの受信設定をご確認ください。</p>
-          <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
-        </div>
-        <div *ngIf="sentMailFailed" class="sent-mail-message">
-          <p><b>「{{emailAddress}}」宛へのメール送信に失敗しました。</b></p>
-          <p><b>すでに登録済み、もしくはメールアドレスの形式が正しくない可能性がありますので、ご確認ください。</b></p>
-          <br>
           <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
         </div>
       </div>
