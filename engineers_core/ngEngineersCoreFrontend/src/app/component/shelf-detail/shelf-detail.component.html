@@ -46,7 +46,7 @@
             <ul class="comment-reactions">
               <li>
                 <ul class="comment-replies comment-reaction">
-                  <li><span class="comment-reaction-reply"><fa-icon [icon]="faCommentDots"></fa-icon></span>
+                  <li><span (click)="scrollToComment('comment-area')" class="comment-reaction-reply"><fa-icon [icon]="faCommentDots"></fa-icon></span>
                   </li>
                   <li>{{shelf.commentUserCount}}</li>
                 </ul>
@@ -134,7 +134,7 @@
                   <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </li>
-              <li>
+              <li id="comment-area">
                 <form #f="ngForm" class="comment-form">
                   <div class="form-group" style="width:90%;">
                     <textarea ngModel class="form-control" name="comment" id="comment" placeholder="本棚に対するコメントを追加..."
