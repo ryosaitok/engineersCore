@@ -175,6 +175,6 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   scrollToComment(id: string): void {
-    document.getElementById(id).scrollIntoView({block: 'start', behavior: 'smooth'});
+    document.getElementById(id).scrollIntoView({block: 'center', behavior: 'smooth'});
   }
 }

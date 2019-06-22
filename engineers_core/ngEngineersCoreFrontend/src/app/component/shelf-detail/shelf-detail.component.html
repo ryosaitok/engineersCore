@@ -126,12 +126,12 @@
           <div class="add-comment-module">
             <ul class="add-comment">
               <li>
-                <div *ngIf="shelf.user.profileImageLink !== null && shelf.user.profileImageLink !== undefined"
+                <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                      class="user-profile-icon">
-                  <img class="profile-image" src="../../assets/image/profile/{{shelf.user.profileImageLink}}"
+                  <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
                        alt=""/>
                 </div>
-                <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
+                <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
                   <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </li>
