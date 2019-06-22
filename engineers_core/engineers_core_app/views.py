@@ -245,7 +245,7 @@ class BookListView(generics.ListCreateAPIView):
         sort = self.request.query_params.get('sort', None)
         if sort is not None:
             if sort == 'sale_date':
-                return queryset.filter(sale_date__lte=TODAY).order_by(F('sale_date').desc(nulls_last=True))
+                return queryset.order_by(F('sale_date').desc(nulls_last=True))
             if sort == 'popular':
                 return queryset.order_by(F('comment_count').desc(nulls_last=True))
         return queryset.order_by(F('amazon_book__sales_rank').asc(nulls_last=True))
