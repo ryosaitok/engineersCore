@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {faBookOpen, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faBook, faUser} from '@fortawesome/free-solid-svg-icons';
 
 import {AuthGuard} from '../../guard/auth.guard';
 import {AppComponent} from '../../app.component';
@@ -43,7 +43,7 @@ export class SearchComponent implements OnInit {
   popularBooks: Book[];
   newBooks: Book[];
 
-  faBookOpen = faBookOpen;
+  faBook = faBook;
   faUser = faUser;
   titleSelected = '';
   authorSelected = '';

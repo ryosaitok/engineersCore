@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {AuthGuard} from '../../guard/auth.guard';
 import {NgForm} from '@angular/forms';
-import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faCommentDots, faHeart, faBook} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {Book} from '../../dto/book/book';
@@ -27,6 +27,7 @@ export class BookDetailComponent implements OnInit {
   @Input() book: Book;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
+  faBook = faBook;
   userId: number;
   accountName: string;
   bookComments: BookComment[];
