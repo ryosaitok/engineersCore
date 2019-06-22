@@ -20,7 +20,8 @@
                              alt=""/>
                       </div>
                       <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                             alt=""/>
                       </div>
                     </div>
                   </a>
@@ -37,9 +38,9 @@
                       <li>
                         <ul class="comment-replies comment-reaction">
                           <li>
-                              <span class="comment-reaction-reply">
-                                <fa-icon [icon]="faCommentDots"></fa-icon>
-                              </span>
+                            <span class="comment-reaction-reply">
+                              <a class="comment-reaction-reply-link" routerLink="/shelf/{{shelf.shelfId}}/"><fa-icon [icon]="faCommentDots"></fa-icon></a>
+                            </span>
                           </li>
                           <li>{{shelf.commentUserCount}}</li>
                         </ul>

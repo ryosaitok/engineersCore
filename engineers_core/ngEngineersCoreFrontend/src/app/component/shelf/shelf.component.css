@@ -93,6 +93,9 @@ ul.comment-reaction li {
 ul.comment-reaction li > span {
     color: #cccccc;
 }
+.comment-reaction-reply-link,.comment-reaction-reply-link:visited {
+    color: #cccccc;
+}
 ul.comment-reaction li > span.comment-reaction-reply:hover {
     color: #337ab7;
     cursor: pointer;

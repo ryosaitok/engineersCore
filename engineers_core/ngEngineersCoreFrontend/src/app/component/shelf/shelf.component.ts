@@ -8,6 +8,7 @@ import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
 import {Shelf} from '../../dto/shelf/shelf';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-shelf',
@@ -24,6 +25,7 @@ export class ShelfComponent implements OnInit {
 
   constructor(
     private authGuard: AuthGuard,
+    private router: Router,
     private appComponent: AppComponent,
     private shelfService: ShelfService,
     private shelfFavoriteService: ShelfFavoriteService,
