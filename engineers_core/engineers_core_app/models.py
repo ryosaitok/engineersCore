@@ -315,3 +315,22 @@ class ShelfCommentReply(models.Model):
 
     def __str__(self):
         return '【' + self.user.user_name + '】', self.comment.comment_text
+
+
+class ShelfCommentReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shelf_comment = models.ForeignKey(ShelfComment, related_name='report_users', on_delete=models.CASCADE)
+    report_date = models.DateField(auto_now=True)
+    report_reasons = [
+        ['VLT', 'Violent'],
+        ['SPM', 'Spam'],
+        ['POM', 'Violate Public Order And Morals'],
+        ['SVL', 'Service Violation'],
+    ]
+    reason_code = models.CharField(choices=report_reasons, default='SVL', max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "shelf_comment")
+        db_table = 'shelf_comment_report'

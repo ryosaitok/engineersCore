@@ -5,12 +5,12 @@ import {CookieService} from 'ngx-cookie-service';
 import {FormsModule} from '@angular/forms';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AppRoutingModule} from './app-routing.module';
-import {SocialLoginModule, AuthServiceConfig} from "angularx-social-login";
-import {GoogleLoginProvider, FacebookLoginProvider} from "angularx-social-login";
+import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
 import {AppComponent} from './app.component';
 import {UsersComponent} from './component/users/users.component';
@@ -24,9 +24,9 @@ import {ShelfComponent} from './component/shelf/shelf.component';
 import {ShelfDetailComponent} from './component/shelf-detail/shelf-detail.component';
 import {SignupComponent} from './component/signup/signup.component';
 import {SigninService} from './service/signin/signin.service';
-import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
-import { PasswordReminderComponent } from './component/password-reminder/password-reminder.component';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
+import {VerifyEmailComponent} from './component/verify-email/verify-email.component';
+import {PasswordReminderComponent} from './component/password-reminder/password-reminder.component';
+import {PasswordResetComponent} from './password-reset/password-reset.component';
 
 const config = new AuthServiceConfig([
   {
@@ -70,7 +70,8 @@ export function provideConfig() {
     NgbButtonsModule,
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   exports: [],
   providers: [CookieService, SigninService,

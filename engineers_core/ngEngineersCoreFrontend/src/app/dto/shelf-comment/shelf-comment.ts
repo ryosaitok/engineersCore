@@ -11,9 +11,10 @@ export class ShelfComment {
   favoriteUserCount: number;
   replyUserIds: number[];
   replyUserCount: number;
+  reportUserIds: number[];
 
   constructor(shelfCommentId: number, user: User, shelfId: number, commentText: string, commentDate: Date, tweetFlag: boolean,
-              favoriteUsers: number[], favoriteUserCount: number, replyUserIds: number[], replyUserCount: number) {
+              favoriteUsers: number[], favoriteUserCount: number, replyUserIds: number[], replyUserCount: number, reportUserIds: number[]) {
     this.shelfCommentId = shelfCommentId;
     this.user = user;
     this.shelfId = shelfId;
@@ -24,5 +25,6 @@ export class ShelfComment {
     this.favoriteUserCount = favoriteUserCount;
     this.replyUserIds = replyUserIds;
     this.replyUserCount = replyUserCount;
+    this.reportUserIds = reportUserIds;
   }
 }

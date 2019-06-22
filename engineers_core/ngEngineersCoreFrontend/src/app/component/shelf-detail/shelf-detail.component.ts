@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {AuthGuard} from '../../guard/auth.guard';
-import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faBookReader, faCommentDots, faHeart, faCaretDown, faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {Shelf} from '../../dto/shelf/shelf';
@@ -28,6 +28,8 @@ export class ShelfDetailComponent implements OnInit {
   faBookReader = faBookReader;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
+  faCaretDown = faCaretDown;
+  faExclamationTriangle = faExclamationTriangle;
 
   constructor(
     private route: ActivatedRoute,
@@ -123,6 +125,29 @@ export class ShelfDetailComponent implements OnInit {
           this.shelfComments.unshift(shelfComment);
         }
       });
+    });
+  }
+
+  deleteComment(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.shelfCommentService.deleteShelfComment(commentId).subscribe(res => {
+      this.shelfComments.splice(index, 1);
+      this.shelfCommentCount -= 1;
+    }, error => {
+      console.error('deleteCommentでエラー: ', error);
+    });
+  }
+
+  reportComment(commentId: number, reasonCode: string): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.shelfCommentService.reportComment(this.appComponent.userId, commentId, reasonCode).subscribe(res => {
+      // 報告済みマークつける
+    }, error => {
+      console.error('reportCommentでエラー: ', error);
     });
   }
 

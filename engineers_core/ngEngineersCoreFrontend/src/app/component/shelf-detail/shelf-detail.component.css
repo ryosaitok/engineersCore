@@ -11,6 +11,7 @@ a:visited {
 a:hover {
     color: #337ab7;
     text-decoration: none;
+    cursor: pointer;
 }
 
 /* 本棚名ナビ */
@@ -268,6 +269,13 @@ ul.comment-list {
 }
 .shelf-comment {
     margin: 30px 0 !important;
+}
+.comment-menu {
+    float: right;
+    padding: 0 10px;
+}
+.comment-menu-icon {
+    color: #cccccc;
 }
 ul.comment-user {
     list-style: none;

@@ -150,11 +150,44 @@
           </div>
           <div class="comments-module" *ngIf="shelfCommentCount > 0">
             <ul class="comment-list">
-              <li *ngFor="let comment of shelfComments; let i = index" class="shelf-comment flex-module-inner" data-section-id="wtf"
+              <li *ngFor="let comment of shelfComments; let i = index" class="shelf-comment flex-module-inner"
+                  data-section-id="wtf"
                   style="opacity: 1;">
                 <!-- コメントの情報 -->
                 <div class="context">
                   <div class="comment-content">
+                    <div class="comment-menu">
+
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown [insideClick]="true">
+                        <div dropdownToggle class="dropdown-toggle">
+                          <a class="comment-menu-icon"><i class="fas fa-lg">
+                            <fa-icon [icon]="faCaretDown"></fa-icon>
+                          </i></a>
+                        </div>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                          <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
+                            <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, i)">
+                              削除する
+                            </a>
+                          </li>
+                          <li *ngIf="comment.user.id !== appComponent.userId" role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
+                            <a dropdownToggle class="dropdown-item">報告する</a>
+                            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'VLT')">悪意のある表現や暴力的</a></li>
+                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'SPM')">商業目的やスパム</a></li>
+                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'POM')">公序良俗に反する</a></li>
+                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'SVL')">その他利用規約に反する</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) >= 0" tooltip="問題のあるコメントとして報告済みです。">
+                        <a class="comment-menu-icon"><i class="fas fa-lg">
+                            <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                          </i></a>
+                      </div>
+
+                    </div>
                     <ul class="comment-user">
                       <li class="comment-user-image">
                         <a routerLink="/user/{{comment.user.userAccountName}}">

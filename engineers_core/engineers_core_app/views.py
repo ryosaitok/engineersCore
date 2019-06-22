@@ -709,3 +709,18 @@ class ShelfCommentReplyListView(generics.ListCreateAPIView):
 class ShelfCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfCommentReply.objects.all()
     serializer_class = ShelfCommentReplySerializer
+
+
+class ShelfCommentReportListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentReport.objects.all()
+    serializer_class = ShelfCommentReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = ShelfCommentReport.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentReportSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)

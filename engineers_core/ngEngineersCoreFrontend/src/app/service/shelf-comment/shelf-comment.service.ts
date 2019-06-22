@@ -17,6 +17,8 @@ export class ShelfCommentService {
   shelfCommentsAPIUrl = this.host + this.shelfCommentsUrl;
   shelfIdShelfCommentsUrl = 'api/shelf/comments/?shelf_id=';
   shelfIdShelfCommentsAPIUrl = this.host + this.shelfIdShelfCommentsUrl;
+  shelfCommentReportsUrl = 'api/shelf/comment/reports/';
+  shelfCommentReportsAPIUrl = this.host + this.shelfCommentReportsUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -58,6 +60,21 @@ export class ShelfCommentService {
     return this.http.post<any>(this.shelfCommentsAPIUrl, body, this.httpOptions);
   }
 
+  deleteShelfComment(commentId: number) {
+    const url = this.shelfCommentAPIUrl + commentId + '/';
+    return this.http.delete<any>(url, this.httpOptions);
+  }
+
+  reportComment(userId: number, shelfCommentId: number, reasonCode: string) {
+    const url = this.shelfCommentReportsAPIUrl;
+    const body = {
+      user: userId,
+      shelf_comment: shelfCommentId,
+      reason_code: reasonCode
+    };
+    return this.http.post<any>(url, body, this.httpOptions);
+  }
+
   convertShelfComments(shelfComments: any[]): ShelfComment[] {
     const convertedShelfComments = [];
     shelfComments.forEach(comment => {
@@ -68,7 +85,7 @@ export class ShelfCommentService {
       const replyUserCount = Object.keys(comment.reply_users).length;
       convertedShelfComments.push(
         new ShelfComment(comment.id, userForComment, shelfIdForComment, comment.comment_text, comment.comment_date,
-          comment.tweet_flag, comment.favorite_users, favoriteUserCount, comment.reply_users, replyUserCount)
+          comment.tweet_flag, comment.favorite_users, favoriteUserCount, comment.reply_users, replyUserCount, comment.report_users)
       );
     });
     return convertedShelfComments;
@@ -81,6 +98,7 @@ export class ShelfCommentService {
     const favoriteUserCount = Object.keys(shelfComment.favorite_users).length;
     const replyUserCount = Object.keys(shelfComment.reply_users).length;
     return new ShelfComment(shelfComment.id, userForComment, shelfIdForComment, shelfComment.comment_text, shelfComment.comment_date,
-      shelfComment.tweet_flag, shelfComment.favorite_users, favoriteUserCount, shelfComment.reply_users, replyUserCount);
+      shelfComment.tweet_flag, shelfComment.favorite_users, favoriteUserCount, shelfComment.reply_users, replyUserCount,
+      shelfComment.report_users);
   }
 }
