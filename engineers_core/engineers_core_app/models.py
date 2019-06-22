@@ -301,22 +301,6 @@ class ShelfCommentFavorite(models.Model):
         return '【' + self.user.user_name + '】', self.shelf_comment.comment_text
 
 
-class ShelfCommentReply(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(ShelfComment, related_name='reply_users', on_delete=models.CASCADE)
-    comment_text = models.TextField(max_length=10000)
-    comment_date = models.DateField(auto_now=True)
-    tweet_flag = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'shelf_comment_reply'
-
-    def __str__(self):
-        return '【' + self.user.user_name + '】', self.comment.comment_text
-
-
 class ShelfCommentReport(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shelf_comment = models.ForeignKey(ShelfComment, related_name='report_users', on_delete=models.CASCADE)
@@ -334,3 +318,53 @@ class ShelfCommentReport(models.Model):
     class Meta:
         unique_together = ("user", "shelf_comment")
         db_table = 'shelf_comment_report'
+
+
+class ShelfCommentReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(ShelfComment, related_name='reply_users', on_delete=models.CASCADE)
+    comment_text = models.TextField(max_length=10000)
+    comment_date = models.DateField(auto_now=True)
+    tweet_flag = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'shelf_comment_reply'
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.comment.comment_text
+
+
+class ShelfCommentReplyFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shelf_comment_reply = models.ForeignKey(ShelfCommentReply, related_name='favorite_users', on_delete=models.CASCADE)
+    favorite_date = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "shelf_comment_reply")
+        db_table = 'shelf_comment_reply_favorite'
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.shelf_comment_reply.comment_text
+
+
+class ShelfCommentReplyReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shelf_comment_reply = models.ForeignKey(ShelfCommentReply, related_name='report_users', on_delete=models.CASCADE)
+    report_date = models.DateField(auto_now=True)
+    report_reasons = [
+        ['VLT', 'Violent'],
+        ['SPM', 'Spam'],
+        ['POM', 'Violate Public Order And Morals'],
+        ['SVL', 'Service Violation'],
+    ]
+    reason_code = models.CharField(choices=report_reasons, default='SVL', max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "shelf_comment_reply")
+        db_table = 'shelf_comment_reply_report'

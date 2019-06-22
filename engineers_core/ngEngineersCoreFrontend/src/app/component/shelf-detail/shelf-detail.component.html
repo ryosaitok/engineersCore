@@ -141,7 +141,7 @@
                     <textarea ngModel class="form-control" name="comment" id="comment" placeholder="本棚に対するコメントを追加..."
                               required maxlength="255"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary" (click)="registerComment(f)">
+                  <button type="submit" class="btn btn-primary comment-button" (click)="registerComment(f)">
                     <strong><b>コメント</b></strong>
                   </button>
                 </form>
@@ -150,15 +150,16 @@
           </div>
           <div class="comments-module" *ngIf="shelfCommentCount > 0">
             <ul class="comment-list">
-              <li *ngFor="let comment of shelfComments; let i = index" class="shelf-comment flex-module-inner"
+              <li *ngFor="let comment of shelfComments; let commentIndex = index"
+                  class="shelf-comment flex-module-inner"
                   data-section-id="wtf"
                   style="opacity: 1;">
                 <!-- コメントの情報 -->
                 <div class="context">
                   <div class="comment-content">
                     <div class="comment-menu">
-
-                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown [insideClick]="true">
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown
+                           [insideClick]="true">
                         <div dropdownToggle class="dropdown-toggle">
                           <a class="comment-menu-icon"><i class="fas fa-lg">
                             <fa-icon [icon]="faCaretDown"></fa-icon>
@@ -166,27 +167,36 @@
                         </div>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                           <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
-                            <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, i)">
+                            <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, commentIndex)">
                               削除する
                             </a>
                           </li>
-                          <li *ngIf="comment.user.id !== appComponent.userId" role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
+                          <li *ngIf="comment.user.id !== appComponent.userId" role="menuitem" dropdown
+                              triggers="mouseover" placement="right" container="body">
                             <a dropdownToggle class="dropdown-item">報告する</a>
                             <ul *dropdownMenu class="dropdown-menu" role="menu">
-                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'VLT')">悪意のある表現や暴力的</a></li>
-                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'SPM')">商業目的やスパム</a></li>
-                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'POM')">公序良俗に反する</a></li>
-                              <li role="menuitem"><a class="dropdown-item" (click)="reportComment(comment.shelfCommentId, 'SVL')">その他利用規約に反する</a></li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'VLT', commentIndex)">悪意のある表現や暴力的</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'SPM', commentIndex)">商業目的やスパム</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'POM', commentIndex)">公序良俗に反する</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'SVL', commentIndex)">その他利用規約に反する</a>
+                              </li>
                             </ul>
                           </li>
                         </ul>
                       </div>
-                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) >= 0" tooltip="問題のあるコメントとして報告済みです。">
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) >= 0"
+                           tooltip="問題のあるコメントとして報告済みです。">
                         <a class="comment-menu-icon"><i class="fas fa-lg">
-                            <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-                          </i></a>
+                          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                        </i></a>
                       </div>
-
                     </div>
                     <ul class="comment-user">
                       <li class="comment-user-image">
@@ -223,7 +233,7 @@
                       <ul class="comment-reactions space-for-comment">
                         <li>
                           <ul class="comment-replies comment-reaction">
-                            <li>
+                            <li (click)="reverseRepliesDisplayState(comment.shelfCommentId, commentIndex, 1)">
                               <span class="comment-reaction-reply">
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
@@ -235,12 +245,12 @@
                           <ul class="comment-favorites comment-reaction">
                             <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
                                 <span class="comment-reaction-heart favorite-done"
-                                      (click)="notCommentFavorite(comment.shelfCommentId, i)"><fa-icon
+                                      (click)="notCommentFavorite(comment.shelfCommentId, commentIndex)"><fa-icon
                                   [icon]="faHeart"></fa-icon></span>
                             </li>
                             <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
                               <span class="comment-reaction-heart favorite-none"
-                                    (click)="commentFavorite(comment.shelfCommentId, i)">
+                                    (click)="commentFavorite(comment.shelfCommentId, commentIndex)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
                             </li>
@@ -248,6 +258,137 @@
                           </ul>
                         </li>
                       </ul>
+                    </div>
+
+                    <div class="replies" *ngIf="comment.displayedReply">
+                      <div class="add-comment-module">
+                        <ul class="add-comment">
+                          <li>
+                            <div
+                              *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
+                              class="user-profile-icon">
+                              <img class="min-profile-image"
+                                   src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
+                            </div>
+                            <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
+                              <img class="min-profile-image"
+                                   src="../../../assets/image/profile/default_profile_image.png"
+                                   alt=""/>
+                            </div>
+                          </li>
+                          <li>
+                            <form #f="ngForm" class="comment-form">
+                              <div class="form-group" style="width:90%;">
+                              <textarea ngModel class="form-control" name="comment" placeholder="本棚に対するコメントを追加..."
+                                        required maxlength="255"></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-primary reply-button"
+                                      (click)="registerReply(f, comment.shelfCommentId, commentIndex)">
+                                <strong><b>コメント</b></strong>
+                              </button>
+                            </form>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="comments-module comment-reply-fields" *ngIf="comment.commentReplies !== []">
+                        <ul class="comment-list">
+                          <li *ngFor="let reply of comment.commentReplies; let replyIndex = index"
+                              class="reply-comment">
+                            <!-- コメントの情報 -->
+                            <div class="context">
+                              <div class="comment-content">
+                                <div class="comment-menu">
+                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group"
+                                       dropdown [insideClick]="true">
+                                    <div dropdownToggle class="dropdown-toggle">
+                                      <a class="comment-menu-icon"><i class="fas fa-lg">
+                                        <fa-icon [icon]="faCaretDown"></fa-icon>
+                                      </i></a>
+                                    </div>
+                                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                      <li *ngIf="reply.user.id === appComponent.userId" role="menuitem">
+                                        <a class="dropdown-item"
+                                           (click)="deleteReply(reply.shelfCommentReplyId, commentIndex, replyIndex)">削除する</a>
+                                      </li>
+                                      <li *ngIf="reply.user.id !== appComponent.userId" role="menuitem" dropdown
+                                          triggers="mouseover" placement="right" container="body">
+                                        <a dropdownToggle class="dropdown-item">報告する</a>
+                                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'VLT', commentIndex, replyIndex)">悪意のある表現や暴力的</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'SPM', commentIndex, replyIndex)">商業目的やスパム</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'POM', commentIndex, replyIndex)">公序良俗に反する</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'SVL', commentIndex, replyIndex)">その他利用規約に反する</a>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) >= 0"
+                                       tooltip="問題のあるコメントとして報告済みです。">
+                                    <a class="comment-menu-icon"><i>
+                                      <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                                    </i></a>
+                                  </div>
+                                </div>
+                                <ul class="comment-user">
+                                  <li class="comment-user-image">
+                                    <a routerLink="/user/{{reply.user.userAccountName}}">
+                                      <div
+                                        *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
+                                        class="user-profile-icon">
+                                        <img class="min-profile-image"
+                                             src="../../assets/image/profile/{{reply.user.profileImageLink}}" alt=""/>
+                                      </div>
+                                      <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
+                                        <img class="min-profile-image"
+                                             src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                                      </div>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <ul class="comment-user-name-space">
+                                      <li class="comment-user-name"><a
+                                        routerLink="/user/{{reply.user.userAccountName}}">{{reply.user.userName}}</a>
+                                      </li>
+                                      <li><a class="comment-user-account-name"
+                                             routerLink="/user/{{reply.user.userAccountName}}">
+                                        @{{reply.user.userAccountName}}</a>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                                <div class="comment-date">・{{reply.commentDate | date:"yyyy年M月d日" }}</div>
+                                <div class="comment">{{reply.commentText}}</div>
+                                <div class="comment-reaction">
+                                  <ul class="comment-reactions space-for-comment">
+                                    <li>
+                                      <ul class="comment-favorites comment-reaction">
+                                        <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) >= 0">
+                                      <span class="comment-reaction-heart favorite-done"
+                                            (click)="notReplyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
+                                        [icon]="faHeart"></fa-icon></span></li>
+                                        <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) == -1">
+                                      <span class="comment-reaction-heart favorite-none"
+                                            (click)="replyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
+                                        [icon]="faHeart"></fa-icon></span>
+                                        </li>
+                                        <li>{{reply.favoriteUserCount}}</li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>

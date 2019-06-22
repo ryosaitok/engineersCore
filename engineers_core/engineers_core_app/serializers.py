@@ -335,21 +335,6 @@ class ShelfCommentFavoriteWithForeignSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'shelf_comment', 'favorite_date',)
 
 
-class ShelfCommentReplySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShelfCommentReply
-        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)
-
-
-class ShelfCommentReplyWithForeignSerializer(serializers.ModelSerializer):
-    comment = ShelfCommentSerializer()
-    user = UserSerializer()
-
-    class Meta:
-        model = ShelfCommentReply
-        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)
-
-
 class ShelfCommentReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelfCommentReport
@@ -363,3 +348,71 @@ class ShelfCommentReportWithForeignSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelfCommentReport
         fields = ('id', 'user', 'shelf_comment', 'report_date', 'reason_code',)
+
+
+class ShelfCommentReplySerializer(serializers.ModelSerializer):
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+    report_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+
+    class Meta:
+        model = ShelfCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',
+                  'report_users',)
+
+
+class ShelfCommentReplyWithForeignSerializer(serializers.ModelSerializer):
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+    report_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+    comment = ShelfCommentSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = ShelfCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',
+                  'report_users',)
+
+
+class ShelfCommentReplyFavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShelfCommentReplyFavorite
+        fields = ('id', 'user', 'shelf_comment_reply', 'favorite_date',)
+
+
+class ShelfCommentReplyFavoriteWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    shelf_comment_reply = ShelfCommentReplySerializer()
+
+    class Meta:
+        model = ShelfCommentReplyFavorite
+        fields = ('id', 'user', 'shelf_comment_reply', 'favorite_date',)
+
+
+class ShelfCommentReplyReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShelfCommentReplyReport
+        fields = ('id', 'user', 'shelf_comment_reply', 'report_date',  'reason_code',)
+
+
+class ShelfCommentReplyReportWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    shelf_comment = ShelfCommentReplySerializer()
+
+    class Meta:
+        model = ShelfCommentReplyReport
+        fields = ('id', 'user', 'shelf_comment_reply', 'report_date', 'reason_code',)

@@ -75,22 +75,6 @@ export class ShelfCommentService {
     return this.http.post<any>(url, body, this.httpOptions);
   }
 
-  convertShelfComments(shelfComments: any[]): ShelfComment[] {
-    const convertedShelfComments = [];
-    shelfComments.forEach(comment => {
-      const user = comment.user;
-      const userForComment = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
-      const shelfIdForComment = comment.shelf;
-      const favoriteUserCount = Object.keys(comment.favorite_users).length;
-      const replyUserCount = Object.keys(comment.reply_users).length;
-      convertedShelfComments.push(
-        new ShelfComment(comment.id, userForComment, shelfIdForComment, comment.comment_text, comment.comment_date,
-          comment.tweet_flag, comment.favorite_users, favoriteUserCount, comment.reply_users, replyUserCount, comment.report_users)
-      );
-    });
-    return convertedShelfComments;
-  }
-
   convertShelfComment(shelfComment: any): ShelfComment {
     const user = shelfComment.user;
     const userForComment = new User(user.id, user.user_name, user.account_name, user.description, user.profile_image_link);
@@ -99,6 +83,14 @@ export class ShelfCommentService {
     const replyUserCount = Object.keys(shelfComment.reply_users).length;
     return new ShelfComment(shelfComment.id, userForComment, shelfIdForComment, shelfComment.comment_text, shelfComment.comment_date,
       shelfComment.tweet_flag, shelfComment.favorite_users, favoriteUserCount, shelfComment.reply_users, replyUserCount,
-      shelfComment.report_users);
+      shelfComment.report_users, [], false);
+  }
+
+  convertShelfComments(shelfComments: any[]): ShelfComment[] {
+    const convertedShelfComments = [];
+    shelfComments.forEach(comment => {
+      convertedShelfComments.push(this.convertShelfComment(comment));
+    });
+    return convertedShelfComments;
   }
 }

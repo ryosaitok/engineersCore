@@ -684,6 +684,26 @@ class ShelfCommentFavoriteListView(generics.ListCreateAPIView):
         return queryset.order_by('favorite_date')
 
 
+class ShelfCommentReportListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentReport.objects.all()
+    serializer_class = ShelfCommentReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = ShelfCommentReport.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentReportSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+
+class ShelfCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfCommentReply.objects.all()
+    serializer_class = ShelfCommentReplyWithForeignSerializer
+
+
 class ShelfCommentReplyListView(generics.ListCreateAPIView):
     queryset = ShelfCommentReply.objects.all()
     serializer_class = ShelfCommentReplyWithForeignSerializer
@@ -697,30 +717,63 @@ class ShelfCommentReplyListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = ShelfCommentReply.objects.all()
-        account_name = self.request.query_params.get('account_name', None)
-        if account_name is not None:
-            queryset = queryset.filter(user__account_name=account_name)
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
         comment_id = self.request.query_params.get('comment_id', None)
         if comment_id is not None:
-            queryset = queryset.filter(comment__id=comment_id)
+            queryset = queryset.filter(comment=comment_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('ShelfCommentReplyListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
 
+    def filter_queryset(self, queryset):
+        queryset = super(ShelfCommentReplyListView, self).filter_queryset(queryset)
+        return queryset.order_by('-id')
 
-class ShelfCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ShelfCommentReply.objects.all()
-    serializer_class = ShelfCommentReplySerializer
+
+class ShelfCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfCommentReplyFavorite.objects.all()
+    serializer_class = ShelfCommentReplyFavoriteSerializer
 
 
-class ShelfCommentReportListView(generics.ListCreateAPIView):
-    queryset = ShelfCommentReport.objects.all()
-    serializer_class = ShelfCommentReportWithForeignSerializer
+class ShelfCommentReplyFavoriteListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentReplyFavorite.objects.all()
+    serializer_class = ShelfCommentReplyFavoriteWithForeignSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentReplyFavoriteSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
-        queryset = ShelfCommentReport.objects.all()
+        queryset = ShelfCommentReplyFavorite.objects.all()
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        comment_reply_id = self.request.query_params.get('comment_reply_id', None)
+        if comment_reply_id is not None:
+            queryset = queryset.filter(shelf_comment_reply__id=comment_reply_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('ShelfCommentFavoriteListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(ShelfCommentReplyFavoriteListView, self).filter_queryset(queryset)
+        return queryset.order_by('favorite_date')
+
+
+class ShelfCommentReplyReportListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentReplyReport.objects.all()
+    serializer_class = ShelfCommentReplyReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = ShelfCommentReplyReport.objects.all()
         return queryset
 
     def post(self, request, *args, **kwargs):
-        serializer_class = ShelfCommentReportSerializer(data=request.data)
+        serializer_class = ShelfCommentReplyReportSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=True)
         serializer_class.save()
         return Response(serializer_class.data, status=201)
