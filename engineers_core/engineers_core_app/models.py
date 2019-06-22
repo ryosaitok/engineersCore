@@ -299,3 +299,19 @@ class ShelfCommentFavorite(models.Model):
 
     def __str__(self):
         return '【' + self.user.user_name + '】', self.shelf_comment.comment_text
+
+
+class ShelfCommentReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(ShelfComment, related_name='reply_users', on_delete=models.CASCADE)
+    comment_text = models.TextField(max_length=10000)
+    comment_date = models.DateField(auto_now=True)
+    tweet_flag = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'shelf_comment_reply'
+
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.comment.comment_text

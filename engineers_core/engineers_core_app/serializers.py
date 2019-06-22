@@ -279,10 +279,15 @@ class ShelfCommentSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='user_id'
     )
+    reply_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
 
     class Meta:
         model = ShelfComment
-        fields = ('id', 'user', 'shelf', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',)
+        fields = ('id', 'user', 'shelf', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users',)
 
 
 class ShelfCommentWithForeignSerializer(serializers.ModelSerializer):
@@ -291,11 +296,16 @@ class ShelfCommentWithForeignSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='user_id'
     )
+    reply_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
     user = UserSerializer()
 
     class Meta:
         model = ShelfComment
-        fields = ('id', 'user', 'shelf', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',)
+        fields = ('id', 'user', 'shelf', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users', 'reply_users',)
 
 
 class ShelfCommentFavoriteSerializer(serializers.ModelSerializer):
@@ -306,8 +316,23 @@ class ShelfCommentFavoriteSerializer(serializers.ModelSerializer):
 
 class ShelfCommentFavoriteWithForeignSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    shelf = ShelfCommentSerializer()
+    shelf_comment = ShelfCommentSerializer()
 
     class Meta:
         model = ShelfCommentFavorite
         fields = ('id', 'user', 'shelf_comment', 'favorite_date',)
+
+
+class ShelfCommentReplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShelfCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)
+
+
+class ShelfCommentReplyWithForeignSerializer(serializers.ModelSerializer):
+    comment = ShelfCommentSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = ShelfCommentReply
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)

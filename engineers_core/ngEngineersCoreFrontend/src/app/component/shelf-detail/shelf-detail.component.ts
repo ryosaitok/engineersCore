@@ -10,6 +10,7 @@ import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
 import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';
+import {ShelfCommentFavoriteService} from '../../service/shelf-comment-favorite/shelf-comment-favorite.service';
 
 @Component({
   selector: 'app-shelf-detail',
@@ -35,6 +36,7 @@ export class ShelfDetailComponent implements OnInit {
     private shelfService: ShelfService,
     private shelfCommentService: ShelfCommentService,
     private shelfFavoriteService: ShelfFavoriteService,
+    private shelfCommentFavoriteService: ShelfCommentFavoriteService,
   ) {
   }
 
@@ -121,6 +123,54 @@ export class ShelfDetailComponent implements OnInit {
           this.shelfComments.unshift(shelfComment);
         }
       });
+    });
+  }
+
+  commentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.shelfCommentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.shelfCommentFavoriteService.registerCommentFavorite(loggedInUserId, commentId).subscribe(
+          (res) => {
+            this.shelfComments[index].favoriteUserIds.push(loggedInUserId);
+            this.shelfComments[index].favoriteUserCount += 1;
+          },
+          (error) => {
+            console.error('commentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('commentFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentId: ' + commentId);
+      }
+    });
+  }
+
+  notCommentFavorite(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.shelfCommentFavoriteService.getCommentFavorite(loggedInUserId, commentId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const favoriteId = data.results[0].id;
+        this.shelfCommentFavoriteService.deleteCommentFavorite(favoriteId).subscribe(
+          (res) => {
+            const userIdIndex = this.shelfComments[index].favoriteUserIds.indexOf(loggedInUserId);
+            this.shelfComments[index].favoriteUserIds.splice(userIdIndex, 1);
+            this.shelfComments[index].favoriteUserCount -= 1;
+          },
+          (error) => {
+            console.log('notCommentFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+      }
     });
   }
 

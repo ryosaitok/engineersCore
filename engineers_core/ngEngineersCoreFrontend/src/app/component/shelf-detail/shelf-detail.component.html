@@ -43,10 +43,11 @@
             <div class="shelf-description-text">{{shelf.description}}</div>
           </div>
           <div class="comment-reaction">
-            <ul class="comment-reactions">
+            <ul class="comment-reactions space-for-description">
               <li>
                 <ul class="comment-replies comment-reaction">
-                  <li><span (click)="scrollToComment('comment-area')" class="comment-reaction-reply"><fa-icon [icon]="faCommentDots"></fa-icon></span>
+                  <li><span (click)="scrollToComment('comment-area')" class="comment-reaction-reply"><fa-icon
+                    [icon]="faCommentDots"></fa-icon></span>
                   </li>
                   <li>{{shelf.commentUserCount}}</li>
                 </ul>
@@ -149,7 +150,7 @@
           </div>
           <div class="comments-module" *ngIf="shelfCommentCount > 0">
             <ul class="comment-list">
-              <li *ngFor="let comment of shelfComments" class="shelf-comment flex-module-inner" data-section-id="wtf"
+              <li *ngFor="let comment of shelfComments; let i = index" class="shelf-comment flex-module-inner" data-section-id="wtf"
                   style="opacity: 1;">
                 <!-- コメントの情報 -->
                 <div class="context">
@@ -179,8 +180,41 @@
                         </ul>
                       </li>
                     </ul>
+                    <div class="comment-date">
+                      ・{{comment.commentDate | date:"yyyy年M月d日" }}
+                    </div>
                     <div class="comment">
                       {{comment.commentText}}
+                    </div>
+                    <div class="comment-reaction">
+                      <ul class="comment-reactions space-for-comment">
+                        <li>
+                          <ul class="comment-replies comment-reaction">
+                            <li>
+                              <span class="comment-reaction-reply">
+                                <fa-icon [icon]="faCommentDots"></fa-icon>
+                              </span>
+                            </li>
+                            <li>{{comment.replyUserCount}}</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <ul class="comment-favorites comment-reaction">
+                            <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
+                                <span class="comment-reaction-heart favorite-done"
+                                      (click)="notCommentFavorite(comment.shelfCommentId, i)"><fa-icon
+                                  [icon]="faHeart"></fa-icon></span>
+                            </li>
+                            <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
+                              <span class="comment-reaction-heart favorite-none"
+                                    (click)="commentFavorite(comment.shelfCommentId, i)">
+                                <fa-icon [icon]="faHeart"></fa-icon>
+                              </span>
+                            </li>
+                            <li>{{comment.favoriteUserCount}}</li>
+                          </ul>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>

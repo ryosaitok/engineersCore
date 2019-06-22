@@ -682,3 +682,30 @@ class ShelfCommentFavoriteListView(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ShelfCommentFavoriteListView, self).filter_queryset(queryset)
         return queryset.order_by('favorite_date')
+
+
+class ShelfCommentReplyListView(generics.ListCreateAPIView):
+    queryset = ShelfCommentReply.objects.all()
+    serializer_class = ShelfCommentReplyWithForeignSerializer
+
+    # 登録処理ではuserとcommentのidだけ指定で行いたいので、ShelfCommentReplySerializerを使う。
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentReplySerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+    def get_queryset(self):
+        queryset = ShelfCommentReply.objects.all()
+        account_name = self.request.query_params.get('account_name', None)
+        if account_name is not None:
+            queryset = queryset.filter(user__account_name=account_name)
+        comment_id = self.request.query_params.get('comment_id', None)
+        if comment_id is not None:
+            queryset = queryset.filter(comment__id=comment_id)
+        return queryset
+
+
+class ShelfCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShelfCommentReply.objects.all()
+    serializer_class = ShelfCommentReplySerializer

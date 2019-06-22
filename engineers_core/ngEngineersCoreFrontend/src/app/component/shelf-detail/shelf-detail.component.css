@@ -108,10 +108,12 @@ ul.producer-name-space li {
     word-wrap: break-word;
     white-space: normal;
 }
+ul.space-for-description {
+    margin: 5px 0 0 220px;
+}
 ul.comment-reactions {
     list-style: none;
     padding-left: 0;
-    margin: 5px 0 0 220px !important;
 }
 ul.comment-reactions li {
     display: inline-block;
@@ -279,6 +281,7 @@ ul.comment-user-name-space {
     list-style: none;
     margin-bottom: 0 !important;
     padding-left: 55px;
+    float: left;
 }
 .comment-user-name {
     font-weight: bold;
@@ -287,6 +290,9 @@ ul.comment-user-name-space {
     color: #657786 !important;
 }
 .comment {
-    padding-left: 55px;
+    padding: 5px 55px;
     white-space: pre-line;
+}
+ul.space-for-comment {
+    margin: 0 55px;
 }
