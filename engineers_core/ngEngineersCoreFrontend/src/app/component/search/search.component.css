@@ -54,7 +54,7 @@ ul.search-form {
 }
 .MenuNavigation-canopy {
     background-color: #ffffff;
-    padding: 14px 0;
+    padding: 10px 0;
 }
 .MenuNavigation-textContainer {
     margin: 0 auto;
@@ -71,33 +71,27 @@ ul.search-form {
 }
 ul.navigation-menu {
     list-style: none;
-    margin-bottom: 0 !important;
-    cursor: pointer;
-    padding-left: 0 !important;
+    margin-bottom: 0;
+    padding-left: 0;
 }
 ul.navigation-menu li {
     display: inline-block;
-    margin: 0 10px 0 0 !important;
+    margin: 0;
 }
 ul.title-search, ul.author-search, ul.user-search {
-    padding: 0 15px 0 10px !important;
-}
-ul.title-search {
-    list-style: none;
-    margin-bottom: 0 !important;
-}
-ul.title-search > li {
-    display: grid;
+    width: 100px;
     text-align: center;
+    padding: 0;
 }
-ul.title-search > li:hover {
+.search-books, .search-users {
+    margin-right: 4px;
+    display: grid;
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
+}
+.search-books:hover, .search-users:hover {
     color: #337ab7;
     cursor: pointer;
-}
-ul.title-search li {
-    margin-right: 4px;
 }
 
 /* メインコンテンツ */
@@ -107,7 +101,7 @@ ul.title-search li {
   }
 }
 .AppContainer {
-    margin: 45px auto;
+    margin: 60px auto;
 }
 .AppContent-main {
     margin: 15px auto 0;
