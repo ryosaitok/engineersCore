@@ -537,6 +537,21 @@ class ShelfView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ShelfSerializer
 
 
+class ShelfReportListView(generics.ListCreateAPIView):
+    queryset = ShelfReport.objects.all()
+    serializer_class = ShelfReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = ShelfReport.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = ShelfReportSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+
 class ShelfListView(generics.ListCreateAPIView):
     queryset = Shelf.objects.all()
     serializer_class = ShelfSerializer

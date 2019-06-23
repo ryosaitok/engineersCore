@@ -76,6 +76,13 @@ export class ShelfDetailComponent implements OnInit {
     });
   }
 
+  editShelf(shelfId: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    console.log('shelfId: ' + shelfId);
+  }
+
   shelfFavorite(shelfId: number): void {
     if (!this.authGuard.canActivate()) {
       return;
@@ -121,6 +128,18 @@ export class ShelfDetailComponent implements OnInit {
       } else {
         console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
       }
+    });
+  }
+
+  reportShelf(shelfId: number, reasonCode: string): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.shelfService.reportShelf(this.appComponent.userId, shelfId, reasonCode).subscribe(res => {
+      // 報告済みマークつける
+      this.shelf.reportUserIds.push(this.appComponent.userId);
+    }, error => {
+      console.error('reportShelfでエラー: ', error);
     });
   }
 

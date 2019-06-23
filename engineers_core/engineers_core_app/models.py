@@ -240,6 +240,25 @@ class Shelf(models.Model):
         return self.shelf_name
 
 
+class ShelfReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shelf = models.ForeignKey(Shelf, related_name='report_users', on_delete=models.CASCADE)
+    report_date = models.DateField(auto_now=True)
+    report_reasons = [
+        ['VLT', 'Violent'],
+        ['SPM', 'Spam'],
+        ['POM', 'Violate Public Order And Morals'],
+        ['SVL', 'Service Violation'],
+    ]
+    reason_code = models.CharField(choices=report_reasons, default='SVL', max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "shelf")
+        db_table = 'shelf_report'
+
+
 class ShelfBook(models.Model):
     shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)

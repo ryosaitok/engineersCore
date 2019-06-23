@@ -23,6 +23,8 @@ export class ShelfService {
   bookIdShelvesAPIUrl = this.host + this.bookIdShelvesUrl;
   shelfIdShelvesUrl = 'api/shelves/?shelf_id=';
   shelfIdShelvesAPIUrl = this.host + this.shelfIdShelvesUrl;
+  shelfReportsUrl = 'api/shelf/reports';
+  shelfReportsAPIUrl = this.host + this.shelfReportsUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -56,6 +58,16 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
+  reportShelf(userId: number, shelfId: number, reasonCode: string) {
+    const url = this.shelfReportsAPIUrl;
+    const body = {
+      user: userId,
+      shelf: shelfId,
+      reason_code: reasonCode
+    };
+    return this.http.post<any>(url, body, this.httpOptions);
+  }
+
   convertShelf(shelf: any, bookCount: number): Shelf {
     const userForShelf = this.userService.convertUser(shelf.user);
     const booksForShelf = [];
@@ -68,7 +80,8 @@ export class ShelfService {
     const favoriteUserCount = Object.keys(shelf.favorite_users).length;
     const commentUserCount = Object.keys(shelf.comment_users).length;
     return new Shelf(shelf.id, userForShelf, booksForShelf, shelf.shelf_cd, shelf.shelf_name, shelf.display_order,
-      shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users, favoriteUserCount, commentUserCount);
+      shelf.shelf_status, shelf.description, shelf.favorite_users, shelf.comment_users, favoriteUserCount, commentUserCount,
+      shelf.report_users);
   }
 
   convertShelves(shelves: any[], bookCount: number): Shelf[] {

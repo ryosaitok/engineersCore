@@ -236,11 +236,31 @@ class ShelfSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='user_id'
     )
+    report_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
 
     class Meta:
         model = Shelf
         fields = ('id', 'user', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',
-                  'favorite_users', 'comment_users',)
+                  'favorite_users', 'comment_users', 'report_users',)
+
+
+class ShelfReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShelfReport
+        fields = ('id', 'user', 'shelf', 'report_date',  'reason_code',)
+
+
+class ShelfReportWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    shelf = ShelfSerializer()
+
+    class Meta:
+        model = ShelfReport
+        fields = ('id', 'user', 'shelf', 'report_date', 'reason_code',)
 
 
 class ShelfBookSerializer(serializers.ModelSerializer):

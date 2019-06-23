@@ -32,7 +32,6 @@ a:hover {
 .ShelfNameNavigation-titleText {
     color: #fff;
     font-weight: bold;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -53,14 +52,16 @@ h1 {
 }
 .ShelfNavigation-textContainer {
     color: #222222;
-    margin: 0 auto;
-    max-width: 1190px;
+    margin: 0 0 0 125px;
+    max-width: 900px;
 }
 .ShelfNavigation-titleText {
-    overflow: hidden;
     font-size: 15px;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.shelf-menu {
+    float: right;
 }
 ul.shelf-data {
     float: left;
@@ -271,7 +272,7 @@ ul.add-comment li {
 }
 
 .comments-module {
-    margin: 15px;
+    margin: 15px 20px;
 }
 ul.comment-list {
     list-style: none;
