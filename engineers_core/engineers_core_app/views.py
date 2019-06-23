@@ -64,7 +64,7 @@ def generate_key():
 def send_email_confirmation(email_address, from_address, token):
     try:
         if email_address is not None:
-            subject = "【engineersCore】仮登録が完了しました。こちらのメールから本登録できます。"
+            subject = "【EngineersCore】仮登録が完了しました。こちらのメールから本登録できます。"
             message = "こちらから本登録を完了させると、ログインしてサービスをご利用いただけます。\n" \
                       "http://127.0.0.1:4200/signup/{}".format(token)
             from_email = from_address
@@ -125,7 +125,7 @@ class PasswordReminderView(generics.CreateAPIView):
 def send_password_reminder(email_address, from_address, token):
     try:
         if email_address is not None:
-            subject = "【engineersCore】こちらのメールからパスワード変更ができます。"
+            subject = "【EngineersCore】こちらのメールからパスワード変更ができます。"
             message = "こちらからパスワード変更ができます。\n" \
                       "http://127.0.0.1:4200/password/reset/{}".format(token)
             from_email = from_address
