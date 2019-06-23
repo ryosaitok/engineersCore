@@ -27,6 +27,7 @@ import {SigninService} from './service/signin/signin.service';
 import {VerifyEmailComponent} from './component/verify-email/verify-email.component';
 import {PasswordReminderComponent} from './component/password-reminder/password-reminder.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
+import {ShelfEditComponent} from './component/shelf-edit/shelf-edit.component';
 
 const config = new AuthServiceConfig([
   {
@@ -59,6 +60,7 @@ export function provideConfig() {
     VerifyEmailComponent,
     PasswordReminderComponent,
     PasswordResetComponent,
+    ShelfEditComponent,
   ],
   imports: [
     BrowserModule,

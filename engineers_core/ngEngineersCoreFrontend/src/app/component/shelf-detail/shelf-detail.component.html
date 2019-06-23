@@ -27,7 +27,7 @@
               </li>
               <li class="divider dropdown-divider"></li>
               <li *ngIf="shelf.user.id === appComponent.userId" role="menuitem">
-                <a class="dropdown-item" (click)="editShelf(shelf.shelfId)">編集する</a>
+                <a class="dropdown-item" routerLink="/shelf/edit/{{shelf.shelfId}}">編集する</a>
               </li>
               <li *ngIf="shelf.user.id !== appComponent.userId" role="menuitem" dropdown triggers="mouseover"
                   placement="right" container="body">

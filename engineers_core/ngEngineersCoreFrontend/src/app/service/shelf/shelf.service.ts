@@ -58,6 +58,12 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
+  updateShelf(shelfId: number, shelfName: string, description): Observable<any> {
+    const url = this.shelfAPIUrl + shelfId + '/';
+    const body = {id: shelfId, shelf_name: shelfName, description};
+    return this.http.put<any>(url, body, this.httpOptions);
+  }
+
   reportShelf(userId: number, shelfId: number, reasonCode: string) {
     const url = this.shelfReportsAPIUrl;
     const body = {

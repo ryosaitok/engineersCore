@@ -1,0 +1,311 @@
+.page-outer {
+    opacity: 0.2;
+}
+a {
+    color: #222222;
+    text-decoration: none;
+}
+a:visited {
+    color: #222222;
+    text-decoration: none;
+}
+a:hover {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 本棚名ナビ */
+.ShelfNameNavigation {
+}
+.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
+    background-color: #337ab7 !important;
+}
+.ShelfNameNavigation-canopy {
+    background-color: #337ab7;
+    padding: 14px 0;
+}
+.ShelfNameNavigation-textContainer {
+    color: #fff;
+    margin: 0 auto;
+    max-width: 1190px;
+}
+.ShelfNameNavigation-titleText {
+    color: #fff;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+}
+
+/* 本棚の基本情報 */
+.ShelfNavigation {
+    border-bottom: 1px solid #e6ecf0;
+}
+.ShelfNavigation-canopy {
+    background-color: #ffffff;
+    padding: 10px 0;
+}
+.ShelfNavigation-textContainer {
+    color: #222222;
+    margin: 0 0 0 125px;
+    max-width: 900px;
+}
+.ShelfNavigation-titleText {
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.shelf-menu {
+    float: right;
+}
+ul.shelf-data {
+    float: left;
+    list-style: none;
+    margin-bottom: 0 !important;
+    width: 200px;
+    padding-left: 0;
+}
+ul.shelf-data li {
+    margin-right: 10px;
+}
+.shelf-producer-image {
+}
+.profile-image {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    vertical-align: text-top !important;
+}
+.shelf-producer-image, .producer-name, .producer-account-name {
+    float: left;
+}
+ul.producer-name-space {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 55px;
+}
+ul.producer-name-space li {
+    display: inline-block;
+    margin-right: 4px;
+}
+.producer-name {
+    font-weight: bold;
+}
+.producer-name, .producer-account-name {
+    margin-top: 0;
+    font-size: 14px;
+}
+.producer-account-name {
+    color: #657786;
+}
+.shelf-description {
+    margin-left: 220px;
+}
+.shelf-description-text {
+    word-wrap: break-word;
+    white-space: normal;
+}
+ul.space-for-description {
+    margin: 5px 0 0 220px;
+}
+ul.comment-reactions {
+    list-style: none;
+    padding-left: 0;
+}
+ul.comment-reactions li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.comment-reaction {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.comment-reaction li {
+    display: inline-block;
+    margin-right: 4px;
+}
+ul.comment-reaction li > span {
+    color: #cccccc;
+}
+ul.comment-reaction li > span.favorite-done {
+    color: #f08080;
+}
+
+/* メインコンテンツ */
+@media screen and (min-width: 1236px) {
+  .AppContainer {
+    max-width: 1190px;
+  }
+}
+.AppContainer {
+    margin: 0 auto;
+}
+.AppContent-main {
+    margin: 15px auto 0;
+    max-width: 1190px;
+    min-width: 890px;
+}
+
+@media (min-width: 1236px) {
+  .ShelfBooksModules {
+    float: left;
+    margin: auto;
+  }
+}
+.ShelfBooksModules {
+    width: 850px;
+    position: unset;
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    margin-bottom: 50px;
+}
+
+.form-group {
+    width: 80%;
+    margin: 20px 0 5px 60px;
+}
+.form-control {
+    border: 0 solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0;
+    margin: 0 0 20px 0;
+    box-shadow: none;
+    transition: none;
+}
+
+ul.book-list {
+    list-style: none;
+    margin: 0 8px;
+    padding: 5px 0;
+}
+ul.book-list > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
+}
+.book-content {
+    font-size: 12px;
+    margin: 5px 10px;
+    padding: 10px 0;
+}
+.registered-book:hover {
+    opacity: 0.5;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+    border: 1px solid #e6ecf0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    margin: 1px 0;
+}
+.book-title {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+ul.authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.authors li {
+    display: inline;
+}
+.author-name {
+    width: auto !important;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+.add-book {
+    text-align: center;
+}
+.add-book-button {
+    height: 165px;
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.add-book-button:hover {
+    background-color: #337ab7;
+}
+.no-book-text {
+    margin: 20px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.action-buttons {
+    text-align: center;
+}
+.update-button, .delete-button {
+    margin: 30px 50px;
+    border-radius: 0;
+}
+
+/* 右サイドバー */
+.SidebarBookModules {
+    float: left;
+    margin: 0 10px;
+    width: 290px;
+    background-color: white;
+}
+.flex-module-header {
+    margin: 15px;
+}
+.search-form {
+    margin: 8px;
+}
+.sub-book-content {
+    font-size: 12px;
+    margin: 0 10px;
+    padding: 10px 0 0 0;
+    border-bottom: 1px solid #e6ecf0;
+}
+.sub-book-content:hover {
+    opacity: 0.5;
+}
+ul.sub-book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+ul.sub-book-list > li {
+    vertical-align: top;
+    display: inline-block;
+}
+ul.context {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.context > li {
+    display: table-cell;
+}
+li.sub-book-info {
+    padding-left: 8px;
+    vertical-align: top;
+}
+.min-amazon-book-image {
+    width: 80px;
+    height: 115px;
+    border: 1px solid #e6ecf0;
+}
