@@ -173,7 +173,7 @@
                               Twitterに投稿する
                             </a>
                           </li>
-                          <li class="divider dropdown-divider"></li>
+                          <li *ngIf="comment.user.id === appComponent.userId" class="divider dropdown-divider"></li>
                           <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
                             <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, commentIndex)">
                               削除する

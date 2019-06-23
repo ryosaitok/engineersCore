@@ -125,6 +125,9 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   registerComment(f: NgForm) {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const comment = f.value.comment;
     // const tweetFlag = f.value.tweetFlag;
     const tweetFlag = false;
@@ -224,6 +227,9 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   registerReply(f: NgForm, commentId: number, commentIndex: number) {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     const comment = f.value.comment;
     // const tweetFlag = f.value.tweetFlag;
     const tweetFlag = false;
