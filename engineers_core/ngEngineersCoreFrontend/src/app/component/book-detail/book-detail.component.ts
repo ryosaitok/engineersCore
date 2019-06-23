@@ -114,8 +114,9 @@ export class BookDetailComponent implements OnInit {
           this.bookComments.unshift(convertedComment);
           this.bookCommentCount += 1;
         });
-        // コメント登録が完了したらモーダルを閉じる。
+        // コメント登録が完了したらモーダルを閉じて画面の一番上に移動
         this.modalRef.hide();
+        window.scrollTo(0, 0);
       }, (error) => {
         console.log('読んだコメントの登録に失敗！error: ' + error);
       }

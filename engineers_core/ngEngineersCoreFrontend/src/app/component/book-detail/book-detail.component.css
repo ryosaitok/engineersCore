@@ -11,6 +11,17 @@ a:visited {
 a:hover {
     color: #337ab7 !important;
 }
+.btn-primary {
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.btn-primary:hover {
+    background-color: #337ab7;
+}
+.btn-success {
+    border-radius: 0;
+}
 
 /* 本のタイトルナビ */
 .BookNavigation {
