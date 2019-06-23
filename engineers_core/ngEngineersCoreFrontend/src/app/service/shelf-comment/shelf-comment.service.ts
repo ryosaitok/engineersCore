@@ -10,16 +10,12 @@ import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 })
 export class ShelfCommentService {
 
-  host = 'http://127.0.0.1:8000/';
-  shelfCommentUrl = 'api/shelf/comment/';
-  shelfCommentAPIUrl = this.host + this.shelfCommentUrl;
-  shelfCommentsUrl = 'api/shelf/comments/';
-  shelfCommentsAPIUrl = this.host + this.shelfCommentsUrl;
-  shelfIdShelfCommentsUrl = 'api/shelf/comments/?shelf_id=';
-  shelfIdShelfCommentsAPIUrl = this.host + this.shelfIdShelfCommentsUrl;
-  shelfCommentReportsUrl = 'api/shelf/comment/reports/';
-  shelfCommentReportsAPIUrl = this.host + this.shelfCommentReportsUrl;
-  httpOptions = {
+  HOST = 'http://127.0.0.1:8000/';
+  SHELF_COMMENT_API_URL = this.HOST + 'api/shelf/comment/';
+  SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/';
+  SHELF_ID_SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/?shelf_id=';
+  SHELF_COMMENT_REPORTS_API_URL = this.HOST + 'api/shelf/comment/reports/';
+  HTTP_OPTIONS = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
@@ -31,23 +27,23 @@ export class ShelfCommentService {
   }
 
   getShelfComment(commentId: number): Observable<any> {
-    const url = this.shelfCommentAPIUrl + commentId + '/';
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENT_API_URL + commentId + '/';
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getShelfComments(): Observable<any> {
-    const url = this.shelfCommentsAPIUrl;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENTS_API_URL;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getShelfCommentsByShelfId(shelfId: number): Observable<any> {
-    const url = this.shelfIdShelfCommentsAPIUrl + shelfId;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_ID_SHELF_COMMENTS_API_URL + shelfId;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getFilteredShelfComment(userId: number, shelfId: number): Observable<any> {
-    const url = this.shelfCommentsAPIUrl + '?user_id=' + userId + '&shelf_id=' + shelfId;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENTS_API_URL + '?user_id=' + userId + '&shelf_id=' + shelfId;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   registerShelfComment(userId: number, shelfId: number, comment: string, tweetFlag: boolean) {
@@ -57,22 +53,22 @@ export class ShelfCommentService {
       comment_text: comment,
       tweet_flag: tweetFlag,
     };
-    return this.http.post<any>(this.shelfCommentsAPIUrl, body, this.httpOptions);
+    return this.http.post<any>(this.SHELF_COMMENTS_API_URL, body, this.HTTP_OPTIONS);
   }
 
   deleteShelfComment(commentId: number) {
-    const url = this.shelfCommentAPIUrl + commentId + '/';
-    return this.http.delete<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENT_API_URL + commentId + '/';
+    return this.http.delete<any>(url, this.HTTP_OPTIONS);
   }
 
   reportComment(userId: number, shelfCommentId: number, reasonCode: string) {
-    const url = this.shelfCommentReportsAPIUrl;
+    const url = this.SHELF_COMMENT_REPORTS_API_URL;
     const body = {
       user: userId,
       shelf_comment: shelfCommentId,
       reason_code: reasonCode
     };
-    return this.http.post<any>(url, body, this.httpOptions);
+    return this.http.post<any>(url, body, this.HTTP_OPTIONS);
   }
 
   convertShelfComment(shelfComment: any): ShelfComment {

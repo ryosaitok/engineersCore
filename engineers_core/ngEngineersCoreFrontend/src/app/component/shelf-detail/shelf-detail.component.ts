@@ -72,12 +72,21 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   getShelfComments(): void {
+    console.log('とおる？: ');
     this.shelfCommentService.getShelfCommentsByShelfId(this.shelfId).subscribe(data => {
+      console.log('getShelfCommentsでdata: ' + JSON.stringify(data));
       if (data.results !== undefined && data.results !== null && data.count !== 0) {
         const shelfComments = data.results;
         this.shelfComments = this.shelfCommentService.convertShelfComments(shelfComments);
         this.shelfCommentCount = data.count;
+      } else {
+        this.shelfComments = [];
+        this.shelfCommentCount = 0;
       }
+    }, error => {
+        console.error('getShelfCommentsでerror: ' + error);
+        this.shelfComments = [];
+        this.shelfCommentCount = 0;
     });
   }
 
