@@ -1,4 +1,4 @@
-<div class="page-outer">
+<div class="page-outer" *ngIf="!notFound">
   <!-- 本棚名 -->
   <div class="ShelfNameNavigation">
     <div class="ShelfNameNavigation-canopy u-bgUserColor">
@@ -64,36 +64,89 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="AppContainer">
-  <div class="AppContent-main u-cf">
-    <!-- メインメニュー(本棚の本) -->
-    <div class="ShelfBooksModules">
-      <!-- 本の情報 -->
-      <div class="module shelf-books">
-        <form #f="ngForm" class="update-form" (ngSubmit)="updateShelf(f, shelf.shelfId, shelf.books)">
-          <div class="form-group">
-            <label for="shelfName"><span>本棚のタイトル</span></label>
-            <input [(ngModel)]="shelf.shelfName" type="text" class="form-control" name="shelfName" id="shelfName"
-                   required minlength="4">
-            <label for="description"><span>本棚の説明</span></label>
-            <textarea [(ngModel)]="shelf.description" class="form-control" name="description" id="description" required
-                      minlength="1"></textarea>
-          </div>
-          <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
-            <ul class="book-list">
-              <li *ngFor="let book of shelf.books; let i = index" class="book-content flex-module-inner registered-book">
-                <!-- 本の情報 -->
-                <div class="context" (click)="removeBook(i)">
-                  <div class="book-image">
-                    <img class="amazon-book-image"
-                         src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                         alt=""><img
-                    src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
-                    width="1"
-                    height="1" alt="" style="border:none !important; margin:0 !important;"/>
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- メインメニュー(本棚の本) -->
+      <div class="ShelfBooksModules">
+        <!-- 本の情報 -->
+        <div class="module shelf-books">
+          <form #form="ngForm" class="update-form" (ngSubmit)="updateShelf(form, shelf.shelfId, shelf.books)">
+            <div class="form-group">
+              <label for="shelfName"><span>本棚のタイトル</span></label>
+              <input [(ngModel)]="shelf.shelfName" type="text" class="form-control" name="shelfName" id="shelfName"
+                     required minlength="4">
+              <label for="description"><span>本棚の説明</span></label>
+              <textarea [(ngModel)]="shelf.description" class="form-control" name="description" id="description"
+                        required minlength="1"></textarea>
+            </div>
+            <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
+              <ul class="book-list">
+                <li *ngFor="let book of shelf.books; let i = index"
+                    class="book-content flex-module-inner registered-book">
+                  <!-- 本の情報 -->
+                  <div class="context" (click)="removeBook(i)">
+                    <div class="book-image">
+                      <img class="amazon-book-image"
+                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                           alt=""><img
+                      src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
+                      width="1"
+                      height="1" alt="" style="border:none !important; margin:0 !important;"/>
+                    </div>
+                    <ul class="book-title-data">
+                      <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                      <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
+                      <ul class="authors">
+                        <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                          <span *ngIf="i === 0">{{author.authorName}}</span>
+                          <span *ngIf="i > 0">, {{author.authorName}}</span>
+                        </li>
+                      </ul>
+                    </ul>
                   </div>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="shelfBookCount === 0" class="shelf-books">
+              <div class="no-book-text">
+                <span>まだ本棚に本が登録されていません。</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary update-button"><b>本棚を更新して公開する</b></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右サイドバー(本の追加) -->
+  <div class="SidebarBookModules">
+    <div class="flex-module popular-book">
+      <div class="flex-module-header"><strong>本棚に追加する本を検索</strong></div>
+      <div class="flex-module-inner">
+        <!-- 検索フォーム -->
+        <div class="search-form">
+          <nav>
+            <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
+              <div class="form-group search-form">
+                <input class="form-control" type="text" name="query" ngModel placeholder="本のタイトルで検索する...">
+              </div>
+            </form>
+          </nav>
+        </div>
+        <!-- 検索結果の本一覧 -->
+        <div class="module books">
+          <ul class="sub-book-list">
+            <li *ngFor="let book of searchedBooks" class="sub-book-content flex-module-inner">
+              <ul class="context" (click)="addBook(book)">
+                <li class="book-image">
+                  <img class="min-amazon-book-image"
+                       src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                       alt=""><img
+                  src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
+                  width="1" height="1" alt="" style="border:none !important; margin:0 !important;"/>
+                </li>
+                <li class="sub-book-info">
                   <ul class="book-title-data">
                     <li class="book-title">{{book.title | slice: 0 :40}}</li>
                     <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
@@ -104,68 +157,16 @@
                       </li>
                     </ul>
                   </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div *ngIf="shelfBookCount === 0" class="shelf-books">
-            <div class="no-book-text">
-              <span>まだ本棚に本が登録されていません。</span>
-            </div>
-          </div>
-          <div class="action-buttons">
-            <button type="submit" class="btn btn-primary update-button"><b>本棚を更新する</b></button>
-            <button class="btn btn-danger delete-button" (click)="deleteShelf(shelf.shelfId)"><b>本棚を削除する</b></button>
-          </div>
-        </form>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 右サイドバー(本の追加) -->
-<div class="SidebarBookModules">
-  <div class="flex-module popular-book">
-    <div class="flex-module-header"><strong>本棚に追加する本を検索</strong></div>
-    <div class="flex-module-inner">
-      <!-- 検索フォーム -->
-      <div class="search-form">
-        <nav>
-          <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
-            <div class="form-group search-form">
-              <input class="form-control" type="text" name="query" ngModel placeholder="本のタイトルで検索する...">
-            </div>
-          </form>
-        </nav>
-      </div>
-      <!-- 検索結果の本一覧 -->
-      <div class="module books">
-        <ul class="sub-book-list">
-          <li *ngFor="let book of searchedBooks" class="sub-book-content flex-module-inner">
-            <ul class="context" (click)="addBook(book)">
-              <li class="book-image">
-                <img class="min-amazon-book-image"
-                     src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                     alt=""><img
-                src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
-                width="1" height="1" alt="" style="border:none !important; margin:0 !important;"/>
-              </li>
-              <li class="sub-book-info">
-                <ul class="book-title-data">
-                  <li class="book-title">{{book.title | slice: 0 :40}}</li>
-                  <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
-                  <ul class="authors">
-                    <li *ngFor="let author of book.authors; let i = index" class="author_name">
-                      <span *ngIf="i === 0">{{author.authorName}}</span>
-                      <span *ngIf="i > 0">, {{author.authorName}}</span>
-                    </li>
-                  </ul>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class="ShelfNavigation" *ngIf="notFound">
+  このページは削除されたか、存在しません。
 </div>

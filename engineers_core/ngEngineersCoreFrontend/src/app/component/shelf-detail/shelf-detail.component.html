@@ -1,4 +1,5 @@
-<div class="page-outer">
+<div class="page-outer" *ngIf="!notFound">
+
   <!-- 本棚名 -->
   <div class="ShelfNameNavigation">
     <div class="ShelfNameNavigation-canopy u-bgUserColor">
@@ -10,14 +11,18 @@
       </div>
     </div>
   </div>
+
   <!-- 本棚の基本情報 -->
   <div class="ShelfNavigation">
     <div class="ShelfNavigation-canopy">
       <div class="ShelfNavigation-textContainer">
         <div class="ShelfNavigation-titleText" dir="ltr">
-          <div *ngIf="shelf.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group shelf-menu" dropdown [insideClick]="true">
+          <div *ngIf="shelf.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group shelf-menu" dropdown
+               [insideClick]="true">
             <div dropdownToggle class="dropdown-toggle">
-              <a class="comment-menu-icon"><i class="fas fa-lg"><fa-icon [icon]="faCaretDown"></fa-icon></i></a>
+              <a class="comment-menu-icon"><i class="fas fa-lg">
+                <fa-icon [icon]="faCaretDown"></fa-icon>
+              </i></a>
             </div>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
               <li role="menuitem">
@@ -28,6 +33,10 @@
               <li class="divider dropdown-divider"></li>
               <li *ngIf="shelf.user.id === appComponent.userId" role="menuitem">
                 <a class="dropdown-item" routerLink="/shelf/edit/{{shelf.shelfId}}">編集する</a>
+              </li>
+              <li *ngIf="shelf.user.id === appComponent.userId" class="divider dropdown-divider"></li>
+              <li *ngIf="shelf.user.id === appComponent.userId" role="menuitem">
+                <a class="dropdown-item" (click)="deleteShelf(shelf.shelfId)">削除する</a>
               </li>
               <li *ngIf="shelf.user.id !== appComponent.userId" role="menuitem" dropdown triggers="mouseover"
                   placement="right" container="body">
@@ -49,8 +58,11 @@
               </li>
             </ul>
           </div>
-          <div *ngIf="shelf.reportUserIds.indexOf(appComponent.userId) >= 0" tooltip="問題のあるコメントとして報告済みです。">
-            <a class="comment-menu-icon"><i class="fas fa-lg"><fa-icon [icon]="faExclamationTriangle"></fa-icon></i></a>
+          <div *ngIf="shelf.reportUserIds.indexOf(appComponent.userId) >= 0" tooltip="問題のあるコメントとして報告済みです。"
+               class="shelf-menu">
+            <a class="comment-menu-icon"><i class="fas fa-lg">
+              <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+            </i></a>
           </div>
           <ul class="shelf-data">
             <li class="shelf-producer-image">
@@ -110,360 +122,365 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="AppContainer">
-  <div class="AppContent-main u-cf">
-    <!-- メインメニュー(本棚の本) -->
-    <div class="ShelfBooksModules">
-      <!-- 本の情報 -->
-      <div class="module shelf-books">
-        <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
-          <ul class="book-list">
-            <li *ngFor="let book of shelf.books" class="js-books book-content flex-module-inner" data-section-id="wtf"
-                style="opacity: 1;">
-              <!-- 本の情報 -->
-              <div class="context">
-                <div class="book-image">
-                  <a class="amazon-book-detail"
-                     href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
-                     target="_blank">
-                    <img class="amazon-book-image"
-                         src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                         alt=""></a><img
-                  src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
-                  width="1"
-                  height="1" alt="" style="border:none !important; margin:0 !important;"/>
-                </div>
-                <ul class="book-title-data">
-                  <a routerLink="/book/{{book.id}}">
-                    <li class="book-title">{{book.title | slice: 0 :40}}</li>
-                  </a>
-                  <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
-                  <ul class="authors">
-                    <li *ngFor="let author of book.authors; let i = index" class="author_name">
-                      <a *ngIf="i === 0" [routerLink]="['/search/']"
-                         [queryParams]="{ author : author.authorName }">{{author.authorName}}</a>
-                      <a *ngIf="i > 0" [routerLink]="['/search/']"
-                         [queryParams]="{ author : author.authorName }">, {{author.authorName}}</a>
-                    </li>
+  <div class="AppContainer">
+    <div class="AppContent-main u-cf">
+      <!-- メインメニュー(本棚の本) -->
+      <div class="ShelfBooksModules">
+        <!-- 本の情報 -->
+        <div class="module shelf-books">
+          <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
+            <ul class="book-list">
+              <li *ngFor="let book of shelf.books" class="js-books book-content flex-module-inner" data-section-id="wtf"
+                  style="opacity: 1;">
+                <!-- 本の情報 -->
+                <div class="context">
+                  <div class="book-image">
+                    <a class="amazon-book-detail"
+                       href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
+                       target="_blank">
+                      <img class="amazon-book-image"
+                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                           alt=""></a><img
+                    src="https://ir-jp.amazon-adsystem.com/e/ir?language=ja_JP&l=li3&o=9&a={{book.amazonBook.dataAsin}}"
+                    width="1"
+                    height="1" alt="" style="border:none !important; margin:0 !important;"/>
+                  </div>
+                  <ul class="book-title-data">
+                    <a routerLink="/book/{{book.id}}">
+                      <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                    </a>
+                    <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
+                    <ul class="authors">
+                      <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                        <a *ngIf="i === 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.authorName }">{{author.authorName}}</a>
+                        <a *ngIf="i > 0" [routerLink]="['/search/']"
+                           [queryParams]="{ author : author.authorName }">, {{author.authorName}}</a>
+                      </li>
+                    </ul>
                   </ul>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div *ngIf="shelfBookCount === 0" class="shelf-books">
-          <div class="no-book-text">
-            <span>まだ本棚に本が登録されていません。</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="shelfBookCount === 0" class="shelf-books">
+            <div class="no-book-text">
+              <span>まだ本棚に本が登録されていません。</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- コメント情報 -->
-      <div class="module shelf-comments">
-        <div class="add-comment-module">
-          <ul class="add-comment">
-            <li>
-              <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
-                   class="user-profile-icon">
-                <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
-                     alt=""/>
-              </div>
-              <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
-                <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
-              </div>
-            </li>
-            <li id="comment-area">
-              <form #f="ngForm" class="comment-form">
-                <div class="form-group">
+        <!-- コメント情報 -->
+        <div class="module shelf-comments">
+          <div class="add-comment-module">
+            <ul class="add-comment">
+              <li>
+                <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
+                     class="user-profile-icon">
+                  <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
+                       alt=""/>
+                </div>
+                <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
+                  <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                </div>
+              </li>
+              <li id="comment-area">
+                <form #f="ngForm" class="comment-form">
+                  <div class="form-group">
                     <textarea ngModel class="form-control" name="comment" id="comment" placeholder="本棚に対するコメントを追加..."
                               required maxlength="255"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary comment-button" (click)="registerComment(f)">
-                  <strong><b>コメント</b></strong>
-                </button>
-              </form>
-            </li>
-          </ul>
-        </div>
-        <div class="comments-module" *ngIf="shelfCommentCount > 0">
-          <ul class="comment-list">
-            <li *ngFor="let comment of shelfComments; let commentIndex = index"
-                class="shelf-comment flex-module-inner"
-                data-section-id="wtf"
-                style="opacity: 1;">
-              <!-- コメントの情報 -->
-              <div class="context">
-                <div class="comment-content">
-                  <div class="comment-menu">
-                    <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown
-                         [insideClick]="true">
-                      <div dropdownToggle class="dropdown-toggle">
+                  </div>
+                  <button type="submit" class="btn btn-primary comment-button" (click)="registerComment(f)">
+                    <strong><b>コメント</b></strong>
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+          <div class="comments-module" *ngIf="shelfCommentCount > 0">
+            <ul class="comment-list">
+              <li *ngFor="let comment of shelfComments; let commentIndex = index"
+                  class="shelf-comment flex-module-inner"
+                  data-section-id="wtf"
+                  style="opacity: 1;">
+                <!-- コメントの情報 -->
+                <div class="context">
+                  <div class="comment-content">
+                    <div class="comment-menu">
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown
+                           [insideClick]="true">
+                        <div dropdownToggle class="dropdown-toggle">
+                          <a class="comment-menu-icon"><i class="fas fa-lg">
+                            <fa-icon [icon]="faCaretDown"></fa-icon>
+                          </i></a>
+                        </div>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                          <li role="menuitem">
+                            <a *ngIf="comment.user.id === appComponent.userId" class="dropdown-item"
+                               href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}?comment={{comment.shelfCommentId}}&ref_src=twsrc%5Etfw&text={{comment.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
+                               target="_blank">
+                              Twitterにツイートする
+                            </a>
+                            <a *ngIf="comment.user.id !== appComponent.userId" class="dropdown-item"
+                               href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}?comment={{comment.shelfCommentId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{comment.commentText}} By {{comment.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                               target="_blank">
+                              Twitterにツイートする
+                            </a>
+                          </li>
+                          <li class="divider dropdown-divider"></li>
+                          <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
+                            <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, commentIndex)">
+                              削除する
+                            </a>
+                          </li>
+                          <li *ngIf="comment.user.id !== appComponent.userId" role="menuitem" dropdown
+                              triggers="mouseover" placement="right" container="body">
+                            <a dropdownToggle class="dropdown-item">報告する</a>
+                            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'VLT', commentIndex)">暴力的・悪意のある表現</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'SPM', commentIndex)">商業目的やスパム</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'POM', commentIndex)">公序良俗に反する</a>
+                              </li>
+                              <li role="menuitem"><a class="dropdown-item"
+                                                     (click)="reportComment(comment.shelfCommentId, 'SVL', commentIndex)">その他利用規約に反する</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) >= 0"
+                           tooltip="問題のあるコメントとして報告済みです。">
                         <a class="comment-menu-icon"><i class="fas fa-lg">
-                          <fa-icon [icon]="faCaretDown"></fa-icon>
+                          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
                         </i></a>
                       </div>
-                      <ul *dropdownMenu class="dropdown-menu" role="menu">
-                        <li role="menuitem">
-                          <a *ngIf="comment.user.id === appComponent.userId" class="dropdown-item"
-                             href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}?comment={{comment.shelfCommentId}}&ref_src=twsrc%5Etfw&text={{comment.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
-                             target="_blank">
-                            Twitterにツイートする
-                          </a>
-                          <a *ngIf="comment.user.id !== appComponent.userId" class="dropdown-item"
-                             href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}?comment={{comment.shelfCommentId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{comment.commentText}} By {{comment.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
-                             target="_blank">
-                            Twitterにツイートする
-                          </a>
-                        </li>
-                        <li class="divider dropdown-divider"></li>
-                        <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
-                          <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, commentIndex)">
-                            削除する
-                          </a>
-                        </li>
-                        <li *ngIf="comment.user.id !== appComponent.userId" role="menuitem" dropdown
-                            triggers="mouseover" placement="right" container="body">
-                          <a dropdownToggle class="dropdown-item">報告する</a>
-                          <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem"><a class="dropdown-item"
-                                                   (click)="reportComment(comment.shelfCommentId, 'VLT', commentIndex)">暴力的・悪意のある表現</a>
-                            </li>
-                            <li role="menuitem"><a class="dropdown-item"
-                                                   (click)="reportComment(comment.shelfCommentId, 'SPM', commentIndex)">商業目的やスパム</a>
-                            </li>
-                            <li role="menuitem"><a class="dropdown-item"
-                                                   (click)="reportComment(comment.shelfCommentId, 'POM', commentIndex)">公序良俗に反する</a>
-                            </li>
-                            <li role="menuitem"><a class="dropdown-item"
-                                                   (click)="reportComment(comment.shelfCommentId, 'SVL', commentIndex)">その他利用規約に反する</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
                     </div>
-                    <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) >= 0"
-                         tooltip="問題のあるコメントとして報告済みです。">
-                      <a class="comment-menu-icon"><i class="fas fa-lg">
-                        <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-                      </i></a>
-                    </div>
-                  </div>
-                  <ul class="comment-user">
-                    <li class="comment-user-image">
-                      <a routerLink="/user/{{comment.user.userAccountName}}">
-                        <div
-                          *ngIf="comment.user.profileImageLink !== null && comment.user.profileImageLink !== undefined"
-                          class="user-profile-icon">
-                          <img class="profile-image"
-                               src="../../assets/image/profile/{{comment.user.profileImageLink}}" alt=""/>
-                        </div>
-                        <div *ngIf="comment.user.profileImageLink === null" class="user-profile-icon">
-                          <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
-                               alt=""/>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <ul class="comment-user-name-space">
-                        <li class="comment-user-name"><a routerLink="/user/{{comment.user.userAccountName}}">
-                          {{comment.user.userName}}</a></li>
-                        <li><a class="comment-user-account-name" routerLink="/user/{{comment.user.userAccountName}}">
-                          @{{comment.user.userAccountName}}</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <div class="comment-date">
-                    ・{{comment.commentDate | date:"yyyy年M月d日" }}
-                  </div>
-                  <div class="comment">
-                    {{comment.commentText}}
-                  </div>
-                  <div class="comment-reaction">
-                    <ul class="comment-reactions space-for-comment">
+                    <ul class="comment-user">
+                      <li class="comment-user-image">
+                        <a routerLink="/user/{{comment.user.userAccountName}}">
+                          <div
+                            *ngIf="comment.user.profileImageLink !== null && comment.user.profileImageLink !== undefined"
+                            class="user-profile-icon">
+                            <img class="profile-image"
+                                 src="../../assets/image/profile/{{comment.user.profileImageLink}}" alt=""/>
+                          </div>
+                          <div *ngIf="comment.user.profileImageLink === null" class="user-profile-icon">
+                            <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                                 alt=""/>
+                          </div>
+                        </a>
+                      </li>
                       <li>
-                        <ul class="comment-replies comment-reaction">
-                          <li (click)="reverseRepliesDisplayState(comment.shelfCommentId, commentIndex, 1)">
+                        <ul class="comment-user-name-space">
+                          <li class="comment-user-name"><a routerLink="/user/{{comment.user.userAccountName}}">
+                            {{comment.user.userName}}</a></li>
+                          <li><a class="comment-user-account-name" routerLink="/user/{{comment.user.userAccountName}}">
+                            @{{comment.user.userAccountName}}</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <div class="comment-date">
+                      ・{{comment.commentDate | date:"yyyy年M月d日" }}
+                    </div>
+                    <div class="comment">
+                      {{comment.commentText}}
+                    </div>
+                    <div class="comment-reaction">
+                      <ul class="comment-reactions space-for-comment">
+                        <li>
+                          <ul class="comment-replies comment-reaction">
+                            <li (click)="reverseRepliesDisplayState(comment.shelfCommentId, commentIndex, 1)">
                               <span class="comment-reaction-reply">
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
-                          </li>
-                          <li>{{comment.replyUserCount}}</li>
-                        </ul>
-                      </li>
-                      <li>
-                        <ul class="comment-favorites comment-reaction">
-                          <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
+                            </li>
+                            <li>{{comment.replyUserCount}}</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <ul class="comment-favorites comment-reaction">
+                            <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
                                 <span class="comment-reaction-heart favorite-done"
                                       (click)="notCommentFavorite(comment.shelfCommentId, commentIndex)"><fa-icon
                                   [icon]="faHeart"></fa-icon></span>
-                          </li>
-                          <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
+                            </li>
+                            <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
                               <span class="comment-reaction-heart favorite-none"
                                     (click)="commentFavorite(comment.shelfCommentId, commentIndex)">
                                 <fa-icon [icon]="faHeart"></fa-icon>
                               </span>
-                          </li>
-                          <li>{{comment.favoriteUserCount}}</li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="replies" *ngIf="comment.displayedReply">
-                    <div class="add-comment-module">
-                      <ul class="add-comment">
-                        <li>
-                          <div
-                            *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
-                            class="user-profile-icon">
-                            <img class="min-profile-image"
-                                 src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
-                          </div>
-                          <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
-                            <img class="min-profile-image"
-                                 src="../../../assets/image/profile/default_profile_image.png"
-                                 alt=""/>
-                          </div>
-                        </li>
-                        <li>
-                          <form #f="ngForm" class="comment-form">
-                            <div class="form-group">
-                              <textarea ngModel class="form-control" name="comment" placeholder="{{comment.user.userName}}さんのコメントに対する返信を追加..."
-                                        required maxlength="255"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary reply-button"
-                                    (click)="registerReply(f, comment.shelfCommentId, commentIndex)">
-                              <strong><b>コメント</b></strong>
-                            </button>
-                          </form>
+                            </li>
+                            <li>{{comment.favoriteUserCount}}</li>
+                          </ul>
                         </li>
                       </ul>
                     </div>
-                    <div class="comments-module comment-reply-fields" *ngIf="comment.commentReplies !== []">
-                      <ul class="comment-list">
-                        <li *ngFor="let reply of comment.commentReplies; let replyIndex = index"
-                            class="reply-comment">
-                          <!-- コメントの情報 -->
-                          <div class="context">
-                            <div class="comment-content">
-                              <div class="comment-menu">
-                                <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group"
-                                     dropdown [insideClick]="true">
-                                  <div dropdownToggle class="dropdown-toggle">
-                                    <a class="comment-menu-icon"><i class="fas fa-lg">
-                                      <fa-icon [icon]="faCaretDown"></fa-icon>
+
+                    <div class="replies" *ngIf="comment.displayedReply">
+                      <div class="add-comment-module">
+                        <ul class="add-comment">
+                          <li>
+                            <div
+                              *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
+                              class="user-profile-icon">
+                              <img class="min-profile-image"
+                                   src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
+                            </div>
+                            <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
+                              <img class="min-profile-image"
+                                   src="../../../assets/image/profile/default_profile_image.png"
+                                   alt=""/>
+                            </div>
+                          </li>
+                          <li>
+                            <form #f="ngForm" class="comment-form">
+                              <div class="form-group">
+                              <textarea ngModel class="form-control" name="comment"
+                                        placeholder="{{comment.user.userName}}さんのコメントに対する返信を追加..."
+                                        required maxlength="255"></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-primary reply-button"
+                                      (click)="registerReply(f, comment.shelfCommentId, commentIndex)">
+                                <strong><b>コメント</b></strong>
+                              </button>
+                            </form>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="comments-module comment-reply-fields" *ngIf="comment.commentReplies !== []">
+                        <ul class="comment-list">
+                          <li *ngFor="let reply of comment.commentReplies; let replyIndex = index"
+                              class="reply-comment">
+                            <!-- コメントの情報 -->
+                            <div class="context">
+                              <div class="comment-content">
+                                <div class="comment-menu">
+                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group"
+                                       dropdown [insideClick]="true">
+                                    <div dropdownToggle class="dropdown-toggle">
+                                      <a class="comment-menu-icon"><i class="fas fa-lg">
+                                        <fa-icon [icon]="faCaretDown"></fa-icon>
+                                      </i></a>
+                                    </div>
+                                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                      <li role="menuitem">
+                                        <a *ngIf="reply.user.id === appComponent.userId" class="dropdown-item"
+                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}%3Fcomment%3D{{comment.shelfCommentId}}%26reply%3D{{reply.shelfCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
+                                           target="_blank">
+                                          Twitterにツイートする
+                                        </a>
+                                        <a *ngIf="reply.user.id !== appComponent.userId" class="dropdown-item"
+                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}%3Fcomment%3D{{comment.shelfCommentId}}%26reply%3D{{reply.shelfCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                                           target="_blank">
+                                          Twitterにツイートする
+                                        </a>
+                                      </li>
+                                      <li class="divider dropdown-divider"></li>
+                                      <li *ngIf="reply.user.id === appComponent.userId" role="menuitem">
+                                        <a class="dropdown-item"
+                                           (click)="deleteReply(reply.shelfCommentReplyId, commentIndex, replyIndex)">削除する</a>
+                                      </li>
+                                      <li *ngIf="reply.user.id !== appComponent.userId" role="menuitem" dropdown
+                                          triggers="mouseover" placement="right" container="body">
+                                        <a dropdownToggle class="dropdown-item">報告する</a>
+                                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'VLT', commentIndex, replyIndex)">暴力的・悪意のある表現</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'SPM', commentIndex, replyIndex)">商業目的やスパム</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'POM', commentIndex, replyIndex)">公序良俗に反する</a>
+                                          </li>
+                                          <li role="menuitem"><a class="dropdown-item"
+                                                                 (click)="reportReply(reply.shelfCommentReplyId, 'SVL', commentIndex, replyIndex)">その他利用規約に反する</a>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) >= 0"
+                                       tooltip="問題のあるコメントとして報告済みです。">
+                                    <a class="comment-menu-icon"><i>
+                                      <fa-icon [icon]="faExclamationTriangle"></fa-icon>
                                     </i></a>
                                   </div>
-                                  <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                    <li role="menuitem">
-                                      <a *ngIf="reply.user.id === appComponent.userId" class="dropdown-item"
-                                         href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}%3Fcomment%3D{{comment.shelfCommentId}}%26reply%3D{{reply.shelfCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
-                                         target="_blank">
-                                        Twitterにツイートする
-                                      </a>
-                                      <a *ngIf="reply.user.id !== appComponent.userId" class="dropdown-item"
-                                         href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}%3Fcomment%3D{{comment.shelfCommentId}}%26reply%3D{{reply.shelfCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
-                                         target="_blank">
-                                        Twitterにツイートする
-                                      </a>
-                                    </li>
-                                    <li class="divider dropdown-divider"></li>
-                                    <li *ngIf="reply.user.id === appComponent.userId" role="menuitem">
-                                      <a class="dropdown-item"
-                                         (click)="deleteReply(reply.shelfCommentReplyId, commentIndex, replyIndex)">削除する</a>
-                                    </li>
-                                    <li *ngIf="reply.user.id !== appComponent.userId" role="menuitem" dropdown
-                                        triggers="mouseover" placement="right" container="body">
-                                      <a dropdownToggle class="dropdown-item">報告する</a>
-                                      <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                        <li role="menuitem"><a class="dropdown-item"
-                                                               (click)="reportReply(reply.shelfCommentReplyId, 'VLT', commentIndex, replyIndex)">暴力的・悪意のある表現</a>
+                                </div>
+                                <ul class="comment-user">
+                                  <li class="comment-user-image">
+                                    <a routerLink="/user/{{reply.user.userAccountName}}">
+                                      <div
+                                        *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
+                                        class="user-profile-icon">
+                                        <img class="min-profile-image"
+                                             src="../../assets/image/profile/{{reply.user.profileImageLink}}" alt=""/>
+                                      </div>
+                                      <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
+                                        <img class="min-profile-image"
+                                             src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                                      </div>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <ul class="comment-user-name-space">
+                                      <li class="comment-user-name"><a
+                                        routerLink="/user/{{reply.user.userAccountName}}">{{reply.user.userName}}</a>
+                                      </li>
+                                      <li><a class="comment-user-account-name"
+                                             routerLink="/user/{{reply.user.userAccountName}}">
+                                        @{{reply.user.userAccountName}}</a>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                                <div class="comment-date">・{{reply.commentDate | date:"yyyy年M月d日" }}</div>
+                                <div class="comment">{{reply.commentText}}</div>
+                                <div class="comment-reaction">
+                                  <ul class="comment-reactions space-for-comment">
+                                    <li>
+                                      <ul class="comment-favorites comment-reaction">
+                                        <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) >= 0">
+                                      <span class="comment-reaction-heart favorite-done"
+                                            (click)="notReplyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
+                                        [icon]="faHeart"></fa-icon></span></li>
+                                        <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) == -1">
+                                      <span class="comment-reaction-heart favorite-none"
+                                            (click)="replyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
+                                        [icon]="faHeart"></fa-icon></span>
                                         </li>
-                                        <li role="menuitem"><a class="dropdown-item"
-                                                               (click)="reportReply(reply.shelfCommentReplyId, 'SPM', commentIndex, replyIndex)">商業目的やスパム</a>
-                                        </li>
-                                        <li role="menuitem"><a class="dropdown-item"
-                                                               (click)="reportReply(reply.shelfCommentReplyId, 'POM', commentIndex, replyIndex)">公序良俗に反する</a>
-                                        </li>
-                                        <li role="menuitem"><a class="dropdown-item"
-                                                               (click)="reportReply(reply.shelfCommentReplyId, 'SVL', commentIndex, replyIndex)">その他利用規約に反する</a>
-                                        </li>
+                                        <li>{{reply.favoriteUserCount}}</li>
                                       </ul>
                                     </li>
                                   </ul>
                                 </div>
-                                <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) >= 0"
-                                     tooltip="問題のあるコメントとして報告済みです。">
-                                  <a class="comment-menu-icon"><i>
-                                    <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-                                  </i></a>
-                                </div>
-                              </div>
-                              <ul class="comment-user">
-                                <li class="comment-user-image">
-                                  <a routerLink="/user/{{reply.user.userAccountName}}">
-                                    <div
-                                      *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
-                                      class="user-profile-icon">
-                                      <img class="min-profile-image"
-                                           src="../../assets/image/profile/{{reply.user.profileImageLink}}" alt=""/>
-                                    </div>
-                                    <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
-                                      <img class="min-profile-image"
-                                           src="../../../assets/image/profile/default_profile_image.png" alt=""/>
-                                    </div>
-                                  </a>
-                                </li>
-                                <li>
-                                  <ul class="comment-user-name-space">
-                                    <li class="comment-user-name"><a
-                                      routerLink="/user/{{reply.user.userAccountName}}">{{reply.user.userName}}</a>
-                                    </li>
-                                    <li><a class="comment-user-account-name"
-                                           routerLink="/user/{{reply.user.userAccountName}}">
-                                      @{{reply.user.userAccountName}}</a>
-                                    </li>
-                                  </ul>
-                                </li>
-                              </ul>
-                              <div class="comment-date">・{{reply.commentDate | date:"yyyy年M月d日" }}</div>
-                              <div class="comment">{{reply.commentText}}</div>
-                              <div class="comment-reaction">
-                                <ul class="comment-reactions space-for-comment">
-                                  <li>
-                                    <ul class="comment-favorites comment-reaction">
-                                      <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) >= 0">
-                                      <span class="comment-reaction-heart favorite-done"
-                                            (click)="notReplyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
-                                        [icon]="faHeart"></fa-icon></span></li>
-                                      <li *ngIf="reply.favoriteUserIds.indexOf(appComponent.userId) == -1">
-                                      <span class="comment-reaction-heart favorite-none"
-                                            (click)="replyFavorite(reply.shelfCommentReplyId, commentIndex, replyIndex)"><fa-icon
-                                        [icon]="faHeart"></fa-icon></span>
-                                      </li>
-                                      <li>{{reply.favoriteUserCount}}</li>
-                                    </ul>
-                                  </li>
-                                </ul>
                               </div>
                             </div>
-                          </div>
-                        </li>
-                      </ul>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- 右サイドバー -->
   </div>
 
-  <!-- 右サイドバー -->
+</div>
 
+<div class="ShelfNavigation" *ngIf="notFound">
+  このページは削除されたか、存在しません。
 </div>

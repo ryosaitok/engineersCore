@@ -221,7 +221,7 @@ class Shelf(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     books = models.ManyToManyField(Book, through='ShelfBook')
     shelf_name = models.TextField(max_length=1000)
-    shelf_cd = models.CharField(max_length=128, unique=True)
+    shelf_cd = models.CharField(max_length=128, unique=True, null=True)
     display_order = models.IntegerField(null=True)
     shelf_status_choices = [
         ['OPN', 'Open'],

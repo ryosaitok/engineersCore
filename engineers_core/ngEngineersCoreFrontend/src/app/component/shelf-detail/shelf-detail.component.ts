@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthGuard} from '../../guard/auth.guard';
 import {
   faBookReader,
@@ -32,6 +32,7 @@ export class ShelfDetailComponent implements OnInit {
   shelfBookCount: number;
   shelfComments: ShelfComment[];
   shelfCommentCount: number;
+  notFound = false;
 
   faBookReader = faBookReader;
   faHeart = faHeart;
@@ -42,6 +43,7 @@ export class ShelfDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authGuard: AuthGuard,
+    private router: Router,
     private appComponent: AppComponent,
     private shelfService: ShelfService,
     private shelfCommentService: ShelfCommentService,
@@ -63,6 +65,9 @@ export class ShelfDetailComponent implements OnInit {
         this.shelf = this.shelfService.convertShelf(res, 20);
         this.shelfBookCount = Object.keys(this.shelf.books).length;
       }
+    }, error => {
+      // リソースにアクセスできない場合は、アクセスできない表示
+      this.notFound = true;
     });
   }
 
@@ -74,13 +79,6 @@ export class ShelfDetailComponent implements OnInit {
         this.shelfCommentCount = data.count;
       }
     });
-  }
-
-  editShelf(shelfId: number): void {
-    if (!this.authGuard.canActivate()) {
-      return;
-    }
-    console.log('shelfId: ' + shelfId);
   }
 
   shelfFavorite(shelfId: number): void {
@@ -140,6 +138,14 @@ export class ShelfDetailComponent implements OnInit {
       this.shelf.reportUserIds.push(this.appComponent.userId);
     }, error => {
       console.error('reportShelfでエラー: ', error);
+    });
+  }
+
+  deleteShelf(shelfId: number) {
+    this.shelfService.deleteShelf(shelfId).subscribe(res => {
+      this.router.navigate(['shelves/']);
+    }, err => {
+      console.error('JSON.stringify(err): ', JSON.stringify(err));
     });
   }
 

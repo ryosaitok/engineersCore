@@ -248,6 +248,12 @@ class ShelfSerializer(serializers.ModelSerializer):
                   'favorite_users', 'comment_users', 'report_users',)
 
 
+class ShelfEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shelf
+        fields = ('id', 'user', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',)
+
+
 class ShelfReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelfReport
@@ -275,6 +281,13 @@ class ShelfBookWithForeignSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShelfBook
+        fields = ('id', 'shelf', 'book', 'display_order',)
+
+
+class ShelfBookBulkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
+    class Meta:
+        model = ShelfBook
+        list_serializer_class = BulkListSerializer
         fields = ('id', 'shelf', 'book', 'display_order',)
 
 

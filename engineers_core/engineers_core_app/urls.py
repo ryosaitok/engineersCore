@@ -55,4 +55,5 @@ urlpatterns = [
     path('bulk/author/', AuthorBulkListView.as_view()),
     path('bulk/bookauthor/', BookAuthorBulkListView.as_view()),
     path('bulk/bookdetail/', BookDetailBulkListView.as_view()),
+    path('shelf/books/bulk/', ShelfBookBulkView.as_view()),
 ]

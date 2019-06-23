@@ -536,6 +536,12 @@ class ShelfView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shelf.objects.all()
     serializer_class = ShelfSerializer
 
+    def put(self, request, *args, **kwargs):
+        serializer_class = ShelfEditSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=200)
+
 
 class ShelfReportListView(generics.ListCreateAPIView):
     queryset = ShelfReport.objects.all()
@@ -601,6 +607,35 @@ class ShelfBookListView(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ShelfBookListView, self).filter_queryset(queryset)
         return queryset.order_by('shelf_book__display_order', 'display_order')
+
+
+class ShelfBookBulkView(ListBulkCreateUpdateDestroyAPIView):
+    queryset = ShelfBook.objects.all()
+    serializer_class = ShelfBookBulkSerializer
+
+    def delete(self, request, *args, **kwargs):
+        serializer_class = ShelfBookBulkSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=False)
+
+        # TODO: 現状だと空のリストが返る。どうやったら削除したIDのリスト返せるのか...
+        id_list = self.request.query_params.getlist('id', None)
+        if len(id_list) != 0:
+            query_set = ShelfBook.objects.filter(id__in=id_list)
+            if len(query_set) == 0:
+                return Response(data=query_set, status=404)
+            query_set.delete()
+            # 何も返らなくなるから明示的に空のリストを指定。
+            return Response(data=[], status=204)
+
+        shelf_id = self.request.query_params.get('shelf_id', None)
+        if shelf_id is not None:
+            query_set = ShelfBook.objects.filter(shelf=shelf_id)
+            if len(query_set) == 0:
+                return Response(data=query_set, status=404)
+            query_set.delete()
+            return Response(data=[], status=204)
+
+        return Response(data=serializer_class.validated_data, status=400)
 
 
 class ShelfFavoriteView(generics.RetrieveUpdateDestroyAPIView):
