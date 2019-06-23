@@ -167,6 +167,14 @@
                         </div>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                           <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
+                            <a class="dropdown-item"
+                               href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}?comment={{comment.shelfCommentId}}&ref_src=twsrc%5Etfw&text={{comment.commentText}}%0a%0aEngineersCore+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                               target="_blank">
+                              Twitterに投稿する
+                            </a>
+                          </li>
+                          <li class="divider dropdown-divider"></li>
+                          <li *ngIf="comment.user.id === appComponent.userId" role="menuitem">
                             <a class="dropdown-item" (click)="deleteComment(comment.shelfCommentId, commentIndex)">
                               削除する
                             </a>
@@ -306,6 +314,14 @@
                                       </i></a>
                                     </div>
                                     <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                      <li *ngIf="reply.user.id === appComponent.userId" role="menuitem">
+                                        <a class="dropdown-item"
+                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.shelfId}}%3Fcomment%3D{{comment.shelfCommentId}}%26reply%3D{{reply.shelfCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0aEngineersCore+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                                           target="_blank">
+                                          Twitterに投稿する
+                                        </a>
+                                      </li>
+                                      <li *ngIf="reply.user.id === appComponent.userId" class="divider dropdown-divider"></li>
                                       <li *ngIf="reply.user.id === appComponent.userId" role="menuitem">
                                         <a class="dropdown-item"
                                            (click)="deleteReply(reply.shelfCommentReplyId, commentIndex, replyIndex)">削除する</a>

@@ -226,8 +226,9 @@ ul.authors li {
     color: #657786 !important;
 }
 .no-book-text {
-    padding: 10px;
+    margin: 20px;
     line-height: 16px;
+    text-align: center;
 }
 
 .form-control {
