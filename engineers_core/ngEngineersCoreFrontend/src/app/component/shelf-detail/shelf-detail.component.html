@@ -49,7 +49,7 @@
                   <li><span (click)="scrollToComment('comment-area')" class="comment-reaction-reply"><fa-icon
                     [icon]="faCommentDots"></fa-icon></span>
                   </li>
-                  <li>{{shelf.commentUserCount}}</li>
+                  <li>{{shelfCommentCount}}</li>
                 </ul>
               </li>
               <li>
@@ -137,7 +137,7 @@
               </li>
               <li id="comment-area">
                 <form #f="ngForm" class="comment-form">
-                  <div class="form-group" style="width:90%;">
+                  <div class="form-group">
                     <textarea ngModel class="form-control" name="comment" id="comment" placeholder="本棚に対するコメントを追加..."
                               required maxlength="255"></textarea>
                   </div>
@@ -278,7 +278,7 @@
                           </li>
                           <li>
                             <form #f="ngForm" class="comment-form">
-                              <div class="form-group" style="width:90%;">
+                              <div class="form-group">
                               <textarea ngModel class="form-control" name="comment" placeholder="本棚に対するコメントを追加..."
                                         required maxlength="255"></textarea>
                               </div>

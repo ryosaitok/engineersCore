@@ -133,6 +133,7 @@ export class ShelfDetailComponent implements OnInit {
         if (response.id !== undefined) {
           const shelfComment = this.shelfCommentService.convertShelfComment(response);
           this.shelfComments.unshift(shelfComment);
+          this.shelfCommentCount += 1;
         }
       });
     });
@@ -235,6 +236,7 @@ export class ShelfDetailComponent implements OnInit {
           const shelfCommentReply = this.shelfCommentReplyService.convertShelfCommentReply(response);
           console.log('shelfCommentReply: ', shelfCommentReply);
           this.shelfComments[commentIndex].commentReplies.unshift(shelfCommentReply);
+          this.shelfComments[commentIndex].replyUserCount += 1;
         }
       });
     });

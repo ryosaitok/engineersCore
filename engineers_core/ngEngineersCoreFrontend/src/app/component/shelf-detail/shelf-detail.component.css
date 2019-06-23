@@ -252,11 +252,21 @@ ul.add-comment li {
 .user-profile-icon {
     position: absolute;
 }
+.form-group {
+    width: 90%;
+    margin-bottom: 5px;
+}
 .comment-form {
     margin-left: 60px;
 }
 .comment-button {
     margin-left: 600px;
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.comment-button:hover {
+    background-color: #337ab7;
 }
 
 .comments-module {
@@ -310,6 +320,12 @@ ul.space-for-comment {
 }
 .reply-button {
     margin-left: 545px;
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.reply-button:hover {
+    background-color: #337ab7;
 }
 .reply-comment {
     margin: 10px 0;
