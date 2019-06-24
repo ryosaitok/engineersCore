@@ -62,6 +62,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.focusToSearchForm();
     this.getPopularBooks();
     this.getNewBooks();
     this.getLoginUser();
@@ -127,6 +128,10 @@ export class SearchComponent implements OnInit {
     }
     this.isSearchByTitle = true;
     this.searchBooks(this.page, null, this.sort);
+  }
+
+  focusToSearchForm(): void {
+    document.getElementById('search-query').focus();
   }
 
   /**
