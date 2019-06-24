@@ -29,6 +29,9 @@ a:hover {
     margin: 0 auto;
     max-width: 1190px;
 }
+.ShelfNameNavigationText {
+    word-break: break-all;
+}
 .ShelfNameNavigation-titleText {
     color: #fff;
     font-weight: bold;
@@ -108,7 +111,7 @@ ul.producer-name-space li {
 }
 .shelf-description-text {
     word-wrap: break-word;
-    white-space: normal;
+    white-space: pre-wrap;
 }
 ul.space-for-description {
     margin: 5px 0 0 220px;

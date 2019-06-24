@@ -72,9 +72,7 @@ export class ShelfDetailComponent implements OnInit {
   }
 
   getShelfComments(): void {
-    console.log('とおる？: ');
     this.shelfCommentService.getShelfCommentsByShelfId(this.shelfId).subscribe(data => {
-      console.log('getShelfCommentsでdata: ' + JSON.stringify(data));
       if (data.results !== undefined && data.results !== null && data.count !== 0) {
         const shelfComments = data.results;
         this.shelfComments = this.shelfCommentService.convertShelfComments(shelfComments);

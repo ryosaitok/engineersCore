@@ -30,6 +30,9 @@ a:hover {
     margin: 0 auto;
     max-width: 1190px;
 }
+.ShelfNameNavigationText {
+    word-break: break-all;
+}
 .ShelfNameNavigation-titleText {
     color: #fff;
     font-weight: bold;
@@ -110,7 +113,7 @@ ul.producer-name-space li {
 }
 .shelf-description-text {
     word-wrap: break-word;
-    white-space: normal;
+    white-space: pre-wrap;
 }
 ul.space-for-description {
     margin: 5px 0 0 220px;
@@ -197,8 +200,21 @@ ul.book-list > li {
     margin: 5px 10px;
     padding: 10px 0;
 }
-.registered-book:hover {
-    opacity: 0.5;
+.remove-navigation {
+    opacity: 0;
+    width: 145px;
+    height: 170px;
+    position: absolute;
+    padding: 80px 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #222222;
+    color: #ffffff;
+    font-weight: bold;
+}
+.remove-navigation:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }
 .book-image {
     text-align: center;
@@ -254,7 +270,7 @@ ul.authors li {
     text-align: center;
 }
 
-.action-buttons {
+.action-button {
     text-align: center;
 }
 .update-button, .delete-button {
@@ -281,9 +297,6 @@ ul.authors li {
     padding: 10px 0 0 0;
     border-bottom: 1px solid #e6ecf0;
 }
-.sub-book-content:hover {
-    opacity: 0.5;
-}
 ul.sub-book-list {
     list-style: none;
     margin-bottom: 0 !important;
@@ -292,6 +305,25 @@ ul.sub-book-list {
 ul.sub-book-list > li {
     vertical-align: top;
     display: inline-block;
+}
+.add-navigation {
+    opacity: 0;
+    width: 270px;
+    height: 120px;
+    position: absolute;
+    padding: 45px 75px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #222222;
+    color: #ffffff;
+    font-weight: bold;
+}
+.add-navigation:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+.disabled-area:hover {
+    cursor: not-allowed;
 }
 ul.context {
     list-style: none;

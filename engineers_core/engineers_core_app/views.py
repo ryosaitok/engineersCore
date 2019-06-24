@@ -105,7 +105,8 @@ class PasswordReminderView(generics.CreateAPIView):
         email = serializer_class.validated_data.get('email', None)
         # 登録されていないメアドが指定された場合は未登録エラーのレスポンス
         if not email_address_exists(email):
-            return Response(data={'email': email, 'message': '指定されたメールアドレスのユーザーは、登録されていません。', 'success': False}, status=400)
+            return Response(data={'email': email, 'message': '指定されたメールアドレスのユーザーは、登録されていません。', 'success': False},
+                            status=400)
         # 登録済みメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
         token = generate_key()
         success = send_password_reminder(email, 'info@engineers-core.mail', token)
@@ -537,10 +538,12 @@ class ShelfView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ShelfSerializer
 
     def put(self, request, *args, **kwargs):
-        serializer_class = ShelfEditSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=200)
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = ShelfEditSerializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class ShelfReportListView(generics.ListCreateAPIView):
@@ -599,14 +602,10 @@ class ShelfBookListView(generics.ListCreateAPIView):
             queryset = queryset.filter(book__id=book_id)
         shelf_id = self.request.query_params.get('shelf_id', None)
         if shelf_id is not None:
-            queryset = queryset.filter(shelf_book__shelf_id=shelf_id)
+            queryset = queryset.filter(shelf_id=shelf_id)
         compiler = queryset.query.get_compiler(using=queryset.db)
         print('ShelfBookListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
-
-    def filter_queryset(self, queryset):
-        queryset = super(ShelfBookListView, self).filter_queryset(queryset)
-        return queryset.order_by('shelf_book__display_order', 'display_order')
 
 
 class ShelfBookBulkView(ListBulkCreateUpdateDestroyAPIView):

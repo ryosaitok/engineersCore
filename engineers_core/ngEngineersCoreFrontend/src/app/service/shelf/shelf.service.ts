@@ -50,9 +50,9 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
-  updateShelf(shelfId: number, userId: number, shelfName: string, description): Observable<any> {
+  updateShelf(shelfId: number, userId: number, shelfName: string, description: string): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
-    const body = {id: shelfId, user: userId, shelf_name: shelfName, description};
+    const body = {user: userId, shelf_name: shelfName, description};
     return this.http.put<any>(url, body, this.httpOptions);
   }
 

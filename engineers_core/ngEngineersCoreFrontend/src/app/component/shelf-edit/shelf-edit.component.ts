@@ -106,11 +106,13 @@ export class ShelfEditComponent implements OnInit {
     });
     if (!alreadyListed) {
       this.shelf.books.push(book);
+      this.shelfBookCount += 1;
     }
   }
 
   removeBook(index: number) {
     this.shelf.books.splice(index, 1);
+    this.shelfBookCount -= 1;
   }
 
   updateShelf(form: NgForm, shelfId: number, books: Book[]) {
@@ -120,24 +122,21 @@ export class ShelfEditComponent implements OnInit {
     books.forEach(book => {
       shelfBooks.push(new ShelfBook(null, shelfId, book.id, null));
     });
-    console.log('shelfName: ' + shelfName + ' description: ' + description + ' shelfBooks: ' + shelfBooks);
     this.shelfService.updateShelf(shelfId, this.appComponent.userId, shelfName, description).subscribe(res => {
-      console.log('JSON.stringify(res): ', JSON.stringify(res));
-      // 本棚の本を一旦全削除し、本を追加登録していく
-      this.shelfBookService.shlefIdBulkDeleteShelfBooks(shelfId).subscribe(response => {
-        console.log('JSON.stringify(response): ', JSON.stringify(response));
-        // 本棚の本を一旦全削除し、本を追加登録していく
-        this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
-          console.log('JSON.stringify(r): ', JSON.stringify(r));
-          this.router.navigate(['shelf/' + shelfId + '/']);
-        }, e => {
-          console.error('JSON.stringify(e): ', JSON.stringify(e));
-        });
-      }, error => {
-          console.error('JSON.stringify(error): ', JSON.stringify(error));
-        });
-    }, err => {
-      console.error('JSON.stringify(err): ', JSON.stringify(err));
+      // すでに本棚に本が登録されている場合は、本棚の本を一旦全削除し、本を追加登録していく。
+      this.shelfBookService.getShelfBooksByShelfId(shelfId).subscribe(data => {
+        if (data.count === 0) {
+          this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
+            this.router.navigate(['shelf/' + shelfId + '/']);
+          });
+        } else {
+          this.shelfBookService.shlefIdBulkDeleteShelfBooks(shelfId).subscribe(response => {
+            this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
+              this.router.navigate(['shelf/' + shelfId + '/']);
+            });
+          });
+        }
+      });
     });
   }
 }
