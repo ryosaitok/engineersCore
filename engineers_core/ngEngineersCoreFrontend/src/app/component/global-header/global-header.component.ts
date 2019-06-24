@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
-import {faBars, faBookReader, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faBookReader, faSearch, faBell, faCrown} from '@fortawesome/free-solid-svg-icons';
 
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
@@ -16,6 +16,8 @@ export class GlobalHeaderComponent implements OnInit {
   faBars = faBars;
   faBookReader = faBookReader;
   faSearch = faSearch;
+  faBell = faBell;
+  faCrown = faCrown;
 
   constructor(
     private router: Router,

@@ -33,23 +33,46 @@
                   </nav>
                 </li>
               </ul>
+              <ul class="nav global-actions">
+                <li>
+                  <nav>
+                    <a>
+                      <span class="ranking"><fa-icon [icon]="faCrown"></fa-icon></span>
+                      <b> ランキング</b>
+                    </a>
+                  </nav>
+                </li>
+              </ul>
             </div>
             <div class="pull-right nav-extras">
               <ul class="nav right-actions">
+                <ul class="nav global-actions">
+                  <li>
+                    <nav>
+                      <a><span class="shelf-books"><fa-icon [icon]="faBell"></fa-icon></span><b> 通知</b></a>
+                    </nav>
+                  </li>
+                </ul>
                 <!-- ログインユーザーメニュー -->
-                <div class="login-user-menu">
+                <li class="login-user-menu">
                   <div class="btn-group" dropdown [insideClick]="true">
                     <div dropdownToggle class="dropdown-toggle login-state" *ngIf="appComponent.isLoggedIn">
-                      <div class="user-profile-image"  *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
-                        <nav><img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/></nav>
+                      <div class="user-profile-image"
+                           *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
+                        <nav><img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                        </nav>
                       </div>
-                      <div class="user-profile-image" *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
-                        <nav><img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/></nav>
+                      <div class="user-profile-image"
+                           *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
+                        <nav><img class="avatar" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
+                                  alt=""/></nav>
                       </div>
                     </div>
                     <div dropdownToggle class="dropdown-toggle login-state" *ngIf="!appComponent.isLoggedIn">
                       <nav>
-                        <i class="fas fa-lg"><fa-icon [icon]="faBars"></fa-icon></i>
+                        <i class="fas fa-lg">
+                          <fa-icon [icon]="faBars"></fa-icon>
+                        </i>
                       </nav>
                     </div>
                     <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -63,15 +86,18 @@
                       <li role="menuitem"><a class="dropdown-item" href="#">アカウント設定</a></li>
                       <li role="menuitem"><a class="dropdown-item" href="#">お問い合わせ</a></li>
                       <li class="divider dropdown-divider"></li>
-                      <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a><span class="dropdown-item" (click)="signOut()">ログアウト</span></a>
+                      <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a><span class="dropdown-item"
+                                                                                   (click)="signOut()">ログアウト</span></a>
                       </li>
-                      <li *ngIf="!appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item" routerLink="/login/">ログイン</a>
+                      <li *ngIf="!appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item"
+                                                                              routerLink="/login/">ログイン</a>
                       </li>
-                      <li *ngIf="!appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item" routerLink="/signup/">新規登録</a>
+                      <li *ngIf="!appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item"
+                                                                              routerLink="/signup/">新規登録</a>
                       </li>
                     </ul>
                   </div>
-                </div>
+                </li>
               </ul>
             </div>
           </div>
