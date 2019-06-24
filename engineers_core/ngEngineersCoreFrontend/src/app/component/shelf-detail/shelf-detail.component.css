@@ -112,6 +112,7 @@ ul.producer-name-space li {
 .shelf-description-text {
     word-wrap: break-word;
     white-space: pre-wrap;
+    padding: 1px;
 }
 ul.space-for-description {
     margin: 5px 0 0 220px;
