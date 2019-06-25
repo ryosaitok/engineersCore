@@ -13,6 +13,7 @@ import {SignupComponent} from './component/signup/signup.component';
 import {VerifyEmailComponent} from './component/verify-email/verify-email.component';
 import {PasswordReminderComponent} from './component/password-reminder/password-reminder.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
+import {ShelfRegisterComponent} from './component/shelf-register/shelf-register.component';
 import {ShelfEditComponent} from './component/shelf-edit/shelf-edit.component';
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'book/:id', component: BookDetailComponent},
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},
+  {path: 'shelf/register', component: ShelfRegisterComponent},
   {path: 'shelf/:shelfId', component: ShelfDetailComponent},
   {path: 'shelf/edit/:shelfId', component: ShelfEditComponent},
   {path: '**', component: PageNotFoundComponent},

@@ -50,6 +50,12 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
+  registerShelf(userId: number, shelfName: string, description: string): Observable<any> {
+    const url = this.SHELVES_API_URL;
+    const body = {user: userId, shelf_name: shelfName, description};
+    return this.http.post<any>(url, body, this.httpOptions);
+  }
+
   updateShelf(shelfId: number, userId: number, shelfName: string, description: string): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
     const body = {user: userId, shelf_name: shelfName, description};

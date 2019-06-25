@@ -567,7 +567,7 @@ class ShelfListView(generics.ListCreateAPIView):
 
     # 登録処理ではidだけ指定で行いたいので、BookFeatureCategorySerializerを使う。
     def post(self, request, *args, **kwargs):
-        serializer_class = ShelfSerializer(data=request.data)
+        serializer_class = ShelfEditSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=True)
         serializer_class.save()
         return Response(serializer_class.data, status=201)

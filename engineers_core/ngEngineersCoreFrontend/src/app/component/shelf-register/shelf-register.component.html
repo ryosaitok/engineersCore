@@ -17,18 +17,18 @@
         <div class="ShelfNavigation-titleText" dir="ltr">
           <ul class="shelf-data">
             <li class="shelf-producer-image">
-              <div *ngIf="shelf.user.profileImageLink !== null && shelf.user.profileImageLink !== undefined"
+              <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                    class="user-profile-icon">
-                <img class="profile-image" src="../../assets/image/profile/{{shelf.user.profileImageLink}}" alt=""/>
+                <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
               </div>
-              <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
+              <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
                 <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
               </div>
             </li>
             <li>
               <ul class="producer-name-space">
-                <li class="producer-name">{{shelf.user.userName}}</li>
-                <li class="producer-account-name">@{{shelf.user.userAccountName}}</li>
+                <li class="producer-name">{{appComponent.userName}}</li>
+                <li class="producer-account-name">@{{appComponent.accountName}}</li>
               </ul>
             </li>
           </ul>
@@ -41,7 +41,7 @@
             <li>
               <ul class="comment-replies comment-reaction">
                 <li><span class="comment-reaction-reply"><fa-icon [icon]="faCommentDots"></fa-icon></span></li>
-                <li>{{shelfCommentCount}}</li>
+                <li>0</li>
               </ul>
             </li>
             <li>
@@ -56,7 +56,7 @@
                       <fa-icon [icon]="faHeart"></fa-icon>
                     </span>
                 </li>
-                <li>{{shelf.favoriteUserCount}}</li>
+                <li>0</li>
               </ul>
             </li>
           </ul>
@@ -70,7 +70,7 @@
       <div class="ShelfBooksModules">
         <!-- 本の情報 -->
         <div class="module shelf-books">
-          <form #form="ngForm" class="update-form" (ngSubmit)="updateShelf(form, shelf.shelfId, shelf.books)">
+          <form #form="ngForm" class="update-form" (ngSubmit)="registerShelf(form, shelf.books)">
             <div class="form-group">
               <label for="shelfName"><span>本棚のタイトル</span></label>
               <input [(ngModel)]="shelf.shelfName" type="text" class="form-control" name="shelfName" id="shelfName"
@@ -117,7 +117,7 @@
               </div>
             </div>
             <div class="action-button">
-              <button type="submit" class="btn btn-primary update-button"><b>本棚を更新して公開する</b></button>
+              <button type="submit" class="btn btn-primary update-button"><b>本棚を登録して公開する</b></button>
             </div>
           </form>
         </div>
@@ -144,14 +144,15 @@
         <div class="module books">
           <ul class="sub-book-list">
             <li *ngFor="let book of searchedBooks" class="sub-book-content flex-module-inner">
-              <div *ngIf="shelf.books.indexOf(book) < 0 && shelfBookCount < 20" class="add-navigation" (click)="addBook(book)">
-                <p >本棚に追加する</p>
+              <div *ngIf="shelf.books.indexOf(book) < 0 && shelfBookCount < 20" class="add-navigation"
+                   (click)="addBook(book)">
+                <p>本棚に追加する</p>
               </div>
               <div *ngIf="shelf.books.indexOf(book) >= 0 && shelfBookCount < 20" class="add-navigation disabled-area">
-                <p >本棚に追加済み</p>
+                <p>本棚に追加済み</p>
               </div>
               <div *ngIf="shelfBookCount >= 20" class="add-navigation disabled-area">
-                <p >本棚は20冊まで</p>
+                <p>本棚は20冊まで</p>
               </div>
               <ul class="context">
                 <li class="book-image">
@@ -180,8 +181,4 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="ShelfNavigation" *ngIf="notFound">
-  このページは削除されたか、存在しません。
 </div>

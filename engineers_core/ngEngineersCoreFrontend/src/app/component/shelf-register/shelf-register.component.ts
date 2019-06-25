@@ -1,29 +1,28 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
 import {AuthGuard} from '../../guard/auth.guard';
+import {NgForm} from '@angular/forms';
 import {faBookReader, faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {Shelf} from '../../dto/shelf/shelf';
 import {Book} from '../../dto/book/book';
 import {ShelfBook} from '../../dto/shelf-book/shelf-book';
+import {BookService} from '../../service/book/book.service';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';
-import {BookService} from '../../service/book/book.service';
 import {ShelfBookService} from '../../service/shelf-book/shelf-book.service';
 
 @Component({
-  selector: 'app-shelf-edit',
-  templateUrl: './shelf-edit.component.html',
-  styleUrls: ['./shelf-edit.component.css']
+  selector: 'app-shelf-register',
+  templateUrl: './shelf-register.component.html',
+  styleUrls: ['./shelf-register.component.css']
 })
-export class ShelfEditComponent implements OnInit {
+export class ShelfRegisterComponent implements OnInit {
 
   shelfId = Number(this.route.snapshot.paramMap.get('shelfId'));
   shelf: Shelf;
   shelfBookCount: number;
-  shelfCommentCount: number;
   searchedBooks: Book[];
   notFound = false;
 
@@ -44,27 +43,14 @@ export class ShelfEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initShelf();
     this.focusToSearchForm();
-    this.getShelf();
-    this.getShelfCommentCount();
   }
 
-  getShelf(): void {
-    this.shelfService.getShelf(this.shelfId).subscribe(res => {
-      if (res !== undefined && res !== null) {
-        this.shelf = this.shelfService.convertShelf(res, 20);
-        this.shelfBookCount = Object.keys(this.shelf.books).length;
-      }
-    }, error => {
-      // リソースにアクセスできない場合は、アクセスできない表示
-      this.notFound = true;
-    });
-  }
-
-  getShelfCommentCount(): void {
-    this.shelfCommentService.getShelfCommentsByShelfId(this.shelfId).subscribe(data => {
-      this.shelfCommentCount = data.count;
-    });
+  initShelf(): void {
+    this.shelf = new Shelf(null, null, [], null, null, null, null,
+      null, [], [], null, null, []);
+    this.shelfBookCount = 0;
   }
 
   focusToSearchForm(): void {
@@ -114,27 +100,17 @@ export class ShelfEditComponent implements OnInit {
     this.shelfBookCount -= 1;
   }
 
-  updateShelf(form: NgForm, shelfId: number, books: Book[]) {
+  registerShelf(form: NgForm, books: Book[]) {
     const shelfName = form.value.shelfName;
     const description = form.value.description;
-    const shelfBooks = [];
-    books.forEach(book => {
-      shelfBooks.push(new ShelfBook(null, shelfId, book.id, null));
-    });
-    this.shelfService.updateShelf(shelfId, this.appComponent.userId, shelfName, description).subscribe(res => {
-      // すでに本棚に本が登録されている場合は、本棚の本を一旦全削除し、本を追加登録していく。
-      this.shelfBookService.getShelfBooksByShelfId(shelfId).subscribe(data => {
-        if (data.count === 0) {
-          this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
-            this.router.navigate(['shelf/' + shelfId + '/']);
-          });
-        } else {
-          this.shelfBookService.shlefIdBulkDeleteShelfBooks(shelfId).subscribe(response => {
-            this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
-              this.router.navigate(['shelf/' + shelfId + '/']);
-            });
-          });
-        }
+    this.shelfService.registerShelf(this.appComponent.userId, shelfName, description).subscribe(res => {
+      const shelfId = res.id;
+      const shelfBooks = [];
+      books.forEach(book => {
+        shelfBooks.push(new ShelfBook(null, shelfId, book.id, null));
+      });
+      this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
+        this.router.navigate(['shelf/' + shelfId + '/']);
       });
     });
   }
