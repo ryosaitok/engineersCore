@@ -574,8 +574,16 @@ class ShelfListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Shelf.objects.filter(shelf_status='OPN')
-        compiler = queryset.query.get_compiler(using=queryset.db)
-        print('ShelfListViewのSQL: ' + str(compiler.as_sql()))
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(ShelfListView, self).filter_queryset(queryset).annotate(favorite_count=Count('favorite_users'))
+        sort = self.request.query_params.get('sort', None)
+        if sort is not None:
+            if sort == 'new':
+                return queryset.order_by(F('id').desc(nulls_last=True))
+            if sort == 'popular':
+                return queryset.order_by(F('favorite_count').desc(nulls_last=True))
         return queryset
 
 

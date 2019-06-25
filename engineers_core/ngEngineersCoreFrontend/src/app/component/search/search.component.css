@@ -328,7 +328,7 @@ ul.user-module > li {
 }
 
 .paging-navigation {
-    padding: 0 10px !important;
+    padding: 0 10px;
     border-top: 1px solid #e6ecf0;
     margin-top: 5px;
 }

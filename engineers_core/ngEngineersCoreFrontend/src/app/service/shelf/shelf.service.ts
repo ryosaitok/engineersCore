@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Shelf} from '../../dto/shelf/shelf';
 import {BookService} from '../book/book.service';
 import {UserService} from '../user/user.service';
+import {HttpRequestService} from '../http-request/http-request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class ShelfService {
 
   constructor(
     private http: HttpClient,
+    private httpRequestService: HttpRequestService,
     private bookService: BookService,
     private userService: UserService,
   ) {
@@ -38,6 +40,12 @@ export class ShelfService {
   getShelves(): Observable<any> {
     const url = this.SHELVES_API_URL;
     return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getShelvesPaging(sort: string, page: string): Observable<any> {
+    let url = this.SHELVES_API_URL;
+    url = this.httpRequestService.addUrlConditions(url, sort, page);
+    return this.http.get<any>(url);
   }
 
   getShelvesByBookId(bookId: number): Observable<any> {

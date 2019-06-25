@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthGuard} from '../../guard/auth.guard';
 import {faCommentDots, faHeart} from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.
 import {SigninService} from '../../service/signin/signin.service';
 import {UserService} from '../../service/user/user.service';
 import {Shelf} from '../../dto/shelf/shelf';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-shelf',
@@ -19,6 +19,13 @@ export class ShelfComponent implements OnInit {
 
   shelves: Shelf[];
   shelfCount: number;
+  sort: string;
+  nextPageUrl: string;
+  previousPageUrl: string;
+  nextPage: number;
+  previousPage: number;
+  newSelected: string;
+  popularSelected: string;
 
   faHeart = faHeart;
   faCommentDots = faCommentDots;
@@ -26,6 +33,7 @@ export class ShelfComponent implements OnInit {
   constructor(
     private authGuard: AuthGuard,
     private router: Router,
+    private route: ActivatedRoute,
     private appComponent: AppComponent,
     private shelfService: ShelfService,
     private shelfFavoriteService: ShelfFavoriteService,
@@ -36,7 +44,7 @@ export class ShelfComponent implements OnInit {
 
   ngOnInit() {
     this.getLoginUser();
-    this.getShelves();
+    this.searchShelves(1, 'new');
   }
 
   getLoginUser(): void {
@@ -58,12 +66,37 @@ export class ShelfComponent implements OnInit {
     });
   }
 
-  getShelves(): void {
-    this.shelfService.getShelves().subscribe(data => {
-      const shelves = data.results;
-      this.shelves = this.shelfService.convertShelves(shelves, 5);
-      this.shelfCount = data.count;
+  /**
+   * 本棚を検索して検索結果を表示する。
+   */
+  searchShelves(page: number, sort: string) {
+    this.nextPage = page + 1;
+    this.previousPage = page - 1;
+
+    if (sort === null) {
+      sort = this.sort;
+    } else {
+      this.sort = sort;
+    }
+    if (sort === 'new') {
+      this.newSelected = 'selected';
+      this.popularSelected = '';
+    } else if (sort === 'popular') {
+      this.newSelected = '';
+      this.popularSelected = 'selected';
+    }
+    const pageStr = page === null ? null : page.toString();
+
+    this.shelfService.getShelvesPaging(sort, pageStr).subscribe(data => {
+      if (data.count !== 0) {
+        const shelves = data.results;
+        this.shelves = this.shelfService.convertShelves(shelves, 5);
+        this.shelfCount = data.count;
+        this.nextPageUrl = data.next;
+        this.previousPageUrl = data.previous;
+      }
     });
+    window.scrollTo(0, 0);
   }
 
   shelfFavorite(shelfId: number, index: number): void {

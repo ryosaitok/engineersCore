@@ -5,10 +5,20 @@
       <div class="ShelvesModules">
         <div class="module shelves">
           <div *ngIf="shelfCount > 0" class="shelf-module">
+            <ul class="sort-condition">
+              <li>
+                {{pageStart}}~ / <b>{{shelfCount}}</b>
+              </li>
+              <li class="sort-condition-button">
+                <span [class]="newSelected" (click)="searchShelves(1, 'new')">新しい順</span>
+              </li>
+              <li class="sort-condition-button">
+                <span [class]="popularSelected" (click)="searchShelves(1, 'popular')">人気順</span>
+              </li>
+            </ul>
             <!-- 本棚の情報 -->
             <div *ngFor="let shelf of shelves; let i = index"
-                 class="js-shelf-books shelf-books-content flex-module-inner"
-                 data-section-id="wtf" style="opacity: 1;">
+                 class="js-shelf-books shelf-books-content flex-module-inner">
               <ul class="shelf-basic-info">
                 <li class="producer-info">
                   <!-- カテゴリの作成者 -->
@@ -100,10 +110,34 @@
                 </div>
               </div>
             </div>
+            <nav aria-label="Page navigation" class="paging-navigation">
+              <ul class="pagination">
+                <li class="page-item" *ngIf="previousPageUrl !== undefined && previousPageUrl !== null">
+                  <a class="page-link" (click)="searchShelves(previousPage, sort)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item disabled" *ngIf="previousPageUrl === undefined || previousPageUrl === null">
+                  <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item" *ngIf="nextPageUrl !== undefined && nextPageUrl !== null">
+                  <a class="page-link" (click)="searchShelves(nextPage, sort)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                  </a>
+                </li>
+                <li class="page-item disabled" *ngIf="nextPageUrl === undefined || nextPageUrl === null">
+                  <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
           <div *ngIf="shelfCount === 0" class="shelf-none-module">
             <div class="no-book-text">
-              <span>本がありませんでした。</span>
+              <span>本棚がありませんでした。</span>
             </div>
           </div>
         </div>
