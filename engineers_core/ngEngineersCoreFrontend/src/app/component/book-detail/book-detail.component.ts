@@ -23,6 +23,7 @@ import {UserService} from '../../service/user/user.service';
 })
 export class BookDetailComponent implements OnInit {
 
+  pageFound = true;
   bookId = Number(this.route.snapshot.paramMap.get('id'));
   @Input() book: Book;
   faHeart = faHeart;
@@ -86,6 +87,8 @@ export class BookDetailComponent implements OnInit {
     const bookId = this.route.snapshot.paramMap.get('id');
     this.bookService.getBook(bookId).subscribe(res => {
       this.book = this.bookService.convertBook(res);
+    }, error => {
+      this.pageFound = false;
     });
   }
 

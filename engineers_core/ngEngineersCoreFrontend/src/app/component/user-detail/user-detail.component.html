@@ -1,4 +1,4 @@
-<div class="page-outer" *ngIf="user">
+<div class="page-outer" *ngIf="pageFound">
   <!-- サブヘッダー(ユーザー名) -->
   <div class="UserNavigation">
     <div class="UserNavigation-canopy u-bgUserColor">
@@ -263,9 +263,10 @@
         </div>
       </div>
     </div>
-
     <!-- 右サイドバー -->
-
   </div>
 </div>
 
+<div *ngIf="!pageFound">
+  <app-page-not-found></app-page-not-found>
+</div>

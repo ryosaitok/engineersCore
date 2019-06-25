@@ -25,7 +25,7 @@ export class ShelfEditComponent implements OnInit {
   shelfBookCount: number;
   shelfCommentCount: number;
   searchedBooks: Book[];
-  notFound = false;
+  pageFound = true;
 
   faBookReader = faBookReader;
   faHeart = faHeart;
@@ -44,7 +44,6 @@ export class ShelfEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.focusToSearchForm();
     this.getShelf();
     this.getShelfCommentCount();
   }
@@ -57,7 +56,7 @@ export class ShelfEditComponent implements OnInit {
       }
     }, error => {
       // リソースにアクセスできない場合は、アクセスできない表示
-      this.notFound = true;
+      this.pageFound = false;
     });
   }
 
@@ -65,10 +64,6 @@ export class ShelfEditComponent implements OnInit {
     this.shelfCommentService.getShelfCommentsByShelfId(this.shelfId).subscribe(data => {
       this.shelfCommentCount = data.count;
     });
-  }
-
-  focusToSearchForm(): void {
-    document.getElementById('search-query').focus();
   }
 
   /**

@@ -472,12 +472,10 @@
         </div>
       </div>
     </div>
-
     <!-- 右サイドバー -->
   </div>
-
 </div>
 
-<div class="ShelfNavigation" *ngIf="notFound">
-  このページは削除されたか、存在しません。
+<div *ngIf="!pageFound">
+  <app-page-not-found></app-page-not-found>
 </div>

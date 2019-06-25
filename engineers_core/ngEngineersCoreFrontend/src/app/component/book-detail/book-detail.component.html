@@ -1,4 +1,4 @@
-<div class="page-outer" *ngIf="book">
+<div class="page-outer" *ngIf="pageFound">
   <!-- 本のタイトル -->
   <div class="BookNavigation">
     <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
@@ -316,8 +316,10 @@
         </div>
       </div>
     </div>
-
     <!-- 右サイドバー -->
-
   </div>
+</div>
+
+<div *ngIf="!pageFound">
+  <app-page-not-found></app-page-not-found>
 </div>

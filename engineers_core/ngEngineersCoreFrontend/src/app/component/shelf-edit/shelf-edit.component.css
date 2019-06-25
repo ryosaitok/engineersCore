@@ -16,7 +16,6 @@ a:hover {
 
 /* 本棚名ナビ */
 .ShelfNameNavigation {
-    opacity: 0.2;
 }
 .u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
     background-color: #337ab7 !important;
@@ -47,9 +46,11 @@ h1 {
 }
 
 /* 本棚の基本情報 */
+.hide-area {
+    opacity: 0.2;
+}
 .ShelfNavigation {
     border-bottom: 1px solid #e6ecf0;
-    opacity: 0.2;
 }
 .ShelfNavigation-canopy {
     background-color: #ffffff;

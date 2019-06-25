@@ -32,7 +32,7 @@ export class ShelfDetailComponent implements OnInit {
   shelfBookCount: number;
   shelfComments: ShelfComment[];
   shelfCommentCount: number;
-  notFound = false;
+  pageFound = true;
 
   faBookReader = faBookReader;
   faHeart = faHeart;
@@ -67,7 +67,7 @@ export class ShelfDetailComponent implements OnInit {
       }
     }, error => {
       // リソースにアクセスできない場合は、アクセスできない表示
-      this.notFound = true;
+      this.pageFound = false;
     });
   }
 

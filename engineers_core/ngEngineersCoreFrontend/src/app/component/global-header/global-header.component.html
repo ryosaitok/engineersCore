@@ -67,7 +67,7 @@
                     </div>
                     <ul *dropdownMenu class="dropdown-menu" role="menu">
                       <li *ngIf="appComponent.isLoggedIn" role="menuitem">
-                        <a class="dropdown-item" routerLink="/user/{{appComponent.accountName}}">
+                        <a class="dropdown-item" href="/user/{{appComponent.accountName}}">
                           <b class="fullname">{{appComponent.userName}}</b><span class="UserBadges"></span>
                           <p class="name"><span class="username" dir="ltr">@{{appComponent.accountName}}</span></p>
                         </a>

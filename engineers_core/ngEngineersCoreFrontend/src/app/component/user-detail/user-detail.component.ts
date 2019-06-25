@@ -24,6 +24,7 @@ export class UserDetailComponent implements OnInit {
   faCommentDots = faCommentDots;
   faUser = faUser;
 
+  pageFound = true;
   accountName = this.route.snapshot.paramMap.get('accountName');
   @Input() user: User;
   bookComments: BookComment[];
@@ -78,6 +79,8 @@ export class UserDetailComponent implements OnInit {
   getUser(): void {
     this.userService.getUser(this.accountName).subscribe(response => {
       this.user = new User(response.id, response.user_name, response.account_name, response.description, response.profile_image_link);
+    }, error => {
+      this.pageFound = false;
     });
   }
 

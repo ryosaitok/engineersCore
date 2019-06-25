@@ -1,6 +1,10 @@
+<div *ngIf="notFound">
+  <app-page-not-found></app-page-not-found>
+</div>
+
 <div class="page-outer" *ngIf="!notFound">
   <!-- 本棚名 -->
-  <div class="ShelfNameNavigation">
+  <div class="ShelfNameNavigation hide-area">
     <div class="ShelfNameNavigation-canopy u-bgUserColor">
       <div class="ShelfNameNavigation-textContainer">
         <h1 class="ShelfNameNavigationText" dir="ltr">
@@ -11,7 +15,7 @@
     </div>
   </div>
   <!-- 本棚の基本情報 -->
-  <div class="ShelfNavigation">
+  <div class="ShelfNavigation hide-area">
     <div class="ShelfNavigation-canopy">
       <div class="ShelfNavigation-textContainer">
         <div class="ShelfNavigation-titleText" dir="ltr">
@@ -175,8 +179,4 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="ShelfNavigation" *ngIf="notFound">
-  このページは削除されたか、存在しません。
 </div>
