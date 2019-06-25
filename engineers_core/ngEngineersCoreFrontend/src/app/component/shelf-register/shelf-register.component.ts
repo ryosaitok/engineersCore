@@ -44,17 +44,12 @@ export class ShelfRegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initShelf();
-    this.focusToSearchForm();
   }
 
   initShelf(): void {
     this.shelf = new Shelf(null, null, [], null, null, null, null,
       null, [], [], null, null, []);
     this.shelfBookCount = 0;
-  }
-
-  focusToSearchForm(): void {
-    document.getElementById('search-query').focus();
   }
 
   /**

@@ -32,6 +32,20 @@ a:hover {
     min-width: 890px;
 }
 
+.action-button {
+    width: 850px;
+    text-align: center;
+}
+.register-button {
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+    margin: 0 0 10px 0;
+}
+.register-button:hover {
+    background-color: #337ab7;
+}
+
 @media (min-width: 1236px) {
   .ShelvesModules {
     float: left;
