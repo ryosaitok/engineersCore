@@ -97,7 +97,7 @@ export class ShelfRegisterComponent implements OnInit {
   registerShelf(form: NgForm, books: Book[]) {
     const shelfName = form.value.shelfName;
     const description = form.value.description;
-    this.shelfService.registerShelf(this.appComponent.userId, shelfName, description).subscribe(res => {
+    this.shelfService.registerShelf(this.appComponent.userId, shelfName, description, 'OPN').subscribe(res => {
       const shelfId = res.id;
       const shelfBooks = [];
       books.forEach(book => {

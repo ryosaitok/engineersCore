@@ -169,6 +169,7 @@ export class ShelfDetailComponent implements OnInit {
           const shelfComment = this.shelfCommentService.convertShelfComment(response);
           this.shelfComments.unshift(shelfComment);
           this.shelfCommentCount += 1;
+          f.reset();
         }
       });
     });
@@ -265,16 +266,13 @@ export class ShelfDetailComponent implements OnInit {
     const comment = f.value.comment;
     // const tweetFlag = f.value.tweetFlag;
     const tweetFlag = false;
-    console.log('registerReply。comment: ' + comment + 'commentId: ' + commentId + 'commentIndex: ' + commentIndex);
     this.shelfCommentReplyService.registerCommentReply(this.appComponent.userId, commentId, comment, tweetFlag).subscribe(res => {
       this.shelfCommentReplyService.getCommentReply(res.id).subscribe(response => {
-        console.log('JSON.stringify(res): ', JSON.stringify(response));
         if (response.id !== undefined) {
-          console.log('response: ', response);
           const shelfCommentReply = this.shelfCommentReplyService.convertShelfCommentReply(response);
-          console.log('shelfCommentReply: ', shelfCommentReply);
           this.shelfComments[commentIndex].commentReplies.unshift(shelfCommentReply);
           this.shelfComments[commentIndex].replyUserCount += 1;
+          f.reset();
         }
       });
     });

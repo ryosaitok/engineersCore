@@ -127,7 +127,7 @@ export class ShelfEditComponent implements OnInit {
     books.forEach(book => {
       shelfBooks.push(new ShelfBook(null, shelfId, book.id, null));
     });
-    this.shelfService.updateShelf(shelfId, this.appComponent.userId, shelfName, description).subscribe(res => {
+    this.shelfService.updateShelf(shelfId, this.appComponent.userId, shelfName, description, 'OPN').subscribe(res => {
       // すでに本棚に本が登録されている場合は、本棚の本を一旦全削除し、本を追加登録していく。
       this.shelfBookService.getShelfBooksByShelfId(shelfId).subscribe(data => {
         if (data.count === 0) {

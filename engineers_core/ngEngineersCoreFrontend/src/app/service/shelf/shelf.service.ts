@@ -58,15 +58,15 @@ export class ShelfService {
     return this.http.get<any>(url, this.httpOptions);
   }
 
-  registerShelf(userId: number, shelfName: string, description: string): Observable<any> {
+  registerShelf(userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELVES_API_URL;
-    const body = {user: userId, shelf_name: shelfName, description};
+    const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
     return this.http.post<any>(url, body, this.httpOptions);
   }
 
-  updateShelf(shelfId: number, userId: number, shelfName: string, description: string): Observable<any> {
+  updateShelf(shelfId: number, userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
-    const body = {user: userId, shelf_name: shelfName, description};
+    const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
     return this.http.put<any>(url, body, this.httpOptions);
   }
 
