@@ -24,7 +24,6 @@ export class ShelfRegisterComponent implements OnInit {
   shelf: Shelf;
   shelfBookCount: number;
   searchedBooks: Book[];
-  notFound = false;
 
   faBookReader = faBookReader;
   faHeart = faHeart;

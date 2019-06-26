@@ -12,6 +12,8 @@ import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';
 import {BookService} from '../../service/book/book.service';
 import {ShelfBookService} from '../../service/shelf-book/shelf-book.service';
+import {SigninService} from '../../service/signin/signin.service';
+import {UserService} from '../../service/user/user.service';
 
 @Component({
   selector: 'app-shelf-edit',
@@ -35,6 +37,8 @@ export class ShelfEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authGuard: AuthGuard,
+    private signinService: SigninService,
+    private userService: UserService,
     private appComponent: AppComponent,
     private bookService: BookService,
     private shelfService: ShelfService,
@@ -50,10 +54,17 @@ export class ShelfEditComponent implements OnInit {
 
   getShelf(): void {
     this.shelfService.getShelf(this.shelfId).subscribe(res => {
-      if (res !== undefined && res !== null) {
-        this.shelf = this.shelfService.convertShelf(res, 20);
-        this.shelfBookCount = Object.keys(this.shelf.books).length;
-      }
+      this.signinService.getAuthUser().subscribe(response => {
+        this.userService.getUser(response.account_name).subscribe(r => {
+          if (res.user.id === r.id) {
+            this.shelf = this.shelfService.convertShelf(res, 20);
+            this.shelfBookCount = Object.keys(this.shelf.books).length;
+          } else {
+            // ログイン中ユーザーの本棚ではない場合は、アクセスできない表示
+            this.pageFound = false;
+          }
+        });
+      });
     }, error => {
       // リソースにアクセスできない場合は、アクセスできない表示
       this.pageFound = false;

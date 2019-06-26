@@ -1,8 +1,8 @@
-<div *ngIf="notFound">
+<div *ngIf="!pageFound">
   <app-page-not-found></app-page-not-found>
 </div>
 
-<div class="page-outer" *ngIf="!notFound">
+<div class="page-outer" *ngIf="pageFound">
   <!-- 本棚名 -->
   <div class="ShelfNameNavigation hide-area">
     <div class="ShelfNameNavigation-canopy u-bgUserColor">
