@@ -276,7 +276,7 @@ ul.add-comment li {
 }
 
 .comments-module {
-    margin: 15px 20px;
+    margin: 15px 15px;
 }
 ul.comment-list {
     list-style: none;
@@ -334,7 +334,7 @@ ul.space-for-comment {
     background-color: #337ab7;
 }
 .reply-comment {
-    margin: 10px 0;
+    margin: 10px 15px;
 }
 .min-profile-image {
     height: 35px;
