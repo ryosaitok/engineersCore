@@ -19,7 +19,7 @@
             <li [class]="readBookSelected">
               <ul class="read-books navigation" (click)="getReadBookComments()">
                 <div class="read-books-link link-items">
-                  <li>読んだ</li>
+                  <li><span class="read-books-icon icon">読んだ <fa-icon [icon]="faBook"></fa-icon></span></li>
                   <li>{{bookCommentCount}}</li>
                 </div>
               </ul>
@@ -27,7 +27,7 @@
             <li [class]="interestedBookSelected">
               <ul class="interested-books navigation" (click)="getInterestedBooks()">
                 <div class="interested-books-link link-items">
-                  <li>読みたい</li>
+                  <li><span class="interested-books-icon icon">読みたい <fa-icon [icon]="faBook"></fa-icon></span></li>
                   <li>{{interestedBookCount}}</li>
                 </div>
               </ul>
@@ -35,7 +35,7 @@
             <li [class]="favoriteCommentSelected">
               <ul class="favorite-comments navigation" (click)="getFavoriteBookComments()">
                 <div class="favorite-comments-link link-items">
-                  <li>いいね</li>
+                  <li><span class="favorite-comments-icon icon">いいね <fa-icon [icon]="faCommentDots"></fa-icon></span></li>
                   <li>{{favoriteCommentCount}}</li>
                 </div>
               </ul>

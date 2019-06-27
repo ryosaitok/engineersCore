@@ -1,7 +1,7 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthGuard} from '../../guard/auth.guard';
-import {faCommentDots, faHeart, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faCommentDots, faHeart, faUser, faBook} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {InterestedBook} from '../../dto/interested-book/interested-book';
@@ -23,6 +23,7 @@ export class UserDetailComponent implements OnInit {
   faHeart = faHeart;
   faCommentDots = faCommentDots;
   faUser = faUser;
+  faBook = faBook;
 
   pageFound = true;
   accountName = this.route.snapshot.paramMap.get('accountName');
