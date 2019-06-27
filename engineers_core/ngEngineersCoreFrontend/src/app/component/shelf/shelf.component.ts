@@ -17,8 +17,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class ShelfComponent implements OnInit {
 
-  shelves: Shelf[];
-  shelfCount: number;
+  shelves: Shelf[] = [];
+  shelfCount = 0;
   sort: string;
   nextPageUrl: string;
   previousPageUrl: string;
