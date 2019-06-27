@@ -22,6 +22,7 @@ export class ShelfComponent implements OnInit {
   sort: string;
   nextPageUrl: string;
   previousPageUrl: string;
+  pageStart: number;
   nextPage: number;
   previousPage: number;
   newSelected: string;
@@ -72,6 +73,7 @@ export class ShelfComponent implements OnInit {
   searchShelves(page: number, sort: string) {
     this.nextPage = page + 1;
     this.previousPage = page - 1;
+    this.setPageRange(page);
 
     if (sort === null) {
       sort = this.sort;
@@ -147,5 +149,13 @@ export class ShelfComponent implements OnInit {
         console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
       }
     });
+  }
+
+  private setPageRange(page: number): void {
+    if (page === 1) {
+      this.pageStart = 1;
+    } else {
+      this.pageStart = 20 * (page - 1) + 1;
+    }
   }
 }

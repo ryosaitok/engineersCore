@@ -1,17 +1,20 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthGuard} from '../../guard/auth.guard';
-import {faCommentDots, faHeart, faUser, faBook} from '@fortawesome/free-solid-svg-icons';
+import {faCommentDots, faHeart, faUser, faBook, faBookReader} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {InterestedBook} from '../../dto/interested-book/interested-book';
 import {BookComment} from '../../dto/book-comment/book-comment';
 import {User} from '../../dto/user/user';
+import {Shelf} from '../../dto/shelf/shelf';
 import {UserService} from '../../service/user/user.service';
 import {BookCommentService} from '../../service/book-comment/book-comment.service';
 import {InterestedBookService} from '../../service/interested-book/interested-book.service';
 import {CommentFavoriteService} from '../../service/comment-favorite/comment-favorite.service';
 import {SigninService} from '../../service/signin/signin.service';
+import {ShelfService} from '../../service/shelf/shelf.service';
+import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -24,17 +27,21 @@ export class UserDetailComponent implements OnInit {
   faCommentDots = faCommentDots;
   faUser = faUser;
   faBook = faBook;
+  faBookReader = faBookReader;
 
   pageFound = true;
   accountName = this.route.snapshot.paramMap.get('accountName');
   @Input() user: User;
-  bookComments: BookComment[];
-  bookCommentCount: number;
-  interestedBooks: InterestedBook[];
-  interestedBookCount: number;
-  favoriteCommentCount: number;
+  shelves: Shelf[] = [];
+  shelfCount = 0;
+  bookComments: BookComment[] = [];
+  bookCommentCount = 0;
+  interestedBooks: InterestedBook[] = [];
+  interestedBookCount = 0;
+  favoriteCommentCount = 0;
   knowledgeScore: number;
-  readBookSelected = 'selected';
+  shelfSelected = 'selected';
+  readBookSelected = '';
   interestedBookSelected = '';
   favoriteCommentSelected = '';
 
@@ -44,6 +51,8 @@ export class UserDetailComponent implements OnInit {
     private authGuard: AuthGuard,
     private appComponent: AppComponent,
     private userService: UserService,
+    private shelfService: ShelfService,
+    private shelfFavoriteService: ShelfFavoriteService,
     private bookCommentService: BookCommentService,
     private interestedBookService: InterestedBookService,
     private signinService: SigninService,
@@ -54,7 +63,8 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.getLoginUser();
     this.getUser();
-    this.getReadBookComments();
+    this.getShelves();
+    this.getReadBookCommentCount();
     this.getInterestedBookCount();
     this.getFavoriteCommentCount();
   }
@@ -85,9 +95,20 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
+  getShelves(): void {
+    this.shelfService.getShelvesByAccountName(this.accountName).subscribe(data => {
+      this.shelfCount = data.count;
+      if (this.shelfCount > 0) {
+        this.shelves = this.shelfService.convertShelves(data.results, 5);
+      }
+    });
+    this.shelfSelected = 'selected';
+    this.readBookSelected = '';
+    this.interestedBookSelected = '';
+    this.favoriteCommentSelected = '';
+  }
+
   getReadBookComments(): void {
-    this.bookComments = [];
-    this.bookCommentCount = 0;
     this.bookCommentService.getBookCommentsByAccountName(this.accountName).subscribe(data => {
       this.bookCommentCount = data.count;
       if (data.count > 0) {
@@ -98,6 +119,7 @@ export class UserDetailComponent implements OnInit {
         this.knowledgeScore = this.knowledgeScore + res.book.offer_price;
       });
     });
+    this.shelfSelected = '';
     this.readBookSelected = 'selected';
     this.interestedBookSelected = '';
     this.favoriteCommentSelected = '';
@@ -110,14 +132,13 @@ export class UserDetailComponent implements OnInit {
         this.interestedBooks = this.interestedBookService.convertInterestedBooks(data.results);
       }
     });
+    this.shelfSelected = '';
     this.readBookSelected = '';
     this.interestedBookSelected = 'selected';
     this.favoriteCommentSelected = '';
   }
 
   getFavoriteBookComments(): void {
-    this.bookComments = [];
-    this.favoriteCommentCount = 0;
     this.commentFavoriteService.getCommentFavoritesByAccountName(this.accountName).subscribe(data => {
       this.favoriteCommentCount = data.count;
       if (data.count > 0) {
@@ -128,22 +149,80 @@ export class UserDetailComponent implements OnInit {
         this.bookComments = this.bookCommentService.convertBookComments(comments);
       }
     });
+    this.shelfSelected = '';
     this.readBookSelected = '';
     this.interestedBookSelected = '';
     this.favoriteCommentSelected = 'selected';
   }
 
-// TODO: ryo.saito countのAPIに切り替える
+  // TODO: ryo.saito countのAPIに切り替える
+  getReadBookCommentCount(): void {
+    this.bookCommentService.getBookCommentsByAccountName(this.accountName).subscribe(data => {
+      this.bookCommentCount = data.count;
+    });
+  }
+
+  // TODO: ryo.saito countのAPIに切り替える
   getInterestedBookCount(): void {
     this.interestedBookService.getInterestedBookByAccountName(this.accountName).subscribe(data => {
       this.interestedBookCount = data.count;
     });
   }
 
-// TODO: ryo.saito countのAPIに切り替える
+  // TODO: ryo.saito countのAPIに切り替える
   getFavoriteCommentCount(): void {
     this.commentFavoriteService.getCommentFavoritesByAccountName(this.accountName).subscribe(data => {
       this.favoriteCommentCount = data.count;
+    });
+  }
+
+  shelfFavorite(shelfId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.shelfFavoriteService.getShelfFavorite(loggedInUserId, shelfId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.shelfFavoriteService.registerShelfFavorite(loggedInUserId, shelfId).subscribe(
+          (res) => {
+            this.shelves[index].favoriteUserIds.push(loggedInUserId);
+            this.shelves[index].favoriteUserCount += 1;
+          },
+          (error) => {
+            console.error('shelfFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('shelfFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+      }
+    }, e => {
+      console.error('見つからなかった？loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+    });
+  }
+
+  undoShelfFavorite(shelfId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.shelfFavoriteService.getShelfFavorite(loggedInUserId, shelfId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const favoriteId = data.results[0].id;
+        this.shelfFavoriteService.deleteShelfFavorite(favoriteId).subscribe(
+          (res) => {
+            const userIdIndex = this.shelves[index].favoriteUserIds.indexOf(loggedInUserId);
+            this.shelves[index].favoriteUserIds.splice(userIdIndex, 1);
+            this.shelves[index].favoriteUserCount -= 1;
+          },
+          (error) => {
+            console.log('undoShelfFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
+      }
     });
   }
 

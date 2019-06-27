@@ -230,10 +230,139 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
     margin: 0 10px;
   }
 }
-
 .ContentsModules {
     width: 850px;
 }
+
+/* 本棚一覧 */
+.shelf-module {
+    background-color: #fff;
+    padding: 10px;
+    line-height: 16px;
+}
+.shelf-books-content {
+    border-bottom: 2px solid #e6ecf0;
+    margin: 5px 0;
+    padding: 10px 0;
+}
+h4 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+.producer-info {
+    vertical-align: top !important;
+}
+ul.shelf-basic-info {
+    list-style: none;
+    margin-bottom: 8px !important;
+    padding-left: 0;
+}
+ul.shelf-basic-info li {
+    display: inline-block;
+    margin: 0 6px 0 0;
+}
+.producer-profile-image {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    vertical-align: sub !important;
+    margin: 0 10px;
+}
+ul.shelf-reactions {
+    list-style: none;
+    margin-bottom: 5px !important;
+    padding-left: 0;
+}
+ul.shelf-reactions li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.shelf-reaction {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.shelf-reaction li {
+    display: inline-block;
+    margin-right: 4px;
+}
+ul.shelf-reaction li > span {
+    color: #cccccc;
+}
+.shelf-reaction-reply-link,.shelf-reaction-reply-link:visited {
+    color: #cccccc;
+}
+ul.shelf-reaction li > span.shelf-reaction-reply:hover {
+    color: #337ab7;
+    cursor: pointer;
+}
+ul.shelf-reaction li > span.shelf-reaction-heart:hover {
+    color: #f08080;
+    cursor: pointer;
+}
+ul.shelf-reaction li > span.favorite-done {
+    color: #f08080;
+}
+.ShelfNameItem-context > a:hover {
+    color: #337ab7 !important;
+}
+ul.shelf-book-list {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+ul.shelf-book-list > li {
+    width: 145px;
+    vertical-align: top;
+    display: inline-block;
+}
+.shelf-book-content {
+    font-size: 12px;
+    margin: 5px 10px;
+    padding: 10px 0;
+}
+.shelf-book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    width: 120px;
+    height: 165px;
+    border: 1px solid #e6ecf0;
+}
+ul.book-title-data {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.book-title-data li {
+    margin: 1px 0;
+}
+.book-title {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+ul.authors {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+}
+ul.authors li {
+    display: inline;
+}
+.author-name {
+    width: auto !important;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786 !important;
+}
+.no-shelf-text {
+    padding: 10px;
+    line-height: 16px;
+}
+
+/* 読んだ本一覧 */
 .comment-module {
   background-color: #fff;
     border: 1px solid #e6ecf0;

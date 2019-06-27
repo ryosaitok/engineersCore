@@ -16,6 +16,14 @@
       <div class="MenuNavigation-textContainer">
         <div class="MenuNavigation-titleText" dir="ltr">
           <ul class="navigation-menu">
+            <li [class]="shelfSelected">
+              <ul class="shelfs navigation" (click)="getShelves()">
+                <div class="shelfs-link link-items">
+                  <li><span class="shelfs-icon icon">本棚 <fa-icon [icon]="faBookReader"></fa-icon></span></li>
+                  <li>{{shelfCount}}</li>
+                </div>
+              </ul>
+            </li>
             <li [class]="readBookSelected">
               <ul class="read-books navigation" (click)="getReadBookComments()">
                 <div class="read-books-link link-items">
@@ -35,7 +43,8 @@
             <li [class]="favoriteCommentSelected">
               <ul class="favorite-comments navigation" (click)="getFavoriteBookComments()">
                 <div class="favorite-comments-link link-items">
-                  <li><span class="favorite-comments-icon icon">いいね <fa-icon [icon]="faCommentDots"></fa-icon></span></li>
+                  <li><span class="favorite-comments-icon icon">いいね <fa-icon [icon]="faCommentDots"></fa-icon></span>
+                  </li>
                   <li>{{favoriteCommentCount}}</li>
                 </div>
               </ul>
@@ -100,8 +109,114 @@
         </div>
       </div>
 
-      <!-- メインメニュー(コメントorいいね) -->
+      <!-- メインメニュー -->
       <div class="ContentsModules">
+
+        <!-- 本棚 -->
+        <div *ngIf="shelfSelected" class="module shelves">
+          <div *ngIf="shelfCount > 0" class="shelf-module">
+            <!-- 本棚の情報 -->
+            <div *ngFor="let shelf of shelves; let i = index"
+                 class="js-shelf-books shelf-books-content flex-module-inner">
+              <ul class="shelf-basic-info">
+                <li class="producer-info">
+                  <!-- カテゴリの作成者 -->
+                  <a routerLink="/user/{{shelf.user.userAccountName}}">
+                    <div class="producer-icon">
+                      <div *ngIf="shelf.user.profileImageLink !== null" class="user-profile-icon">
+                        <img class="producer-profile-image"
+                             src="../../assets/image/profile/{{shelf.user.profileImageLink}}"
+                             alt=""/>
+                      </div>
+                      <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
+                        <img class="producer-profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                             alt=""/>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <!-- 本棚の名前 -->
+                  <h4 class="shelf-book-info">
+                    <div class="ShelfNameItem-context">
+                      <a routerLink="/shelf/{{shelf.shelfId}}/"><b>{{shelf.shelfName}}</b></a>
+                    </div>
+                  </h4>
+                  <div class="shelf-reaction">
+                    <ul class="shelf-reactions">
+                      <li>
+                        <ul class="shelf-replies shelf-reaction">
+                          <li>
+                            <span class="shelf-reaction-reply">
+                              <a class="shelf-reaction-reply-link" routerLink="/shelf/{{shelf.shelfId}}/"><fa-icon
+                                [icon]="faCommentDots"></fa-icon></a>
+                            </span>
+                          </li>
+                          <li>{{shelf.commentUserCount}}</li>
+                        </ul>
+                      </li>
+                      <li>
+                        <ul class="shelf-favorites shelf-reaction">
+                          <li *ngIf="shelf.favoriteUserIds.indexOf(appComponent.userId) >= 0">
+                                <span class="shelf-reaction-heart favorite-done"
+                                      (click)="undoShelfFavorite(shelf.shelfId, i)"><fa-icon
+                                  [icon]="faHeart"></fa-icon></span>
+                          </li>
+                          <li *ngIf="shelf.favoriteUserIds.indexOf(appComponent.userId) == -1">
+                              <span class="shelf-reaction-heart favorite-none"
+                                    (click)="shelfFavorite(shelf.shelfId, i)">
+                                <fa-icon [icon]="faHeart"></fa-icon>
+                              </span>
+                          </li>
+                          <li>{{shelf.favoriteUserCount}}</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <!-- 本棚の本の一覧 -->
+              <div class="shelf-books">
+                <div class="ShelfItem-context">
+                  <ul class="shelf-book-list">
+                    <li *ngFor="let book of shelf.books; let i = index" class="shelf-book-content">
+                      <div class="context">
+                        <div class="shelf-book-image">
+                          <a class="amazon-book-detail"
+                             href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
+                             target="_blank">
+                            <img class="amazon-book-image"
+                                 src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                                 onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
+                        </div>
+                        <ul class="book-title-data">
+                          <a routerLink="/book/{{book.id}}">
+                            <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                          </a>
+                          <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
+                          <ul class="authors">
+                            <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                              <a *ngIf="i === 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.authorName }">{{author.authorName}}</a>
+                              <a *ngIf="i > 0" [routerLink]="['/search/']"
+                                 [queryParams]="{ author : author.authorName }">, {{author.authorName}}</a>
+                            </li>
+                          </ul>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="shelfCount === 0" class="shelf-none-module">
+            <div class="no-shelf-text">
+              <span>本棚がありませんでした。</span>
+            </div>
+          </div>
+        </div>
+
         <!-- コメント -->
         <div *ngIf="readBookSelected || favoriteCommentSelected" class="module bookComments">
           <div

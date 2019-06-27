@@ -16,6 +16,8 @@ export class ShelfService {
   SHELF_API_URL = this.host + 'api/shelf/';
   SHELVES_API_URL = this.host + 'api/shelves/';
   BOOK_ID_SHELVES_API_URL = this.host + 'api/shelves/?book_id=';
+  USER_ID_SHELVES_API_URL = this.host + 'api/shelves/?user_id=';
+  ACCOUNT_NAME_SHELVES_API_URL = this.host + 'api/shelves/?account_name=';
   SHELF_ID_SHELVES_API_URL = this.host + 'api/shelves/?shelf_id=';
   SHELF_REPORTS_API_URL = this.host + 'api/shelf/reports';
   httpOptions = {
@@ -50,6 +52,16 @@ export class ShelfService {
 
   getShelvesByBookId(bookId: number): Observable<any> {
     const url = this.BOOK_ID_SHELVES_API_URL + bookId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getShelvesByUserId(userId: number): Observable<any> {
+    const url = this.USER_ID_SHELVES_API_URL + userId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getShelvesByAccountName(accountName: string): Observable<any> {
+    const url = this.ACCOUNT_NAME_SHELVES_API_URL + accountName;
     return this.http.get<any>(url, this.httpOptions);
   }
 

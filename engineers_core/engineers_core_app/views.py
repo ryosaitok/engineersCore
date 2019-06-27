@@ -574,6 +574,12 @@ class ShelfListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Shelf.objects.filter(shelf_status='OPN')
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        account_name = self.request.query_params.get('account_name', None)
+        if account_name is not None:
+            queryset = queryset.filter(user__account_name=account_name)
         return queryset
 
     def filter_queryset(self, queryset):
