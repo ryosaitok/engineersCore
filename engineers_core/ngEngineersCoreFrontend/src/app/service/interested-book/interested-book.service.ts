@@ -2,10 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-import {User} from '../../dto/user/user';
-import {AmazonBook} from '../../dto/amazon-book/amazon-book';
-import {Author} from '../../dto/author/author';
-import {Book} from '../../dto/book/book';
 import {InterestedBook} from '../../dto/interested-book/interested-book';
 import {SigninService} from '../signin/signin.service';
 import {UserService} from '../user/user.service';
@@ -16,13 +12,13 @@ import {BookService} from '../book/book.service';
 })
 export class InterestedBookService {
 
-  host = 'http://127.0.0.1:8000/';
-  interestedBooksUrl = 'api/interestedbooks/';
-  interestedBooksAPIUrl = this.host + this.interestedBooksUrl;
-  accountNameInterestedBooksUrl = 'api/interestedbooks/?account_name=';
-  accountNameInterestedBooksAPIUrl = this.host + this.accountNameInterestedBooksUrl;
-  interestedBookUrl = 'api/interestedbook/';
-  interestedBookAPIUrl = this.host + this.interestedBookUrl;
+  HOST = 'http://127.0.0.1:8000/';
+  INTERESTED_BOOKS_URL = 'api/interested/books/';
+  INTERESTED_BOOKS_API_URL = this.HOST + this.INTERESTED_BOOKS_URL;
+  ACCOUNT_NAME_INTERESTED_BOOKS_URL = 'api/interested/books/?account_name=';
+  ACCOUNT_NAME_INTERESTED_BOOKS_API_URL = this.HOST + this.ACCOUNT_NAME_INTERESTED_BOOKS_URL;
+  INTERESTED_BOOK_URL = 'api/interested/book/';
+  INTERESTED_BOOK_API_URL = this.HOST + this.INTERESTED_BOOK_URL;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -38,22 +34,22 @@ export class InterestedBookService {
   }
 
   getInterestedBook(userId: number, bookId: number): Observable<any> {
-    const url = this.interestedBooksAPIUrl + '?user_id=' + userId + '&book_id=' + bookId;
+    const url = this.INTERESTED_BOOKS_API_URL + '?user_id=' + userId + '&book_id=' + bookId;
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getUserInterestedBook(userId: number): Observable<any> {
-    const url = this.interestedBooksAPIUrl + '?user_id=' + userId;
+    const url = this.INTERESTED_BOOKS_API_URL + '?user_id=' + userId;
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getInterestedBookByAccountName(accountName: string): Observable<any> {
-    const url = this.accountNameInterestedBooksAPIUrl + accountName;
+    const url = this.ACCOUNT_NAME_INTERESTED_BOOKS_API_URL + accountName;
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getBookInterested(bookId: number): Observable<any> {
-    const url = this.interestedBooksAPIUrl + '?book_id=' + bookId;
+    const url = this.INTERESTED_BOOKS_API_URL + '?book_id=' + bookId;
     return this.http.get<any>(url, this.httpOptions);
   }
 
@@ -62,11 +58,11 @@ export class InterestedBookService {
       user: userId,
       book: bookId,
     };
-    return this.http.post<any>(this.interestedBooksAPIUrl, body, this.httpOptions);
+    return this.http.post<any>(this.INTERESTED_BOOKS_API_URL, body, this.httpOptions);
   }
 
   deleteInterestedBook(interestedBookId: number): Observable<any> {
-    const url = this.interestedBookAPIUrl + interestedBookId + '/';
+    const url = this.INTERESTED_BOOK_API_URL + interestedBookId + '/';
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
     return this.http.delete<any>(url, {headers: jwtHeader});
   }

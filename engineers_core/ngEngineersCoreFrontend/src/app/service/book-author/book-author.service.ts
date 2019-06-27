@@ -10,15 +10,15 @@ export class BookAuthorService {
   constructor(
     private http: HttpClient,
   ) {}
-  host = 'http://127.0.0.1:8000/';
-  bookAuthorsUrl = 'api/bookauthors/';
-  bookAuthorsApiUrl = this.host + this.bookAuthorsUrl;
+
+  HOST = 'http://127.0.0.1:8000/';
+  BOOK_AUTHORS_API_URL = this.HOST + 'api/book/authors/';
 
   getBookAuthors(bookId): Observable<any> {
-    return this.http.get<any>(this.bookAuthorsApiUrl + '?book_id=' + bookId);
+    return this.http.get<any>(this.BOOK_AUTHORS_API_URL + '?book_id=' + bookId);
   }
 
   getBookAuthor(id): Observable<any> {
-    return this.http.get<any>(this.bookAuthorsApiUrl + id + '/');
+    return this.http.get<any>(this.BOOK_AUTHORS_API_URL + id + '/');
   }
 }
