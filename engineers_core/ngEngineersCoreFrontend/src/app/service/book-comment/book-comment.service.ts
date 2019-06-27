@@ -11,20 +11,13 @@ import {UserService} from '../user/user.service';
 export class BookCommentService {
 
   host = 'http://127.0.0.1:8000/';
-  bookCommentUrl = 'api/bookcomment/';
-  bookCommentAPIUrl = this.host + this.bookCommentUrl;
-  filteredBookCommentsUrl = 'api/bookcomments/?book_id=';
-  filteredBookCommentsAPIUrl = this.host + this.filteredBookCommentsUrl;
-  accountNameFilteredBookCommentsUrl = 'api/bookcomments/?account_name=';
-  accountNameFilteredBookCommentsAPIUrl = this.host + this.accountNameFilteredBookCommentsUrl;
-  filteredBookCommentsByTitleUrl = 'api/bookcomments/?title=';
-  filteredBookCommentsByTitleAPIUrl = this.host + this.filteredBookCommentsByTitleUrl;
-  filteredBookCommentsByAuthorUrl = 'api/bookcomments/?author=';
-  filteredBookCommentsByAuthorAPIUrl = this.host + this.filteredBookCommentsByAuthorUrl;
-  filteredBookCommentsByUserUrl = 'api/bookcomments/?user=';
-  filteredBookCommentsByUserAPIUrl = this.host + this.filteredBookCommentsByUserUrl;
-  bookCommentsUrl = 'api/bookcomments/';
-  bookCommentsAPIUrl = this.host + this.bookCommentsUrl;
+  BOOK_COMMENT_API_URL = this.host + 'api/book/comment/';
+  BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/';
+  BOOK_ID_BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/?book_id=';
+  ACCOUNT_NAME_BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/?account_name=';
+  TITLE_BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/?title=';
+  AUTHOR_BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/?author=';
+  USER_BOOK_COMMENTS_API_URL = this.host + 'api/book/comments/?user=';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -40,25 +33,25 @@ export class BookCommentService {
   }
 
   getBookComment(commentId: number): Observable<any> {
-    return this.http.get<any>(this.bookCommentAPIUrl + commentId + '/');
+    return this.http.get<any>(this.BOOK_COMMENT_API_URL + commentId + '/');
   }
 
   getBookComments(): Observable<any> {
-    return this.http.get<any>(this.bookCommentsAPIUrl);
+    return this.http.get<any>(this.BOOK_COMMENTS_API_URL);
   }
 
   getBookCommentPaging(sort: string, page: string): Observable<any> {
-    let url = this.bookCommentsAPIUrl;
+    let url = this.BOOK_COMMENTS_API_URL;
     url = this.httpRequestService.addUrlConditions(url, sort, page);
     return this.http.get<any>(url);
   }
 
   getBookCommentsByBookId(bookId: number): Observable<any> {
-    return this.http.get<any>(this.filteredBookCommentsAPIUrl + bookId);
+    return this.http.get<any>(this.BOOK_ID_BOOK_COMMENTS_API_URL + bookId);
   }
 
   getBookCommentsByAccountName(userId: string): Observable<any> {
-    return this.http.get<any>(this.accountNameFilteredBookCommentsAPIUrl + userId);
+    return this.http.get<any>(this.ACCOUNT_NAME_BOOK_COMMENTS_API_URL + userId);
   }
 
   /**
@@ -66,7 +59,7 @@ export class BookCommentService {
    * @param title 本のタイトル
    */
   getBookCommentsByTitle(title: string): Observable<any> {
-    return this.http.get<any>(this.filteredBookCommentsByTitleAPIUrl + title, this.httpOptions);
+    return this.http.get<any>(this.TITLE_BOOK_COMMENTS_API_URL + title, this.httpOptions);
   }
 
   /**
@@ -74,7 +67,7 @@ export class BookCommentService {
    * @param authorName 本の著者名
    */
   getBookCommentsByAuthorName(authorName: string): Observable<any> {
-    return this.http.get<any>(this.filteredBookCommentsByAuthorAPIUrl + authorName, this.httpOptions);
+    return this.http.get<any>(this.AUTHOR_BOOK_COMMENTS_API_URL + authorName, this.httpOptions);
   }
 
   /**
@@ -82,7 +75,7 @@ export class BookCommentService {
    * @param user ユーザー検索語
    */
   getBookCommentsByUser(user: string): Observable<any> {
-    return this.http.get<any>(this.filteredBookCommentsByUserAPIUrl + user, this.httpOptions);
+    return this.http.get<any>(this.USER_BOOK_COMMENTS_API_URL + user, this.httpOptions);
   }
 
   registerBookComment(userId: number, bookId: number, comment: string, readDate: Date) {
@@ -92,7 +85,7 @@ export class BookCommentService {
       comment_text: comment,
       read_date: readDate,
     };
-    return this.http.post<any>(this.bookCommentsAPIUrl, body, this.httpOptions);
+    return this.http.post<any>(this.BOOK_COMMENTS_API_URL, body, this.httpOptions);
   }
 
   convertBookComment(bookComment: any): BookComment {
