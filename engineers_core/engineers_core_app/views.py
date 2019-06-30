@@ -409,6 +409,21 @@ class BookCommentView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookCommentWithForeignSerializer
 
 
+class BookCommentReportListView(generics.ListCreateAPIView):
+    queryset = BookCommentReport.objects.all()
+    serializer_class = BookCommentReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = BookCommentReport.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookCommentReportSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
+
+
 class CommentFavoriteListView(generics.ListCreateAPIView):
     queryset = CommentFavorite.objects.all()
     serializer_class = CommentFavoriteWithForeignSerializer

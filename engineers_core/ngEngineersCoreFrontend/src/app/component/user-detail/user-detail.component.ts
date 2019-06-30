@@ -1,7 +1,15 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthGuard} from '../../guard/auth.guard';
-import {faCommentDots, faHeart, faUser, faBook, faBookReader} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCommentDots,
+  faHeart,
+  faUser,
+  faBook,
+  faBookReader,
+  faCaretDown,
+  faExclamationTriangle
+} from '@fortawesome/free-solid-svg-icons';
 
 import {AppComponent} from '../../app.component';
 import {InterestedBook} from '../../dto/interested-book/interested-book';
@@ -28,6 +36,8 @@ export class UserDetailComponent implements OnInit {
   faUser = faUser;
   faBook = faBook;
   faBookReader = faBookReader;
+  faCaretDown = faCaretDown;
+  faExclamationTriangle = faExclamationTriangle;
 
   pageFound = true;
   accountName = this.route.snapshot.paramMap.get('accountName');
@@ -271,6 +281,30 @@ export class UserDetailComponent implements OnInit {
       } else {
         console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
       }
+    });
+  }
+
+  deleteComment(commentId: number, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.bookCommentService.deleteComment(commentId).subscribe(res => {
+      this.bookComments.splice(index, 1);
+      this.bookCommentCount -= 1;
+    }, error => {
+      console.error('deleteCommentでエラー: ', error);
+    });
+  }
+
+  reportComment(commentId: number, reasonCode: string, index: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.bookCommentService.reportComment(this.appComponent.userId, commentId, reasonCode).subscribe(res => {
+      // 報告済みマークつける
+      this.bookComments[index].reportUserIds.push(this.appComponent.userId);
+    }, error => {
+      console.error('reportCommentでエラー: ', error);
     });
   }
 }

@@ -10,6 +10,7 @@ a:visited {
 }
 a:hover {
     color: #337ab7 !important;
+    cursor: pointer;
 }
 .selected {
     color: #337ab7;
@@ -547,9 +548,112 @@ ul.authors li {
     font-size: 12px;
     color: #657786 !important;
 }
-
 .no-book-text {
     padding: 10px;
     line-height: 16px;
     text-align: center;
+}
+
+.form-control {
+    height: 45px;
+    width: 100%;
+    color: #222222;
+    border: 0 solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    transition: none;
+}
+ul.add-comment {
+    list-style: none;
+    margin: 25px 15px !important;
+    padding-left: 0;
+}
+ul.add-comment li {
+    display: inline;
+}
+.form-group {
+    width: 90%;
+    margin-bottom: 5px;
+}
+.comment-form {
+    margin-left: 60px;
+}
+.comment-button {
+    margin-left: 600px;
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.comment-button:hover {
+    background-color: #337ab7;
+}
+
+.comments-module {
+    margin: 15px 15px;
+}
+ul.comment-list {
+    list-style: none;
+    margin: 0 !important;
+    padding-left: 0 !important;
+}
+.shelf-comment {
+    margin: 30px 0;
+}
+.comment-menu {
+    float: right;
+    padding: 0 10px;
+}
+.comment-menu-icon {
+    color: #cccccc;
+}
+ul.comment-user {
+    list-style: none;
+    margin: 0 !important;
+    padding-left: 0 !important;
+}
+ul.comment-user li {
+    display: inline;
+}
+ul.comment-user-name-space {
+    list-style: none;
+    margin-bottom: 0 !important;
+    padding-left: 55px;
+    float: left;
+}
+.comment-user-name {
+    font-weight: bold;
+}
+.comment-user-account-name {
+    color: #657786 !important;
+}
+.comment {
+    padding: 5px 55px;
+    white-space: pre-line;
+}
+ul.space-for-comment {
+    margin: 0 55px;
+}
+
+.replies {
+    margin-left: 30px;
+}
+.reply-button {
+    margin-left: 545px;
+    border-radius: 0;
+    background-color: #cccccc;
+    border: 0 solid #e6ecf0;
+}
+.reply-button:hover {
+    background-color: #337ab7;
+}
+.reply-comment {
+    margin: 10px 15px;
+}
+.min-profile-image {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    vertical-align: text-top !important;
 }

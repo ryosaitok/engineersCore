@@ -12,9 +12,11 @@ export class BookComment {
   favoriteUserCount: number;
   replyUserIds: number[];
   replyUserCount: number;
+  reportUserIds: number[];
 
   constructor(id: number, user: User, book: Book, commentText: string, commentDate: string, tweetFlag: boolean,
-              favoriteUserIds: number[], favoriteUserCount: number, replyUserIds: number[], replyUserCount: number) {
+              favoriteUserIds: number[], favoriteUserCount: number, replyUserIds: number[], replyUserCount: number,
+              reportUserIds: number[]) {
     this.id = id;
     this.user = user;
     this.book = book;
@@ -25,5 +27,6 @@ export class BookComment {
     this.favoriteUserCount = favoriteUserCount;
     this.replyUserIds = replyUserIds;
     this.replyUserCount = replyUserCount;
+    this.reportUserIds = reportUserIds;
   }
 }

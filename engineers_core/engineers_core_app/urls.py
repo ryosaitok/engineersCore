@@ -21,6 +21,7 @@ urlpatterns = [
     path('user/<str:account_name>/', UserView.as_view(), name='account_name'),
     path('book/comments/', BookCommentListView.as_view()),
     path('book/comment/<int:pk>/', BookCommentView.as_view()),
+    path('book/comment/reports/', BookCommentReportListView.as_view()),
     path('comment/favorites/', CommentFavoriteListView.as_view()),
     path('comment/favorite/<int:pk>/', CommentFavoriteView.as_view()),
     path('book/comment/replies/', BookCommentReplyListView.as_view()),
