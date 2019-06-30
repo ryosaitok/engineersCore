@@ -483,19 +483,28 @@ class BookCommentReplyListView(generics.ListCreateAPIView):
 
 class BookCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookCommentReply.objects.all()
-    serializer_class = BookCommentReplySerializer
+    serializer_class = BookCommentReplyWithForeignSerializer
 
 
 class BookCommentReplyFavoriteListView(generics.ListCreateAPIView):
     queryset = BookCommentReplyFavorite.objects.all()
-    serializer_class = BookCommentReplyFavoriteSerializer
+    serializer_class = BookCommentReplyFavoriteWithForeignSerializer
 
     def get_queryset(self):
         queryset = BookCommentReplyFavorite.objects.all()
-        account_name = self.request.query_params.get('account_name', None)
-        if account_name is not None:
-            queryset = queryset.filter(user__account_name=account_name)
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        comment_reply_id = self.request.query_params.get('comment_reply_id', None)
+        if comment_reply_id is not None:
+            queryset = queryset.filter(book_comment_reply__id=comment_reply_id)
+        compiler = queryset.query.get_compiler(using=queryset.db)
+        print('BookCommentReplyFavoriteListViewのSQL: ' + str(compiler.as_sql()))
         return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = super(BookCommentReplyFavoriteListView, self).filter_queryset(queryset)
+        return queryset.order_by('favorite_date')
 
     # 登録処理ではuserとcommentのidだけ指定で行いたいので、BookCommentReplyFavoriteSerializerを使う。
     def post(self, request, *args, **kwargs):
@@ -508,6 +517,21 @@ class BookCommentReplyFavoriteListView(generics.ListCreateAPIView):
 class BookCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookCommentReplyFavorite.objects.all()
     serializer_class = BookCommentReplyFavoriteSerializer
+
+
+class BookCommentReplyReportListView(generics.ListCreateAPIView):
+    queryset = BookCommentReplyReport.objects.all()
+    serializer_class = BookCommentReplyReportWithForeignSerializer
+
+    def get_queryset(self):
+        queryset = BookCommentReplyReport.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        serializer_class = BookCommentReplyReportSerializer(data=request.data)
+        serializer_class.is_valid(raise_exception=True)
+        serializer_class.save()
+        return Response(serializer_class.data, status=201)
 
 
 class InterestedBookListView(generics.ListCreateAPIView):

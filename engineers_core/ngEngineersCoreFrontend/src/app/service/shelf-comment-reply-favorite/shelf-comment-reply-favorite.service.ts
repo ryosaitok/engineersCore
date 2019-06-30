@@ -9,13 +9,10 @@ import {SigninService} from '../signin/signin.service';
 })
 export class ShelfCommentReplyFavoriteService {
 
-  host = 'http://127.0.0.1:8000/';
-  shelfCommentReplyFavoriteUrl = 'api/shelf/comment/reply/favorite/';
-  shelfCommentReplyFavoriteAPIUrl = this.host + this.shelfCommentReplyFavoriteUrl;
-  shelfCommentReplyFavoritesUrl = 'api/shelf/comment/reply/favorites/';
-  shelfCommentReplyFavoritesAPIUrl = this.host + this.shelfCommentReplyFavoritesUrl;
-  accountNameShelfCommentReplyFavoritesUrl = 'api/shelf/comment/reply/favorites/?account_name=';
-  accountNameShelfCommentReplyFavoritesAPIUrl = this.host + this.accountNameShelfCommentReplyFavoritesUrl;
+  HOST = 'http://127.0.0.1:8000/';
+  SHELF_COMMENT_REPLY_FAVORITE_API_URL = this.HOST + 'api/shelf/comment/reply/favorite/';
+  SHELF_COMMENT_REPLY_FAVORITES_API_URL = this.HOST + 'api/shelf/comment/reply/favorites/';
+  ACCOUNT_NAME_SHELF_COMMENT_REPLY_FAVORITES_API_URL = this.HOST + 'api/shelf/comment/reply/favorites/?account_name=';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -28,32 +25,29 @@ export class ShelfCommentReplyFavoriteService {
   ) { }
 
   getReplyFavorite(userId: number, shelfCommentReplyId: number): Observable<any> {
-    const url = this.shelfCommentReplyFavoritesAPIUrl + '?user_id=' + userId + '&comment_reply_id=' + shelfCommentReplyId;
+    const url = this.SHELF_COMMENT_REPLY_FAVORITES_API_URL + '?user_id=' + userId + '&comment_reply_id=' + shelfCommentReplyId;
     console.log('getReplyFavorite。url: ' + url);
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getUserReplyFavorites(userId: number): Observable<any> {
-    const url = this.shelfCommentReplyFavoritesAPIUrl + '?user_id=' + userId;
+    const url = this.SHELF_COMMENT_REPLY_FAVORITES_API_URL + '?user_id=' + userId;
     return this.http.get<any>(url, this.httpOptions);
   }
 
   getReplyFavoritesByAccountName(accountName: string): Observable<any> {
-    const url = this.accountNameShelfCommentReplyFavoritesAPIUrl + accountName;
+    const url = this.ACCOUNT_NAME_SHELF_COMMENT_REPLY_FAVORITES_API_URL + accountName;
     return this.http.get<any>(url, this.httpOptions);
   }
 
   registerReplyFavorite(userId: number, shelfCommentReplyId: number): Observable<any> {
-    const body = {
-      user: userId,
-      shelf_comment_reply: shelfCommentReplyId,
-    };
+    const body = {user: userId, shelf_comment_reply: shelfCommentReplyId};
     console.log('userId: ' + userId + ' shelfCommentReplyId: ' + shelfCommentReplyId);
-    return this.http.post<any>(this.shelfCommentReplyFavoritesAPIUrl, body, this.httpOptions);
+    return this.http.post<any>(this.SHELF_COMMENT_REPLY_FAVORITES_API_URL, body, this.httpOptions);
   }
 
   deleteReplyFavorite(replyFavoriteId: number): Observable<any> {
-    const url = this.shelfCommentReplyFavoriteAPIUrl + replyFavoriteId + '/';
+    const url = this.SHELF_COMMENT_REPLY_FAVORITE_API_URL + replyFavoriteId + '/';
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
     return this.http.delete<any>(url, {headers: jwtHeader});
   }

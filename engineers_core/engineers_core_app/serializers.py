@@ -206,33 +206,71 @@ class CommentFavoriteWithForeignSerializer(serializers.ModelSerializer):
 
 
 class BookCommentReplySerializer(serializers.ModelSerializer):
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+    report_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+
     class Meta:
         model = BookCommentReply
-        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',
+                  'report_users')
 
 
 class BookCommentReplyWithForeignSerializer(serializers.ModelSerializer):
+    favorite_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
+    report_users = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='user_id'
+    )
     comment = BookCommentSerializer()
     user = UserSerializer()
 
     class Meta:
         model = BookCommentReply
-        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag',)
+        fields = ('id', 'user', 'comment', 'comment_text', 'comment_date', 'tweet_flag', 'favorite_users',
+                  'report_users')
 
 
 class BookCommentReplyFavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookCommentReplyFavorite
-        fields = ('id', 'user', 'reply', 'favorite_date')
+        fields = ('id', 'user', 'book_comment_reply', 'favorite_date')
 
 
 class BookCommentReplyFavoriteWithForeignSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    reply = BookCommentReplySerializer()
+    book_comment_reply = BookCommentReplySerializer()
 
     class Meta:
         model = BookCommentReplyFavorite
-        fields = ('id', 'user', 'reply', 'favorite_date',)
+        fields = ('id', 'user', 'book_comment_reply', 'favorite_date',)
+
+
+class BookCommentReplyReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookCommentReplyReport
+        fields = ('id', 'user', 'book_comment_reply', 'report_date',  'reason_code',)
+
+
+class BookCommentReplyReportWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    book_comment_reply = BookCommentReplySerializer()
+
+    class Meta:
+        model = BookCommentReplyReport
+        fields = ('id', 'user', 'book_comment_reply', 'report_date', 'reason_code',)
 
 
 class InterestedBookSerializer(serializers.ModelSerializer):
@@ -471,7 +509,7 @@ class ShelfCommentReplyReportSerializer(serializers.ModelSerializer):
 
 class ShelfCommentReplyReportWithForeignSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    shelf_comment = ShelfCommentReplySerializer()
+    shelf_comment_reply = ShelfCommentReplySerializer()
 
     class Meta:
         model = ShelfCommentReplyReport

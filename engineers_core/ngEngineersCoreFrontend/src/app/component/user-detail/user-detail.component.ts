@@ -23,6 +23,9 @@ import {CommentFavoriteService} from '../../service/comment-favorite/comment-fav
 import {SigninService} from '../../service/signin/signin.service';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
+import {NgForm} from "@angular/forms";
+import {BookCommentReplyService} from "../../service/book-comment-reply/book-comment-reply.service";
+import {BookCommentReplyFavoriteService} from "../../service/book-comment-reply-favorite/book-comment-reply-favorite.service";
 
 @Component({
   selector: 'app-user-detail',
@@ -60,13 +63,15 @@ export class UserDetailComponent implements OnInit {
     private router: Router,
     private authGuard: AuthGuard,
     private appComponent: AppComponent,
+    private signinService: SigninService,
     private userService: UserService,
     private shelfService: ShelfService,
     private shelfFavoriteService: ShelfFavoriteService,
     private bookCommentService: BookCommentService,
-    private interestedBookService: InterestedBookService,
-    private signinService: SigninService,
     private commentFavoriteService: CommentFavoriteService,
+    private bookCommentReplyService: BookCommentReplyService,
+    private interestedBookService: InterestedBookService,
+    private bookCommentReplyFavoriteService: BookCommentReplyFavoriteService,
   ) {
   }
 
@@ -305,6 +310,109 @@ export class UserDetailComponent implements OnInit {
       this.bookComments[index].reportUserIds.push(this.appComponent.userId);
     }, error => {
       console.error('reportCommentでエラー: ', error);
+    });
+  }
+
+  reverseRepliesDisplayState(bookCommentId: number, commentIndex: number, page: number): void {
+    // 表示中に呼ばれた場合には非表示、非表示中に呼ばれた場合には表示
+    this.bookComments[commentIndex].displayedReply = !this.bookComments[commentIndex].displayedReply;
+    this.bookCommentReplyService.getCommentRepliesPagingByCommentId(bookCommentId, page).subscribe(data => {
+      if (data.count > 0) {
+        this.bookComments[commentIndex].commentReplies = this.bookCommentReplyService.convertBookCommentReplies(data.results);
+      }
+    }, error => {
+      console.error('displayRepliesでエラー: ', error);
+    });
+  }
+
+  registerReply(f: NgForm, commentId: number, commentIndex: number) {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const comment = f.value.comment;
+    // const tweetFlag = f.value.tweetFlag;
+    const tweetFlag = false;
+    this.bookCommentReplyService.registerCommentReply(this.appComponent.userId, commentId, comment, tweetFlag).subscribe(res => {
+      this.bookCommentReplyService.getCommentReply(res.id).subscribe(response => {
+        if (response.id !== undefined) {
+          const shelfCommentReply = this.bookCommentReplyService.convertBookCommentReply(response);
+          this.bookComments[commentIndex].commentReplies.unshift(shelfCommentReply);
+          this.bookComments[commentIndex].replyUserCount += 1;
+          f.reset();
+        }
+      });
+    });
+  }
+
+  deleteReply(commentReplyId: number, commentIndex: number, replyIndex: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.bookCommentReplyService.deleteCommentReply(commentReplyId).subscribe(res => {
+      this.bookComments[commentIndex].commentReplies.splice(replyIndex, 1);
+      this.bookComments[commentIndex].replyUserCount -= 1;
+    }, error => {
+      console.error('deleteReplyでエラー: ', error);
+    });
+  }
+
+  reportReply(commentReplyId: number, reasonCode: string, commentIndex: number, replyIndex: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    this.bookCommentReplyService.reportReply(this.appComponent.userId, commentReplyId, reasonCode).subscribe(res => {
+      // 報告済みマークつける
+      this.bookComments[commentIndex].commentReplies[replyIndex].reportUserIds.push(this.appComponent.userId);
+    }, error => {
+      console.error('reportReplyでエラー: ', error);
+    });
+  }
+
+  replyFavorite(commentReplyId: number, commentIndex: number, replyIndex: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.bookCommentReplyFavoriteService.getReplyFavorite(loggedInUserId, commentReplyId).subscribe(data => {
+      // まだデータが存在しない場合は作成する。
+      if (data === null || data === undefined || data.count === 0) {
+        this.bookCommentReplyFavoriteService.registerReplyFavorite(loggedInUserId, commentReplyId).subscribe(
+          (res) => {
+            this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserIds.push(loggedInUserId);
+            this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserCount += 1;
+          },
+          (error) => {
+            console.error('replyFavoriteでerror: ' + JSON.stringify(error));
+          }
+        );
+      } else {
+        console.error('replyFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentReplyId: ' + commentReplyId);
+      }
+    });
+  }
+
+  undoReplyFavorite(commentReplyId: number, commentIndex: number, replyIndex: number): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
+    const loggedInUserId = this.appComponent.userId;
+    this.bookCommentReplyFavoriteService.getReplyFavorite(loggedInUserId, commentReplyId).subscribe(data => {
+      // データがある場合は削除する。
+      if (data !== null && data !== undefined && data.count !== 0) {
+        const favoriteId = data.results[0].id;
+        this.bookCommentReplyFavoriteService.deleteReplyFavorite(favoriteId).subscribe(
+          (res) => {
+            const userIdIndex = this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserIds.indexOf(loggedInUserId);
+            this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserIds.splice(userIdIndex, 1);
+            this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserCount -= 1;
+          },
+          (error) => {
+            console.log('notReplyFavoriteでerror: ' + error);
+          }
+        );
+      } else {
+        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentReplyId: ' + commentReplyId);
+      }
     });
   }
 }

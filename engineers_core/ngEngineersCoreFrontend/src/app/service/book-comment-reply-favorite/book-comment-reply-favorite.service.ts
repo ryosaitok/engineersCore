@@ -1,0 +1,54 @@
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+import {SigninService} from '../signin/signin.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BookCommentReplyFavoriteService {
+
+  HOST = 'http://127.0.0.1:8000/';
+  BOOK_COMMENT_REPLY_FAVORITE_API_URL = this.HOST + 'api/book/comment/reply/favorite/';
+  BOOK_COMMENT_REPLY_FAVORITES_API_URL = this.HOST + 'api/book/comment/reply/favorites/';
+  ACCOUNT_NAME_BOOK_COMMENT_REPLY_FAVORITES_API_URL = this.HOST + 'api/book/comment/reply/favorites/?account_name=';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
+
+  constructor(
+    private http: HttpClient,
+    private signinService: SigninService,
+  ) { }
+
+  getReplyFavorite(userId: number, shelfCommentReplyId: number): Observable<any> {
+    const url = this.BOOK_COMMENT_REPLY_FAVORITES_API_URL + '?user_id=' + userId + '&comment_reply_id=' + shelfCommentReplyId;
+    console.log('getReplyFavorite。url: ' + url);
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getUserReplyFavorites(userId: number): Observable<any> {
+    const url = this.BOOK_COMMENT_REPLY_FAVORITES_API_URL + '?user_id=' + userId;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  getReplyFavoritesByAccountName(accountName: string): Observable<any> {
+    const url = this.ACCOUNT_NAME_BOOK_COMMENT_REPLY_FAVORITES_API_URL + accountName;
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  registerReplyFavorite(userId: number, bookCommentReplyId: number): Observable<any> {
+    const body = {user: userId, book_comment_reply: bookCommentReplyId};
+    console.log('userId: ' + userId + ' shelfCommentReplyId: ' + bookCommentReplyId);
+    return this.http.post<any>(this.BOOK_COMMENT_REPLY_FAVORITES_API_URL, body, this.httpOptions);
+  }
+
+  deleteReplyFavorite(replyFavoriteId: number): Observable<any> {
+    const url = this.BOOK_COMMENT_REPLY_FAVORITE_API_URL + replyFavoriteId + '/';
+    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
+    return this.http.delete<any>(url, {headers: jwtHeader});
+  }
+}

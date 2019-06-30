@@ -208,17 +208,36 @@ class BookCommentReply(models.Model):
 
 class BookCommentReplyFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reply = models.ForeignKey(BookCommentReply, on_delete=models.CASCADE)
+    book_comment_reply = models.ForeignKey(BookCommentReply, related_name='favorite_users', on_delete=models.CASCADE)
     favorite_date = models.DateField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        unique_together = ("user", "book_comment_reply")
         db_table = 'book_comment_reply_favorite'
 
-    # Django標準API画面で表示できない...
-    # def __str__(self):
-    #     return '【' + self.user.user_name + '】', self.user.user_name
+    def __str__(self):
+        return '【' + self.user.user_name + '】', self.book_comment_reply.comment_text
+
+
+class BookCommentReplyReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book_comment_reply = models.ForeignKey(BookCommentReply, related_name='report_users', on_delete=models.CASCADE)
+    report_date = models.DateField(auto_now=True)
+    report_reasons = [
+        ['VLT', 'Violent'],
+        ['SPM', 'Spam'],
+        ['POM', 'Violate Public Order And Morals'],
+        ['SVL', 'Service Violation'],
+    ]
+    reason_code = models.CharField(choices=report_reasons, default='SVL', max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "book_comment_reply")
+        db_table = 'book_comment_reply_report'
 
 
 class InterestedBook(models.Model):

@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 
 import {SigninService} from '../signin/signin.service';
 import {HttpRequestService} from '../http-request/http-request.service';
-import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 import {User} from '../../dto/user/user';
 import {ShelfCommentReply} from '../../dto/shelf-comment/shelf-comment-reply';
 
@@ -13,16 +12,12 @@ import {ShelfCommentReply} from '../../dto/shelf-comment/shelf-comment-reply';
 })
 export class ShelfCommentReplyService {
 
-  host = 'http://127.0.0.1:8000/';
-  shelfCommentReplyUrl = 'api/shelf/comment/reply/';
-  shelfCommentReplyAPIUrl = this.host + this.shelfCommentReplyUrl;
-  shelfCommentRepliesUrl = 'api/shelf/comment/replies/';
-  shelfCommentRepliesAPIUrl = this.host + this.shelfCommentRepliesUrl;
-  accountNameShelfCommentRepliesUrl = 'api/shelf/comment/replies/?account_name=';
-  accountNameShelfCommentRepliesAPIUrl = this.host + this.accountNameShelfCommentRepliesUrl;
-  shelfCommentReplyReportsUrl = 'api/shelf/comment/reply/reports/';
-  shelfCommentReplyReportsAPIUrl = this.host + this.shelfCommentReplyReportsUrl;
-  httpOptions = {
+  HOST = 'http://127.0.0.1:8000/';
+  SHELF_COMMENT_REPLY_API_URL = this.HOST + 'api/shelf/comment/reply/';
+  SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/';
+  ACCOUNT_NAME_SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/?account_name=';
+  SHELF_COMMENT_REPLY_REPORTS_API_URL = this.HOST + 'api/shelf/comment/reply/reports/';
+  HTTP_OPTIONS = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
@@ -36,50 +31,41 @@ export class ShelfCommentReplyService {
   }
 
   getCommentReply(commentReplyId: number): Observable<any> {
-    const url = this.shelfCommentReplyAPIUrl + commentReplyId + '/';
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENT_REPLY_API_URL + commentReplyId + '/';
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getUserCommentReplies(userId: number): Observable<any> {
-    const url = this.shelfCommentRepliesAPIUrl + '?user_id=' + userId;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_COMMENT_REPLIES_API_URL + '?user_id=' + userId;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getCommentRepliesByAccountName(accountName: string): Observable<any> {
-    const url = this.accountNameShelfCommentRepliesAPIUrl + accountName;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.ACCOUNT_NAME_SHELF_COMMENT_REPLIES_API_URL + accountName;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getCommentRepliesPagingByCommentId(shelfCommentId: number, page: number): Observable<any> {
-    const url = this.shelfCommentRepliesAPIUrl + '?comment_id=' + shelfCommentId;
+    const url = this.SHELF_COMMENT_REPLIES_API_URL + '?comment_id=' + shelfCommentId;
     this.httpRequestService.appendUrlConditions(url, null, page.toString());
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   registerCommentReply(userId: number, shelfCommentId: number, commentText: string, tweetFlag: boolean): Observable<any> {
-    const body = {
-      user: userId,
-      comment: shelfCommentId,
-      comment_text: commentText,
-      tweet_flag: tweetFlag,
-    };
-    return this.http.post<any>(this.shelfCommentRepliesAPIUrl, body, this.httpOptions);
+    const body = {user: userId, comment: shelfCommentId, comment_text: commentText, tweet_flag: tweetFlag,};
+    return this.http.post<any>(this.SHELF_COMMENT_REPLIES_API_URL, body, this.HTTP_OPTIONS);
   }
 
   deleteCommentReply(commentReplyId: number): Observable<any> {
-    const url = this.shelfCommentReplyAPIUrl + commentReplyId + '/';
+    const url = this.SHELF_COMMENT_REPLY_API_URL + commentReplyId + '/';
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
     return this.http.delete<any>(url, {headers: jwtHeader});
   }
 
   reportReply(userId: number, shelfCommentReplyId: number, reasonCode: string) {
-    const url = this.shelfCommentReplyReportsAPIUrl;
-    const body = {
-      user: userId,
-      shelf_comment_reply: shelfCommentReplyId,
-      reason_code: reasonCode
-    };
-    return this.http.post<any>(url, body, this.httpOptions);
+    const url = this.SHELF_COMMENT_REPLY_REPORTS_API_URL;
+    const body = {user: userId, shelf_comment_reply: shelfCommentReplyId, reason_code: reasonCode};
+    return this.http.post<any>(url, body, this.HTTP_OPTIONS);
   }
 
   convertShelfCommentReply(shelfCommentReply: any): ShelfCommentReply {

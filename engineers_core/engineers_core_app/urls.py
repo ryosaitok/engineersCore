@@ -28,6 +28,7 @@ urlpatterns = [
     path('book/comment/reply/<int:pk>/', BookCommentReplyView.as_view()),
     path('book/comment/reply/favorites/', BookCommentReplyFavoriteListView.as_view()),
     path('book/comment/reply/favorite/<int:pk>/', BookCommentReplyFavoriteView.as_view()),
+    path('book/comment/reply/reports/', BookCommentReplyReportListView.as_view()),
     path('book/details/', BookDetailListView.as_view()),
     path('book/detail/<int:pk>/', BookDetailView.as_view()),
     path('book/authors/', BookAuthorListView.as_view()),

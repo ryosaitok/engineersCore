@@ -374,8 +374,8 @@ ul.authors li {
     font-size: 12px;
 }
 .book-info {
-    width: 25%;
-    margin: 0 10px;
+    width: 20%;
+    margin: 0 5px 0 10px;
     display: inline-block;
 }
 .book-image {
@@ -389,7 +389,7 @@ ul.authors li {
 .book-comment {
     display: inline-block;
     vertical-align: top;
-    width: 68%;
+    width: 75%;
     margin: 10px;
 }
 .book-comment-content {
@@ -430,6 +430,9 @@ ul.authors li {
 .comment-content {
     margin-left: 58px;
 }
+.comment-text {
+    max-width: 90%;
+}
 .comment-text, .comment-reaction {
     padding-top: 5px;
     white-space: pre-line;
@@ -447,11 +450,12 @@ ul.authors li {
 .comment-user > a:hover {
     color: #337ab7 !important;
 }
-.comment-user {
-    float: left;
-}
 .user-name {
     font-weight: bold;
+}
+.comment-date {
+    max-width: 90%;
+    word-break: keep-all;
 }
 ul.comment-reactions {
     list-style: none;
@@ -567,7 +571,7 @@ ul.authors li {
 }
 ul.add-comment {
     list-style: none;
-    margin: 25px 15px !important;
+    margin: 25px 0;
     padding-left: 0;
 }
 ul.add-comment li {
@@ -608,18 +612,28 @@ ul.comment-list {
 .comment-menu-icon {
     color: #cccccc;
 }
+.dropdown-menu {
+    top: 18px;
+    left: -80px;
+}
 ul.comment-user {
     list-style: none;
     margin: 0 !important;
     padding-left: 0 !important;
 }
+.comment-user-float {
+    float: left;
+}
 ul.comment-user li {
     display: inline;
 }
-ul.comment-user-name-space {
+.comment-user-image {
+    float: left;
+}
+ul.reply-user-name-space {
     list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 55px;
+    margin-bottom: 0;
+    padding-left: 20px;
     float: left;
 }
 .comment-user-name {
@@ -637,10 +651,9 @@ ul.space-for-comment {
 }
 
 .replies {
-    margin-left: 30px;
 }
 .reply-button {
-    margin-left: 545px;
+    margin-left: 365px;
     border-radius: 0;
     background-color: #cccccc;
     border: 0 solid #e6ecf0;
@@ -649,7 +662,10 @@ ul.space-for-comment {
     background-color: #337ab7;
 }
 .reply-comment {
-    margin: 10px 15px;
+    margin: 20px 5px 20px 0;
+}
+.reply-user-profile-icon {
+    position: absolute;
 }
 .min-profile-image {
     height: 35px;

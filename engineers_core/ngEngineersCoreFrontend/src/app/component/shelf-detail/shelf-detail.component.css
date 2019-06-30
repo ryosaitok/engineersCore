@@ -66,6 +66,10 @@ h1 {
 .shelf-menu {
     float: right;
 }
+.dropdown-menu {
+    top: 18px;
+    left: -80px;
+}
 ul.shelf-data {
     float: left;
     list-style: none;
