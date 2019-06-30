@@ -432,6 +432,7 @@ ul.authors li {
 }
 .comment-text {
     max-width: 90%;
+    word-break: break-word;
 }
 .comment-text, .comment-reaction {
     padding-top: 5px;
@@ -594,16 +595,10 @@ ul.add-comment li {
     background-color: #337ab7;
 }
 
-.comments-module {
-    margin: 15px 15px;
-}
 ul.comment-list {
     list-style: none;
     margin: 0 !important;
     padding-left: 0 !important;
-}
-.shelf-comment {
-    margin: 30px 0;
 }
 .comment-menu {
     float: right;
@@ -645,6 +640,7 @@ ul.reply-user-name-space {
 .comment {
     padding: 5px 55px;
     white-space: pre-line;
+    word-break: break-word;
 }
 ul.space-for-comment {
     margin: 0 55px;
