@@ -16,36 +16,36 @@ export class BookService {
   ) {
   }
 
-  host = 'http://127.0.0.1:8000/';
-  booksUrl = 'api/books/';
-  titleBooksUrl = 'api/books/?title=';
-  authorNameBooksUrl = 'api/books/?author=';
-  bookUrl = 'api/book/';
+  HOST = 'http://127.0.0.1:8000/';
+  BOOK_API_URL = this.HOST + 'api/book/';
+  BOOKS_API_URL = this.HOST + 'api/books/';
+  TITLE_BOOKS_API_URL = this.HOST + 'api/books/?title=';
+  AUTHOR_NAME_BOOKS_API_URL = this.HOST + 'api/books/?author=';
 
   getBooks(): Observable<any> {
-    return this.http.get<any>(this.host + this.booksUrl);
+    return this.http.get<any>(this.BOOKS_API_URL);
   }
 
   getBooksPaging(sort: string, page: string): Observable<any> {
-    let url = this.host + this.booksUrl;
+    let url = this.BOOKS_API_URL;
     url = this.httpRequestService.addUrlConditions(url, sort, page);
     return this.http.get<any>(url);
   }
 
   getBooksLikeTitle(title: string, sort: string, page: string): Observable<any> {
-    let url = this.host + this.titleBooksUrl + title;
+    let url = this.TITLE_BOOKS_API_URL + title;
     url = this.httpRequestService.appendUrlConditions(url, sort, page);
     return this.http.get<any>(url);
   }
 
   getBooksLikeAuthorName(authorName: string, sort: string, page: string): Observable<any> {
-    let url = this.host + this.authorNameBooksUrl + authorName;
+    let url = this.AUTHOR_NAME_BOOKS_API_URL + authorName;
     url = this.httpRequestService.appendUrlConditions(url, sort, page);
     return this.http.get<any>(url);
   }
 
   getBook(id): Observable<any> {
-    return this.http.get<any>(this.host + this.bookUrl + id + '/');
+    return this.http.get<any>(this.BOOK_API_URL + id + '/');
   }
 
   convertBook(book: any): Book {

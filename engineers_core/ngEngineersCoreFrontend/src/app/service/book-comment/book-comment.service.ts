@@ -107,7 +107,7 @@ export class BookCommentService {
     const replyUserCount = Object.keys(replyUsers).length;
     return new BookComment(bookComment.id, userForComment, bookForComment, bookComment.comment_text,
       bookComment.comment_date, bookComment.tweet_flag, favoriteUsers, favoriteUserCount, replyUsers, replyUserCount,
-      bookComment.report_users);
+      bookComment.report_users, bookComment.reply_users, false);
   }
 
   convertBookComments(bookComments: any[]): BookComment[] {

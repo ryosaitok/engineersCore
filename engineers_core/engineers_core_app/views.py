@@ -480,6 +480,10 @@ class BookCommentReplyListView(generics.ListCreateAPIView):
             queryset = queryset.filter(comment__id=comment_id)
         return queryset
 
+    def filter_queryset(self, queryset):
+        queryset = super(BookCommentReplyListView, self).filter_queryset(queryset)
+        return queryset.order_by('-id')
+
 
 class BookCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookCommentReply.objects.all()
