@@ -12,14 +12,14 @@ import {HttpRequestService} from '../http-request/http-request.service';
 })
 export class ShelfService {
 
-  host = 'http://127.0.0.1:8000/';
-  SHELF_API_URL = this.host + 'api/shelf/';
-  SHELVES_API_URL = this.host + 'api/shelves/';
-  BOOK_ID_SHELVES_API_URL = this.host + 'api/shelves/?book_id=';
-  USER_ID_SHELVES_API_URL = this.host + 'api/shelves/?user_id=';
-  ACCOUNT_NAME_SHELVES_API_URL = this.host + 'api/shelves/?account_name=';
-  SHELF_ID_SHELVES_API_URL = this.host + 'api/shelves/?shelf_id=';
-  SHELF_REPORTS_API_URL = this.host + 'api/shelf/reports';
+  HOST = 'http://127.0.0.1:8000/';
+  SHELF_API_URL = this.HOST + 'api/shelf/';
+  SHELVES_API_URL = this.HOST + 'api/shelves/';
+  BOOK_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?book_id=';
+  USER_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?user_id=';
+  ACCOUNT_NAME_SHELVES_API_URL = this.HOST + 'api/shelves/?account_name=';
+  SHELF_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?shelf_id=';
+  SHELF_REPORTS_API_URL = this.HOST + 'api/shelf/reports';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

@@ -1,21 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {SigninService} from '../signin/signin.service';
 import {Observable} from 'rxjs';
+
+import {SigninService} from '../signin/signin.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfFavoriteService {
 
-  host = 'http://127.0.0.1:8000/';
-  shelfFavoritesUrl = 'api/shelf/favorites/';
-  shelfFavoritesAPIUrl = this.host + this.shelfFavoritesUrl;
-  accountNameShelfFavoritesUrl = 'api/shelf/favorites/?account_name=';
-  accountNameShelfFavoritesAPIUrl = this.host + this.accountNameShelfFavoritesUrl;
-  shelfFavoriteUrl = 'api/shelf/favorite/';
-  shelfFavoriteAPIUrl = this.host + this.shelfFavoriteUrl;
-  httpOptions = {
+  HOST = 'http://127.0.0.1:8000/';
+  SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/';
+  ACCOUNT_NAME_SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/?account_name=';
+  SHELF_FAVORITE_API_URL = this.HOST + 'api/shelf/favorite/';
+  HTTP_OPTIONS = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
@@ -27,19 +25,19 @@ export class ShelfFavoriteService {
   ) { }
 
   getShelfFavorite(userId: number, shelfId: number): Observable<any> {
-    const url = this.shelfFavoritesAPIUrl + '?user_id=' + userId + '&shelf_id=' + shelfId;
+    const url = this.SHELF_FAVORITES_API_URL + '?user_id=' + userId + '&shelf_id=' + shelfId;
     console.log('getShelfFavorite。url: ' + url);
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getUserShelfFavorites(userId: number): Observable<any> {
-    const url = this.shelfFavoritesAPIUrl + '?user_id=' + userId;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.SHELF_FAVORITES_API_URL + '?user_id=' + userId;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   getShelfFavoritesByAccountName(accountName: string): Observable<any> {
-    const url = this.accountNameShelfFavoritesAPIUrl + accountName;
-    return this.http.get<any>(url, this.httpOptions);
+    const url = this.ACCOUNT_NAME_SHELF_FAVORITES_API_URL + accountName;
+    return this.http.get<any>(url, this.HTTP_OPTIONS);
   }
 
   registerShelfFavorite(userId: number, shelfId: number): Observable<any> {
@@ -47,11 +45,11 @@ export class ShelfFavoriteService {
       user: userId,
       shelf: shelfId,
     };
-    return this.http.post<any>(this.shelfFavoritesAPIUrl, body, this.httpOptions);
+    return this.http.post<any>(this.SHELF_FAVORITES_API_URL, body, this.HTTP_OPTIONS);
   }
 
   deleteShelfFavorite(shelfFavoriteId: number): Observable<any> {
-    const url = this.shelfFavoriteAPIUrl + shelfFavoriteId + '/';
+    const url = this.SHELF_FAVORITE_API_URL + shelfFavoriteId + '/';
     const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
     return this.http.delete<any>(url, {headers: jwtHeader});
   }
