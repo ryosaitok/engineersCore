@@ -16,7 +16,6 @@ from datetime import timedelta
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,9 +44,16 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',  # AngularからAPIにアクセス可能とする
 ]
-# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
+# Local用のダミーメールサーバーの設定
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 25
+
+# 本番用のSendGridメールサーバーの設定
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,
