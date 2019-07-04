@@ -4,6 +4,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from .views import *
 
 urlpatterns = [
+    path('profile/image/upload/', ProfileImageUploadView.as_view()),
     path('auth/', obtain_jwt_token),
     path('auth/me/', AuthInfoGetView.as_view()),
     path('email/verification/send/', EmailVerificationView.as_view()),

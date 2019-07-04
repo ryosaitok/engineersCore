@@ -61,6 +61,13 @@ class User(models.Model):
         return self.user_name
 
 
+class File(models.Model):
+    file = models.FileField(blank=False, null=False)
+
+    def __str__(self):
+        return self.file.name
+
+
 class Author(models.Model):
     author_name = models.CharField(max_length=128, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)

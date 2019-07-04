@@ -1,6 +1,8 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import FileUploadParser
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 from .serializers import *
 from django.db.models import Q
@@ -12,8 +14,42 @@ from django.contrib.auth import password_validation
 from django.core.validators import validate_email
 import binascii
 import os
+from google.cloud import storage
 
 TODAY = date.today()
+BUCKET_NAME = 'test-packet-engineerscore'
+
+
+class ProfileImageUploadView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    parser_class = (FileUploadParser,)
+
+    # TODO: 一旦localに保存してからGCSに保存してlocalのファイルを削除している処理が無駄。直接ファイルをアップロードするように修正する。
+    def post(self, request, *args, **kwargs):
+        serializer = FileSerializer(data=request.data)
+        if serializer.is_valid():
+            # media配下に画像保存
+            serializer.save()
+
+            # media配下に保存した画像を取得してGoogle Cloud Storageに同名で保存する。
+            image_file = serializer.validated_data.get('file')
+            account_name = request.user.username
+            logged_id_user = User.objects.filter(account_name=account_name).first()
+            upload_file_name = '{0}_{1}'.format(str(logged_id_user.id), str(TODAY))
+            upload_file_path = 'image/profile/' + upload_file_name
+            image_file_path = './media/' + str(image_file)
+            client = storage.Client()
+            bucket = client.get_bucket(BUCKET_NAME)
+            blob = bucket.blob(upload_file_path)
+            blob.upload_from_filename(image_file_path)
+
+            # 以降はGCSから画像データを参照するので、media配下の画像は不要。削除する。
+            os.remove(image_file_path)
+
+            return Response(data={'upload_file_path': upload_file_path, 'message': 'ファイルのアップロードに成功しました。'}
+                            , status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EmailVerificationView(generics.CreateAPIView):

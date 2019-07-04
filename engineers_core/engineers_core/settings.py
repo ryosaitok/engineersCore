@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from datetime import timedelta
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# 画像保存のための設定
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_BUCKET_NAME = 'test-packet-engineerscore'
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#     "./../sodium-chalice-245511-a2e97bee388a.json"
+# )
 
 # Application definition
 INSTALLED_APPS = [
