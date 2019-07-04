@@ -1,0 +1,26 @@
+<div class="AppContainer">
+  <div class="AppContent-main u-cf">
+    <!-- メインメニュー -->
+    <div class="AccountSettingModules">
+      <div class="content-module">
+        <h3 class="account-setting">アカウント設定</h3>
+        <form #form="ngForm" class="update-form" enctype="multipart/form-data" (ngSubmit)="updateAccountSetting(form)">
+          <div class="form-group">
+            <label for="userName"><span>ユーザー名</span></label>
+            <input [(ngModel)]="appComponent.userName" type="text" class="form-control" name="userName" id="userName">
+            <label for="accountName"><span>アカウント名（ログイン時に利用します）</span></label>
+            <input [(ngModel)]="appComponent.accountName" type="text" class="form-control" name="accountName" id="accountName">
+            <label for="description"><span>プロフィール</span></label>
+            <input [(ngModel)]="appComponent.description" type="text" class="form-control" name="description" id="description">
+            <label for="profileImageFile"><span>プロフィール画像</span></label>
+            <input type='file' class="form-control" accept="image/*" ngModel name="profileImageFile" id="profileImageFile" (change)="onSelectFile($event)">
+            <img class="preview-profile-image" [src]="url" height="200"> <br/>
+          </div>
+          <div class="action-button">
+            <button type="submit" class="btn btn-primary update-button"><b>更新する</b></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

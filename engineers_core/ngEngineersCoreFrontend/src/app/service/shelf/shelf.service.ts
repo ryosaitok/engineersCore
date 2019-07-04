@@ -20,11 +20,9 @@ export class ShelfService {
   ACCOUNT_NAME_SHELVES_API_URL = this.HOST + 'api/shelves/?account_name=';
   SHELF_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?shelf_id=';
   SHELF_REPORTS_API_URL = this.HOST + 'api/shelf/reports';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -36,12 +34,12 @@ export class ShelfService {
 
   getShelf(shelfId: number): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelves(): Observable<any> {
     const url = this.SHELVES_API_URL;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelvesPaging(sort: string, page: string): Observable<any> {
@@ -52,34 +50,34 @@ export class ShelfService {
 
   getShelvesByBookId(bookId: number): Observable<any> {
     const url = this.BOOK_ID_SHELVES_API_URL + bookId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelvesByUserId(userId: number): Observable<any> {
     const url = this.USER_ID_SHELVES_API_URL + userId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelvesByAccountName(accountName: string): Observable<any> {
     const url = this.ACCOUNT_NAME_SHELVES_API_URL + accountName;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelvesByShelfId(shelfId: string): Observable<any> {
     const url = this.SHELF_ID_SHELVES_API_URL + shelfId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerShelf(userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELVES_API_URL;
     const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
-    return this.http.post<any>(url, body, this.httpOptions);
+    return this.http.post<any>(url, body, {headers: this.httpHeaders});
   }
 
   updateShelf(shelfId: number, userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
     const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
-    return this.http.put<any>(url, body, this.httpOptions);
+    return this.http.put<any>(url, body, {headers: this.httpHeaders});
   }
 
   reportShelf(userId: number, shelfId: number, reasonCode: string) {
@@ -89,12 +87,12 @@ export class ShelfService {
       shelf: shelfId,
       reason_code: reasonCode
     };
-    return this.http.post<any>(url, body, this.httpOptions);
+    return this.http.post<any>(url, body, {headers: this.httpHeaders});
   }
 
   deleteShelf(shelfId: number) {
     const url = this.SHELF_API_URL + shelfId + '/';
-    return this.http.delete<any>(url, this.httpOptions);
+    return this.http.delete<any>(url, {headers: this.httpHeaders});
   }
 
   convertShelf(shelf: any, bookCount: number): Shelf {

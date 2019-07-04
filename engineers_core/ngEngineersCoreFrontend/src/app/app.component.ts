@@ -11,6 +11,7 @@ export class AppComponent {
   accountName: string;
   userName: string;
   profileImageLink: string;
+  description: string;
   isLoggedIn: boolean;
 
   constructor() {

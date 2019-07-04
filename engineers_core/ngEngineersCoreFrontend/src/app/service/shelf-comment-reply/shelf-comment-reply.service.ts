@@ -17,11 +17,9 @@ export class ShelfCommentReplyService {
   SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/';
   ACCOUNT_NAME_SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/?account_name=';
   SHELF_COMMENT_REPLY_REPORTS_API_URL = this.HOST + 'api/shelf/comment/reply/reports/';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -32,40 +30,40 @@ export class ShelfCommentReplyService {
 
   getCommentReply(commentReplyId: number): Observable<any> {
     const url = this.SHELF_COMMENT_REPLY_API_URL + commentReplyId + '/';
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getUserCommentReplies(userId: number): Observable<any> {
     const url = this.SHELF_COMMENT_REPLIES_API_URL + '?user_id=' + userId;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getCommentRepliesByAccountName(accountName: string): Observable<any> {
     const url = this.ACCOUNT_NAME_SHELF_COMMENT_REPLIES_API_URL + accountName;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getCommentRepliesPagingByCommentId(shelfCommentId: number, page: number): Observable<any> {
     const url = this.SHELF_COMMENT_REPLIES_API_URL + '?comment_id=' + shelfCommentId;
     this.httpRequestService.appendUrlConditions(url, null, page.toString());
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerCommentReply(userId: number, shelfCommentId: number, commentText: string, tweetFlag: boolean): Observable<any> {
     const body = {user: userId, comment: shelfCommentId, comment_text: commentText, tweet_flag: tweetFlag,};
-    return this.http.post<any>(this.SHELF_COMMENT_REPLIES_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.SHELF_COMMENT_REPLIES_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteCommentReply(commentReplyId: number): Observable<any> {
     const url = this.SHELF_COMMENT_REPLY_API_URL + commentReplyId + '/';
-    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.delete<any>(url, {headers: jwtHeader});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 
   reportReply(userId: number, shelfCommentReplyId: number, reasonCode: string) {
     const url = this.SHELF_COMMENT_REPLY_REPORTS_API_URL;
     const body = {user: userId, shelf_comment_reply: shelfCommentReplyId, reason_code: reasonCode};
-    return this.http.post<any>(url, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(url, body, {headers: this.httpHeaders});
   }
 
   convertShelfCommentReply(shelfCommentReply: any): ShelfCommentReply {

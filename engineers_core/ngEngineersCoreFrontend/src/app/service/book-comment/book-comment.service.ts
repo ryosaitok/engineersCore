@@ -20,11 +20,9 @@ export class BookCommentService {
   AUTHOR_BOOK_COMMENTS_API_URL = this.HOST + 'api/book/comments/?author=';
   USER_BOOK_COMMENTS_API_URL = this.HOST + 'api/book/comments/?user=';
   BOOK_COMMENT_REPORTS_API_URL = this.HOST + 'api/book/comment/reports/';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -62,7 +60,7 @@ export class BookCommentService {
    * @param title 本のタイトル
    */
   getBookCommentsByTitle(title: string): Observable<any> {
-    return this.http.get<any>(this.TITLE_BOOK_COMMENTS_API_URL + title, this.HTTP_OPTIONS);
+    return this.http.get<any>(this.TITLE_BOOK_COMMENTS_API_URL + title, {headers: this.httpHeaders});
   }
 
   /**
@@ -70,7 +68,7 @@ export class BookCommentService {
    * @param authorName 本の著者名
    */
   getBookCommentsByAuthorName(authorName: string): Observable<any> {
-    return this.http.get<any>(this.AUTHOR_BOOK_COMMENTS_API_URL + authorName, this.HTTP_OPTIONS);
+    return this.http.get<any>(this.AUTHOR_BOOK_COMMENTS_API_URL + authorName, {headers: this.httpHeaders});
   }
 
   /**
@@ -78,24 +76,24 @@ export class BookCommentService {
    * @param user ユーザー検索語
    */
   getBookCommentsByUser(user: string): Observable<any> {
-    return this.http.get<any>(this.USER_BOOK_COMMENTS_API_URL + user, this.HTTP_OPTIONS);
+    return this.http.get<any>(this.USER_BOOK_COMMENTS_API_URL + user, {headers: this.httpHeaders});
   }
 
   registerBookComment(userId: number, bookId: number, comment: string, readDate: Date) {
     const body = {user: userId, book: bookId, comment_text: comment, read_date: readDate};
-    return this.http.post<any>(this.BOOK_COMMENTS_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.BOOK_COMMENTS_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteComment(commentId: number): Observable<any> {
     const url = this.BOOK_COMMENT_API_URL + commentId + '/';
-    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.delete<any>(url, {headers: jwtHeader});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 
   reportComment(userId: number, bookCommentId: number, reasonCode: string) {
     const url = this.BOOK_COMMENT_REPORTS_API_URL;
     const body = {user: userId, book_comment: bookCommentId, reason_code: reasonCode};
-    return this.http.post<any>(url, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(url, body, {headers: this.httpHeaders});
   }
 
   convertBookComment(bookComment: any): BookComment {

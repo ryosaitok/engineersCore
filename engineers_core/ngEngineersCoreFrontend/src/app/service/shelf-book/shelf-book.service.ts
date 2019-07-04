@@ -14,11 +14,9 @@ export class ShelfBookService {
   SHELF_BOOKS_API_URL = this.HOST + 'api/shelf/books/';
   SHELF_ID_SHELF_BOOKS_API_URL = this.HOST + 'api/shelf/books/?shelf_id=';
   SHELF_BOOKS_BULK_API_URL = this.HOST + 'api/shelf/books/bulk/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -27,17 +25,17 @@ export class ShelfBookService {
 
   getShelfBook(commentId: number): Observable<any> {
     const url = this.SHELF_BOOK_API_URL + commentId + '/';
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelfBooks(): Observable<any> {
     const url = this.SHELF_BOOKS_API_URL;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelfBooksByShelfId(shelfId: number): Observable<any> {
     const url = this.SHELF_ID_SHELF_BOOKS_API_URL + shelfId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerShelfBook(shelfId: number, bookId: number, displayOrder: number) {
@@ -46,7 +44,7 @@ export class ShelfBookService {
       book: bookId,
       display_order: displayOrder
     };
-    return this.http.post<any>(this.SHELF_BOOKS_API_URL, body, this.httpOptions);
+    return this.http.post<any>(this.SHELF_BOOKS_API_URL, body, {headers: this.httpHeaders});
   }
 
   bulkRegisterShelfBooks(shelfBooks: ShelfBook[]) {
@@ -58,12 +56,12 @@ export class ShelfBookService {
         display_order: shelfBook.displayOrder
       });
     });
-    return this.http.post<any>(this.SHELF_BOOKS_BULK_API_URL, body, this.httpOptions);
+    return this.http.post<any>(this.SHELF_BOOKS_BULK_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteShelfBook(shelfBookId: number) {
     const url = this.SHELF_BOOK_API_URL + shelfBookId + '/';
-    return this.http.delete<any>(url, this.httpOptions);
+    return this.http.delete<any>(url, {headers: this.httpHeaders});
   }
 
   bulkDeleteShelfBooks(shelfBookIds: number[]) {
@@ -75,11 +73,11 @@ export class ShelfBookService {
         url += url + '&id=' + id;
       }
     });
-    return this.http.delete<any>(this.SHELF_BOOKS_BULK_API_URL, this.httpOptions);
+    return this.http.delete<any>(this.SHELF_BOOKS_BULK_API_URL, {headers: this.httpHeaders});
   }
 
   shlefIdBulkDeleteShelfBooks(shelfId: number) {
     const url = this.SHELF_BOOKS_BULK_API_URL + '?shelf_id=' + shelfId;
-    return this.http.delete<any>(url, this.httpOptions);
+    return this.http.delete<any>(url, {headers: this.httpHeaders});
   }
 }

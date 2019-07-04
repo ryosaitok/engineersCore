@@ -15,6 +15,7 @@ import {PasswordReminderComponent} from './component/password-reminder/password-
 import {PasswordResetComponent} from './password-reset/password-reset.component';
 import {ShelfRegisterComponent} from './component/shelf-register/shelf-register.component';
 import {ShelfEditComponent} from './component/shelf-edit/shelf-edit.component';
+import {AccountSettingComponent} from './component/account-setting/account-setting.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/shelves', pathMatch: 'full'},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'password/reset/:token', component: PasswordResetComponent},
   {path: 'users', component: UsersComponent},
   {path: 'user/:accountName', component: UserDetailComponent},
+  {path: 'account/setting', component: AccountSettingComponent},
   {path: 'book/:id', component: BookDetailComponent},
   {path: 'search', component: SearchComponent},
   {path: 'shelves', component: ShelfComponent},

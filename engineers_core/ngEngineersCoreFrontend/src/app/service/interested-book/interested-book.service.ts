@@ -19,11 +19,9 @@ export class InterestedBookService {
   ACCOUNT_NAME_INTERESTED_BOOKS_API_URL = this.HOST + this.ACCOUNT_NAME_INTERESTED_BOOKS_URL;
   INTERESTED_BOOK_URL = 'api/interested/book/';
   INTERESTED_BOOK_API_URL = this.HOST + this.INTERESTED_BOOK_URL;
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -35,22 +33,22 @@ export class InterestedBookService {
 
   getInterestedBook(userId: number, bookId: number): Observable<any> {
     const url = this.INTERESTED_BOOKS_API_URL + '?user_id=' + userId + '&book_id=' + bookId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getUserInterestedBook(userId: number): Observable<any> {
     const url = this.INTERESTED_BOOKS_API_URL + '?user_id=' + userId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getInterestedBookByAccountName(accountName: string): Observable<any> {
     const url = this.ACCOUNT_NAME_INTERESTED_BOOKS_API_URL + accountName;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getBookInterested(bookId: number): Observable<any> {
     const url = this.INTERESTED_BOOKS_API_URL + '?book_id=' + bookId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerInterestedBook(userId: number, bookId: number): Observable<any> {
@@ -58,13 +56,13 @@ export class InterestedBookService {
       user: userId,
       book: bookId,
     };
-    return this.http.post<any>(this.INTERESTED_BOOKS_API_URL, body, this.httpOptions);
+    return this.http.post<any>(this.INTERESTED_BOOKS_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteInterestedBook(interestedBookId: number): Observable<any> {
     const url = this.INTERESTED_BOOK_API_URL + interestedBookId + '/';
-    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.delete<any>(url, {headers: jwtHeader});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 
   convertInterestedBook(interestedBook: any): InterestedBook {

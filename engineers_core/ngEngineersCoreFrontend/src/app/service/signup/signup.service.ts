@@ -11,21 +11,20 @@ export class SignupService {
   AUTH_USERS_API_URL = this.HOST + 'api/auth/users/';
   EMAIL_VERIFICATION_SEND_API_URL = this.HOST + 'api/email/verification/send/';
   VERIFY_EMAIL_API_URL = this.HOST + 'api/verify/email/';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
   token: string;
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   // 認証ユーザーを新規登録する。
   registerUser(username, email, password): Observable<any> {
     const body = {username, email, password};
-    return this.http.post<any>(this.AUTH_USERS_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.AUTH_USERS_API_URL, body, {headers: this.httpHeaders});
   }
 
   // 認証メールを送信する。
@@ -33,7 +32,7 @@ export class SignupService {
     // tokenはサーバーサイド側で書き換えるので何を送ってもよい
     const token = 'token';
     const body = {email, token};
-    return this.http.post<any>(this.EMAIL_VERIFICATION_SEND_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.EMAIL_VERIFICATION_SEND_API_URL, body, {headers: this.httpHeaders});
   }
 
   // メールアドレス認証をトークンで行う。
@@ -41,6 +40,6 @@ export class SignupService {
     const email = 'email';
     // const body = {email, token};
     const url = this.VERIFY_EMAIL_API_URL + '?token=' + token;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 }

@@ -13,31 +13,30 @@ export class CommentFavoriteService {
   COMMENT_FAVORITES_API_URL = this.HOST + 'api/comment/favorites/';
   ACCOUNT_NAME_COMMENT_FAVORITES_API_URL = this.HOST + 'api/comment/favorites/?account_name=';
   COMMENT_FAVORITE_API_URL = this.HOST + 'api/comment/favorite/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
     private signinService: SigninService,
-  ) { }
+  ) {
+  }
 
   getCommentFavorite(userId: number, commentId: number): Observable<any> {
     const url = this.COMMENT_FAVORITES_API_URL + '?user_id=' + userId + '&comment_id=' + commentId;
     console.log('getCommentFavorite。url: ' + url);
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getUserCommentFavorites(userId: number): Observable<any> {
     const url = this.COMMENT_FAVORITES_API_URL + '?user_id=' + userId;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getCommentFavoritesByAccountName(accountName: string): Observable<any> {
     const url = this.ACCOUNT_NAME_COMMENT_FAVORITES_API_URL + accountName;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerCommentFavorite(userId: number, commentId: number): Observable<any> {
@@ -45,12 +44,12 @@ export class CommentFavoriteService {
       user: userId,
       comment: commentId,
     };
-    return this.http.post<any>(this.COMMENT_FAVORITES_API_URL, body, this.httpOptions);
+    return this.http.post<any>(this.COMMENT_FAVORITES_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteCommentFavorite(commentFavoriteId: number): Observable<any> {
     const url = this.COMMENT_FAVORITE_API_URL + commentFavoriteId + '/';
-    const jwtHeader = this.signinService.createJwtHeaderFromLocalStorage();
-    return this.http.delete<any>(url, {headers: jwtHeader});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 }

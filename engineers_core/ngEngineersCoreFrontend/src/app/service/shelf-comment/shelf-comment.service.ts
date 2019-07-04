@@ -15,11 +15,9 @@ export class ShelfCommentService {
   SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/';
   SHELF_ID_SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/?shelf_id=';
   SHELF_COMMENT_REPORTS_API_URL = this.HOST + 'api/shelf/comment/reports/';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -28,22 +26,22 @@ export class ShelfCommentService {
 
   getShelfComment(commentId: number): Observable<any> {
     const url = this.SHELF_COMMENT_API_URL + commentId + '/';
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelfComments(): Observable<any> {
     const url = this.SHELF_COMMENTS_API_URL;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelfCommentsByShelfId(shelfId: number): Observable<any> {
     const url = this.SHELF_ID_SHELF_COMMENTS_API_URL + shelfId;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getFilteredShelfComment(userId: number, shelfId: number): Observable<any> {
     const url = this.SHELF_COMMENTS_API_URL + '?user_id=' + userId + '&shelf_id=' + shelfId;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerShelfComment(userId: number, shelfId: number, comment: string, tweetFlag: boolean) {
@@ -53,12 +51,12 @@ export class ShelfCommentService {
       comment_text: comment,
       tweet_flag: tweetFlag,
     };
-    return this.http.post<any>(this.SHELF_COMMENTS_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.SHELF_COMMENTS_API_URL, body, {headers: this.httpHeaders});
   }
 
   deleteShelfComment(commentId: number) {
     const url = this.SHELF_COMMENT_API_URL + commentId + '/';
-    return this.http.delete<any>(url, this.HTTP_OPTIONS);
+    return this.http.delete<any>(url, {headers: this.httpHeaders});
   }
 
   reportComment(userId: number, shelfCommentId: number, reasonCode: string) {
@@ -68,7 +66,7 @@ export class ShelfCommentService {
       shelf_comment: shelfCommentId,
       reason_code: reasonCode
     };
-    return this.http.post<any>(url, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(url, body, {headers: this.httpHeaders});
   }
 
   convertShelfComment(shelfComment: any): ShelfComment {

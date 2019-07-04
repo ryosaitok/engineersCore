@@ -18,11 +18,9 @@ export class UserService {
   USER_API_URL = this.HOST + 'api/user/';
   USERS_API_URL = this.HOST + 'api/users/';
   FILTERED_USERS_API_URL = this.HOST + 'api/users/?user=';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   getUsers(): Observable<any> {
     return this.http.get<any>(this.USERS_API_URL);
@@ -42,7 +40,7 @@ export class UserService {
       description,
       profile_image_link: imageLink
     };
-    return this.http.post<any>(this.USERS_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.USERS_API_URL, body, {headers: this.httpHeaders});
   }
 
   getUser(userAccountName): Observable<any> {

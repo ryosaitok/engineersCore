@@ -15,12 +15,9 @@ export class SigninService {
   PASSWORD_REMINDER_SEND_API_URL = this.HOST + 'api/password/reminder/send/';
   VERIFY_PASSWORD_REMINDER_API_URL = this.HOST + 'api/verify/password/reminder/';
   PASSWORD_RESET_API_URL = this.HOST + 'api/password/reset/';
-  HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
-  token: string;
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(
     private http: HttpClient,
@@ -35,12 +32,13 @@ export class SigninService {
       username,
       password
     };
-    return this.http.post<any>(this.AUTH_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.AUTH_API_URL, body, {headers: this.httpHeaders});
   }
 
   getAuthUser(): Observable<any> {
-    const jwtHeader = this.createJwtHeaderFromLocalStorage();
-    return this.http.get<any>(this.AUTH_USER_ME_API_URL, {headers: jwtHeader});
+    const httpHeaders = this.appendJwtHeader(this.httpHeaders);
+    console.log('httpHeaders: ', httpHeaders);
+    return this.http.get<any>(this.AUTH_USER_ME_API_URL, {headers: httpHeaders});
   }
 
   getAuthUsersByEmail(email: string): Observable<any> {
@@ -59,18 +57,18 @@ export class SigninService {
     return localStorage.getItem('authToken');
   }
 
-  createJwtHeaderFromLocalStorage(): HttpHeaders {
+  createJwtAuthorization(): string {
     const token = this.getTokenFromLocalStorage();
     if (token !== null) {
-      return this.createJwtHeader(token);
+      return 'JWT ' + token;
+    } else {
+      return 'JWT ';
     }
   }
 
-  createJwtHeader(token: string): HttpHeaders {
-    const authorization = 'JWT ' + token;
-    return new HttpHeaders({
-      Authorization: authorization
-    });
+  appendJwtHeader(headers: HttpHeaders): HttpHeaders {
+    const authorization = this.createJwtAuthorization();
+    return headers.set('Authorization', authorization);
   }
 
   // パスワードリマインダーメールを送信する。
@@ -78,7 +76,7 @@ export class SigninService {
     // tokenはサーバーサイド側で書き換えるので何を送ってもよい
     const token = 'token';
     const body = {email, token};
-    return this.http.post<any>(this.PASSWORD_REMINDER_SEND_API_URL, body, this.HTTP_OPTIONS);
+    return this.http.post<any>(this.PASSWORD_REMINDER_SEND_API_URL, body, {headers: this.httpHeaders});
   }
 
   // パスワードリマインダーメールの認証をトークンで行う。
@@ -86,6 +84,6 @@ export class SigninService {
     const email = 'email';
     // const body = {email, token};
     const url = this.VERIFY_PASSWORD_REMINDER_API_URL + '?token=' + token;
-    return this.http.get<any>(url, this.HTTP_OPTIONS);
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 }
