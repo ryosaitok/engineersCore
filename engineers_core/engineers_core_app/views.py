@@ -230,8 +230,28 @@ class PasswordResetView(generics.UpdateAPIView):
 
 
 class AuthUserView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = AuthUser.objects.all()
-    serializer_class = AuthUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer = AuthUserSerializer
+
+    def put(self, request, *args, **kwargs):
+        username = request.data.get('username', None)
+        if username is not None:
+            # ログインしているユーザーのaccount_nameを更新する（AuthUserのusernameとUserのaccount_nameは、両方同じものである必要ある）
+            logged_in_auth_user_id = request.user.id
+            update_account_name(logged_in_auth_user_id, username)
+            return Response(data={'username': username, 'success': True}, status=200)
+        return Response(data={'username': username, 'success': False}, status=500)
+
+
+def update_account_name(auth_user_id, account_name):
+    # AuthUserのusernameを更新する。
+    logged_in_auth_user = AuthUser.objects.filter(id=auth_user_id).first()
+    logged_in_auth_user.username = account_name
+    logged_in_auth_user.save()
+    # Userのaccount_nameを更新する。（両方同じものに更新しないといけない。）
+    logged_in_user = User.objects.filter(auth_user=auth_user_id).first()
+    logged_in_user.account_name = account_name
+    logged_in_user.save()
 
 
 class AuthUserListView(generics.ListCreateAPIView):

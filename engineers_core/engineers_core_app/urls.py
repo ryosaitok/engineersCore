@@ -17,7 +17,7 @@ urlpatterns = [
     path('authors/', AuthorListView.as_view()),
     path('author/<int:pk>/', AuthorView.as_view()),
     path('auth/users/', AuthUserListView.as_view()),
-    path('auth/user/<int:pk>/', AuthUserView.as_view()),
+    path('auth/user/', AuthUserView.as_view()),
     path('users/', UserListView.as_view()),
     path('user/<str:account_name>/', UserView.as_view(), name='account_name'),
     path('book/comments/', BookCommentListView.as_view()),
