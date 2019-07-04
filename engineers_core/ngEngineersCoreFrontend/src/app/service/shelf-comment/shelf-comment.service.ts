@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 
 import {User} from '../../dto/user/user';
 import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
+import {SigninService} from "../signin/signin.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class ShelfCommentService {
 
   constructor(
     private http: HttpClient,
+    private signinService: SigninService,
   ) {
   }
 
@@ -51,7 +53,8 @@ export class ShelfCommentService {
       comment_text: comment,
       tweet_flag: tweetFlag,
     };
-    return this.http.post<any>(this.SHELF_COMMENTS_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_COMMENTS_API_URL, body, {headers: httpHeaders});
   }
 
   deleteShelfComment(commentId: number) {

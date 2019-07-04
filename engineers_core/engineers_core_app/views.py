@@ -792,8 +792,13 @@ class ShelfCommentListView(generics.ListCreateAPIView):
     serializer_class = ShelfCommentWithForeignSerializer
 
     def post(self, request, *args, **kwargs):
+        permission_classes = (permissions.IsAuthenticated,)
         serializer_class = ShelfCommentSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': '未ログイン状態でコメントすることはできません。', 'success': False}, status=500)
+        serializer_class.is_valid()
+        serializer_class.validated_data['user'] = get_user_by_acount_name(username)
         serializer_class.save()
         return Response(serializer_class.data, status=201)
 
@@ -812,6 +817,10 @@ class ShelfCommentListView(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ShelfCommentListView, self).filter_queryset(queryset)
         return queryset.order_by('-id')
+
+
+def get_user_by_acount_name(account_name):
+    return User.objects.filter(account_name=account_name).first()
 
 
 class ShelfCommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
