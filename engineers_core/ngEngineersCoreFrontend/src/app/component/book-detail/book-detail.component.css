@@ -229,6 +229,7 @@ b {
     height: 45px;
     margin-left: -58px;
     border-radius: 50%;
+    object-fit: cover;
     -moz-force-broken-image-icon: 1;
 }
 .user-name {
@@ -397,5 +398,6 @@ ul.space-for-comment {
     height: 35px;
     width: 35px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: text-top !important;
 }

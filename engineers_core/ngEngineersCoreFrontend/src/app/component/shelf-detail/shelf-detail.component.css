@@ -86,6 +86,7 @@ ul.shelf-data li {
     height: 45px;
     width: 45px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: text-top !important;
 }
 .shelf-producer-image, .producer-name, .producer-account-name {
@@ -344,5 +345,6 @@ ul.space-for-comment {
     height: 35px;
     width: 35px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: text-top !important;
 }

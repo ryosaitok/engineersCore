@@ -103,6 +103,7 @@ ul.shelf-basic-info li {
     height: 45px;
     width: 45px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: sub !important;
     margin: 0 10px;
 }

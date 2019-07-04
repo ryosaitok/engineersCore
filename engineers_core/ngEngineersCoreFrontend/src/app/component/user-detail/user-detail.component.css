@@ -203,6 +203,7 @@ ul.navigation li {
 .profile-image {
     width: 150px;
     height: 150px;
+    object-fit: cover;
 }
 .description {
     line-height: initial;
@@ -266,6 +267,7 @@ ul.shelf-basic-info li {
     height: 45px;
     width: 45px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: sub !important;
     margin: 0 10px;
 }
@@ -446,6 +448,7 @@ ul.authors li {
     height: 45px;
     margin-left: -58px;
     border-radius: 50%;
+    object-fit: cover;
     -moz-force-broken-image-icon: 1;
 }
 .comment-user > a:hover {
@@ -667,5 +670,6 @@ ul.space-for-comment {
     height: 35px;
     width: 35px;
     border-radius: 50%;
+    object-fit: cover;
     vertical-align: text-top !important;
 }

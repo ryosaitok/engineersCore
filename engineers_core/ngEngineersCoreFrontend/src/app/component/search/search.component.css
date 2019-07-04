@@ -293,6 +293,7 @@ ul.authors li {
     height: 45px;
     margin-left: -58px;
     border-radius: 50%;
+    object-fit: cover;
     -moz-force-broken-image-icon: 1;
 }
 .user-name {

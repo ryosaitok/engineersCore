@@ -200,11 +200,13 @@ li {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    object-fit: cover;
     cursor: pointer;
 }
 .avatar {
     display: block;
     border-radius: 50%;
+    object-fit: cover;
     height: 36px;
     width: 36px;
 }
