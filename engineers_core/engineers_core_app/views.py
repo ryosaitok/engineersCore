@@ -884,6 +884,18 @@ class ShelfCommentReplyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfCommentReply.objects.all()
     serializer_class = ShelfCommentReplyWithForeignSerializer
 
+    def delete(self, request, *args, **kwargs):
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        user = get_user_by_acount_name(username)
+        reply_id = self.kwargs['pk']
+        reply = ShelfCommentReply.objects.filter(id=reply_id).first()
+        if user.id != reply.user.id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        self.perform_destroy(reply)
+        return Response(data={'message': 'いいねを削除しました。', 'success': True}, status=204)
+
 
 class ShelfCommentReplyListView(generics.ListCreateAPIView):
     queryset = ShelfCommentReply.objects.all()
@@ -891,10 +903,19 @@ class ShelfCommentReplyListView(generics.ListCreateAPIView):
 
     # 登録処理ではuserとcommentのidだけ指定で行いたいので、ShelfCommentReplySerializerを使う。
     def post(self, request, *args, **kwargs):
-        serializer_class = ShelfCommentReplySerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
+        serializer = ShelfCommentReplySerializer(data=request.data)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        shelf_comment_id = serializer.validated_data['comment'].id
+        shelf_comment = ShelfComment.objects.filter(id=shelf_comment_id).first()
+        if shelf_comment is None:
+            return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+        serializer.validated_data['user'] = get_user_by_acount_name(username)
+        serializer.is_valid()
+        serializer.save()
+        return Response(serializer.data, status=201)
 
     def get_queryset(self):
         queryset = ShelfCommentReply.objects.all()
@@ -918,14 +939,12 @@ class ShelfCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ShelfCommentReplyFavoriteSerializer
 
     def delete(self, request, *args, **kwargs):
-        permission_classes = (permissions.IsAuthenticated,)
         username = request.user.username
         if username == '' or username is None:
             return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
         user = get_user_by_acount_name(username)
         favorite_id = self.kwargs['pk']
         favorite = ShelfCommentReplyFavorite.objects.filter(id=favorite_id).first()
-        print('user.id:{}, favorite.user:{}'.format(user.id, favorite.user))
         if user.id != favorite.user.id:
             return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(favorite)
@@ -937,7 +956,6 @@ class ShelfCommentReplyFavoriteListView(generics.ListCreateAPIView):
     serializer_class = ShelfCommentReplyFavoriteSerializer
 
     def post(self, request, *args, **kwargs):
-        permission_classes = (permissions.IsAuthenticated,)
         serializer_class = ShelfCommentReplyFavoriteSerializer(data=request.data)
         username = request.user.username
         if username == '' or username is None:

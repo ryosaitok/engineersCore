@@ -50,8 +50,9 @@ export class ShelfCommentReplyService {
   }
 
   registerCommentReply(userId: number, shelfCommentId: number, commentText: string, tweetFlag: boolean): Observable<any> {
-    const body = {user: userId, comment: shelfCommentId, comment_text: commentText, tweet_flag: tweetFlag,};
-    return this.http.post<any>(this.SHELF_COMMENT_REPLIES_API_URL, body, {headers: this.httpHeaders});
+    const body = {user: userId, comment: shelfCommentId, comment_text: commentText, tweet_flag: tweetFlag};
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_COMMENT_REPLIES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteCommentReply(commentReplyId: number): Observable<any> {
@@ -63,7 +64,8 @@ export class ShelfCommentReplyService {
   reportReply(userId: number, shelfCommentReplyId: number, reasonCode: string) {
     const url = this.SHELF_COMMENT_REPLY_REPORTS_API_URL;
     const body = {user: userId, shelf_comment_reply: shelfCommentReplyId, reason_code: reasonCode};
-    return this.http.post<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(url, body, {headers: httpHeaders});
   }
 
   convertShelfCommentReply(shelfCommentReply: any): ShelfCommentReply {
