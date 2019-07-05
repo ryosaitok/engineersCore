@@ -25,7 +25,6 @@ export class CommentFavoriteService {
 
   getCommentFavorite(userId: number, commentId: number): Observable<any> {
     const url = this.COMMENT_FAVORITES_API_URL + '?user_id=' + userId + '&comment_id=' + commentId;
-    console.log('getCommentFavorite。url: ' + url);
     return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 

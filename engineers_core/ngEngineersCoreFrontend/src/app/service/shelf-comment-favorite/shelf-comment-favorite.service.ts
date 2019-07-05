@@ -25,7 +25,6 @@ export class ShelfCommentFavoriteService {
 
   getCommentFavorite(userId: number, commentId: number): Observable<any> {
     const url = this.SHELF_COMMENT_FAVORITES_API_URL + '?user_id=' + userId + '&comment_id=' + commentId;
-    console.log('getCommentFavorite。url: ' + url);
     return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
@@ -40,11 +39,9 @@ export class ShelfCommentFavoriteService {
   }
 
   registerCommentFavorite(userId: number, shelfCommentId: number): Observable<any> {
-    const body = {
-      user: userId,
-      shelf_comment: shelfCommentId,
-    };
-    return this.http.post<any>(this.SHELF_COMMENT_FAVORITES_API_URL, body, {headers: this.httpHeaders});
+    const body = {user: userId, shelf_comment: shelfCommentId};
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_COMMENT_FAVORITES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteCommentFavorite(commentFavoriteId: number): Observable<any> {

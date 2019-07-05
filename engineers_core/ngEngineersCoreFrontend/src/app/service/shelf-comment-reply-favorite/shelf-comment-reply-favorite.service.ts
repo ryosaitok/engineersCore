@@ -38,8 +38,8 @@ export class ShelfCommentReplyFavoriteService {
     return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
-  registerReplyFavorite(shelfCommentReplyId: number): Observable<any> {
-    const body = {shelf_comment_reply: shelfCommentReplyId};
+  registerReplyFavorite(userId: number, shelfCommentReplyId: number): Observable<any> {
+    const body = {user: userId, shelf_comment_reply: shelfCommentReplyId};
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.post<any>(this.SHELF_COMMENT_REPLY_FAVORITES_API_URL, body, {headers: httpHeaders});
   }
