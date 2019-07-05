@@ -310,7 +310,7 @@ export class ShelfDetailComponent implements OnInit {
     this.shelfCommentReplyFavoriteService.getReplyFavorite(loggedInUserId, commentReplyId).subscribe(data => {
       // まだデータが存在しない場合は作成する。
       if (data === null || data === undefined || data.count === 0) {
-        this.shelfCommentReplyFavoriteService.registerReplyFavorite(loggedInUserId, commentReplyId).subscribe(
+        this.shelfCommentReplyFavoriteService.registerReplyFavorite(commentReplyId).subscribe(
           (res) => {
             this.shelfComments[commentIndex].commentReplies[replyIndex].favoriteUserIds.push(loggedInUserId);
             this.shelfComments[commentIndex].commentReplies[replyIndex].favoriteUserCount += 1;

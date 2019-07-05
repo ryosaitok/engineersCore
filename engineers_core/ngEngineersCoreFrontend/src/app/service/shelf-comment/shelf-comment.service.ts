@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 
 import {User} from '../../dto/user/user';
 import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
-import {SigninService} from "../signin/signin.service";
+import {SigninService} from '../signin/signin.service';
 
 @Injectable({
   providedIn: 'root'

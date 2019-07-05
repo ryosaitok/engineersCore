@@ -799,6 +799,7 @@ class ShelfCommentListView(generics.ListCreateAPIView):
             return Response(data={'message': '未ログイン状態でコメントすることはできません。', 'success': False}, status=500)
         serializer_class.is_valid()
         serializer_class.validated_data['user'] = get_user_by_acount_name(username)
+        print('serializer_class.errors: ', serializer_class.errors)
         serializer_class.save()
         return Response(serializer_class.data, status=201)
 
@@ -907,15 +908,39 @@ class ShelfCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfCommentReplyFavorite.objects.all()
     serializer_class = ShelfCommentReplyFavoriteSerializer
 
+    def delete(self, request, *args, **kwargs):
+        permission_classes = (permissions.IsAuthenticated,)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': '未ログイン状態でいいねを削除することはできません。', 'success': False}, status=500)
+        user = get_user_by_acount_name(username)
+        favorite_id = self.kwargs['pk']
+        favorite = ShelfCommentReplyFavorite.objects.filter(id=favorite_id).first()
+        print('user.id:{}, favorite.user:{}'.format(user.id, favorite.user))
+        if user.id != favorite.user.id:
+            return Response(data={'message': '自分以外の行ったいいねを削除することはできません。', 'success': False}, status=500)
+        self.perform_destroy(favorite)
+        return Response(data={'message': 'いいねを削除しました。', 'success': True}, status=204)
+
 
 class ShelfCommentReplyFavoriteListView(generics.ListCreateAPIView):
     queryset = ShelfCommentReplyFavorite.objects.all()
-    serializer_class = ShelfCommentReplyFavoriteWithForeignSerializer
+    serializer_class = ShelfCommentReplyFavoriteSerializer
 
     def post(self, request, *args, **kwargs):
+        permission_classes = (permissions.IsAuthenticated,)
         serializer_class = ShelfCommentReplyFavoriteSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': '未ログイン状態でいいねすることはできません。', 'success': False}, status=500)
+        serializer_class.is_valid()
+        # ShelfCommentReplyFavoriteオブジェクトを作成し、保存する。
+        # TODO: わざわざ検索しなくても作成できるようにする。
+        favorite = ShelfCommentReplyFavorite()
+        favorite.user = get_user_by_acount_name(username)
+        shelf_comment_reply_id = serializer_class.data['shelf_comment_reply']
+        favorite.shelf_comment_reply = ShelfCommentReply.objects.filter(id=shelf_comment_reply_id).first()
+        favorite.save()
         return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
