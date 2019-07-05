@@ -921,13 +921,13 @@ class ShelfCommentReplyFavoriteView(generics.RetrieveUpdateDestroyAPIView):
         permission_classes = (permissions.IsAuthenticated,)
         username = request.user.username
         if username == '' or username is None:
-            return Response(data={'message': '未ログイン状態でいいねを削除することはできません。', 'success': False}, status=500)
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
         user = get_user_by_acount_name(username)
         favorite_id = self.kwargs['pk']
         favorite = ShelfCommentReplyFavorite.objects.filter(id=favorite_id).first()
         print('user.id:{}, favorite.user:{}'.format(user.id, favorite.user))
         if user.id != favorite.user.id:
-            return Response(data={'message': '自分以外の行ったいいねを削除することはできません。', 'success': False}, status=500)
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(favorite)
         return Response(data={'message': 'いいねを削除しました。', 'success': True}, status=204)
 
@@ -941,7 +941,7 @@ class ShelfCommentReplyFavoriteListView(generics.ListCreateAPIView):
         serializer_class = ShelfCommentReplyFavoriteSerializer(data=request.data)
         username = request.user.username
         if username == '' or username is None:
-            return Response(data={'message': '未ログイン状態でいいねすることはできません。', 'success': False}, status=500)
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
         serializer_class.is_valid()
         # ShelfCommentReplyFavoriteオブジェクトを作成し、保存する。
         # TODO: わざわざ検索しなくても作成できるようにする。

@@ -82,7 +82,7 @@ export class ShelfBookService {
     return this.http.delete<any>(this.SHELF_BOOKS_BULK_API_URL, {headers: httpHeaders});
   }
 
-  shlefIdBulkDeleteShelfBooks(shelfId: number) {
+  shelfIdBulkDeleteShelfBooks(shelfId: number) {
     const url = this.SHELF_BOOKS_BULK_API_URL + '?shelf_id=' + shelfId;
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.delete<any>(url, {headers: httpHeaders});

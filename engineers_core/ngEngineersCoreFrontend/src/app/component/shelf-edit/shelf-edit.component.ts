@@ -135,7 +135,7 @@ export class ShelfEditComponent implements OnInit {
             this.router.navigate(['shelf/' + shelfId + '/']);
           });
         } else {
-          this.shelfBookService.shlefIdBulkDeleteShelfBooks(shelfId).subscribe(response => {
+          this.shelfBookService.shelfIdBulkDeleteShelfBooks(shelfId).subscribe(response => {
             this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
               this.router.navigate(['shelf/' + shelfId + '/']);
             });
