@@ -697,16 +697,9 @@ class ShelfBookView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ShelfBookSerializer
 
 
-class ShelfBookListView(generics.ListCreateAPIView):
+class ShelfBookListView(generics.ListAPIView):
     queryset = ShelfBook.objects.all()
     serializer_class = ShelfBookWithForeignSerializer
-
-    # 登録処理ではcategoryとbookのidだけ指定で行いたいので、BookFeatureSerializerを使う。
-    def post(self, request, *args, **kwargs):
-        serializer_class = ShelfBookSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
 
     def get_queryset(self):
         queryset = ShelfBook.objects.filter(shelf__shelf_status='OPN')
@@ -725,29 +718,45 @@ class ShelfBookBulkView(ListBulkCreateUpdateDestroyAPIView):
     queryset = ShelfBook.objects.all()
     serializer_class = ShelfBookBulkSerializer
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, many=True)
+        serializer.is_valid(raise_exception=True)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        shelf_id = request.data[0]['shelf']
+        shelf = Shelf.objects.filter(id=shelf_id).first()
+        logged_in_user = get_user_by_acount_name(username)
+        if shelf.user.id != logged_in_user.id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        # 保存する
+        self.perform_bulk_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     def delete(self, request, *args, **kwargs):
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+
         serializer_class = ShelfBookBulkSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=False)
-
-        # TODO: 現状だと空のリストが返る。どうやったら削除したIDのリスト返せるのか...
-        id_list = self.request.query_params.getlist('id', None)
-        if len(id_list) != 0:
-            query_set = ShelfBook.objects.filter(id__in=id_list)
-            if len(query_set) == 0:
-                return Response(data=query_set, status=404)
-            query_set.delete()
-            # 何も返らなくなるから明示的に空のリストを指定。
-            return Response(data=[], status=204)
-
         shelf_id = self.request.query_params.get('shelf_id', None)
-        if shelf_id is not None:
-            query_set = ShelfBook.objects.filter(shelf=shelf_id)
-            if len(query_set) == 0:
-                return Response(data=query_set, status=404)
-            query_set.delete()
-            return Response(data=[], status=204)
-
-        return Response(data=serializer_class.validated_data, status=400)
+        if shelf_id is None:
+            return Response(data={'message': 'システムエラーが発生しました。', 'success': False}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            shelf = Shelf.objects.filter(id=shelf_id).first()
+            if shelf is None:
+                return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+            shelf_books = ShelfBook.objects.filter(shelf_id=shelf_id)
+            if len(shelf_books) == 0:
+                return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+            logged_in_user = get_user_by_acount_name(username)
+            if shelf.user.id != logged_in_user.id:
+                return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+            shelf_books.delete()
+            # TODO: 現状だと空のリストが返る。どうやったら削除したIDのリスト返せるのか...
+            # 何も返らなくなるから明示的に空のリストを指定。
+            return Response(data=[], status=status.HTTP_204_NO_CONTENT)
 
 
 class ShelfFavoriteView(generics.RetrieveUpdateDestroyAPIView):

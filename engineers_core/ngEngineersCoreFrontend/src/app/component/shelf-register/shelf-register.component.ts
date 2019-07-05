@@ -103,9 +103,11 @@ export class ShelfRegisterComponent implements OnInit {
       books.forEach(book => {
         shelfBooks.push(new ShelfBook(null, shelfId, book.id, null));
       });
-      this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
-        this.router.navigate(['shelf/' + shelfId + '/']);
-      });
+      if (shelfBooks.length !== 0) {
+        this.shelfBookService.bulkRegisterShelfBooks(shelfBooks).subscribe(r => {
+        });
+      }
+      this.router.navigate(['shelf/' + shelfId + '/']);
     });
   }
 }

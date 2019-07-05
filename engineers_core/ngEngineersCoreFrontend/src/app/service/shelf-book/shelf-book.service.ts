@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {ShelfBook} from '../../dto/shelf-book/shelf-book';
+import {SigninService} from '../signin/signin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ShelfBookService {
 
   constructor(
     private http: HttpClient,
+    private signinService: SigninService,
   ) {
   }
 
@@ -44,7 +46,8 @@ export class ShelfBookService {
       book: bookId,
       display_order: displayOrder
     };
-    return this.http.post<any>(this.SHELF_BOOKS_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_BOOKS_API_URL, body, {headers: httpHeaders});
   }
 
   bulkRegisterShelfBooks(shelfBooks: ShelfBook[]) {
@@ -56,12 +59,14 @@ export class ShelfBookService {
         display_order: shelfBook.displayOrder
       });
     });
-    return this.http.post<any>(this.SHELF_BOOKS_BULK_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_BOOKS_BULK_API_URL, body, {headers: httpHeaders});
   }
 
   deleteShelfBook(shelfBookId: number) {
     const url = this.SHELF_BOOK_API_URL + shelfBookId + '/';
-    return this.http.delete<any>(url, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 
   bulkDeleteShelfBooks(shelfBookIds: number[]) {
@@ -73,11 +78,13 @@ export class ShelfBookService {
         url += url + '&id=' + id;
       }
     });
-    return this.http.delete<any>(this.SHELF_BOOKS_BULK_API_URL, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(this.SHELF_BOOKS_BULK_API_URL, {headers: httpHeaders});
   }
 
   shlefIdBulkDeleteShelfBooks(shelfId: number) {
     const url = this.SHELF_BOOKS_BULK_API_URL + '?shelf_id=' + shelfId;
-    return this.http.delete<any>(url, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 }
