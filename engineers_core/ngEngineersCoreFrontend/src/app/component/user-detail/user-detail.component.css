@@ -239,6 +239,7 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
 /* 本棚一覧 */
 .shelf-module {
     background-color: #fff;
+    border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
 }
@@ -363,11 +364,12 @@ ul.authors li {
 .no-shelf-text {
     padding: 10px;
     line-height: 16px;
+    text-align: center;
 }
 
 /* 読んだ本一覧 */
 .comment-module {
-  background-color: #fff;
+    background-color: #fff;
     border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
