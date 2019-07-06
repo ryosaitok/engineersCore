@@ -58,7 +58,6 @@ class EmailVerificationView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer_class = EmailVerificationSerializer(data=request.data)
         serializer_class.is_valid(raise_exception=True)
-
         email = serializer_class.validated_data.get('email', None)
         try:
             validate_email(email)
@@ -234,24 +233,64 @@ class AuthUserView(generics.RetrieveUpdateDestroyAPIView):
     serializer = AuthUserSerializer
 
     def put(self, request, *args, **kwargs):
-        username = request.data.get('username', None)
-        if username is not None:
+        update_username = request.data.get('username', None)
+        print('update_username: ', update_username)
+        if update_username is None:
+            print('update_username is None')
+            return Response(data={'message': 'usernameが指定されていません。', 'success': False},
+                            status=status.HTTP_400_BAD_REQUEST)
+        else:
+            print('update_username is not None')
             # ログインしているユーザーのaccount_nameを更新する（AuthUserのusernameとUserのaccount_nameは、両方同じものである必要ある）
-            logged_in_auth_user_id = request.user.id
-            update_account_name(logged_in_auth_user_id, username)
-            return Response(data={'username': username, 'success': True}, status=200)
-        return Response(data={'username': username, 'success': False}, status=500)
+            logged_in_auth_user = request.user
+            if logged_in_auth_user.id is None:
+                print('logged_in_auth_user.id is None')
+                return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False},
+                                status=status.HTTP_401_UNAUTHORIZED)
+            print('logged_in_auth_user.id is not None')
+            # AuthUserとUserのusernameとaccount_nameを同じものに更新する。
+            try:
+                logged_in_auth_user = AuthUser.objects.filter(id=logged_in_auth_user.id).first()
+                logged_in_auth_user.username = update_username
+                logged_in_auth_user.save()
+                logged_in_user = User.objects.filter(auth_user=logged_in_auth_user.id).first()
+                logged_in_user.account_name = update_username
+                logged_in_user.save()
+                return Response(data={'message': 'アカウント名を更新しました', 'account_name': update_username, 'success': True},
+                                status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response(data={'message': e, 'account_name': update_username, 'success': True},
+                                status=status.HTTP_400_BAD_REQUEST)
 
 
-def update_account_name(auth_user_id, account_name):
-    # AuthUserのusernameを更新する。
-    logged_in_auth_user = AuthUser.objects.filter(id=auth_user_id).first()
-    logged_in_auth_user.username = account_name
-    logged_in_auth_user.save()
-    # Userのaccount_nameを更新する。（両方同じものに更新しないといけない。）
-    logged_in_user = User.objects.filter(auth_user=auth_user_id).first()
-    logged_in_user.account_name = account_name
-    logged_in_user.save()
+# TODO: トランザクションを貼る。
+class AuthUserRegisterView(generics.CreateAPIView):
+    serializer_class = AuthUserSerializer
+
+    def post(self, request, *args, **kwargs):
+        # TODO: APIを直に叩くとユーザー登録できてしまう問題解消必要。
+        # AuthUserの登録
+        print('request.data: ', request.data)
+        serializer = AuthUserSerializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except exceptions.APIException as e:
+            print('serializer.errors: ', serializer.errors)
+            return Response(data={'message': serializer.errors, 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        email = serializer.validated_data['email']
+        if email_address_exists(email):
+            return Response(data={'message': '指定されたメールアドレスはすでに登録済みです。', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+
+        # Userの登録
+        user = User()
+        auth_user_id = serializer.data['id']
+        auth_user = AuthUser.objects.filter(id=auth_user_id).first()
+        user.auth_user = auth_user
+        user.account_name = serializer.data['username']
+        user.user_name = '吾輩は猫である'
+        user.save()
+        return Response(data={'message': 'ユーザーの登録が完了しました。', 'success': True}, status=status.HTTP_201_CREATED)
 
 
 class AuthUserListView(generics.ListCreateAPIView):
@@ -368,6 +407,21 @@ class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def post(self, request, *args, **kwargs):
+        serializer = BookCommentSerializer(data=request.data)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        logged_in_user = get_user_by_acount_name(username)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except exceptions.APIException as e:
+            return Response(data={'message': serializer.errors, 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        if logged_in_user.id != serializer.validated_data['user'].id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        serializer.save()
+        return Response(serializer.data, status=201)
+
     def get_queryset(self):
         queryset = User.objects.all()
         # ユーザー名orアカウント名で検索
@@ -391,6 +445,23 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'account_name'
+
+    def put(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = UserSerializer(instance, data=request.data, partial=partial)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        account_name = self.kwargs['account_name']
+        if account_name != username:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        # account_nameとauth_userは変更すると
+        if 'account_name' in serializer.validated_data or 'auth_user' in serializer.validated_data:
+            return Response(data={'message': '変更できない値が含まれています。', 'success': False}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class BookAuthorListView(generics.ListAPIView):

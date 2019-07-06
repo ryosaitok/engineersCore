@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {User} from '../../dto/user/user';
 import {HttpRequestService} from '../http-request/http-request.service';
+import {SigninService} from '../signin/signin.service';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -11,6 +12,7 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private httpRequestService: HttpRequestService,
+    private signinService: SigninService,
   ) {
   }
 
@@ -40,7 +42,8 @@ export class UserService {
       description,
       profile_image_link: imageLink
     };
-    return this.http.post<any>(this.USERS_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.USERS_API_URL, body, {headers: httpHeaders});
   }
 
   getUser(userAccountName): Observable<any> {

@@ -8,7 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class SignupService {
 
   HOST = 'http://127.0.0.1:8000/';
-  AUTH_USERS_API_URL = this.HOST + 'api/auth/users/';
+  AUTH_USER_REGISTER_API_URL = this.HOST + 'api/auth/user/register/';
   EMAIL_VERIFICATION_SEND_API_URL = this.HOST + 'api/email/verification/send/';
   VERIFY_EMAIL_API_URL = this.HOST + 'api/verify/email/';
   httpHeaders = new HttpHeaders({
@@ -24,7 +24,7 @@ export class SignupService {
   // 認証ユーザーを新規登録する。
   registerUser(username, email, password): Observable<any> {
     const body = {username, email, password};
-    return this.http.post<any>(this.AUTH_USERS_API_URL, body, {headers: this.httpHeaders});
+    return this.http.post<any>(this.AUTH_USER_REGISTER_API_URL, body, {headers: this.httpHeaders});
   }
 
   // 認証メールを送信する。

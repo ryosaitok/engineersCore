@@ -1,6 +1,7 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthGuard} from '../../guard/auth.guard';
+import {NgForm} from '@angular/forms';
 import {
   faCommentDots,
   faHeart,
@@ -23,9 +24,8 @@ import {CommentFavoriteService} from '../../service/comment-favorite/comment-fav
 import {SigninService} from '../../service/signin/signin.service';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
-import {NgForm} from "@angular/forms";
-import {BookCommentReplyService} from "../../service/book-comment-reply/book-comment-reply.service";
-import {BookCommentReplyFavoriteService} from "../../service/book-comment-reply-favorite/book-comment-reply-favorite.service";
+import {BookCommentReplyService} from '../../service/book-comment-reply/book-comment-reply.service';
+import {BookCommentReplyFavoriteService} from '../../service/book-comment-reply-favorite/book-comment-reply-favorite.service';
 
 @Component({
   selector: 'app-user-detail',

@@ -51,26 +51,15 @@ export class VerifyEmailComponent implements OnInit {
   // 新規ユーザー登録する
   // TODO:認証ユーザーとユーザーを同一トランザクションで扱えるようにする
   signUp(f: NgForm) {
-    const accountName = this.getRandomStr();
-    const username = f.value.username;
+    const accountName = f.value.accountName;
     const email = this.verifiedEmail;
     const password = f.value.password;
     this.signupService.registerUser(accountName, email, password).subscribe(res => {
-      const authUserId = res.id;
-      if (authUserId !== null) {
-        this.userService.registerUser(authUserId, accountName, username, null, null).subscribe(r => {
-          this.signinService.getAuthToken(accountName, password).subscribe(response => {
-            localStorage.setItem('authToken', response.token);
-            this.appComponent.userId = r.id;
-            this.appComponent.accountName = accountName;
-            this.appComponent.userName = username;
-            this.appComponent.profileImageLink = null;
-            this.appComponent.isLoggedIn = true;
-            const url = 'user/' + accountName + '/';
-            this.router.navigate([url]);
-          });
-        });
-      }
+      this.signinService.getAuthToken(accountName, password).subscribe(response => {
+        localStorage.setItem('authToken', response.token);
+        const url = 'user/' + accountName + '/';
+        this.router.navigate([url]);
+      });
     });
     this.router.navigate(['login']);
   }

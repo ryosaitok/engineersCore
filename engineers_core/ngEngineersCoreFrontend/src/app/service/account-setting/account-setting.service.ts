@@ -35,16 +35,16 @@ export class AccountSettingService {
 
   updateAuthUser(userName: string): Observable<any> {
     const url = this.AUTH_USER_API_URL;
-    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     const body = {username: userName};
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.put<any>(url, body, {headers: httpHeaders});
   }
 
   updateUser(userId: number, accountName: string, userName: string, description: string,
              profileImageLink: string): Observable<any> {
     const url = this.USER_API_URL + userId + '/';
-    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     const body = {account_name: accountName, user_name: userName, description, profile_image_link: profileImageLink};
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.put<any>(url, body, {headers: httpHeaders});
   }
 
