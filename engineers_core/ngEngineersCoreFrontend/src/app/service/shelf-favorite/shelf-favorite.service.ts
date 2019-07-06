@@ -13,7 +13,7 @@ export class ShelfFavoriteService {
   SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/';
   ACCOUNT_NAME_SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/?account_name=';
   SHELF_FAVORITE_API_URL = this.HOST + 'api/shelf/favorite/';
-  HTTP_HEADERS = new HttpHeaders({
+  httpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
   });
 
@@ -26,17 +26,17 @@ export class ShelfFavoriteService {
   getShelfFavorite(userId: number, shelfId: number): Observable<any> {
     const url = this.SHELF_FAVORITES_API_URL + '?user_id=' + userId + '&shelf_id=' + shelfId;
     console.log('getShelfFavorite。url: ' + url);
-    return this.http.get<any>(url, {headers: this.HTTP_HEADERS});
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getUserShelfFavorites(userId: number): Observable<any> {
     const url = this.SHELF_FAVORITES_API_URL + '?user_id=' + userId;
-    return this.http.get<any>(url, {headers: this.HTTP_HEADERS});
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   getShelfFavoritesByAccountName(accountName: string): Observable<any> {
     const url = this.ACCOUNT_NAME_SHELF_FAVORITES_API_URL + accountName;
-    return this.http.get<any>(url, {headers: this.HTTP_HEADERS});
+    return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
   registerShelfFavorite(userId: number, shelfId: number): Observable<any> {
@@ -44,12 +44,13 @@ export class ShelfFavoriteService {
       user: userId,
       shelf: shelfId,
     };
-    return this.http.post<any>(this.SHELF_FAVORITES_API_URL, body, {headers: this.HTTP_HEADERS});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.SHELF_FAVORITES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteShelfFavorite(shelfFavoriteId: number): Observable<any> {
     const url = this.SHELF_FAVORITE_API_URL + shelfFavoriteId + '/';
-    const httpHeaders = this.signinService.appendJwtHeader(this.HTTP_HEADERS);
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.delete<any>(url, {headers: httpHeaders});
   }
 }

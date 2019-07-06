@@ -634,42 +634,42 @@ class InterestedBookView(generics.RetrieveUpdateDestroyAPIView):
 
 class ShelfView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shelf.objects.all()
-    serializer_class = ShelfSerializer
+    serializer_class = ShelfWithForeignSerializer
 
     def put(self, request, *args, **kwargs):
+        serializer_class = ShelfSerializer
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
         serializer = ShelfEditSerializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        shelf_id = self.kwargs['pk']
+        shelf = Shelf.objects.filter(id=shelf_id).first()
+        if shelf is None:
+            return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+        logged_in_user = get_user_by_acount_name(username)
+        if shelf.user.id != logged_in_user.id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        serializer.validated_data['user'] = logged_in_user
         self.perform_update(serializer)
         return Response(serializer.data)
 
 
-class ShelfReportListView(generics.ListCreateAPIView):
-    queryset = ShelfReport.objects.all()
-    serializer_class = ShelfReportWithForeignSerializer
-
-    def get_queryset(self):
-        queryset = ShelfReport.objects.all()
-        return queryset
-
-    def post(self, request, *args, **kwargs):
-        serializer_class = ShelfReportSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
-
-
 class ShelfListView(generics.ListCreateAPIView):
     queryset = Shelf.objects.all()
-    serializer_class = ShelfSerializer
+    serializer_class = ShelfWithForeignSerializer
 
-    # 登録処理ではidだけ指定で行いたいので、BookFeatureCategorySerializerを使う。
     def post(self, request, *args, **kwargs):
-        serializer_class = ShelfEditSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
+        serializer = ShelfEditSerializer(data=request.data)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        serializer.validated_data['user'] = get_user_by_acount_name(username)
+        serializer.save()
+        return Response(serializer.data, status=201)
 
     def get_queryset(self):
         queryset = Shelf.objects.filter(shelf_status='OPN')
@@ -689,6 +689,29 @@ class ShelfListView(generics.ListCreateAPIView):
                 return queryset.order_by(F('id').desc(nulls_last=True))
             if sort == 'popular':
                 return queryset.order_by(F('favorite_count').desc(nulls_last=True))
+        return queryset
+
+
+class ShelfReportListView(generics.ListCreateAPIView):
+    queryset = ShelfReport.objects.all()
+    serializer_class = ShelfReportWithForeignSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = ShelfReportSerializer(data=request.data)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        shelf_id = serializer.validated_data['shelf'].id
+        shelf = Shelf.objects.filter(id=shelf_id).first()
+        if shelf is None:
+            return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+        serializer.validated_data['user'] = get_user_by_acount_name(username)
+        serializer.save()
+        return Response(serializer.data, status=201)
+
+    def get_queryset(self):
+        queryset = ShelfReport.objects.all()
         return queryset
 
 
@@ -724,11 +747,14 @@ class ShelfBookBulkView(ListBulkCreateUpdateDestroyAPIView):
         username = request.user.username
         if username == '' or username is None:
             return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
-        shelf_id = request.data[0]['shelf']
-        shelf = Shelf.objects.filter(id=shelf_id).first()
+        shelf_ids = []
+        for data in request.data:
+            shelf_ids.append(data['shelf'])
+        shelves = Shelf.objects.filter(id__in=shelf_ids)
         logged_in_user = get_user_by_acount_name(username)
-        if shelf.user.id != logged_in_user.id:
-            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        for shelf in shelves:
+            if shelf.user.id != logged_in_user.id:
+                return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
         # 保存する
         self.perform_bulk_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -738,17 +764,17 @@ class ShelfBookBulkView(ListBulkCreateUpdateDestroyAPIView):
         if username == '' or username is None:
             return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer_class = ShelfBookBulkSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=False)
+        serializer = ShelfBookBulkSerializer(data=request.data)
+        serializer.is_valid(raise_exception=False)
         shelf_id = self.request.query_params.get('shelf_id', None)
         if shelf_id is None:
-            return Response(data={'message': 'システムエラーが発生しました。', 'success': False}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
         else:
-            shelf = Shelf.objects.filter(id=shelf_id).first()
-            if shelf is None:
-                return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
             shelf_books = ShelfBook.objects.filter(shelf_id=shelf_id)
             if len(shelf_books) == 0:
+                return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+            shelf = Shelf.objects.filter(id=shelf_id).first()
+            if shelf is None:
                 return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
             logged_in_user = get_user_by_acount_name(username)
             if shelf.user.id != logged_in_user.id:
@@ -763,16 +789,36 @@ class ShelfFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfFavorite.objects.all()
     serializer_class = ShelfFavoriteSerializer
 
+    def delete(self, request, *args, **kwargs):
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        user = get_user_by_acount_name(username)
+        favorite_id = self.kwargs['pk']
+        favorite = ShelfFavorite.objects.filter(id=favorite_id).first()
+        if user.id != favorite.user.id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        self.perform_destroy(favorite)
+        return Response(data={'message': 'いいねを削除しました。', 'success': True}, status=204)
+
 
 class ShelfFavoriteListView(generics.ListCreateAPIView):
     queryset = ShelfFavorite.objects.all()
     serializer_class = ShelfFavoriteWithForeignSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer_class = ShelfFavoriteSerializer(data=request.data)
-        serializer_class.is_valid(raise_exception=True)
-        serializer_class.save()
-        return Response(serializer_class.data, status=201)
+        serializer = ShelfFavoriteSerializer(data=request.data)
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer.is_valid()
+        shelf_id = serializer.validated_data['shelf'].id
+        shelf = Shelf.objects.filter(id=shelf_id).first()
+        if shelf is None:
+            return Response(data={'message': '見つかりませんでした。', 'success': False}, status=status.HTTP_404_NOT_FOUND)
+        serializer.validated_data['user'] = get_user_by_acount_name(username)
+        serializer.save()
+        return Response(serializer.data, status=201)
 
     def get_queryset(self):
         queryset = ShelfFavorite.objects.filter(shelf__shelf_status='OPN')
@@ -794,6 +840,19 @@ class ShelfFavoriteListView(generics.ListCreateAPIView):
 class ShelfCommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShelfComment.objects.all()
     serializer_class = ShelfCommentWithForeignSerializer
+
+    def delete(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentSerializer
+        username = request.user.username
+        if username == '' or username is None:
+            return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+        user = get_user_by_acount_name(username)
+        comment_id = self.kwargs['pk']
+        comment = ShelfComment.objects.filter(id=comment_id).first()
+        if user.id != comment.user.id:
+            return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+        self.perform_destroy(comment)
+        return Response(data={'message': 'コメントを削除しました。', 'success': True}, status=204)
 
 
 class ShelfCommentListView(generics.ListCreateAPIView):
@@ -840,6 +899,7 @@ class ShelfCommentFavoriteView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ShelfCommentFavoriteSerializer
 
     def delete(self, request, *args, **kwargs):
+        serializer_class = ShelfCommentFavoriteSerializer
         username = request.user.username
         if username == '' or username is None:
             return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)

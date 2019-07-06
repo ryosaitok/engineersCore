@@ -296,6 +296,12 @@ class InterestedBookWithForeignSerializer(serializers.ModelSerializer):
 
 
 class ShelfSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shelf
+        fields = ('id', 'user', 'books', 'shelf_cd', 'shelf_name', 'display_order', 'shelf_status', 'description',)
+
+
+class ShelfWithForeignSerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True)
     user = UserSerializer()
     favorite_users = serializers.SlugRelatedField(

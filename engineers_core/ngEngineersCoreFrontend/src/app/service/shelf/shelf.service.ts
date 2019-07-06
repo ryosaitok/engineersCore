@@ -3,9 +3,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {Shelf} from '../../dto/shelf/shelf';
+import {HttpRequestService} from '../http-request/http-request.service';
+import {SigninService} from '../signin/signin.service';
 import {BookService} from '../book/book.service';
 import {UserService} from '../user/user.service';
-import {HttpRequestService} from '../http-request/http-request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class ShelfService {
   constructor(
     private http: HttpClient,
     private httpRequestService: HttpRequestService,
+    private signinService: SigninService,
     private bookService: BookService,
     private userService: UserService,
   ) {
@@ -71,13 +73,15 @@ export class ShelfService {
   registerShelf(userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELVES_API_URL;
     const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
-    return this.http.post<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(url, body, {headers: httpHeaders});
   }
 
   updateShelf(shelfId: number, userId: number, shelfName: string, description: string, shelfStatus: string): Observable<any> {
     const url = this.SHELF_API_URL + shelfId + '/';
     const body = {user: userId, shelf_name: shelfName, description, shelf_status: shelfStatus};
-    return this.http.put<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.put<any>(url, body, {headers: httpHeaders});
   }
 
   reportShelf(userId: number, shelfId: number, reasonCode: string) {
@@ -87,12 +91,14 @@ export class ShelfService {
       shelf: shelfId,
       reason_code: reasonCode
     };
-    return this.http.post<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(url, body, {headers: httpHeaders});
   }
 
   deleteShelf(shelfId: number) {
     const url = this.SHELF_API_URL + shelfId + '/';
-    return this.http.delete<any>(url, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 
   convertShelf(shelf: any, bookCount: number): Shelf {
