@@ -20,7 +20,7 @@ export class ShelfService {
   USER_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?user_id=';
   ACCOUNT_NAME_SHELVES_API_URL = this.HOST + 'api/shelves/?account_name=';
   SHELF_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?shelf_id=';
-  SHELF_REPORTS_API_URL = this.HOST + 'api/shelf/reports';
+  SHELF_REPORTS_API_URL = this.HOST + 'api/shelf/reports/';
   httpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
   });

@@ -40,7 +40,6 @@ urlpatterns = [
     path('shelf/<int:pk>/', ShelfView.as_view()),
     path('shelf/reports/', ShelfReportListView.as_view()),
     path('shelf/books/', ShelfBookListView.as_view()),
-    path('shelf/book/<int:pk>/', ShelfBookView.as_view()),
     path('shelf/favorites/', ShelfFavoriteListView.as_view()),
     path('shelf/favorite/<int:pk>/', ShelfFavoriteView.as_view()),
     path('shelf/comments/', ShelfCommentListView.as_view()),

@@ -13,12 +13,9 @@ import {BookService} from '../book/book.service';
 export class InterestedBookService {
 
   HOST = 'http://127.0.0.1:8000/';
-  INTERESTED_BOOKS_URL = 'api/interested/books/';
-  INTERESTED_BOOKS_API_URL = this.HOST + this.INTERESTED_BOOKS_URL;
-  ACCOUNT_NAME_INTERESTED_BOOKS_URL = 'api/interested/books/?account_name=';
-  ACCOUNT_NAME_INTERESTED_BOOKS_API_URL = this.HOST + this.ACCOUNT_NAME_INTERESTED_BOOKS_URL;
-  INTERESTED_BOOK_URL = 'api/interested/book/';
-  INTERESTED_BOOK_API_URL = this.HOST + this.INTERESTED_BOOK_URL;
+  INTERESTED_BOOKS_API_URL = this.HOST + 'api/interested/books/';
+  ACCOUNT_NAME_INTERESTED_BOOKS_API_URL = this.HOST + 'api/interested/books/?account_name=';
+  INTERESTED_BOOK_API_URL = this.HOST + 'api/interested/book/';
   httpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -56,7 +53,8 @@ export class InterestedBookService {
       user: userId,
       book: bookId,
     };
-    return this.http.post<any>(this.INTERESTED_BOOKS_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.INTERESTED_BOOKS_API_URL, body, {headers: httpHeaders});
   }
 
   deleteInterestedBook(interestedBookId: number): Observable<any> {

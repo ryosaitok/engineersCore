@@ -4,9 +4,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {BookComment} from '../../dto/book-comment/book-comment';
 import {HttpRequestService} from '../http-request/http-request.service';
+import {SigninService} from '../signin/signin.service';
 import {BookService} from '../book/book.service';
 import {UserService} from '../user/user.service';
-import {SigninService} from '../signin/signin.service';
 
 @Injectable({providedIn: 'root'})
 export class BookCommentService {
@@ -81,7 +81,8 @@ export class BookCommentService {
 
   registerBookComment(userId: number, bookId: number, comment: string, readDate: Date) {
     const body = {user: userId, book: bookId, comment_text: comment, read_date: readDate};
-    return this.http.post<any>(this.BOOK_COMMENTS_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.BOOK_COMMENTS_API_URL, body, {headers: httpHeaders});
   }
 
   deleteComment(commentId: number): Observable<any> {
@@ -93,7 +94,8 @@ export class BookCommentService {
   reportComment(userId: number, bookCommentId: number, reasonCode: string) {
     const url = this.BOOK_COMMENT_REPORTS_API_URL;
     const body = {user: userId, book_comment: bookCommentId, reason_code: reasonCode};
-    return this.http.post<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(url, body, {headers: httpHeaders});
   }
 
   convertBookComment(bookComment: any): BookComment {

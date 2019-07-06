@@ -42,12 +42,13 @@ export class BookCommentReplyFavoriteService {
   registerReplyFavorite(userId: number, bookCommentReplyId: number): Observable<any> {
     const body = {user: userId, book_comment_reply: bookCommentReplyId};
     console.log('userId: ' + userId + ' shelfCommentReplyId: ' + bookCommentReplyId);
-    return this.http.post<any>(this.BOOK_COMMENT_REPLY_FAVORITES_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.BOOK_COMMENT_REPLY_FAVORITES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteReplyFavorite(replyFavoriteId: number): Observable<any> {
     const url = this.BOOK_COMMENT_REPLY_FAVORITE_API_URL + replyFavoriteId + '/';
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
-    return this.http.delete<any>(url, {headers: this.httpHeaders});
+    return this.http.delete<any>(url, {headers: httpHeaders});
   }
 }

@@ -43,7 +43,8 @@ export class CommentFavoriteService {
       user: userId,
       comment: commentId,
     };
-    return this.http.post<any>(this.COMMENT_FAVORITES_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.COMMENT_FAVORITES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteCommentFavorite(commentFavoriteId: number): Observable<any> {

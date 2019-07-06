@@ -52,7 +52,8 @@ export class BookCommentReplyService {
 
   registerCommentReply(userId: number, bookCommentId: number, commentText: string, tweetFlag: boolean): Observable<any> {
     const body = {user: userId, comment: bookCommentId, comment_text: commentText, tweet_flag: tweetFlag,};
-    return this.http.post<any>(this.BOOK_COMMENT_REPLIES_API_URL, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(this.BOOK_COMMENT_REPLIES_API_URL, body, {headers: httpHeaders});
   }
 
   deleteCommentReply(bookCommentReplyId: number): Observable<any> {
@@ -64,7 +65,8 @@ export class BookCommentReplyService {
   reportReply(userId: number, bookCommentReplyId: number, reasonCode: string) {
     const url = this.BOOK_COMMENT_REPLY_REPORTS_API_URL;
     const body = {user: userId, book_comment_reply: bookCommentReplyId, reason_code: reasonCode};
-    return this.http.post<any>(url, body, {headers: this.httpHeaders});
+    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
+    return this.http.post<any>(url, body, {headers: httpHeaders});
   }
 
   convertBookCommentReply(bookCommentReply: any): BookCommentReply {
