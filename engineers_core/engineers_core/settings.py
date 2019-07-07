@@ -26,6 +26,7 @@ SECRET_KEY = '@*d^0iy$w%*oelye6$18zgzk8w&l8l&6(ml17p+6rnaq2c6b)a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# APIアクセスを許可するホストを設定する。
 ALLOWED_HOSTS = []
 
 # 画像保存のための設定

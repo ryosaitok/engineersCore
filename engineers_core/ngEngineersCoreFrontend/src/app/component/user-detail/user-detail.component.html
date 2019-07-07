@@ -114,6 +114,10 @@
 
         <!-- 本棚 -->
         <div *ngIf="shelfSelected" class="module shelves">
+          <div *ngIf="appComponent.accountName === accountName" class="action-button">
+            <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register"><b>本棚を新しく登録する</b>
+            </button>
+          </div>
           <div *ngIf="shelfCount > 0" class="shelf-module">
             <!-- 本棚の情報 -->
             <div *ngFor="let shelf of shelves; let i = index"
@@ -342,15 +346,15 @@
                       <div class="comment-reaction">
                         <ul class="comment-reactions">
                           <li>
-                          <ul class="comment-replies comment-reaction">
-                            <li (click)="reverseRepliesDisplayState(comment.id, commentIndex, 1)">
+                            <ul class="comment-replies comment-reaction">
+                              <li (click)="reverseRepliesDisplayState(comment.id, commentIndex, 1)">
                               <span class="comment-reaction-reply">
                                 <fa-icon [icon]="faCommentDots"></fa-icon>
                               </span>
-                            </li>
-                            <li>{{comment.replyUserCount}}</li>
-                          </ul>
-                        </li>
+                              </li>
+                              <li>{{comment.replyUserCount}}</li>
+                            </ul>
+                          </li>
                           <li>
                             <ul class="comment-favorites comment-reaction">
                               <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
@@ -403,7 +407,8 @@
                         </div>
                         <div class="comment-reply-fields" *ngIf="comment.commentReplies !== []">
                           <ul class="comment-list">
-                            <li *ngFor="let reply of comment.commentReplies; let replyIndex = index" class="reply-comment">
+                            <li *ngFor="let reply of comment.commentReplies; let replyIndex = index"
+                                class="reply-comment">
                               <!-- コメントの情報 -->
                               <div class="context">
                                 <div class="reply-content">
