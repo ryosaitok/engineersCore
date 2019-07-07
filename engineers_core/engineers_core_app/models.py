@@ -62,6 +62,7 @@ class User(models.Model):
 
 
 class File(models.Model):
+    user = models.BigIntegerField()
     file = models.FileField(blank=False, null=False)
 
     def __str__(self):

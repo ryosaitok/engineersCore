@@ -51,6 +51,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'auth_user', 'user_name', 'account_name', 'description', 'profile_image_link')
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'user_name', 'account_name', 'description',)
+
+
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author

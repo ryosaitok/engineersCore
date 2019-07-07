@@ -164,11 +164,11 @@
                     <div class="user">
                       <a routerLink="/user/{{user.userAccountName}}">
                         <div *ngIf="user.profileImageLink !== null" class="user-icon">
-                          <img class="avatar" src="../../assets/image/profile/{{user.profileImageLink}}"
+                          <img class="avatar" src="{{user.profileImageLink}}"
                                alt=""/>
                         </div>
                         <div *ngIf="user.profileImageLink === null" class="user-icon">
-                          <img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                          <img class="avatar" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                         </div>
                       </a>
                       <a routerLink="/user/{{user.userAccountName}}">

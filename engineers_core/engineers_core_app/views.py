@@ -15,38 +15,56 @@ from django.core.validators import validate_email
 import binascii
 import os
 from google.cloud import storage
+import urllib.parse
 
 TODAY = date.today()
 BUCKET_NAME = 'test-packet-engineerscore'
 
 
-class ProfileImageUploadView(APIView):
+class ProfileImageUploadView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     parser_class = (FileUploadParser,)
 
     # TODO: 一旦localに保存してからGCSに保存してlocalのファイルを削除している処理が無駄。直接ファイルをアップロードするように修正する。
     def post(self, request, *args, **kwargs):
+        print('request.data: ', request.data)
         serializer = FileSerializer(data=request.data)
         if serializer.is_valid():
+            # アクセス元の認証
+            username = request.user.username
+            if username == '' or username is None:
+                return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False},
+                                status=status.HTTP_401_UNAUTHORIZED)
+            logged_in_user = get_user_by_acount_name(username)
+            print("serializer.validated_data: ", serializer.validated_data)
+            if logged_in_user.id != serializer.validated_data['user']:
+                return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+
             # media配下に画像保存
             serializer.save()
 
             # media配下に保存した画像を取得してGoogle Cloud Storageに同名で保存する。
-            image_file = serializer.validated_data.get('file')
+            # 日本語のファイル名は%エンコードされているからデコードする。
+            image_file_name = urllib.parse.unquote(serializer.data.get('file'))
             account_name = request.user.username
             logged_id_user = User.objects.filter(account_name=account_name).first()
             upload_file_name = '{0}_{1}'.format(str(logged_id_user.id), str(TODAY))
             upload_file_path = 'image/profile/' + upload_file_name
-            image_file_path = './media/' + str(image_file)
+            image_file_path = '.' + image_file_name
             client = storage.Client()
             bucket = client.get_bucket(BUCKET_NAME)
             blob = bucket.blob(upload_file_path)
             blob.upload_from_filename(image_file_path)
 
+            # Userテーブルのprofile_image_linkにGCSのリンクを保存する。
+            profile_image_link = 'https://storage.cloud.google.com/test-packet-engineerscore/' + upload_file_path
+            logged_in_user.profile_image_link = profile_image_link
+            logged_in_user.save()
+
             # 以降はGCSから画像データを参照するので、media配下の画像は不要。削除する。
             os.remove(image_file_path)
 
-            return Response(data={'upload_file_path': upload_file_path, 'message': 'ファイルのアップロードに成功しました。'}
+            return Response(data={'profile_image_link': profile_image_link, 'message': 'ファイルのアップロードに成功しました。'}
                             , status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -441,27 +459,32 @@ class UserListView(generics.ListCreateAPIView):
         return queryset.order_by('id')
 
 
+# TODO: トランザクション貼る。
 class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'account_name'
 
     def put(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', True)
-        instance = self.get_object()
-        serializer = UserSerializer(instance, data=request.data, partial=partial)
-        username = request.user.username
-        if username == '' or username is None:
+        print('request.data: ', request.data)
+        print('request.user.username: ', request.user.username)
+        current_username = request.user.username
+        if current_username == '' or current_username is None:
             return Response(data={'message': 'ユーザー認証に失敗しました。', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
-        serializer.is_valid()
-        account_name = self.kwargs['account_name']
-        if account_name != username:
+        current_account_name = self.kwargs['account_name']
+        if current_account_name != current_username:
             return Response(data={'message': 'アクセス権限がありません。', 'success': False}, status=status.HTTP_403_FORBIDDEN)
-        # account_nameとauth_userは変更すると
-        if 'account_name' in serializer.validated_data or 'auth_user' in serializer.validated_data:
-            return Response(data={'message': '変更できない値が含まれています。', 'success': False}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.perform_update(serializer)
-        return Response(serializer.data)
+
+        # account_nameを更新するとJWTのアクセストークンが無効になって再ログインが必要になるため、ここでは更新させずAuthUserViewで行う。
+        user = get_user_by_acount_name(current_account_name)
+        user_name = request.data['user_name']
+        if user_name is not None:
+            user.user_name = user_name
+        description = request.data['description']
+        if description is not None:
+            user.description = description
+        user.save()
+        return Response(data={'message': 'ユーザーを更新しました。。', 'success': False}, status=status.HTTP_200_OK)
 
 
 class BookAuthorListView(generics.ListAPIView):

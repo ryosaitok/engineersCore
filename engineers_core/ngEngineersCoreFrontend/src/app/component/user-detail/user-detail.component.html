@@ -69,10 +69,10 @@
                   <div class="content">
                     <a routerLink="/user/{{user.userAccountName}}">
                       <div *ngIf="user.profileImageLink !== null" class="user-profile-icon">
-                        <img class="profile-image" src="../../assets/image/profile/{{user.profileImageLink}}" alt=""/>
+                        <img class="profile-image" src="{{user.profileImageLink}}" alt=""/>
                       </div>
                       <div *ngIf="user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                        <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                              alt=""/>
                       </div>
                     </a>
@@ -129,12 +129,12 @@
                     <div class="producer-icon">
                       <div *ngIf="shelf.user.profileImageLink !== null" class="producer-profile-icon">
                         <img class="producer-profile-image"
-                             src="../../assets/image/profile/{{shelf.user.profileImageLink}}"
+                             src="{{shelf.user.profileImageLink}}"
                              alt=""/>
                       </div>
                       <div *ngIf="shelf.user.profileImageLink === null" class="producer-profile-icon">
                         <img class="producer-profile-image"
-                             src="../../../assets/image/profile/default_profile_image.png"
+                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                              alt=""/>
                       </div>
                     </div>
@@ -325,11 +325,11 @@
                         <a routerLink="/user/{{comment.user.userAccountName}}">
                           <div class="comment-user">
                             <div *ngIf="comment.user.profileImageLink !== null" class="user-icon">
-                              <img class="avatar" src="../../assets/image/profile/{{comment.user.profileImageLink}}"
+                              <img class="avatar" src="{{comment.user.profileImageLink}}"
                                    alt=""/>
                             </div>
                             <div *ngIf="comment.user.profileImageLink === null" class="user-icon">
-                              <img class="avatar" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                              <img class="avatar" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                             </div>
                             <div class="user-name">
                               {{comment.user.userName}} @{{comment.user.userAccountName}}
@@ -382,11 +382,11 @@
                                 *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                                 class="reply-user-profile-icon">
                                 <img class="min-profile-image"
-                                     src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
+                                     src="{{appComponent.profileImageLink}}" alt=""/>
                               </div>
                               <div *ngIf="appComponent.profileImageLink === null" class="reply-user-profile-icon">
                                 <img class="min-profile-image"
-                                     src="../../../assets/image/profile/default_profile_image.png"
+                                     src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                                      alt=""/>
                               </div>
                             </li>
@@ -473,11 +473,11 @@
                                           *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
                                           class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="../../assets/image/profile/{{reply.user.profileImageLink}}" alt=""/>
+                                               src="{{reply.user.profileImageLink}}" alt=""/>
                                         </div>
                                         <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                                         </div>
                                       </a>
                                     </li>

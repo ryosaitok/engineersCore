@@ -69,11 +69,11 @@
               <a routerLink="/user/{{shelf.user.userAccountName}}">
                 <div *ngIf="shelf.user.profileImageLink !== null && shelf.user.profileImageLink !== undefined"
                      class="user-profile-icon">
-                  <img class="profile-image" src="../../assets/image/profile/{{shelf.user.profileImageLink}}"
+                  <img class="profile-image" src="{{shelf.user.profileImageLink}}"
                        alt=""/>
                 </div>
                 <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
-                  <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                  <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </a>
             </li>
@@ -175,11 +175,11 @@
               <li>
                 <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                      class="user-profile-icon">
-                  <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}"
+                  <img class="profile-image" src="{{appComponent.profileImageLink}}"
                        alt=""/>
                 </div>
                 <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
-                  <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                  <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                 </div>
               </li>
               <li id="comment-area">
@@ -265,10 +265,10 @@
                             *ngIf="comment.user.profileImageLink !== null && comment.user.profileImageLink !== undefined"
                             class="user-profile-icon">
                             <img class="profile-image"
-                                 src="../../assets/image/profile/{{comment.user.profileImageLink}}" alt=""/>
+                                 src="{{comment.user.profileImageLink}}" alt=""/>
                           </div>
                           <div *ngIf="comment.user.profileImageLink === null" class="user-profile-icon">
-                            <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                            <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                                  alt=""/>
                           </div>
                         </a>
@@ -328,11 +328,11 @@
                               *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                               class="user-profile-icon">
                               <img class="min-profile-image"
-                                   src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
+                                   src="{{appComponent.profileImageLink}}" alt=""/>
                             </div>
                             <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
                               <img class="min-profile-image"
-                                   src="../../../assets/image/profile/default_profile_image.png"
+                                   src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                                    alt=""/>
                             </div>
                           </li>
@@ -418,11 +418,11 @@
                                         *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
                                         class="user-profile-icon">
                                         <img class="min-profile-image"
-                                             src="../../assets/image/profile/{{reply.user.profileImageLink}}" alt=""/>
+                                             src="{{reply.user.profileImageLink}}" alt=""/>
                                       </div>
                                       <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                         <img class="min-profile-image"
-                                             src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
                                       </div>
                                     </a>
                                   </li>

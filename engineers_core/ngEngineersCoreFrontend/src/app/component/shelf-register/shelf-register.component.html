@@ -19,10 +19,10 @@
             <li class="shelf-producer-image">
               <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                    class="user-profile-icon">
-                <img class="profile-image" src="../../assets/image/profile/{{appComponent.profileImageLink}}" alt=""/>
+                <img class="profile-image" src="{{appComponent.profileImageLink}}" alt=""/>
               </div>
               <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
-                <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
               </div>
             </li>
             <li>

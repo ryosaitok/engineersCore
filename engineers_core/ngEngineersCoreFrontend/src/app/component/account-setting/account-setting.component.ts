@@ -17,6 +17,9 @@ export class AccountSettingComponent implements OnInit {
 
   url = '';
   selectedImage: File;
+  isEditAccountName = false;
+  accountNameChanged = false;
+  pageFound = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +44,8 @@ export class AccountSettingComponent implements OnInit {
         this.appComponent.userName = res.user_name;
         this.appComponent.profileImageLink = res.profile_image_link;
         if (res.profile_image_link !== null) {
-          this.url = '../../assets/image/profile/' + this.appComponent.profileImageLink;
+          console.log('res.profile_image_link: ', res.profile_image_link);
+          this.url = res.profile_image_link;
         } else {
           this.url = '../../assets/image/profile/default_profile_image.png';
         }
@@ -49,6 +53,7 @@ export class AccountSettingComponent implements OnInit {
         this.appComponent.isLoggedIn = true;
       });
     }, error => {
+      this.pageFound = false;
       this.appComponent.userId = null;
       this.appComponent.accountName = null;
       this.appComponent.userName = null;
@@ -72,25 +77,38 @@ export class AccountSettingComponent implements OnInit {
 
   updateAccountSetting(form: NgForm) {
     const userName = form.value.userName;
-    const accountName = form.value.accountName;
     const description = form.value.description;
-    const now = new Date();
-    const profileImageLink = accountName + now.getTime().toString();
-    this.signinService.getAuthUser().subscribe(response => {
-      this.userService.getUser(response.account_name).subscribe(res => {
-        const userId = res.id;
-        // this.accountSettingService.updateAuthUser(authUserId, accountName).subscribe(r => {
-        const uploadData = new FormData();
-        uploadData.append('myFile', this.selectedImage, this.selectedImage.name);
-        this.accountSettingService.updateProfileImage(userId, uploadData).subscribe(resp => {
-          console.log('JSON.stringify(resp):', JSON.stringify(resp));
-        });
-        this.accountSettingService.updateUser(userId, accountName, userName, description, profileImageLink)
-          .subscribe(respon => {
-            this.router.navigate(['user/' + accountName + '/']);
-          });
-        // });
+    if (this.selectedImage !== undefined) {
+      this.accountSettingService.uploadProfileImage(this.appComponent.userId, this.selectedImage).subscribe(res => {
+      }, err => {
+        console.error('プロフィール画像のアップロードに失敗しました、', err);
       });
+    }
+    this.accountSettingService.updateUser(this.appComponent.accountName, userName, description).subscribe(response => {
+      // TODO: プロフィール画像更新時に即時反映するようにする。
+      console.log('アカウント設定の更新が完了しました。 response: ', response);
+      this.router.navigate(['user/' + this.appComponent.accountName + '/']);
+    }, error => {
+      console.log('アカウント設定の更新に失敗しました。 error: ', error);
     });
+  }
+
+  updateAccountName(form: NgForm) {
+    const accountName = form.value.accountName;
+    this.accountSettingService.updateAuthUser(accountName).subscribe(res => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+      this.appComponent.userName = null;
+      this.appComponent.profileImageLink = null;
+      this.appComponent.description = null;
+      this.appComponent.isLoggedIn = false;
+      this.accountNameChanged = true;
+    }, err => {
+      console.error('アカウント名の変更に失敗しました。', err);
+    });
+  }
+
+  editAccountName(): void {
+    this.isEditAccountName = true;
   }
 }

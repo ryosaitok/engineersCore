@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SigninService} from '../signin/signin.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,8 @@ export class AccountSettingService {
     'Content-Type': 'application/json',
   });
   formDataHeaders = new HttpHeaders({
-    'Content-Type': 'multipart/form-data',
+    // Content-Typeを指定すると画像ファイル送れない...?
+    // 'Content-Type': 'multipart/form-data',
   });
   token: string;
 
@@ -40,18 +41,20 @@ export class AccountSettingService {
     return this.http.put<any>(url, body, {headers: httpHeaders});
   }
 
-  updateUser(userId: number, accountName: string, userName: string, description: string,
-             profileImageLink: string): Observable<any> {
-    const url = this.USER_API_URL + userId + '/';
-    const body = {account_name: accountName, user_name: userName, description, profile_image_link: profileImageLink};
+  updateUser(accountName: string, userName: string, description: string): Observable<any> {
+    const url = this.USER_API_URL + accountName + '/';
+    const body = {account_name: accountName, user_name: userName, description};
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.put<any>(url, body, {headers: httpHeaders});
   }
 
-  updateProfileImage(userId: number, profileImage: FormData): Observable<any> {
+  uploadProfileImage(userId: number, profileImage: File): Observable<any> {
     const url = this.USER_PROFILE_IMAGE_UPLOAD_API_URL;
     const formDataHeaders = this.signinService.appendJwtHeader(this.formDataHeaders);
-    const body = {user_id: userId, profile_image: profileImage};
-    return this.http.put<any>(url, body, {headers: formDataHeaders});
+    const formData = new FormData();
+    formData.append('user', userId.toString());
+    const fileName = userId.toString() + '_upload_file.png';
+    formData.append('file', profileImage, fileName);
+    return this.http.post<any>(url, formData, {headers: formDataHeaders});
   }
 }

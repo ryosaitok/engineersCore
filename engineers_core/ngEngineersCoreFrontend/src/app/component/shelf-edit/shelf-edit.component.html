@@ -23,10 +23,10 @@
             <li class="shelf-producer-image">
               <div *ngIf="shelf.user.profileImageLink !== null && shelf.user.profileImageLink !== undefined"
                    class="user-profile-icon">
-                <img class="profile-image" src="../../assets/image/profile/{{shelf.user.profileImageLink}}" alt=""/>
+                <img class="profile-image" src="{{shelf.user.profileImageLink}}" alt=""/>
               </div>
               <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
-                <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png" alt=""/>
+                <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
               </div>
             </li>
             <li>

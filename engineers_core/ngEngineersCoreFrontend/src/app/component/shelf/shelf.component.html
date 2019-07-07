@@ -26,11 +26,11 @@
                     <div class="producer-icon">
                       <div *ngIf="shelf.user.profileImageLink !== null" class="user-profile-icon">
                         <img class="profile-image"
-                             src="../../assets/image/profile/{{shelf.user.profileImageLink}}"
+                             src="{{shelf.user.profileImageLink}}"
                              alt=""/>
                       </div>
                       <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="../../../assets/image/profile/default_profile_image.png"
+                        <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                              alt=""/>
                       </div>
                     </div>
