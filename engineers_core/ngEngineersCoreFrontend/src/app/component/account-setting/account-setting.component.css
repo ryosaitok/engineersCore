@@ -1,6 +1,120 @@
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+a:visited {
+    color: #337ab7;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* メインコンテンツ */
+@media screen and (min-width: 1236px) {
+  .AppContainer {
+    max-width: 890px;
+  }
+}
+.AppContainer {
+    margin: 45px auto;
+}
+.AppContent-main {
+    margin: 15px auto 0;
+    max-width: 890px;
+    min-width: 890px;
+}
+.content-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    height: 500px;
+}
+.account-name-module {
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+    padding: 10px;
+    height: 300px;
+}
+.account-setting {
+    font-weight: bold;
+    text-align: center;
+}
+
+.update-form {
+    width: 90%;
+    margin: 20px 20px;
+}
+.account-name-form {
+    margin: 20px 0 0 220px;
+    width: 50%;
+}
+ul.form-group {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+ul.form-group li {
+    display: inline-block;
+    vertical-align: middle;
+}
+.profile-image {
+    margin: 10px;
+}
+.text-field {
+    margin: 10px;
+    width: 55%;
+}
+.form-control {
+    color: #222222;
+    border: 0 solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    padding: 0;
+    font-size: 16px;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+}
+label {
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+.profile-image-label {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
 .preview-profile-image {
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  object-fit: cover;
+    opacity: 1;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.preview-profile-image:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+textarea {
+    height: 70px;
+}
+.action-button {
+    margin: 10px;
+    text-align: center;
+}
+.btn-primary {
+    border-radius: 0;
+    border: 0 solid #e6ecf0;
+}
+
+.signin-link, .account-name-link {
+    text-align: center;
+    margin-top: 30px;
+}
+.signin-link {
+    margin-top: 30px;
+}
+.account-name-link {
+    margin-top: 15px;
 }

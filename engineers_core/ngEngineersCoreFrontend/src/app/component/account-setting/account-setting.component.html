@@ -9,44 +9,45 @@
       <div *ngIf="!isEditAccountName && !accountNameChanged" class="content-module">
         <h3 class="account-setting">アカウント設定</h3>
         <form #form="ngForm" class="update-form" enctype="multipart/form-data" (ngSubmit)="updateAccountSetting(form)">
-          <div class="form-group">
-            <label for="userName"><span>ユーザー名</span></label>
-            <input [(ngModel)]="appComponent.userName" type="text" class="form-control" name="userName" id="userName">
-            <label><span>アカウント名（ログイン時に利用します）</span></label>
-            <a (click)="editAccountName()"><p>アカウント名の変更はこちら</p></a>
-            <label for="description"><span>プロフィール</span></label>
-            <input [(ngModel)]="appComponent.description" type="text" class="form-control" name="description"
-                   id="description">
-            <label for="profileImageFile"><span>プロフィール画像</span></label>
-            <input type='file' class="form-control" accept="image/*" ngModel name="profileImageFile"
-                   id="profileImageFile" (change)="onSelectFile($event)">
-            <img class="preview-profile-image" [src]="url" height="200"> <br/>
-          </div>
+          <ul class="form-group">
+            <li class="profile-image">
+              <label for="profileImageFile" class="profile-image-label"><img class="preview-profile-image" [src]="url" height="200" alt="プロフィール画像を選択してください"></label>
+              <input type='file' class="form-control" accept="image/*" ngModel name="profileImageFile"
+                      id="profileImageFile" (change)="onSelectFile($event)" style="display:none;">
+            </li>
+            <li class="text-field">
+              <label for="userName"><span>ユーザー名</span></label>
+              <input [(ngModel)]="appComponent.userName" type="text" class="form-control" name="userName" id="userName">
+              <label><span>アカウント名（ログイン時に利用します）</span></label>
+              <p><a (click)="editAccountName(true)">アカウント名の変更はこちら</a></p>
+              <label for="description"><span>紹介文</span></label>
+              <textarea [(ngModel)]="appComponent.description" type="text" class="form-control" name="description"
+                        id="description"></textarea>
+            </li>
+          </ul>
           <div class="action-button">
             <button type="submit" class="btn btn-primary update-button"><b>更新する</b></button>
           </div>
         </form>
       </div>
-      <div *ngIf="isEditAccountName && !accountNameChanged" class="content-module">
+      <div *ngIf="isEditAccountName && !accountNameChanged" class="account-name-module">
         <h3 class="account-setting">アカウント名変更</h3>
-        <form #form="ngForm" class="update-form" (ngSubmit)="updateAccountName(form)">
+        <form #form="ngForm" class="account-name-form" (ngSubmit)="updateAccountName(form)">
           <div class="form-group">
             <label for="accountName"><span>アカウント名（ログイン時に利用します）</span></label>
             <input [(ngModel)]="appComponent.accountName" type="text" class="form-control" name="accountName"
                    id="accountName">
           </div>
-          <span>アカウント名を変更した場合、再度ログインする必要があります。ご了承ください。</span>
-          <span>また、アカウント名を忘れるとログインできなくなってしまうので忘れないようにご注意ください。</span>
+          <span>アカウント名を変更した場合、再度ログインする必要があります。</span>
           <div class="action-button">
             <button type="submit" class="btn btn-primary update-button"><b>更新する</b></button>
           </div>
+          <p class="account-name-link"><a (click)="editAccountName(false)">アカウント設定画面に戻る</a></p>
         </form>
       </div>
-      <div *ngIf="accountNameChanged" class="content-module">
+      <div *ngIf="accountNameChanged" class="account-name-module">
         <h3 class="account-setting">アカウント名変更</h3>
-        <span>アカウント名の変更が完了しました。こちらから再度ログインしてください。</span>
-        <br>
-        <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
+        <p class="signin-link">アカウント名の変更が完了しました。<a routerLink="/login/">こちら</a>から再度ログインしてください。</p>
       </div>
     </div>
   </div>

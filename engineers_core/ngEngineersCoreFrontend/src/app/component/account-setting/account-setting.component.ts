@@ -108,7 +108,7 @@ export class AccountSettingComponent implements OnInit {
     });
   }
 
-  editAccountName(): void {
-    this.isEditAccountName = true;
+  editAccountName(isEdit: boolean): void {
+    this.isEditAccountName = isEdit;
   }
 }
