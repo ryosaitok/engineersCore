@@ -118,13 +118,14 @@ def send_email_confirmation(email_address, from_address, token):
     try:
         if email_address is not None:
             HOST = "http://127.0.0.1:4200/"
-            subject = "【EngineersCore】仮登録が完了しました。\n"
+            subject = "【EngineersCore】仮登録が完了しました。"
             message = "EngineersCoreへのアカウント仮登録が完了しました。\n\n" \
-                      "以下のURLからログインして、本登録を完了させると、ログインしてサービスをご利用いただけます。\n"\
-                      + HOST + "signup/{}".format(token) + "このURLの有効期限は 1時間 です。\n" \
+                      "以下のURLからログインして、本登録を完了させると、ログインしてサービスをご利用いただけます。\n\n"\
+                      + HOST + "signup/{}\n\n".format(token)\
+                      + "このURLの有効期限は 1時間 です。\n" \
                       "あらかじめご了承ください。\n\n" \
-                      "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n" \
-                      "--------------------------------\n" \
+                      "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n\n" \
+                      "--------------------------------\n\n" \
                       "EngineersCore\n\n" \
                       "こちらのメールに返信はできませんので、ご注意ください。"
             from_email = from_address
@@ -188,12 +189,12 @@ def send_password_reminder(email_address, from_address, token):
         if email_address is not None:
             HOST = "http://127.0.0.1:4200/"
             subject = "【EngineersCore】パスワード変更のご案内"
-            message = "以下のURLからパスワードを変更いただけます。\n"\
+            message = "以下のURLからパスワードを変更いただけます。\n\n"\
                       + HOST + "password/reset/{}\n\n".format(token)\
                       + "このURLの有効期限は 1時間 です。\n" \
                       "あらかじめご了承ください。\n\n" \
-                      "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n" \
-                      "--------------------------------\n" \
+                      "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n\n" \
+                      "--------------------------------\n\n" \
                       "EngineersCore\n\n" \
                       "こちらのメールに返信はできませんので、ご注意ください。"
             from_email = from_address
