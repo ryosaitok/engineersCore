@@ -14,21 +14,24 @@
                 <li class="nav global-actions" id="global-nav-search">
                   <nav>
                     <a routerLink="/search/">
-                      <span class="search"><fa-icon [icon]="faSearch"></fa-icon></span>
-                      <b> 検索する</b>
+                      <span class="search"><i class="fas fa-lg"><fa-icon [icon]="faSearch"></fa-icon></i></span>
+                      <b class="menu-text"> 検索する</b>
                     </a>
                   </nav>
                 </li>
                 <li class="nav global-actions" id="global-nav-shelf-books">
                   <nav>
                     <a routerLink="/shelves/">
-                      <span class="shelf-books"><fa-icon [icon]="faBookReader"></fa-icon></span>
-                      <b> みんなの本棚</b>
+                      <span class="shelf-books"><i class="fas fa-lg"><fa-icon [icon]="faBookReader"></fa-icon></i></span>
+                      <b class="menu-text"> みんなの本棚</b>
                     </a>
                   </nav>
                 </li>
                 <li class="nav global-actions" id="global-nav-notifications">
-                  <a><span class="notifications"><fa-icon [icon]="faBell"></fa-icon></span><b> 通知</b></a>
+                  <a>
+                    <span class="notifications"><i class="fas fa-lg"><fa-icon [icon]="faBell"></fa-icon></i></span>
+                    <b class="menu-text"> 通知</b>
+                  </a>
                 </li>
                 <li class="nav global-actions">
                   <!-- ログインユーザーメニュー -->
