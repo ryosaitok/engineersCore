@@ -18,7 +18,7 @@
             </ul>
             <!-- 本棚の情報 -->
             <div *ngFor="let shelf of shelves; let i = index"
-                 class="js-shelf-books shelf-books-content flex-module-inner">
+                 class="shelf-books-content flex-module-inner">
               <ul class="shelf-basic-info">
                 <li class="producer-info">
                   <!-- カテゴリの作成者 -->
@@ -76,9 +76,9 @@
                   </div>
                 </li>
               </ul>
-              <!-- 特集の本の一覧 -->
-              <div class="book-comment">
-                <div class="ShelfItem-context">
+              <!-- 本棚の本の一覧 -->
+              <div class="shelf-books">
+                <div class="shelf-book-module">
                   <ul class="book-list">
                     <li *ngFor="let book of shelf.books; let i = index" class="book-content">
                       <div class="context">
