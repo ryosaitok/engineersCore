@@ -49,6 +49,9 @@ a:hover {
     .shelf-info {
         width: 84%;
     }
+    .book-content {
+        padding: 8px;
+    }
 }
 
 /* PC用のスタイル(画面サイズが890px以上の場合) */
@@ -68,6 +71,9 @@ a:hover {
     }
     .shelf-info {
         width: 91%;
+    }
+    .book-content {
+        padding: 8px;
     }
 }
 
