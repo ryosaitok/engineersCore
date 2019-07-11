@@ -17,6 +17,61 @@ a:hover {
     font-weight: bold;
 }
 
+/* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
+@media screen and (min-width:0px) and (max-width: 480px) {
+    .AppContainer {
+        max-width: 480px;
+    }
+    .AppContent-main {
+    }
+    .ShelvesModules {
+        width: 100%;
+    }
+    .book-title-data {
+        display: none;
+    }
+    .shelf-book-info {
+        font-size: 16px;
+    }
+    .shelf-info {
+        width: 77%;
+    }
+}
+
+/* Tablet用のスタイル(画面サイズが480~890px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1024px) {
+    .AppContainer {
+        max-width: 1024px;
+    }
+    .shelf-book-info {
+        font-size: 18px;
+    }
+    .shelf-info {
+        width: 84%;
+    }
+}
+
+/* PC用のスタイル(画面サイズが890px以上の場合) */
+@media screen and (min-width: 1024px) {
+    .AppContainer {
+        max-width: 1024px;
+    }
+    .AppContent-main {
+        margin: 15px auto 0;
+        max-width: 1190px;
+        min-width: 890px;
+    }
+    .ShelvesModules {
+        width: 850px;
+    }
+    .shelf-book-info {
+        font-size: 18px;
+    }
+    .shelf-info {
+        width: 91%;
+    }
+}
+
 /* メインコンテンツ */
 @media screen and (min-width: 1236px) {
   .AppContainer {
@@ -26,11 +81,6 @@ a:hover {
 .AppContainer {
     margin: 0 auto;
 }
-.AppContent-main {
-    margin: 15px auto 0;
-    max-width: 1190px;
-    min-width: 890px;
-}
 
 @media (min-width: 1236px) {
   .ShelvesModules {
@@ -39,7 +89,6 @@ a:hover {
   }
 }
 .ShelvesModules {
-    width: 850px;
     position: unset;
     background-color: #fff;
     border: 1px solid #e6ecf0;
@@ -66,15 +115,11 @@ ul.sort-condition > li {
 
 .shelf-books-content {
     border-bottom: 2px solid #e6ecf0;
-    margin: 5px 0;
+    margin: 10px 0;
     padding: 10px 0;
 }
-h4 {
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-}
 .producer-info {
-    vertical-align: top !important;
+    vertical-align: top;
 }
 ul.shelf-basic-info {
     list-style: none;
@@ -91,11 +136,11 @@ ul.shelf-basic-info li {
     border-radius: 50%;
     object-fit: cover;
     vertical-align: sub !important;
-    margin: 0 10px;
+    margin: 0 5px;
 }
 ul.comment-reactions {
     list-style: none;
-    margin-bottom: 5px !important;
+    margin: 7px 0;
     padding-left: 0;
 }
 ul.comment-reactions li {
@@ -129,41 +174,33 @@ ul.comment-reaction li > span.favorite-done {
     color: #f08080;
 }
 
-.ShelfNameItem-context > a:hover {
-    color: #337ab7 !important;
-}
-
 ul.book-list {
     list-style: none;
-    margin-bottom: 0 !important;
-    padding: 0 !important;
+    margin: 10px 0;
+    padding: 0;
 }
 ul.book-list > li {
-    width: 145px;
     vertical-align: top;
     display: inline-block;
 }
 .book-content {
-    font-size: 12px;
-    margin: 5px 10px;
-    padding: 10px 0;
+    width: 20%;
 }
 .book-image {
     text-align: center;
     margin-bottom: 5px;
 }
 .amazon-book-image {
-    width: 120px;
-    height: 165px;
     border: 1px solid #e6ecf0;
+    width: 88%;
 }
 ul.book-title-data {
     list-style: none;
     margin-bottom: 0 !important;
-    padding-left: 0;
+    padding: 5px;
 }
 ul.book-title-data li {
-    margin: 1px 0;
+    margin: 2px 0;
 }
 .book-title {
     font-weight: bold;

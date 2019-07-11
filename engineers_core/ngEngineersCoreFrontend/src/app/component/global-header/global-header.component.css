@@ -17,14 +17,7 @@ a:hover {
 }
 .global-nav {
     border-bottom: 2px solid #e6ecf0;
-}
-.global-nav-inner {
-    background: #fff;
-}
-.global-nav .container {
-    min-height: 48px;
-    margin-right: 16px;
-    margin-left: 16px;
+    background-color: #fff;
 }
 header {
     padding-bottom: 46px;
@@ -35,8 +28,20 @@ header {
 
 /* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
 @media screen and (min-width:0px) and (max-width: 480px) {
+    .global-nav {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
     .top-bar, .global-nav, .global-nav-inner, .container {
           max-width: 440px
+    }
+    .Icon {
+        font-size: 16px;
+        margin: 15px 0;
     }
     b.menu-text {
         display: none;
@@ -48,6 +53,10 @@ header {
     .top-bar, .global-nav, .global-nav-inner, .container {
           max-width: 984px
     }
+    .Icon {
+        font-size: 20px;
+        margin: 12px 0;
+    }
     b.menu-text {
         display: none;
     }
@@ -55,24 +64,29 @@ header {
 
 /* PC用のスタイル(画面サイズが890px以上の場合) */
 @media screen and (min-width: 1024px) {
-
+    .global-nav {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+    .Icon {
+        font-size: 24px;
+        margin: 10px 0;
+    }
 }
 
 .global-nav .container {
     width: auto;
+    min-height: 48px;
 }
 
 .container {
     position: relative;
-    margin: 0 auto;
 }
 
 /* home-menu */
 .Icon {
     display: inline-block;
-    font-size: 24px;
     font-weight: bold;
-    margin: 10px 0;
     cursor: pointer;
 }
 .global-menu {
@@ -81,7 +95,7 @@ header {
 }
 .global-actions {
     float: left;
-    padding-right: 20px;
+    padding-left: 20px;
 }
 
 
