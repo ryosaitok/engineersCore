@@ -36,11 +36,12 @@ ul {
     }
     .book-image {
         float: left;
-        width: 35%;
+        width: 30%;
+        margin-left: 10px;
     }
     ul.book-title-data {
         float: right;
-        width: 60%;
+        width: 65%;
     }
     ul.comment-user-name-space {
         width: 65%;
@@ -213,7 +214,7 @@ ul.comment-reaction li > span.favorite-done {
 
 .shelf-books {
     margin: 30px 0;
-    border-bottom: 1px solid #e6ecf0;
+    border-bottom: 2px solid #e6ecf0;
 }
 ul.book-list {
     margin: 10px 0;
@@ -222,6 +223,9 @@ ul.book-list {
 ul.book-list > li {
     vertical-align: top;
     display: inline-block;
+}
+.book-content {
+    font-size: 12px;
 }
 .book-image {
     text-align: center;
