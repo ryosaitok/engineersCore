@@ -50,6 +50,10 @@ header {
 
 /* Tablet用のスタイル(画面サイズが480~890px以上の場合) */
 @media screen and (min-width:480px) and (max-width: 1024px) {
+    .global-nav {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
     .top-bar, .global-nav, .global-nav-inner, .container {
           max-width: 984px
     }
@@ -65,8 +69,8 @@ header {
 /* PC用のスタイル(画面サイズが890px以上の場合) */
 @media screen and (min-width: 1024px) {
     .global-nav {
-        padding-right: 16px;
-        padding-left: 16px;
+        padding-right: 130px;
+        padding-left: 130px;
     }
     .Icon {
         font-size: 24px;

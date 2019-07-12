@@ -38,7 +38,7 @@ a:hover {
     }
 }
 
-/* Tablet用のスタイル(画面サイズが480~890px以上の場合) */
+/* Tablet用のスタイル(画面サイズが480~1024px以上の場合) */
 @media screen and (min-width:480px) and (max-width: 1024px) {
     .AppContainer {
         max-width: 1024px;
@@ -54,7 +54,7 @@ a:hover {
     }
 }
 
-/* PC用のスタイル(画面サイズが890px以上の場合) */
+/* PC用のスタイル(画面サイズが1024px以上の場合) */
 @media screen and (min-width: 1024px) {
     .AppContainer {
         max-width: 1024px;
@@ -78,11 +78,6 @@ a:hover {
 }
 
 /* メインコンテンツ */
-@media screen and (min-width: 1236px) {
-  .AppContainer {
-    max-width: 1190px;
-  }
-}
 .AppContainer {
     margin: 0 auto;
 }
