@@ -1,123 +1,90 @@
 <div class="page-outer">
-  <!-- 本棚名 -->
-  <div class="ShelfNameNavigation">
-    <div class="ShelfNameNavigation-canopy u-bgUserColor">
-      <div class="ShelfNameNavigation-textContainer">
-        <h1 class="ShelfNameNavigationText" dir="ltr">
-          <span class="comment-reaction-reply"><fa-icon
-            [icon]="faBookReader"></fa-icon></span> {{shelf.shelfName}}
-        </h1>
-      </div>
-    </div>
-  </div>
-  <!-- 本棚の基本情報 -->
-  <div class="ShelfNavigation">
-    <div class="ShelfNavigation-canopy">
-      <div class="ShelfNavigation-textContainer">
-        <div class="ShelfNavigation-titleText" dir="ltr">
-          <ul class="shelf-data">
-            <li class="shelf-producer-image">
-              <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
-                   class="user-profile-icon">
-                <img class="profile-image" src="{{appComponent.profileImageLink}}" alt=""/>
-              </div>
-              <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
-                <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
-              </div>
-            </li>
-            <li>
-              <ul class="producer-name-space">
-                <li class="producer-name">{{appComponent.userName}}</li>
-                <li class="producer-account-name">@{{appComponent.accountName}}</li>
-              </ul>
-            </li>
-          </ul>
-          <div class="shelf-description">
-            <div class="shelf-description-text">{{shelf.description}}</div>
-          </div>
-        </div>
-        <div class="comment-reaction">
-          <ul class="comment-reactions space-for-description">
-            <li>
-              <ul class="comment-replies comment-reaction">
-                <li><span class="comment-reaction-reply"><fa-icon [icon]="faCommentDots"></fa-icon></span></li>
-                <li>0</li>
-              </ul>
-            </li>
-            <li>
-              <ul class="comment-favorites comment-reaction">
-                <li *ngIf="shelf.favoriteUserIds.indexOf(appComponent.userId) >= 0">
-                    <span class="comment-reaction-heart favorite-done">
-                      <fa-icon [icon]="faHeart"></fa-icon>
-                    </span>
-                </li>
-                <li *ngIf="shelf.favoriteUserIds.indexOf(appComponent.userId) == -1">
-                    <span class="comment-reaction-heart favorite-none">
-                      <fa-icon [icon]="faHeart"></fa-icon>
-                    </span>
-                </li>
-                <li>0</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
       <!-- メインメニュー(本棚の本) -->
       <div class="ShelfBooksModules">
-        <!-- 本の情報 -->
-        <div class="module shelf-books">
-          <form #form="ngForm" class="update-form" (ngSubmit)="registerShelf(form, shelf.books)">
-            <div class="form-group">
-              <label for="shelfName"><span>本棚のタイトル</span></label>
-              <input [(ngModel)]="shelf.shelfName" type="text" class="form-control" name="shelfName" id="shelfName"
-                     required minlength="4">
-              <label for="description"><span>本棚の説明</span></label>
-              <textarea [(ngModel)]="shelf.description" class="form-control" name="description" id="description"
-                        required minlength="1"></textarea>
+        <form #form="ngForm" class="update-form" (ngSubmit)="registerShelf(form, shelf.books)">
+          <div class="form-group">
+            <!-- 本棚名 -->
+            <div class="shelf-title-area">
+              <h1>
+                <b><input [(ngModel)]="shelf.shelfName" type="text" class="form-control shelf-title" name="shelfName" required
+                          minlength="4" placeholder="本棚のタイトル..."></b>
+              </h1>
             </div>
-            <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
-              <ul class="book-list">
-                <li *ngFor="let book of shelf.books; let i = index"
-                    class="book-content flex-module-inner registered-book">
-                  <!-- 本の情報 -->
-                  <div class="remove-navigation" (click)="removeBook(i)">
-                    本棚から取り除く
+            <!-- 本棚の基本情報 -->
+            <div class="shelf-basic-info">
+              <ul class="shelf-data">
+                <li class="shelf-producer-image">
+                  <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
+                       class="user-profile-icon">
+                    <img class="profile-image" src="{{appComponent.profileImageLink}}"
+                         alt=""/>
                   </div>
-                  <div class="context">
-                    <div class="book-image">
-                      <img class="amazon-book-image"
-                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                           alt="画像が見つかりませんでした。" onerror="this.src='../../../assets/image/book/book_default_image.png';">
-                    </div>
-                    <ul class="book-title-data">
-                      <li class="book-title">{{book.title | slice: 0 :40}}</li>
-                      <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
-                      <ul class="authors">
-                        <li *ngFor="let author of book.authors; let i = index" class="author_name">
-                          <span *ngIf="i === 0">{{author.authorName}}</span>
-                          <span *ngIf="i > 0">, {{author.authorName}}</span>
-                        </li>
-                      </ul>
-                    </ul>
+                  <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
+                    <img class="profile-image"
+                         src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                         alt=""/>
                   </div>
                 </li>
+                <li>
+                  <ul class="producer-name-space">
+                    <li class="producer-name">{{appComponent.userName}}</li>
+                    <li class="producer-account-name"><span class="account-name">@{{appComponent.accountName}}</span>
+                    </li>
+                  </ul>
+                </li>
               </ul>
-            </div>
-            <div *ngIf="shelfBookCount === 0" class="shelf-books">
-              <div class="no-book-text">
-                <p><b>まだ本棚に本が登録されていません。</b></p>
-                <p><b>右メニューの「本棚に本を追加する」から本を追加できます。</b></p>
+              <div class="shelf-description">
+                <div class="shelf-description-text">
+                  <textarea [(ngModel)]="shelf.description" class="form-control" name="description" required
+                            minlength="1" placeholder="本棚の説明..."></textarea>
+                </div>
               </div>
             </div>
-            <div class="action-button">
-              <button type="submit" class="btn btn-primary update-button"><b>本棚を登録して公開する</b></button>
+            <!-- 本の情報 -->
+            <div class="module shelf-books">
+              <div class="shelf-book-module" *ngIf="shelfBookCount > 0">
+                <ul class="book-list">
+                  <li *ngFor="let book of shelf.books; let i = index"
+                      class="book-content flex-module-inner registered-book">
+                    <!-- 本の情報 -->
+                    <div class="remove-navigation" (click)="removeBook(i)">
+                      <p class="remove-text">本棚から取り除く</p>
+                    </div>
+                    <div class="context">
+                      <div class="book-image">
+                        <img class="amazon-book-image"
+                             src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                             alt="画像が見つかりませんでした。"
+                             onerror="this.src='../../../assets/image/book/book_default_image.png';">
+                      </div>
+                      <ul class="book-title-data">
+                        <li class="book-title">{{book.title | slice: 0 :40}}</li>
+                        <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
+                        <ul class="authors">
+                          <li *ngFor="let author of book.authors; let i = index" class="author_name">
+                            <span *ngIf="i === 0">{{author.authorName}}</span>
+                            <span *ngIf="i > 0">, {{author.authorName}}</span>
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="shelfBookCount === 0" class="shelf-books">
+                <div class="no-book-text">
+                  <p><b>まだ本棚に本が登録されていません。</b></p>
+                  <p><b>「本棚に本を追加」から本を追加できます。</b></p>
+                </div>
+              </div>
+              <div class="action-button">
+                <button type="submit" class="btn btn-primary update-button"><b>本棚を登録して公開する</b></button>
+              </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -125,7 +92,7 @@
   <!-- 右サイドバー(本の追加) -->
   <div class="SidebarBookModules">
     <div class="flex-module popular-book">
-      <div class="flex-module-header"><strong>本棚に追加する本を検索</strong></div>
+      <div class="flex-module-header"><strong>本棚に本を追加</strong></div>
       <div class="flex-module-inner">
         <!-- 検索フォーム -->
         <div class="search-form">
@@ -141,22 +108,21 @@
         <div class="module books">
           <ul class="sub-book-list">
             <li *ngFor="let book of searchedBooks" class="sub-book-content flex-module-inner">
-              <div *ngIf="shelf.books.indexOf(book) < 0 && shelfBookCount < 20" class="add-navigation"
-                   (click)="addBook(book)">
-                <p>本棚に追加する</p>
+              <div *ngIf="shelf.books.indexOf(book) < 0 && shelfBookCount < 20" class="add-navigation" (click)="addBook(book)">
+                <p class="add-navigation-text">本棚に追加する</p>
               </div>
               <div *ngIf="shelf.books.indexOf(book) >= 0 && shelfBookCount < 20" class="add-navigation disabled-area">
-                <p>本棚に追加済み</p>
+                <p class="add-navigation-text">本棚に追加済み</p>
               </div>
               <div *ngIf="shelfBookCount >= 20" class="add-navigation disabled-area">
-                <p>本棚は20冊まで</p>
+                <p class="add-navigation-text">本棚は20冊まで</p>
               </div>
               <ul class="context">
                 <li class="book-image">
-                      <img class="min-amazon-book-image"
-                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                           alt="画像が見つかりませんでした。" onerror="this.src='../../../assets/image/book/book_default_image.png';">
-                    </li>
+                  <img class="min-amazon-book-image"
+                       src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                       alt="画像が見つかりませんでした。" onerror="this.src='../../../assets/image/book/book_default_image.png';">
+                </li>
                 <li class="sub-book-info">
                   <ul class="book-title-data">
                     <li class="book-title">{{book.title | slice: 0 :40}}</li>

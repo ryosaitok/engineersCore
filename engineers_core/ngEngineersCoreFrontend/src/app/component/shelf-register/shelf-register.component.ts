@@ -12,6 +12,8 @@ import {BookService} from '../../service/book/book.service';
 import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.service';
 import {ShelfBookService} from '../../service/shelf-book/shelf-book.service';
+import {SigninService} from "../../service/signin/signin.service";
+import {UserService} from "../../service/user/user.service";
 
 @Component({
   selector: 'app-shelf-register',
@@ -34,6 +36,8 @@ export class ShelfRegisterComponent implements OnInit {
     private router: Router,
     private authGuard: AuthGuard,
     private appComponent: AppComponent,
+    private signinService: SigninService,
+    private userService: UserService,
     private bookService: BookService,
     private shelfService: ShelfService,
     private shelfCommentService: ShelfCommentService,
@@ -42,10 +46,33 @@ export class ShelfRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getLoginUser();
     this.initShelf();
   }
 
+  getLoginUser(): void {
+    this.signinService.getAuthUser().subscribe(response => {
+      this.userService.getUser(response.account_name).subscribe(res => {
+        const user = res;
+        this.appComponent.userId = user.id;
+        this.appComponent.accountName = user.account_name;
+        this.appComponent.userName = user.user_name;
+        this.appComponent.profileImageLink = user.profile_image_link;
+        this.appComponent.isLoggedIn = true;
+      });
+    }, error => {
+      this.appComponent.userId = null;
+      this.appComponent.accountName = null;
+      this.appComponent.userName = null;
+      this.appComponent.profileImageLink = null;
+      this.appComponent.isLoggedIn = false;
+    });
+  }
+
   initShelf(): void {
+    if (!this.authGuard.canActivate()) {
+      return;
+    }
     this.shelf = new Shelf(null, null, [], null, null, null, null,
       null, [], [], null, null, []);
     this.shelfBookCount = 0;
