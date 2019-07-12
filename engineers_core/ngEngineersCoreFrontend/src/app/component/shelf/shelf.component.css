@@ -38,10 +38,16 @@ a:hover {
     }
 }
 
-/* Tablet用のスタイル(画面サイズが480~1024px以上の場合) */
-@media screen and (min-width:480px) and (max-width: 1024px) {
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
     .AppContainer {
-        max-width: 1024px;
+        max-width: 1240px;
+    }
+    .AppContent-main {
+    }
+    .ShelvesModules {
+        width: 100%;
+        padding: 10px;
     }
     .shelf-book-info {
         font-size: 18px;
@@ -54,8 +60,8 @@ a:hover {
     }
 }
 
-/* PC用のスタイル(画面サイズが1024px以上の場合) */
-@media screen and (min-width: 1024px) {
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
     .AppContainer {
         max-width: 1024px;
     }

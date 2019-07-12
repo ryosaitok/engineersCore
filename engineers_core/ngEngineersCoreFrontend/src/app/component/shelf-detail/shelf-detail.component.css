@@ -51,10 +51,10 @@ ul {
     }
 }
 
-/* Tablet用のスタイル(画面サイズが480~890px以上の場合) */
-@media screen and (min-width:480px) and (max-width: 1024px) {
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
     .AppContainer {
-        max-width: 1024px;
+        max-width: 1240px;
     }
     .AppContent-main {
     }
@@ -77,8 +77,8 @@ ul {
     }
 }
 
-/* PC用のスタイル(画面サイズが890px以上の場合) */
-@media screen and (min-width: 1024px) {
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
     .AppContainer {
         max-width: 1024px;
     }
@@ -106,19 +106,8 @@ ul {
 }
 
 /* メインコンテンツ */
-@media screen and (min-width: 1236px) {
-  .AppContainer {
-    max-width: 1190px;
-  }
-}
 .AppContainer {
     margin: 0 auto;
-}
-@media (min-width: 1236px) {
-  .ShelfBooksModules {
-    float: left;
-    margin: auto;
-  }
 }
 .ShelfBooksModules {
     position: unset;

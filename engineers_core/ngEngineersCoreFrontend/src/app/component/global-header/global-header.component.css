@@ -36,9 +36,6 @@ header {
         padding-right: 0;
         padding-left: 0;
     }
-    .top-bar, .global-nav, .global-nav-inner, .container {
-          max-width: 440px
-    }
     .Icon {
         font-size: 16px;
         margin: 15px 0;
@@ -48,14 +45,11 @@ header {
     }
 }
 
-/* Tablet用のスタイル(画面サイズが480~890px以上の場合) */
-@media screen and (min-width:480px) and (max-width: 1024px) {
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
     .global-nav {
         padding-right: 20px;
         padding-left: 20px;
-    }
-    .top-bar, .global-nav, .global-nav-inner, .container {
-          max-width: 984px
     }
     .Icon {
         font-size: 20px;
@@ -66,8 +60,8 @@ header {
     }
 }
 
-/* PC用のスタイル(画面サイズが890px以上の場合) */
-@media screen and (min-width: 1024px) {
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
     .global-nav {
         padding-right: 130px;
         padding-left: 130px;
