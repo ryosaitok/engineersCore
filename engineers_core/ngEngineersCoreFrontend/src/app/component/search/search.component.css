@@ -258,9 +258,14 @@ ul.book-title-data {
     text-align: center;
     margin-bottom: 5px;
 }
+.search-book-image {
+    width: 100%;
+}
+.feature-book-image {
+    width: 35%;
+}
 .amazon-book-image {
-    width: 120px;
-    height: 165px;
+    width: 100%;
     border: 1px solid #e6ecf0;
 }
 ul.book-title-data li {
