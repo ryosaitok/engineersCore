@@ -1,3 +1,7 @@
+<div *ngIf="!pageFound">
+  <app-page-not-found></app-page-not-found>
+</div>
+
 <div class="page-outer" *ngIf="!notFound">
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
@@ -467,8 +471,4 @@
     </div>
     <!-- 右サイドバー -->
   </div>
-</div>
-
-<div *ngIf="!pageFound">
-  <app-page-not-found></app-page-not-found>
 </div>

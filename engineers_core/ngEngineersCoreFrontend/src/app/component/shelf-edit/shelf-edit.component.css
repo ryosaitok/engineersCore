@@ -1,5 +1,3 @@
-.page-outer {
-}
 a {
     color: #222222;
     text-decoration: none;
@@ -13,136 +11,152 @@ a:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
-/* 本棚名ナビ */
-.ShelfNameNavigation {
-}
-.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
-    background-color: #337ab7 !important;
-}
-.ShelfNameNavigation-canopy {
-    background-color: #337ab7;
-    padding: 14px 0;
-}
-.ShelfNameNavigation-textContainer {
-    color: #fff;
-    margin: 0 auto;
-    max-width: 1190px;
-}
-.ShelfNameNavigationText {
-    word-break: break-all;
-}
-.ShelfNameNavigation-titleText {
-    color: #fff;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-h1 {
-    font-size: 24px;
-    font-weight: bold;
-    text-rendering: optimizeLegibility;
-    margin: 0;
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-/* 本棚の基本情報 */
-.hide-area {
-    opacity: 0.2;
+/* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
+@media screen and (min-width:0px) and (max-width: 480px) {
+    .AppContainer {
+        max-width: 480px;
+    }
+    .AppContent-main {
+    }
+    .ShelfBooksModules, .SidebarBookModules {
+        width: 100%;
+        padding: 8px;
+    }
+    .shelf-title {
+        font-size: 18px;
+    }
+    .book-content {
+        width: 95%;
+        margin: 10px 0;
+    }
+    .remove-navigation {
+        width: 90%;
+        height: 120px;
+    }
+    .remove-text {
+	      transform: translateY(210%);
+    }
+    .book-image {
+        float: left;
+        width: 30%;
+        margin-left: 10px;
+    }
+    ul.book-title-data {
+        padding-left: 37%;
+    }
+    .sub-book-info {
+        width: 65%;
+    }
+    .add-navigation {
+        width: 90%;
+        height: 120px;
+    }
+    .add-navigation-text {
+	      transform: translateY(210%);
+    }
+    ul.context > li {
+        display: inline-block;
+    }
+    .sub-book-content {
+        border-bottom: 1px solid #e6ecf0;
+    }
 }
-.ShelfNavigation {
-    border-bottom: 1px solid #e6ecf0;
+
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
+    .AppContainer {
+        max-width: 1240px;
+    }
+    .AppContent-main {
+    }
+    .ShelfBooksModules, .SidebarBookModules {
+        width: 100%;
+        padding: 10px;
+    }
+    .shelf-title {
+        font-size: 20px;
+    }
+    .book-content {
+        width: 20%;
+        padding: 8px;
+    }
+    .remove-navigation {
+        width: 18%;
+        height: 220px;
+    }
+    .remove-text {
+	      transform: translateY(450%);
+    }
+    .sub-book-content {
+        width: 17%;
+    }
+    .add-navigation {
+        width: 18%;
+        height: 220px;
+    }
+    .add-navigation-text {
+        transform: translateY(450%);
+    }
+    ul.context > li {
+        display: table-cell;
+    }
 }
-.ShelfNavigation-canopy {
-    background-color: #ffffff;
-    padding: 10px 0;
-}
-.ShelfNavigation-textContainer {
-    color: #222222;
-    margin: 0 0 0 125px;
-    max-width: 900px;
-}
-.ShelfNavigation-titleText {
-    font-size: 15px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.shelf-menu {
-    float: right;
-}
-ul.shelf-data {
-    float: left;
-    list-style: none;
-    margin-bottom: 0 !important;
-    width: 200px;
-    padding-left: 0;
-}
-ul.shelf-data li {
-    margin-right: 10px;
-}
-.shelf-producer-image {
-}
-.profile-image {
-    height: 45px;
-    width: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: text-top !important;
-}
-.shelf-producer-image, .producer-name, .producer-account-name {
-    float: left;
-}
-ul.producer-name-space {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 55px;
-}
-ul.producer-name-space li {
-    display: inline-block;
-    margin-right: 4px;
-}
-.producer-name {
-    font-weight: bold;
-}
-.producer-name, .producer-account-name {
-    margin-top: 0;
-    font-size: 14px;
-}
-.producer-account-name {
-    color: #657786;
-}
-.shelf-description {
-    margin-left: 220px;
-}
-.shelf-description-text {
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    padding: 1px;
-}
-ul.space-for-description {
-    margin: 5px 0 0 220px;
-}
-ul.comment-reactions {
-    list-style: none;
-    padding-left: 0;
-}
-ul.comment-reactions li {
-    display: inline-block;
-    margin-right: 10px;
-}
-ul.comment-reaction {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
-}
-ul.comment-reaction li {
-    display: inline-block;
-    margin-right: 4px;
-}
-ul.comment-reaction li > span {
-    color: #cccccc;
-}
-ul.comment-reaction li > span.favorite-done {
-    color: #f08080;
+
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
+    .AppContainer {
+        max-width: 1024px;
+    }
+    .AppContent-main {
+        margin: 15px auto 0;
+        min-width: 890px;
+    }
+    .ShelfBooksModules {
+        width: 850px;
+        padding: 15px;
+    }
+    .shelf-title {
+        font-size: 22px;
+    }
+    .book-content {
+        width: 20%;
+        padding: 8px;
+    }
+    .remove-navigation {
+        width: 10.5%;
+        height: 250px;
+    }
+    .remove-text {
+	      transform: translateY(550%);
+    }
+    .SidebarBookModules {
+        float: left;
+        margin: 0 10px;
+        width: 290px;
+    }
+    .add-navigation {
+        width: 19%;
+        height: 115px;
+    }
+    .add-navigation-text {
+        transform: translateY(220%);
+    }
+    ul.context > li {
+        display: table-cell;
+    }
+    .search-book-image {
+        float: left;
+        width: 30%;
+        margin-left: 10px;
+    }
+    ul.search-book-title-data {
+        padding-left: 37%;
+    }
 }
 
 /* メインコンテンツ */
@@ -154,12 +168,6 @@ ul.comment-reaction li > span.favorite-done {
 .AppContainer {
     margin: 0 auto;
 }
-.AppContent-main {
-    margin: 15px auto 0;
-    max-width: 1190px;
-    min-width: 890px;
-}
-
 @media (min-width: 1236px) {
   .ShelfBooksModules {
     float: left;
@@ -167,17 +175,127 @@ ul.comment-reaction li > span.favorite-done {
   }
 }
 .ShelfBooksModules {
-    width: 850px;
     position: unset;
     background-color: #fff;
     border: 1px solid #e6ecf0;
-    margin-bottom: 50px;
 }
 
-.form-group {
-    width: 80%;
-    margin: 20px 0 5px 60px;
+/* 本棚名ナビ */
+.shelf-title-area {
+    width: 90%;
+    margin: 20px;
 }
+.shelf-title {
+    word-break: break-all;
+}
+
+/* 本棚の基本情報 */
+.shelf-menu {
+    float: right;
+    margin: 20px;
+}
+.dropdown-menu {
+    top: 18px;
+    left: -140px;
+}
+ul.shelf-data {
+    margin: 20px;
+    padding: 0;
+}
+ul.shelf-data li {
+    margin-right: 10px;
+}
+.user-profile-icon {
+    position: absolute;
+}
+.profile-image {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: text-top;
+}
+ul.producer-name-space {
+    margin-bottom: 0;
+    padding: 5px 0 0 50px;
+}
+ul.producer-name-space li {
+    margin-right: 4px;
+}
+.producer-name {
+    font-weight: bold;
+}
+.producer-name, .producer-account-name {
+    margin-top: 0;
+    font-size: 14px;
+}
+.account-name {
+    color: #657786;
+}
+.shelf-description {
+    margin: 10px 20px;
+}
+.shelf-description-text {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    padding: 1px;
+}
+ul.space-for-description {
+    margin: 0 20px 20px;
+}
+
+.shelf-books {
+    margin: 30px 0;
+}
+ul.book-list {
+    margin: 10px 0;
+    padding: 0;
+}
+ul.book-list > li {
+    vertical-align: top;
+    display: inline-block;
+}
+.book-content {
+    font-size: 12px;
+}
+.book-image {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.amazon-book-image {
+    border: 1px solid #e6ecf0;
+    width: 88%;
+}
+ul.book-title-data {
+    margin-bottom: 0;
+}
+ul.book-title-data li {
+    margin: 4px 0;
+}
+.book-title {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+ul.authors {
+    margin-bottom: 0;
+}
+ul.authors li {
+    display: inline;
+}
+.author-name {
+    width: auto;
+}
+.sale-date {
+    font-size: 12px;
+    color: #657786;
+}
+
+.no-book-text {
+    margin: 20px;
+    line-height: 16px;
+    text-align: center;
+}
+
 .form-control {
     border: 0 solid #ccc;
     border-bottom: 1px solid #ccc;
@@ -187,28 +305,9 @@ ul.comment-reaction li > span.favorite-done {
     box-shadow: none;
     transition: none;
 }
-
-ul.book-list {
-    list-style: none;
-    margin: 0 8px;
-    padding: 5px 0;
-}
-ul.book-list > li {
-    width: 145px;
-    vertical-align: top;
-    display: inline-block;
-}
-.book-content {
-    font-size: 12px;
-    margin: 5px 10px;
-    padding: 10px 0;
-}
 .remove-navigation {
     opacity: 0;
-    width: 145px;
-    height: 170px;
     position: absolute;
-    padding: 80px 8px;
     border-radius: 5px;
     font-size: 16px;
     background-color: #222222;
@@ -219,41 +318,8 @@ ul.book-list > li {
     opacity: 0.7;
     cursor: pointer;
 }
-.book-image {
+.remove-text {
     text-align: center;
-    margin-bottom: 5px;
-}
-.amazon-book-image {
-    width: 120px;
-    height: 165px;
-    border: 1px solid #e6ecf0;
-}
-ul.book-title-data {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
-}
-ul.book-title-data li {
-    margin: 1px 0;
-}
-.book-title {
-    font-weight: bold;
-    word-wrap: break-word;
-}
-ul.authors {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
-}
-ul.authors li {
-    display: inline;
-}
-.author-name {
-    width: auto !important;
-}
-.sale-date {
-    font-size: 12px;
-    color: #657786 !important;
 }
 .add-book {
     text-align: center;
@@ -267,26 +333,17 @@ ul.authors li {
 .add-book-button:hover {
     background-color: #337ab7;
 }
-.no-book-text {
-    margin: 20px;
-    line-height: 16px;
-    text-align: center;
-}
-
 .action-button {
     text-align: center;
 }
 .update-button, .delete-button {
-    margin: 30px 50px;
     border-radius: 0;
 }
 
 /* 右サイドバー */
 .SidebarBookModules {
-    float: left;
-    margin: 0 10px;
-    width: 290px;
     background-color: white;
+    padding-bottom: 20px;
 }
 .flex-module-header {
     margin: 15px;
@@ -297,8 +354,7 @@ ul.authors li {
 .sub-book-content {
     font-size: 12px;
     margin: 0 10px;
-    padding: 10px 0 0 0;
-    border-bottom: 1px solid #e6ecf0;
+    padding: 10px 0 10px 0;
 }
 ul.sub-book-list {
     list-style: none;
@@ -311,10 +367,7 @@ ul.sub-book-list > li {
 }
 .add-navigation {
     opacity: 0;
-    width: 270px;
-    height: 120px;
     position: absolute;
-    padding: 45px 75px;
     border-radius: 5px;
     font-size: 16px;
     background-color: #222222;
@@ -325,16 +378,16 @@ ul.sub-book-list > li {
     opacity: 0.7;
     cursor: pointer;
 }
+.add-navigation-text {
+    text-align: center;
+}
 .disabled-area:hover {
     cursor: not-allowed;
 }
 ul.context {
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
-}
-ul.context > li {
-    display: table-cell;
 }
 li.sub-book-info {
     padding-left: 8px;
