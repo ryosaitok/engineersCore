@@ -152,10 +152,9 @@ ul {
     .search-book-image {
         float: left;
         width: 30%;
-        margin-left: 10px;
     }
     ul.search-book-title-data {
-        padding-left: 37%;
+        padding-left: 33%;
     }
 }
 
@@ -265,10 +264,6 @@ ul.book-list > li {
 .amazon-book-image {
     border: 1px solid #e6ecf0;
     width: 88%;
-}
-ul.book-title-data {
-    margin-bottom: 0;
-    padding: 0;
 }
 ul.book-title-data li {
     margin: 4px 0;

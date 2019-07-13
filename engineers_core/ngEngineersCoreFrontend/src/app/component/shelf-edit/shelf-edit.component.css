@@ -152,10 +152,9 @@ ul {
     .search-book-image {
         float: left;
         width: 30%;
-        margin-left: 10px;
     }
     ul.search-book-title-data {
-        padding-left: 37%;
+        padding-left: 33%;
     }
 }
 
