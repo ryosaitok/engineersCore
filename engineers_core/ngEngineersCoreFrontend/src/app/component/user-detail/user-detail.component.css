@@ -34,6 +34,9 @@ ul {
     .ContentsModules {
         width: 100%;
     }
+    .MenuNavigation-titleText {
+        font-size: 13px;
+    }
     .menu-navigation {
         display: none;
     }
@@ -78,6 +81,9 @@ ul {
     }
     .ContentsModules {
         width: 100%;
+    }
+    .MenuNavigation-titleText {
+        font-size: 14px;
     }
     /* 読んだコメント */
     .comment-book-image {
@@ -126,6 +132,9 @@ ul {
         float: left;
         margin: 0 10px;
         width: 850px;
+    }
+    .MenuNavigation-titleText {
+        font-size: 16px;
     }
     .action-button {
         width: 850px;
