@@ -121,11 +121,11 @@
                 </li>
                 <li class="shelf-info-area">
                   <!-- 本棚の名前 -->
-                  <h4 class="shelf-book-info">
+                  <div class="shelf-book-info">
                     <div class="ShelfNameItem-context">
                       <a routerLink="/shelf/{{shelf.shelfId}}/"><b>{{shelf.shelfName}}</b></a>
                     </div>
-                  </h4>
+                  </div>
                   <div class="shelf-reaction">
                     <ul class="shelf-reactions">
                       <li>
@@ -162,8 +162,8 @@
               <!-- 本棚の本の一覧 -->
               <div class="shelf-books">
                 <div class="ShelfItem-context">
-                  <ul class="shelf-book-list">
-                    <li *ngFor="let book of shelf.books; let i = index" class="shelf-book-content">
+                  <ul class="book-list">
+                    <li *ngFor="let book of shelf.books; let i = index" class="book-content">
                       <div class="context">
                         <div class="shelf-book-image">
                           <a class="amazon-book-detail"
@@ -173,7 +173,7 @@
                                  src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
                                  onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
                         </div>
-                        <ul class="book-title-data shelf-book-title-data">
+                        <ul class="book-title-data display-none-in-sp">
                           <a routerLink="/book/{{book.id}}">
                             <li class="book-title">{{book.title | slice: 0 :40}}</li>
                           </a>
@@ -381,7 +381,7 @@
                             <li>
                               <form #f="ngForm" class="comment-form">
                                 <div class="form-group">
-                              <textarea ngModel class="form-control" name="comment"
+                              <textarea ngModel class="form-control comment-text-form" name="comment"
                                         placeholder="{{comment.user.userName}}さんのコメントに対する返信を追加..."
                                         required maxlength="255"></textarea>
                                 </div>
@@ -542,7 +542,7 @@
                            src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{interested.book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
                            onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
                   </div>
-                  <ul class="book-title-data">
+                  <ul class="book-title-data display-none-in-sp">
                     <a routerLink="/book/{{interested.book.id}}">
                       <li class="book-title">{{interested.book.title | slice: 0 :40}}</li>
                     </a>

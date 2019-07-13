@@ -27,9 +27,6 @@ ul {
         width: 100%;
         padding: 8px;
     }
-    .shelf-title {
-        font-size: 18px;
-    }
     .book-content {
         width: 95%;
         margin: 10px 0;
@@ -62,9 +59,6 @@ ul {
         width: 100%;
         padding: 10px;
     }
-    .shelf-title {
-        font-size: 20px;
-    }
     .book-content {
         width: 20%;
         padding: 8px;
@@ -89,9 +83,6 @@ ul {
     .ShelfBooksModules {
         width: 850px;
         padding: 15px;
-    }
-    .shelf-title {
-        font-size: 22px;
     }
     .book-content {
         width: 20%;
@@ -325,7 +316,7 @@ ul.comment-user-name-space {
     font-weight: bold;
 }
 .comment {
-    padding: 5px 35px 5px 55px;
+    padding: 5px 35px 0 55px;
     white-space: pre-line;
 }
 ul.space-for-comment {

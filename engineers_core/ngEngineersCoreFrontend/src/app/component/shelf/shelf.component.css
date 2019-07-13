@@ -30,9 +30,6 @@ a:hover {
     .book-title-data {
         display: none;
     }
-    .shelf-book-info {
-        font-size: 16px;
-    }
     .shelf-info {
         width: 77%;
     }
@@ -49,9 +46,7 @@ a:hover {
         width: 100%;
         padding: 10px;
     }
-    .shelf-book-info {
-        font-size: 18px;
-    }
+
     .shelf-info {
         width: 84%;
     }
@@ -71,9 +66,6 @@ a:hover {
     }
     .ShelvesModules {
         width: 850px;
-    }
-    .shelf-book-info {
-        font-size: 18px;
     }
     .shelf-info {
         width: 91%;

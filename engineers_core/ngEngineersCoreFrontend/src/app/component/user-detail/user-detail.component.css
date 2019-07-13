@@ -43,7 +43,7 @@ ul {
     .shelf-info-area {
         width: 72%;
     }
-    .shelf-book-title-data {
+    .display-none-in-sp {
         display: none;
     }
     /* 読んだコメント */
@@ -68,6 +68,9 @@ ul {
     }
     .comment-content {
         margin-top: 20px;
+    }
+    .comment-text-form {
+        font-size: 12px;
     }
 }
 
@@ -330,16 +333,16 @@ ul.shelf-reaction li > span.shelf-reaction-heart:hover {
 ul.shelf-reaction li > span.favorite-done {
     color: #f08080;
 }
-ul.shelf-book-list {
+ul.book-list {
     margin-bottom: 0;
     padding: 0;
 }
-ul.shelf-book-list > li {
+ul.book-list > li {
     width: 20%;
     vertical-align: top;
     display: inline-block;
 }
-.shelf-book-content {
+.book-content {
     font-size: 12px;
 }
 .shelf-book-image {
@@ -437,7 +440,6 @@ ul.authors li {
     word-break: break-word;
 }
 .comment-text, .comment-reaction {
-    padding-top: 5px;
     white-space: pre-line;
     line-height: normal;
 }
@@ -494,20 +496,6 @@ ul.comment-reaction li > span.favorite-done {
 .book-module {
     padding: 10px;
     line-height: 16px;
-}
-ul.book-list {
-    margin-bottom: 0 !important;
-    padding: 0 !important;
-}
-ul.book-list > li {
-    width: 145px;
-    vertical-align: top;
-    display: inline-block;
-}
-.book-content {
-    font-size: 12px;
-    margin: 5px 10px;
-    padding: 10px 0;
 }
 .book-image {
     text-align: center;
@@ -595,7 +583,7 @@ ul.comment-user-name-space {
     font-weight: bold;
 }
 .comment {
-    padding: 5px 0 5px 55px;
+    padding: 0 0 0 55px;
     white-space: pre-line;
 }
 ul.space-for-comment {
