@@ -1,58 +1,47 @@
 <div class="page-outer">
   <!-- 検索クエリ -->
   <div class="SearchNavigation">
-    <div class="SearchNavigation-canopy u-bgUserColor">
-      <div class="SearchNavigation-textContainer">
-        <!-- 検索フォーム -->
-        <div class="search-form">
-          <nav>
-            <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
-              <ul class="search-form">
-                <li>
-                  <div class="form-group">
-                    <input class="form-control" type="text" name="query" id="search-query" ngModel
-                           placeholder="検索する...">
-                  </div>
-                </li>
-              </ul>
-            </form>
-          </nav>
-        </div>
+    <div class="SearchNavigation-textContainer">
+      <!-- 検索フォーム -->
+      <div class="search-form">
+        <nav>
+          <form #f="ngForm" (ngSubmit)="search(f)" novalidate>
+            <div class="search-form">
+              <div class="form-group">
+                <input class="form-control" type="text" name="query" id="search-query" ngModel placeholder="検索する...">
+              </div>
+            </div>
+          </form>
+        </nav>
       </div>
     </div>
-  </div>
-  <!-- ナビゲーションメニュー -->
-  <div class="MenuNavigation">
-    <div class="MenuNavigation-canopy">
-      <div class="MenuNavigation-textContainer">
-        <div class="MenuNavigation-titleText" dir="ltr">
-          <ul class="navigation-menu">
-            <li>
-              <ul class="title-search">
-                <li class="search-link" [class]="titleSelected"
-                    (click)="searchBooksByTitle(query, null, null)">
-                  <span class="search-books icon"><fa-icon [icon]="faBook"></fa-icon> タイトル</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <ul class="author-search">
-                <li class="search-link" [class]="authorSelected"
-                    (click)="searchBooksByAuthorName(query, null, null)">
-                  <span class="search-books icon"><fa-icon [icon]="faBook"></fa-icon> 著者</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <ul class="user-search">
-                <li class="search-link" [class]="userSelected" (click)="searchUsersByUser(query, null, null)">
-                  <span class="search-users icon"><fa-icon [icon]="faUser"></fa-icon> ユーザー</span>
-                </li>
-              </ul>
+    <!-- ナビゲーションメニュー -->
+    <div class="search-menu">
+      <ul class="navigation-menu">
+        <li>
+          <ul class="title-search">
+            <li class="search-link" [class]="titleSelected"
+                (click)="searchBooksByTitle(query, null, null)">
+              <span class="search-books icon"><fa-icon [icon]="faBook"></fa-icon> タイトル</span>
             </li>
           </ul>
-        </div>
-      </div>
+        </li>
+        <li>
+          <ul class="author-search">
+            <li class="search-link" [class]="authorSelected"
+                (click)="searchBooksByAuthorName(query, null, null)">
+              <span class="search-books icon"><fa-icon [icon]="faBook"></fa-icon> 著者</span>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <ul class="user-search">
+            <li class="search-link" [class]="userSelected" (click)="searchUsersByUser(query, null, null)">
+              <span class="search-users icon"><fa-icon [icon]="faUser"></fa-icon> ユーザー</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -168,7 +157,9 @@
                                alt=""/>
                         </div>
                         <div *ngIf="user.profileImageLink === null" class="user-icon">
-                          <img class="avatar" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
+                          <img class="avatar"
+                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                               alt=""/>
                         </div>
                       </a>
                       <a routerLink="/user/{{user.userAccountName}}">
