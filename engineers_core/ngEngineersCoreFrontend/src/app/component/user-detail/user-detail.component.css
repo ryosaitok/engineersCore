@@ -40,6 +40,9 @@ ul {
     .menu-navigation {
         display: none;
     }
+    .shelf-info-area {
+        width: 72%;
+    }
     .shelf-book-title-data {
         display: none;
     }
@@ -84,6 +87,9 @@ ul {
     }
     .MenuNavigation-titleText {
         font-size: 14px;
+    }
+    .shelf-info-area {
+        width: 82%;
     }
     /* 読んだコメント */
     .comment-book-image {
@@ -135,6 +141,9 @@ ul {
     }
     .MenuNavigation-titleText {
         font-size: 16px;
+    }
+    .shelf-info-area {
+        width: 90%;
     }
     .action-button {
         width: 850px;
