@@ -1,79 +1,4 @@
 <div class="page-outer" *ngIf="pageFound">
-  <!-- 本のタイトル -->
-  <div class="BookNavigation">
-    <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
-       target="_blank">
-      <div class="BookNavigation-canopy u-bgUserColor">
-        <div class="BookNavigation-textContainer">
-          <h1 class="BookNavigation-titleText" dir="ltr">
-            <span class="book-title-navigation"><fa-icon
-              [icon]="faBook"></fa-icon></span> {{book.title}}
-          </h1>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left"><b>読んだ本コメントする</b></h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="book-action-button">
-        <div>
-          <form #f="ngForm">
-            <div class="form-group">
-              <label for="comment" class="control-label col-md-2">本の感想:</label>
-              <textarea ngModel class="form-control" style="width:80%;" name="comment" id="comment" placeholder="本の感想は？"
-                        required maxlength="255"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="readDate" class="control-label col-md-2">読んだ日:</label>
-              <input ngModel type="date" class="form-control" id="readDate" style="width:30%;" name="readDate">
-            </div>
-            <button type="submit" class="btn btn-primary" (click)="registerBookComment(f)">
-              <strong><b>コメント</b></strong>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template #repliesTemplate>
-    <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="user-info">
-        コメント主の情報
-      </div>
-      <div class="book-comment">
-        コメント内容
-      </div>
-      <div class="comment-reactions">
-        コメントに対してのリアクション
-      </div>
-      <div class="reaction-users">
-        コメントにリアクションしたユーザーたち
-      </div>
-      <div class="reaction-buttons">
-        リアクションボタン
-      </div>
-      <div class="reply-field">
-        返信フィールド
-      </div>
-      <div class="reply-comments">
-        返信コメントのリスト
-      </div>
-    </div>
-  </ng-template>
-
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
       <!-- 左サイドバー(本の情報) -->
@@ -82,28 +7,25 @@
         <div class="module book">
           <div class="flex-module">
             <div class="flex-module-header"></div>
-            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
+            <div class="dashboard-book-detail flex-module-inner" data-section-id="wtf"
                  style="opacity: 1;">
               <div class="book-image item">
                 <div class="BookImageItem-context">
-                  <div class="content">
-                    <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
-                       target="_blank">
-                      <img class="amazon-book-image"
-                           src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
-                           onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
-                  </div>
+                  <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
+                     target="_blank">
+                    <img class="amazon-book-image"
+                         src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
+                         onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
                 </div>
               </div>
               <div class="book-basic-info item">
-                <div class="BookBasicInfoItem-context">
-                  <div class="content">
-                    <div class="book-info-text book-title">
-                      <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
-                         target="_blank">
-                        <strong><b>{{book.title}}</b></strong>
-                      </a>
-                    </div>
+                <div class="book-data">
+                  <ul class="book-title-data">
+                    <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
+                       target="_blank">
+                      <li class="book-title">{{book.title}}</li>
+                    </a>
+                    <li class="sale-date">{{book.saleDate | date:"yyyy年M月d日"}}</li>
                     <ul class="authors">
                       <li *ngFor="let author of book.authors; let i = index" class="author_name">
                         <a *ngIf="i === 0" [routerLink]="['/search/']"
@@ -112,63 +34,8 @@
                            [queryParams]="{ author : author.authorName }">, {{author.authorName}}</a>
                       </li>
                     </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="book-detail-info item">
-                <div class="BookDetailInfoItem-context">
-                  <div class="content">
-                    <div class="book-info-text book-sale-date">
-                      <span><b>{{book.saleDate | date:"yyyy年M月d日" }} 発売</b></span>
-                    </div>
-                    <div class="book-info-text book-page-count">
-                      <span><b>{{book.pagesCount}} ページ</b></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 本の読んだ・読みたい登録 -->
-        <div class="module register">
-          <div class="flex-module">
-            <div class="flex-module-header">
-              <strong>本の登録</strong>
-            </div>
-            <div class="js-book-detail dashboard-book-detail flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
-              <div class="book-read item">
-                <div class="BookReadItem-context">
-                  <div class="content">
-                    <div class="book-read">
-                      <div class="book-action-button">
-                        <button type="submit" class="btn btn-primary" (click)="openModal(template)">
-                          <strong><b>読んだ本コメントする</b></strong>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="interested-read item">
-                <div class="BookInterestedItem-context">
-                  <div class="content">
-                    <div class="book-interested">
-                      <div class="book-action-button">
-                        <div *ngIf="!isInterested">
-                          <form (ngSubmit)="interested(book.id)">
-                            <button type="submit" class="btn btn-primary"><strong><b>読みたい本に登録する</b></strong></button>
-                          </form>
-                        </div>
-                        <div *ngIf="isInterested">
-                          <form (ngSubmit)="notInterested(book.id)">
-                            <button type="submit" class="btn btn-success"><strong><b>読みたい本に登録済み</b></strong></button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    <li>{{book.pagesCount}} ページ</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -184,20 +51,54 @@
                  style="opacity: 1;">
               <div class="book-comment item">
                 <div class="BookCommentItem-context">
-                  <div class="content">
-                    <div class="book-comment-count">
-                      <!-- TODO -->
-                      <strong><b>読んだコメント {{bookCommentCount}}件</b></strong>
-                    </div>
+                  <div class="book-comment-count">
+                    <strong><b>読んだコメント {{bookCommentCount}}件</b></strong>
                   </div>
                 </div>
               </div>
               <div class="book-interested item">
                 <div class="BookInterestedCountItem-context">
-                  <div class="content">
-                    <div class="book-interested-count">
-                      <!-- TODO -->
-                      <strong><b>読みたい本登録 {{bookInterestedCount}}人</b></strong>
+                  <div class="book-interested-count">
+                    <strong><b>読みたい本登録 {{bookInterestedCount}}人</b></strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 本の読んだ・読みたい登録 -->
+        <div class="module register">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>本の登録</strong>
+            </div>
+            <div class="interested-read item">
+              <div class="BookInterestedItem-context">
+                <div class="book-interested">
+                  <div class="book-action-button">
+                    <div *ngIf="!isInterested">
+                      <form (ngSubmit)="interested(book.id)">
+                        <button type="submit" class="btn btn-primary"><strong><b>読みたい本に登録する</b></strong></button>
+                      </form>
+                    </div>
+                    <div *ngIf="isInterested">
+                      <form (ngSubmit)="notInterested(book.id)">
+                        <button type="submit" class="btn btn-success"><strong><b>読みたい本に登録済み</b></strong></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard-book-detail flex-module-inner" data-section-id="wtf"
+                 style="opacity: 1;">
+              <div class="book-read item">
+                <div class="BookReadItem-context">
+                  <div class="book-read">
+                    <div class="book-action-button">
+                      <button type="submit" class="btn btn-primary" (click)="openModal(template)">
+                        <strong><b>読んだ本コメントする</b></strong>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -218,9 +119,7 @@
               <div class="book-comment">
                 <div class="BookCommentItem-context">
                   <!-- いいねしたユーザーの情報など -->
-                  <div class="context"></div>
                   <div class="comment-content">
-
                     <div class="comment-menu">
                       <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown
                            [insideClick]="true">
@@ -279,7 +178,9 @@
                                  alt=""/>
                           </div>
                           <div *ngIf="comment.user.profileImageLink === null" class="user-icon">
-                            <img class="avatar" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
+                            <img class="avatar"
+                                 src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                 alt=""/>
                           </div>
                           <div class="user-name">
                             {{comment.user.userName}} @{{comment.user.userAccountName}}
@@ -427,7 +328,8 @@
                                       </div>
                                       <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                         <img class="min-profile-image"
-                                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
+                                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                             alt=""/>
                                       </div>
                                     </a>
                                   </li>
@@ -489,3 +391,63 @@
 <div *ngIf="!pageFound">
   <app-page-not-found></app-page-not-found>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><b>読んだ本コメントする</b></h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="book-action-button">
+      <div>
+        <form #f="ngForm">
+          <div class="form-group">
+            <label for="comment" class="control-label col-md-2">本の感想:</label>
+            <textarea ngModel class="form-control book-comment-form" name="comment" id="comment" placeholder="本の感想は？"
+                      required maxlength="255"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="readDate" class="control-label col-md-2">読んだ日:</label>
+            <input ngModel type="date" class="form-control book-comment-date-form" id="readDate" name="readDate">
+          </div>
+          <button type="submit" class="btn btn-primary" (click)="registerBookComment(f)">
+            <strong><b>コメント</b></strong>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #repliesTemplate>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="user-info">
+      コメント主の情報
+    </div>
+    <div class="book-comment">
+      コメント内容
+    </div>
+    <div class="comment-reactions">
+      コメントに対してのリアクション
+    </div>
+    <div class="reaction-users">
+      コメントにリアクションしたユーザーたち
+    </div>
+    <div class="reaction-buttons">
+      リアクションボタン
+    </div>
+    <div class="reply-field">
+      返信フィールド
+    </div>
+    <div class="reply-comments">
+      返信コメントのリスト
+    </div>
+  </div>
+</ng-template>

@@ -80,7 +80,7 @@ ul {
 /* PC用のスタイル(画面サイズが1240px以上の場合) */
 @media screen and (min-width: 1240px) {
     .AppContainer {
-        max-width: 1024px;
+        max-width: 1190px;
     }
     .AppContent-main {
         margin: 15px auto 0;
