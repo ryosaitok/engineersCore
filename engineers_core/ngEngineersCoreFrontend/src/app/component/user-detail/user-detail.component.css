@@ -1,5 +1,3 @@
-.page-outer {
-}
 a {
     color: #222222;
     text-decoration: none;
@@ -9,183 +7,147 @@ a:visited {
     text-decoration: none;
 }
 a:hover {
-    color: #337ab7 !important;
+    color: #337ab7;
+    text-decoration: none;
     cursor: pointer;
+}
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 .selected {
     color: #337ab7;
     font-weight: bold;
 }
 
-/* 本のタイトルナビ */
-.UserNavigation {
-    backface-visibility: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 46px;
-}
-.UserNavigation-canopy {
-    background-color: #337ab7;
-    padding: 14px 0;
-}
-.UserNavigation-textContainer {
-    margin: 0 auto;
-    max-width: 1190px;
-}
-.UserNavigation-titleText {
-    color: #fff;
-    font-size: 27px;
-    font-weight: bold;
-    line-height: 32px;
-    overflow: hidden;
-    padding-left: 12px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-h1 {
-    font-size: 24px;
-    text-rendering: optimizeLegibility;
-    margin: 0;
-}
-
-/* ナビゲーションメニュー */
-.MenuNavigation {
-    backface-visibility: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 105px;
-    border-bottom: 1px solid #e6ecf0;
-}
-.MenuNavigation-canopy {
-    background-color: #ffffff;
-    padding: 5px 0;
-}
-.MenuNavigation-textContainer {
-    margin: 0 auto;
-    max-width: 1190px;
-}
-.MenuNavigation-titleText {
-    color: #222222;
-    font-weight: bold;
-    overflow: hidden;
-    font-size: 15px;
-    padding-left: 230px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-ul.navigation-menu {
-    list-style: none;
-    margin-bottom: 0 !important;
-}
-ul.navigation-menu li {
-    display: inline-block;
-    margin-right: 10px;
-}
-ul.navigation {
-    list-style: none;
-    margin-bottom: 0 !important;
-}
-ul.navigation > .link-items:hover {
-    list-style: none;
-    margin-bottom: 0 !important;
-    color: #337ab7;
-    cursor: pointer;
-}
-ul.navigation li {
-    display: grid;
-    text-align: center;
-    margin-right: 4px;
+/* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
+@media screen and (min-width:0px) and (max-width: 480px) {
+    .AppContainer {
+        max-width: 480px;
+    }
+    .AppContent-main {
+    }
+    .profile-avatar {
+        width: 55px;
+        height: 55px;
+    }
+    .ContentsModules {
+        width: 100%;
+    }
+    .menu-navigation {
+        display: none;
+    }
+    .shelf-book-title-data {
+        display: none;
+    }
+    /* 読んだコメント */
+    .comment-book-image {
+        width: 30%;
+    }
+    .comment-book-title {
+        width: 65%;
+    }
+    li.comment-book-info {
+        width: 95%;
+    }
+    li.book-comment {
+        width: 95%;
+    }
 }
 
-/* メインコンテンツ */
-@media screen and (min-width: 1236px) {
-  .AppContainer {
-    max-width: 1190px;
-  }
-}
-.AppContainer {
-    margin: 120px auto;
-}
-.AppContent-main {
-    margin: 15px auto 0;
-    max-width: 1190px;
-    min-width: 890px;
-}
-.Grid--withGutter {
-    margin: 0 -5px;
-}
-.Grid {
-    display: block;
-    font-size: 0;
-    margin: 0;
-    padding: 0;
-    text-align: left;
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
+    .AppContainer {
+        max-width: 1240px;
+    }
+    .AppContent-main {
+    }
+    .profile-avatar {
+        width: 105px;
+        height: 105px;
+    }
+    .ContentsModules {
+        width: 100%;
+    }
+    /* 読んだコメント */
+    .comment-book-image {
+        width: 95%;
+    }
+    .comment-book-title {
+        width: 95%;
+    }
+    li.comment-book-info {
+        width: 25%;
+    }
+    li.book-comment {
+        width: 70%;
+        margin: 10px;
+    }
 }
 
-.Grid--withGutter>.Grid-cell {
-    padding: 0 5px;
-}
-.Grid-cell {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    display: inline-block;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    vertical-align: top;
-    width: 100%;
-}
-@media screen and (min-width: 1236px) {
-  .u-lg-size1of4, .u-lg-size2of8, .u-lg-size3of12 {
-    width: 25%!important;
-  }
-}
-.u-size1of3, .u-size2of6, .u-size4of12 {
-    width: 33.33333333333333%!important;
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
+    .AppContainer {
+        max-width: 1190px;
+        margin: 0 auto;
+    }
+    .AppContent-main {
+        margin: 15px auto 0;
+        min-width: 890px;
+    }
+    .SidebarUserModules {
+        float: left;
+        width: 290px;
+    }
+    .module {
+        margin-bottom: 10px;
+    }
+    .profile-avatar {
+        width: 70px;
+        height: 70px;
+    }
+    .ContentsModules {
+        float: left;
+        margin: 0 10px;
+        width: 850px;
+    }
+    .action-button {
+        width: 850px;
+    }
+    /* 読んだコメント */
+    .comment-book-image {
+        width: 95%;
+    }
+    .comment-book-title {
+        width: 95%;
+    }
+    li.comment-book-info {
+        width: 25%;
+    }
+    li.book-comment {
+        width: 70%;
+        margin: 10px;
+    }
 }
 
 /* 左サイドバー */
-.SidebarUserModules {
-    float: left;
-    width: 290px;
-}
-
-.wtf-module.has-content {
-    display: block;
-}
-.wtf-module {
-    display: none;
-}
 .module {
     background-clip: padding-box;
     border: 0;
     position: relative;
-    margin-bottom: 10px;
-}
-
-.module ul:first-child li:first-child .list-link, .module .flex-module:first-child {
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
 }
 .module .flex-module {
     background-color: #fff;
     border: 1px solid #e6ecf0;
-    padding: 15px;
+    padding: 20px;
     line-height: 16px;
 }
-
 .flex-module-inner, .flex-module-footer {
     color: #222222;
     font-size: 14px;
 }
-.user-info-text > a:hover {
-    color: #337ab7 !important;
-}
-.user-image {
-    padding-bottom: 15px !important;
+.user-name-area {
+    margin: 0 0 0 10px;
 }
 .user-name {
     font-size: 14px;
@@ -194,30 +156,29 @@ ul.navigation li {
     margin-bottom: 3px
 }
 .user-account-name > a {
-    color: #657786 !important;
+    color: #657786;
 }
-
-.UserImageItem-context > .content {
+li.user-profile-item {
+    display: inline-block;
+}
+.user-profile-icon {
     text-align: center;
 }
-.profile-image {
-    width: 150px;
-    height: 150px;
+.profile-avatar {
+    border-radius: 50%;
     object-fit: cover;
+}
+.user-name-area {
+    vertical-align: middle;
+}
+.user-detail-info {
+    padding-top: 10px;
 }
 .description {
     line-height: initial;
 }
-.item {
-    border-bottom: 1px solid #e6ecf0;
-    padding: 10px 0;
-}
-b {
-  margin: 1px;
-}
 ul.knowledge-score-sum, ul.knowledge-score-week {
-    list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
@@ -226,51 +187,63 @@ ul.knowledge-score-sum > li, ul.knowledge-score-week > li {
 }
 
 /* メインコンテンツ */
-@media (min-width: 1236px) {
-  .ContentsModules {
-    float: left;
-    margin: 0 10px;
-  }
-}
 .ContentsModules {
-    width: 850px;
+    background-color: #fff;
+    border: 1px solid #e6ecf0;
+}
+.MenuNavigation {
+    padding: 0 25px;
+}
+.MenuNavigation-titleText {
+    padding: 15px 0;
+    border-bottom: 2px solid #e6ecf0;
+    color: #222222;
+    font-weight: bold;
+}
+ul.navigation-menu {
+    margin-bottom: 0;
+}
+ul.navigation-menu > li {
+    display: inline-block;
+    width: 25%;
+}
+ul.navigation > .link-items:hover {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+ul.navigation li {
+    display: grid;
+    text-align: center;
+    margin-right: 4px;
 }
 .action-button {
-    width: 850px;
+    margin-top: 10px;
     text-align: center;
 }
 .register-button {
     border-radius: 0;
-    background-color: #cccccc;
-    border: 0 solid #e6ecf0;
     margin: 0 0 5px 0;
-}
-.register-button:hover {
-    background-color: #337ab7;
 }
 
 /* 本棚一覧 */
 .shelf-module {
-    background-color: #fff;
-    border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
 }
 .shelf-books-content {
-    border-bottom: 2px solid #e6ecf0;
+    border-bottom: 1px solid #e6ecf0;
     margin: 5px 0;
-    padding: 10px 0;
+    padding: 10px 10px;
 }
 h4 {
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .producer-info {
-    vertical-align: top !important;
+    vertical-align: top;
 }
 ul.shelf-basic-info {
-    list-style: none;
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
     padding-left: 0;
 }
 ul.shelf-basic-info li {
@@ -282,12 +255,12 @@ ul.shelf-basic-info li {
     width: 45px;
     border-radius: 50%;
     object-fit: cover;
-    vertical-align: sub !important;
+    vertical-align: sub;
     margin: 0 10px;
 }
 ul.shelf-reactions {
     list-style: none;
-    margin-bottom: 5px !important;
+    margin-bottom: 5px;
     padding-left: 0;
 }
 ul.shelf-reactions li {
@@ -296,7 +269,7 @@ ul.shelf-reactions li {
 }
 ul.shelf-reaction {
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.shelf-reaction li {
@@ -320,37 +293,29 @@ ul.shelf-reaction li > span.shelf-reaction-heart:hover {
 ul.shelf-reaction li > span.favorite-done {
     color: #f08080;
 }
-.ShelfNameItem-context > a:hover {
-    color: #337ab7 !important;
-}
 ul.shelf-book-list {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding: 0 !important;
+    margin-bottom: 0;
+    padding: 0;
 }
 ul.shelf-book-list > li {
-    width: 145px;
+    width: 20%;
     vertical-align: top;
     display: inline-block;
 }
 .shelf-book-content {
     font-size: 12px;
-    margin: 5px 10px;
-    padding: 10px 0;
 }
 .shelf-book-image {
     text-align: center;
     margin-bottom: 5px;
 }
 .amazon-book-image {
-    width: 120px;
-    height: 165px;
+    width: 90%;
     border: 1px solid #e6ecf0;
 }
 ul.book-title-data {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
+    margin-bottom: 0;
+    padding: 5px 8px;
 }
 ul.book-title-data li {
     margin: 1px 0;
@@ -360,7 +325,6 @@ ul.book-title-data li {
     word-wrap: break-word;
 }
 ul.authors {
-    list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
@@ -382,13 +346,15 @@ ul.authors li {
 
 /* 読んだ本一覧 */
 .comment-module {
-    background-color: #fff;
-    border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
 }
-.book-data {
+ul.book-data {
     font-size: 12px;
+}
+li.book-data-item {
+    display: inline-block;
+    vertical-align: top;
 }
 .book-info {
     width: 20%;
@@ -398,38 +364,23 @@ ul.authors li {
 .book-image {
     text-align: center;
 }
-.amazon-book-image {
-    width: 120px;
-    height: 165px;
-    border: 1px solid #e6ecf0;
-}
 .book-comment {
     display: inline-block;
     vertical-align: top;
-    width: 75%;
-    margin: 10px;
 }
 .book-comment-content {
     border-bottom: 1px solid #e6ecf0;
-    /* ↓コメント詳細を開けるようにしたら有効にする */
-    /*cursor: pointer;*/
     margin: 5px;
     padding: 10px 0;
 }
-ul.book-title-data {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
-}
-ul.book-title-data li {
-    margin: 1px 0;
+.book-comment-content > li {
+    display: inline-block;
 }
 .book-title {
     font-weight: bold;
     word-wrap: break-word;
 }
 ul.authors {
-    list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
@@ -464,10 +415,6 @@ ul.authors li {
     margin-left: -58px;
     border-radius: 50%;
     object-fit: cover;
-    -moz-force-broken-image-icon: 1;
-}
-.comment-user > a:hover {
-    color: #337ab7 !important;
 }
 .user-name {
     font-weight: bold;
@@ -477,8 +424,7 @@ ul.authors li {
     word-break: keep-all;
 }
 ul.comment-reactions {
-    list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.comment-reactions li {
@@ -486,8 +432,7 @@ ul.comment-reactions li {
     margin-right: 10px;
 }
 ul.comment-reaction {
-    list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.comment-reaction li {
@@ -515,13 +460,10 @@ ul.comment-reaction li > span.favorite-done {
 }
 
 .book-module {
-  background-color: #fff;
-    border: 1px solid #e6ecf0;
     padding: 10px;
     line-height: 16px;
 }
 ul.book-list {
-    list-style: none;
     margin-bottom: 0 !important;
     padding: 0 !important;
 }
@@ -539,25 +481,11 @@ ul.book-list > li {
     text-align: center;
     margin-bottom: 5px;
 }
-.amazon-book-image {
-    width: 120px;
-    height: 165px;
-    border: 1px solid #e6ecf0;
-}
-ul.book-title-data {
-    list-style: none;
-    margin-bottom: 0 !important;
-    padding-left: 0;
-}
-ul.book-title-data li {
-    margin: 1px 0;
-}
 .book-title {
     font-weight: bold;
     word-wrap: break-word;
 }
 ul.authors {
-    list-style: none;
     margin-bottom: 0 !important;
     padding-left: 0;
 }
@@ -589,7 +517,6 @@ ul.authors li {
     transition: none;
 }
 ul.add-comment {
-    list-style: none;
     margin: 25px 0;
     padding-left: 0;
 }
@@ -606,17 +533,11 @@ ul.add-comment li {
 .comment-button {
     margin-left: 600px;
     border-radius: 0;
-    background-color: #cccccc;
-    border: 0 solid #e6ecf0;
-}
-.comment-button:hover {
-    background-color: #337ab7;
 }
 
 ul.comment-list {
-    list-style: none;
-    margin: 0 !important;
-    padding-left: 0 !important;
+    margin: 0;
+    padding-left: 0;
 }
 .comment-menu {
     float: right;
@@ -627,12 +548,11 @@ ul.comment-list {
 }
 .dropdown-menu {
     top: 18px;
-    left: -80px;
+    left: -180px;
 }
 ul.comment-user {
-    list-style: none;
-    margin: 0 !important;
-    padding-left: 0 !important;
+    margin: 0;
+    padding-left: 0;
 }
 .comment-user-float {
     float: left;
@@ -644,7 +564,6 @@ ul.comment-user li {
     float: left;
 }
 ul.reply-user-name-space {
-    list-style: none;
     margin-bottom: 0;
     padding-left: 20px;
     float: left;
@@ -667,13 +586,7 @@ ul.space-for-comment {
 .replies {
 }
 .reply-button {
-    margin-left: 365px;
     border-radius: 0;
-    background-color: #cccccc;
-    border: 0 solid #e6ecf0;
-}
-.reply-button:hover {
-    background-color: #337ab7;
 }
 .reply-comment {
     margin: 20px 5px 20px 0;

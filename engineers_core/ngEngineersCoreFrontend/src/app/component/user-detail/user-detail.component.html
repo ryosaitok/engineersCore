@@ -1,60 +1,8 @@
-<div class="page-outer" *ngIf="pageFound">
-  <!-- サブヘッダー(ユーザー名) -->
-  <div class="UserNavigation">
-    <div class="UserNavigation-canopy u-bgUserColor">
-      <div class="UserNavigation-textContainer">
-        <h1 class="UserNavigation-titleText" dir="ltr">
-          <span class="user-account-name-navigation"><fa-icon
-            [icon]="faUser"></fa-icon></span> {{user.userName}} @{{user.userAccountName}}
-        </h1>
-      </div>
-    </div>
-  </div>
-  <!-- ナビゲーションメニュー -->
-  <div class="MenuNavigation">
-    <div class="MenuNavigation-canopy">
-      <div class="MenuNavigation-textContainer">
-        <div class="MenuNavigation-titleText" dir="ltr">
-          <ul class="navigation-menu">
-            <li [class]="shelfSelected">
-              <ul class="shelfs navigation" (click)="getShelves()">
-                <div class="shelfs-link link-items">
-                  <li><span class="shelfs-icon icon">本棚 <fa-icon [icon]="faBookReader"></fa-icon></span></li>
-                  <li>{{shelfCount}}</li>
-                </div>
-              </ul>
-            </li>
-            <li [class]="readBookSelected">
-              <ul class="read-books navigation" (click)="getReadBookComments()">
-                <div class="read-books-link link-items">
-                  <li><span class="read-books-icon icon">読んだ <fa-icon [icon]="faBook"></fa-icon></span></li>
-                  <li>{{bookCommentCount}}</li>
-                </div>
-              </ul>
-            </li>
-            <li [class]="interestedBookSelected">
-              <ul class="interested-books navigation" (click)="getInterestedBooks()">
-                <div class="interested-books-link link-items">
-                  <li><span class="interested-books-icon icon">読みたい <fa-icon [icon]="faBook"></fa-icon></span></li>
-                  <li>{{interestedBookCount}}</li>
-                </div>
-              </ul>
-            </li>
-            <li [class]="favoriteCommentSelected">
-              <ul class="favorite-comments navigation" (click)="getFavoriteBookComments()">
-                <div class="favorite-comments-link link-items">
-                  <li><span class="favorite-comments-icon icon">いいね <fa-icon [icon]="faCommentDots"></fa-icon></span>
-                  </li>
-                  <li>{{favoriteCommentCount}}</li>
-                </div>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+<div *ngIf="!pageFound">
+  <app-page-not-found></app-page-not-found>
+</div>
 
+<div class="page-outer" *ngIf="pageFound">
   <div class="AppContainer">
     <div class="AppContent-main u-cf">
       <!-- 左サイドバー(本の情報) -->
@@ -62,40 +10,27 @@
         <!-- ユーザーの情報 -->
         <div class="module user">
           <div class="flex-module">
-            <div class="js-user-detail dashboard-user-detail flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
-              <div class="user-image item">
-                <div class="UserImageItem-context">
-                  <div class="content">
-                    <a routerLink="/user/{{user.userAccountName}}">
-                      <div *ngIf="user.profileImageLink !== null" class="user-profile-icon">
-                        <img class="profile-image" src="{{user.profileImageLink}}" alt=""/>
-                      </div>
-                      <div *ngIf="user.profileImageLink === null" class="user-profile-icon">
-                        <img class="profile-image" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
-                             alt=""/>
-                      </div>
-                    </a>
+            <div class="dashboard-user-detail flex-module-inner">
+              <ul class="user-profile">
+                <li *ngIf="user.profileImageLink !== null" class="user-profile-item profile-user-icon">
+                  <img class="profile-avatar" src="{{user.profileImageLink}}"
+                       alt=""/>
+                </li>
+                <li *ngIf="user.profileImageLink === null" class="user-profile-item profile-user-icon">
+                  <img class="avatar"
+                       src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                       alt=""/>
+                </li>
+                <li class="user-profile-item user-name-area">
+                  <div class="user-name">
+                    <a routerLink="/user/{{user.userAccountName}}">{{user.userName}}</a>
                   </div>
-                </div>
-              </div>
-              <div class="user-basic-info item">
-                <div class="UserBasicInfoItem-context">
-                  <div class="content">
-                    <div class="user-info-text user-name">
-                      <a routerLink="/user/{{user.userAccountName}}">
-                        <strong><b>{{user.userName}}</b></strong>
-                      </a>
-                    </div>
-                    <div class="user-info-text user-account-name">
-                      <a routerLink="/user/{{user.userAccountName}}">
-                        <span>@{{user.userAccountName}}</span>
-                      </a>
-                    </div>
+                  <div class="user-account-name">
+                    <a routerLink="/user/{{user.userAccountName}}">@{{user.userAccountName}}</a>
                   </div>
-                </div>
-              </div>
-              <div class="user-detail-info item">
+                </li>
+              </ul>
+              <div class="user-detail-info">
                 <div class="UserDetailInfoItem-context">
                   <div class="content">
                     <div class="user-info-text description">
@@ -109,19 +44,59 @@
         </div>
       </div>
 
-      <!-- メインメニュー -->
+      <!-- メインコンテンツ -->
       <div class="ContentsModules">
-
+        <!-- ナビゲーションメニュー -->
+        <div class="MenuNavigation">
+          <div class="MenuNavigation-titleText" dir="ltr">
+            <ul class="navigation-menu">
+              <li [class]="shelfSelected">
+                <ul class="shelfs navigation" (click)="getShelves()">
+                  <div class="shelfs-link link-items">
+                    <li><span class="shelfs-icon icon">本棚 <fa-icon class="menu-navigation" [icon]="faBookReader"></fa-icon></span></li>
+                    <li>{{shelfCount}}</li>
+                  </div>
+                </ul>
+              </li>
+              <li [class]="readBookSelected">
+                <ul class="read-books navigation" (click)="getReadBookComments()">
+                  <div class="read-books-link link-items">
+                    <li><span class="read-books-icon icon">読んだ <fa-icon class="menu-navigation" [icon]="faBook"></fa-icon></span></li>
+                    <li>{{bookCommentCount}}</li>
+                  </div>
+                </ul>
+              </li>
+              <li [class]="interestedBookSelected">
+                <ul class="interested-books navigation" (click)="getInterestedBooks()">
+                  <div class="interested-books-link link-items">
+                    <li><span class="interested-books-icon icon">読みたい <fa-icon class="menu-navigation" [icon]="faBook"></fa-icon></span></li>
+                    <li>{{interestedBookCount}}</li>
+                  </div>
+                </ul>
+              </li>
+              <li [class]="favoriteCommentSelected">
+                <ul class="favorite-comments navigation" (click)="getFavoriteBookComments()">
+                  <div class="favorite-comments-link link-items">
+                    <li><span class="favorite-comments-icon icon">いいね <fa-icon class="menu-navigation" [icon]="faCommentDots"></fa-icon></span>
+                    </li>
+                    <li>{{favoriteCommentCount}}</li>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
         <!-- 本棚 -->
         <div *ngIf="shelfSelected" class="module shelves">
-          <div *ngIf="appComponent.accountName === accountName" class="action-button">
-            <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register"><b>本棚を新しく登録する</b>
-            </button>
-          </div>
           <div *ngIf="shelfCount > 0" class="shelf-module">
+            <div *ngIf="appComponent.accountName === accountName" class="action-button">
+              <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register">
+                <b>本棚を新しく登録する</b>
+              </button>
+            </div>
             <!-- 本棚の情報 -->
             <div *ngFor="let shelf of shelves; let i = index"
-                 class="js-shelf-books shelf-books-content flex-module-inner">
+                 class="shelf-books-content flex-module-inner">
               <ul class="shelf-basic-info">
                 <li class="producer-info">
                   <!-- カテゴリの作成者 -->
@@ -194,7 +169,7 @@
                                  src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
                                  onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
                         </div>
-                        <ul class="book-title-data">
+                        <ul class="book-title-data shelf-book-title-data">
                           <a routerLink="/book/{{book.id}}">
                             <li class="book-title">{{book.title | slice: 0 :40}}</li>
                           </a>
@@ -216,6 +191,11 @@
             </div>
           </div>
           <div *ngIf="shelfCount === 0" class="shelf-module">
+            <div *ngIf="appComponent.accountName === accountName" class="action-button">
+              <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register">
+                <b>本棚を新しく登録する</b>
+              </button>
+            </div>
             <div class="no-shelf-text">
               <span>まだ登録した本棚がありません。</span>
             </div>
@@ -227,24 +207,23 @@
           <div
             *ngIf="(readBookSelected && bookCommentCount > 0) || (favoriteCommentSelected && favoriteCommentCount > 0)"
             class="comment-module">
-            <div *ngFor="let comment of bookComments; let commentIndex = index"
-                 class="js-book-comments book-comment-content flex-module-inner"
-                 data-section-id="wtf" style="opacity: 1;">
+            <ul *ngFor="let comment of bookComments; let commentIndex = index"
+                 class="book-comment-content flex-module-inner">
               <!-- 本の情報 -->
-              <div class="book-info">
+              <li class="comment-book-info">
                 <div class="BookCommentItem-context">
                   <!-- 本の基本情報 -->
                   <div class="context">
-                    <div class="book-data">
-                      <div class="book-image">
+                    <ul class="book-data">
+                      <li class="comment-book-image book-data-item">
                         <a class="amazon-book-detail"
                            href="https://www.amazon.co.jp/dp/{{comment.book.amazonBook.dataAsin}}/"
                            target="_blank">
                           <img class="amazon-book-image"
                                src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN={{comment.book.amazonBook.dataAsin}}&Format=_SL500_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&language=ja_JP"
                                onerror="this.src='../../../assets/image/book/book_default_image.png';"></a>
-                      </div>
-                      <div class="book-data">
+                      </li>
+                      <li class="comment-book-title book-data-item">
                         <ul class="book-title-data">
                           <a routerLink="/book/{{comment.book.id}}">
                             <li class="book-title">{{comment.book.title | slice: 0 :40}}</li>
@@ -259,18 +238,17 @@
                             </li>
                           </ul>
                         </ul>
-                      </div>
-                    </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </div>
+              </li>
               <!-- 読んだコメントしたユーザーの情報 -->
-              <div class="book-comment">
+              <li class="book-comment">
                 <div class="BookCommentItem-context">
                   <!-- いいねしたユーザーの情報など -->
                   <div class="context">
                     <div class="comment-content">
-
                       <div class="comment-menu">
                         <div *ngIf="comment.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group" dropdown
                              [insideClick]="true">
@@ -329,7 +307,9 @@
                                    alt=""/>
                             </div>
                             <div *ngIf="comment.user.profileImageLink === null" class="user-icon">
-                              <img class="avatar" src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
+                              <img class="avatar"
+                                   src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                   alt=""/>
                             </div>
                             <div class="user-name">
                               {{comment.user.userName}} @{{comment.user.userAccountName}}
@@ -477,7 +457,8 @@
                                         </div>
                                         <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png" alt=""/>
+                                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                               alt=""/>
                                         </div>
                                       </a>
                                     </li>
@@ -523,8 +504,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
           <div *ngIf="readBookSelected && bookCommentCount === 0" class="comment-module">
             <div class="no-comment-text">
@@ -542,9 +523,7 @@
         <div *ngIf="interestedBookSelected" class="module interestedBooks">
           <div class="book-module" *ngIf="interestedBookCount > 0">
             <ul class="book-list">
-              <li *ngFor="let interested of interestedBooks" class="js-books book-content flex-module-inner"
-                  data-section-id="wtf"
-                  style="opacity: 1;">
+              <li *ngFor="let interested of interestedBooks" class="book-content flex-module-inner">
                 <!-- 本の情報 -->
                 <div class="context">
                   <div class="book-image">
@@ -583,8 +562,4 @@
     </div>
     <!-- 右サイドバー -->
   </div>
-</div>
-
-<div *ngIf="!pageFound">
-  <app-page-not-found></app-page-not-found>
 </div>

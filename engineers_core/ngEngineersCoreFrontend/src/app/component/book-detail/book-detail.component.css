@@ -216,7 +216,6 @@ b {
     margin-left: -58px;
     border-radius: 50%;
     object-fit: cover;
-    -moz-force-broken-image-icon: 1;
 }
 .user-name {
     font-weight: bold;
@@ -227,7 +226,7 @@ b {
 }
 ul.comment-reactions {
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.comment-reactions li {
@@ -236,7 +235,7 @@ ul.comment-reactions li {
 }
 ul.comment-reaction {
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.comment-reaction li {
@@ -267,8 +266,8 @@ ul.comment-reaction li > span.favorite-done {
     height: 45px;
     width: 100%;
     color: #222222;
-    border: 0 solid #ccc !important;
-    border-bottom: 1px solid #ccc !important;
+    border: 0 solid #ccc;
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
     padding: 0;
     box-shadow: none;
@@ -300,8 +299,8 @@ ul.add-comment li {
 
 ul.comment-list {
     list-style: none;
-    margin: 0 !important;
-    padding-left: 0 !important;
+    margin: 0;
+    padding-left: 0;
 }
 .comment-menu {
     float: right;
@@ -312,16 +311,16 @@ ul.comment-list {
 }
 .dropdown-menu {
     top: 18px;
-    left: -80px;
+    left: -180px;
 }
 ul.comment-user {
     list-style: none;
-    margin: 0 !important;
-    padding-left: 0 !important;
+    margin: 0;
+    padding-left: 0;
 }
 ul.comment-user-name-space {
     list-style: none;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 55px;
     float: left;
 }
@@ -350,7 +349,7 @@ ul.reply-user-name-space {
     font-weight: bold;
 }
 .comment-user-account-name {
-    color: #657786 !important;
+    color: #657786;
 }
 .comment {
     padding: 5px 0 5px 55px;
@@ -383,5 +382,5 @@ ul.space-for-comment {
     width: 35px;
     border-radius: 50%;
     object-fit: cover;
-    vertical-align: text-top !important;
+    vertical-align: text-top;
 }
