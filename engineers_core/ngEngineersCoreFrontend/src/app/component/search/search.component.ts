@@ -322,8 +322,8 @@ export class SearchComponent implements OnInit {
     this.bookService.getBooksPaging('popular', '1').subscribe(data => {
       if (data.count > 0) {
         this.bookService.convertBooks(data.results).forEach((book, index) => {
-          // 画面表示に使うのは3つだけ
-          if (index < 3) {
+          // 画面表示に使うのは5つだけ
+          if (index < 5) {
             this.popularBooks.push(book);
           }
         });
@@ -337,8 +337,8 @@ export class SearchComponent implements OnInit {
     this.bookService.getBooksPaging('sale_date', '1').subscribe(data => {
       if (data.count > 0) {
         this.bookService.convertBooks(data.results).forEach((book, index) => {
-          // 画面表示に使うのは3つだけ
-          if (index < 3) {
+          // 画面表示に使うのは5つだけ
+          if (index < 5) {
             this.newBooks.push(book);
           }
         });
