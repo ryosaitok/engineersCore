@@ -46,7 +46,6 @@ ul {
     }
     .book-content {
         width: 95%;
-        margin: 10px 0;
     }
     .book-image {
         float: left;
@@ -289,6 +288,7 @@ ul.book-list > li {
 }
 .book-content {
     font-size: 12px;
+    margin: 10px 0;
 }
 .book-image {
     text-align: center;
