@@ -69,9 +69,9 @@ export class AccountSettingComponent implements OnInit {
       // ファイルをURLとして読み込み
       this.selectedImage = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]);
-      // reader.onload = (e) => {
-      //   this.url = e.target.result;
-      // };
+      reader.onload = (e) => {
+        this.url = e.target.result;
+      };
     }
   }
 
@@ -80,12 +80,12 @@ export class AccountSettingComponent implements OnInit {
     const description = form.value.description;
     if (this.selectedImage !== undefined) {
       this.accountSettingService.uploadProfileImage(this.appComponent.userId, this.selectedImage).subscribe(res => {
+        // TODO: プロフィール画像更新時に即時反映するようにする。
       }, err => {
         console.error('プロフィール画像のアップロードに失敗しました、', err);
       });
     }
     this.accountSettingService.updateUser(this.appComponent.accountName, userName, description).subscribe(response => {
-      // TODO: プロフィール画像更新時に即時反映するようにする。
       console.log('アカウント設定の更新が完了しました。 response: ', response);
       this.router.navigate(['user/' + this.appComponent.accountName + '/']);
     }, error => {
