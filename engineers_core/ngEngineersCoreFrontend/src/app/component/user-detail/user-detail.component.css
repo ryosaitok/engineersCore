@@ -296,7 +296,7 @@ ul.shelf-basic-info li {
     border-radius: 50%;
     object-fit: cover;
     vertical-align: sub;
-    margin: 0 10px;
+    margin: 0 5px 0 0;
 }
 ul.shelf-reactions {
     list-style: none;
@@ -334,7 +334,7 @@ ul.shelf-reaction li > span.favorite-done {
     color: #f08080;
 }
 ul.book-list {
-    margin-bottom: 0;
+    margin: 15px 0 0;
     padding: 0;
 }
 ul.book-list > li {
