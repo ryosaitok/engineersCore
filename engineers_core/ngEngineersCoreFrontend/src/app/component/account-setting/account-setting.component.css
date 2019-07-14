@@ -102,9 +102,6 @@ ul {
         display: inline-block;
         vertical-align: middle;
     }
-    .content-module {
-        height: 500px;
-    }
     .preview-profile-image {
         width: 250px;
         height: 250px;
@@ -112,9 +109,6 @@ ul {
     .profile-image-label {
         width: 250px;
         height: 250px;
-    }
-    .account-name-module {
-        height: 300px;
     }
     .text-field {
         margin: 10px;

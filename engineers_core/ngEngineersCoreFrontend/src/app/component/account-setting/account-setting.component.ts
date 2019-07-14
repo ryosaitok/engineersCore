@@ -69,8 +69,8 @@ export class AccountSettingComponent implements OnInit {
       // ファイルをURLとして読み込み
       this.selectedImage = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (e) => {
-        this.url = e.target.result;
+      reader.onload = (e: Event) => {
+        this.url = reader.result.toString();
       };
     }
   }
