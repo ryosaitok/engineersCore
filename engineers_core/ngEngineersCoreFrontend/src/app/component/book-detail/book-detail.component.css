@@ -29,20 +29,37 @@ ul {
     .SidebarBookModules {
         width: 100%;
     }
+    .book-module, .reaction-module, .register-module {
+        text-align: center;
+    }
     .item {
         padding: 8px 0;
     }
     .amazon-book-image {
         width: 40%;
     }
-    .dashboard-book-detail, .dashboard-book-reaction {
-        text-align: center;
-    }
     .book-comment-form {
         width: 100%;
     }
     .book-comment-date-form {
         width: 60%;
+        margin: 0 auto;
+    }
+    .book-comment {
+        width: 95%;
+        font-size: 12px;
+    }
+    ul.comment-user-name-space {
+        width: 69%;
+    }
+    .comment {
+        width: 90%;
+    }
+    .comment-content {
+        margin: 20px 0 10px;
+    }
+    .comment-text-form {
+        font-size: 12px;
     }
 }
 
@@ -56,20 +73,32 @@ ul {
     .SidebarBookModules {
         width: 100%;
     }
+    .book-module, .reaction-module, .register-module {
+        text-align: center;
+    }
+    .dashboard-book-detail, .comment-module {
+        max-width: 500px;
+        margin: 0 auto;
+    }
     .item {
         padding: 8px 0;
     }
     .amazon-book-image {
-        width: 30%;
-    }
-    .dashboard-book-detail, .dashboard-book-reaction {
-        text-align: center;
+        width: 50%;
     }
     .book-comment-form {
         width: 80%;
+        margin: 0 auto;
     }
     .book-comment-date-form {
         width: 40%;
+        margin: 0 auto;
+    }
+    ul.comment-user-name-space {
+        width: 88%;
+    }
+    .comment {
+        width: 95%;
     }
 }
 
@@ -113,6 +142,12 @@ ul {
     }
     .book-comment-date-form {
         width: 30%;
+    }
+    ul.comment-user-name-space {
+        width: 88%;
+    }
+    .comment {
+        width: 95%;
     }
 }
 
@@ -169,13 +204,8 @@ ul.authors li {
     color: #657786;
 }
 
-.account-summary {
-    position: relative;
-    display: block;
-    min-height: 48px;
-}
-b {
-  margin: 1px;
+.dashboard-book-reaction {
+    margin-top: 5px;
 }
 
 .book-action-button {
@@ -183,9 +213,11 @@ b {
 }
 
 /* メインコンテンツ */
-.comment-module {
-  background-color: #fff;
+.BookCommentsModules {
+    background-color: #fff;
     border: 1px solid #e6ecf0;
+}
+.comment-module {
     padding: 10px;
     line-height: 16px;
 }
@@ -196,9 +228,6 @@ b {
     margin: 5px;
     padding: 10px 0;
 }
-.comment-content {
-    margin-left: 58px;
-}
 .comment-text {
     max-width: 90%;
     word-break: break-word;
@@ -208,24 +237,13 @@ b {
     white-space: pre-line;
     line-height: normal;
 }
-.avatar {
-    float: left;
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    margin-left: -58px;
-    border-radius: 50%;
-    object-fit: cover;
-}
 .user-name {
     font-weight: bold;
 }
 .comment-date {
     max-width: 90%;
-    word-break: keep-all;
 }
 ul.comment-reactions {
-    list-style: none;
     margin-bottom: 0;
     padding-left: 0;
 }
@@ -234,7 +252,6 @@ ul.comment-reactions li {
     margin-right: 10px;
 }
 ul.comment-reaction {
-    list-style: none;
     margin-bottom: 0;
     padding-left: 0;
 }
@@ -262,7 +279,7 @@ ul.comment-reaction li > span.favorite-done {
     text-align: center;
 }
 
-.add-reply-form {
+.comment-text-form {
     height: 45px;
     width: 100%;
     color: #222222;
@@ -274,7 +291,6 @@ ul.comment-reaction li > span.favorite-done {
     transition: none;
 }
 ul.add-comment {
-    list-style: none;
     margin: 25px 0;
     padding-left: 0;
 }
@@ -298,7 +314,6 @@ ul.add-comment li {
 }
 
 ul.comment-list {
-    list-style: none;
     margin: 0;
     padding-left: 0;
 }
@@ -314,54 +329,41 @@ ul.comment-list {
     left: -180px;
 }
 ul.comment-user {
-    list-style: none;
     margin: 0;
-    padding-left: 0;
-}
-ul.comment-user-name-space {
-    list-style: none;
-    margin-bottom: 0;
-    padding-left: 55px;
-    float: left;
-}
-ul.reply-user-name-space {
-    list-style: none;
-    margin-bottom: 0;
-    padding-left: 20px;
-    float: left;
-}
-.comment-user-float {
-    float: left;
 }
 ul.comment-user li {
     display: inline;
 }
-.comment-user-image {
-    float: left;
+.user-profile-icon {
+    text-align: center;
+    position: absolute;
 }
-ul.reply-user-name-space {
-    list-style: none;
-    margin-bottom: 0;
-    padding-left: 20px;
-    float: left;
+.profile-image {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: text-top;
+}
+ul.comment-user-name-space {
+    margin: 0 0 5px 55px;
 }
 .comment-user-name {
     font-weight: bold;
 }
-.comment-user-account-name {
+.account-name {
     color: #657786;
 }
 .comment {
-    padding: 5px 0 5px 55px;
-    max-width: 92%;
+    padding: 0 0 0 55px;
     white-space: pre-line;
-    word-break: break-word;
 }
 ul.space-for-comment {
-    margin: 0 55px;
+    margin: 0 50px;
 }
 
 .replies {
+    margin: 20px 0 0 30px;
 }
 .reply-button {
     border-radius: 0;
@@ -372,15 +374,12 @@ ul.space-for-comment {
     background-color: #337ab7;
 }
 .reply-comment {
-    margin: 20px 5px 20px 0;
-}
-.reply-user-profile-icon {
-    position: absolute;
+    margin: 15px 0;
 }
 .min-profile-image {
     height: 35px;
     width: 35px;
     border-radius: 50%;
     object-fit: cover;
-    vertical-align: text-top;
+    vertical-align: text-top !important;
 }

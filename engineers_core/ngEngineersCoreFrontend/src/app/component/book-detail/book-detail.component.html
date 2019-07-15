@@ -4,11 +4,10 @@
       <!-- 左サイドバー(本の情報) -->
       <div class="SidebarBookModules">
         <!-- 本の情報 -->
-        <div class="module book">
+        <div class="module book-module">
           <div class="flex-module">
             <div class="flex-module-header"></div>
-            <div class="dashboard-book-detail flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
+            <div class="dashboard-book-detail flex-module-inner">
               <div class="book-image item">
                 <div class="BookImageItem-context">
                   <a class="amazon-book-detail" href="https://www.amazon.co.jp/dp/{{book.amazonBook.dataAsin}}/"
@@ -42,32 +41,23 @@
           </div>
         </div>
         <!-- 本のリアクション -->
-        <div class="module reaction">
+        <div class="module reaction-module">
           <div class="flex-module">
             <div class="flex-module-header">
               <strong>本のデータ</strong>
             </div>
-            <div class="js-book-reaction dashboard-book-reaction flex-module-inner" data-section-id="wtf"
-                 style="opacity: 1;">
-              <div class="book-comment item">
-                <div class="BookCommentItem-context">
-                  <div class="book-comment-count">
-                    <strong><b>読んだコメント {{bookCommentCount}}件</b></strong>
-                  </div>
-                </div>
+            <div class="dashboard-book-reaction flex-module-inner">
+              <div class="item">
+                <b>読んだコメント {{bookCommentCount}}件</b>
               </div>
-              <div class="book-interested item">
-                <div class="BookInterestedCountItem-context">
-                  <div class="book-interested-count">
-                    <strong><b>読みたい本登録 {{bookInterestedCount}}人</b></strong>
-                  </div>
-                </div>
+              <div class="item">
+                <b>読みたい本登録 {{bookInterestedCount}}人</b>
               </div>
             </div>
           </div>
         </div>
         <!-- 本の読んだ・読みたい登録 -->
-        <div class="module register">
+        <div class="module register-module">
           <div class="flex-module">
             <div class="flex-module-header">
               <strong>本の登録</strong>
@@ -114,8 +104,7 @@
         <div class="module bookComments">
           <div *ngIf="bookCommentCount > 0" class="comment-module">
             <div *ngFor="let comment of bookComments; let commentIndex = index"
-                 class="js-book-comments book-comment-content flex-module-inner"
-                 data-section-id="wtf" style="opacity: 1;">
+                 class="book-comment-content flex-module-inner">
               <div class="book-comment">
                 <div class="BookCommentItem-context">
                   <!-- いいねしたユーザーの情報など -->
@@ -170,32 +159,38 @@
                       </div>
                     </div>
 
-                    <div class="comment-user comment-user-float">
-                      <a routerLink="/user/{{comment.user.userAccountName}}">
-                        <div class="comment-user">
-                          <div *ngIf="comment.user.profileImageLink !== null" class="user-icon">
-                            <img class="avatar" src="{{comment.user.profileImageLink}}"
-                                 alt=""/>
+                    <ul class="comment-user">
+                      <li class="comment-user-image">
+                        <a routerLink="/user/{{comment.user.userAccountName}}">
+                          <div
+                            *ngIf="comment.user.profileImageLink !== null && comment.user.profileImageLink !== undefined"
+                            class="user-profile-icon">
+                            <img class="profile-image"
+                                 src="{{comment.user.profileImageLink}}" alt=""/>
                           </div>
-                          <div *ngIf="comment.user.profileImageLink === null" class="user-icon">
-                            <img class="avatar"
+                          <div *ngIf="comment.user.profileImageLink === null" class="user-profile-icon">
+                            <img class="profile-image"
                                  src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
                                  alt=""/>
                           </div>
-                          <div class="user-name">
-                            {{comment.user.userName}} @{{comment.user.userAccountName}}
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="comment-date">
-                      ・{{comment.commentDate | date:"yyyy年M月d日" }}
-                    </div>
-                    <div class="comment-text pre-wrap">
-                      {{comment.commentText}}
+                        </a>
+                      </li>
+                      <li>
+                        <ul class="comment-user-name-space">
+                          <li class="comment-user-name"><a routerLink="/user/{{comment.user.userAccountName}}">
+                            {{comment.user.userName}}</a></li>
+                          <li><a routerLink="/user/{{comment.user.userAccountName}}">
+                            <span class="account-name"> @{{comment.user.userAccountName}}</span></a>
+                          </li>
+                          <li class="comment-date">・{{comment.commentDate | date:"yyyy年M月d日" }}</li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <div class="comment">
+                      <p>{{comment.commentText}}</p>
                     </div>
                     <div class="comment-reaction">
-                      <ul class="comment-reactions">
+                      <ul class="comment-reactions space-for-comment">
                         <li>
                           <ul class="comment-replies comment-reaction">
                             <li (click)="reverseRepliesDisplayState(comment.id, commentIndex, 1)">
@@ -209,10 +204,9 @@
                         <li>
                           <ul class="comment-favorites comment-reaction">
                             <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) >= 0">
-                              <span class="comment-reaction-heart favorite-done"
-                                    (click)="notCommentFavorite(comment.id, commentIndex)">
-                                <fa-icon [icon]="faHeart"></fa-icon>
-                              </span>
+                                <span class="comment-reaction-heart favorite-done"
+                                      (click)="notCommentFavorite(comment.id, commentIndex)"><fa-icon
+                                  [icon]="faHeart"></fa-icon></span>
                             </li>
                             <li *ngIf="comment.favoriteUserIds.indexOf(appComponent.userId) == -1">
                               <span class="comment-reaction-heart favorite-none"
@@ -225,14 +219,13 @@
                         </li>
                       </ul>
                     </div>
-
                     <div class="replies" *ngIf="comment.displayedReply">
-                      <div class="add-comment-module">
-                        <ul class="add-comment">
+                      <div class="add-reply-module">
+                        <ul class="add-reply">
                           <li>
                             <div
                               *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
-                              class="reply-user-profile-icon">
+                              class="user-profile-icon">
                               <img class="min-profile-image"
                                    src="{{appComponent.profileImageLink}}" alt=""/>
                             </div>
@@ -245,7 +238,7 @@
                           <li>
                             <form #f="ngForm" class="comment-form">
                               <div class="form-group add-reply-form-group">
-                              <textarea ngModel class="form-control add-reply-form" name="comment"
+                              <textarea ngModel class="form-control comment-text-form" name="comment"
                                         placeholder="{{comment.user.userName}}さんのコメントに対する返信を追加..."
                                         required maxlength="255"></textarea>
                               </div>
@@ -263,9 +256,10 @@
                               class="reply-comment">
                             <!-- コメントの情報 -->
                             <div class="context">
-                              <div class="reply-content">
+                              <div class="comment-content">
                                 <div class="comment-menu">
-                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) == -1" class="btn-group"
+                                  <div *ngIf="reply.reportUserIds.indexOf(appComponent.userId) == -1"
+                                       class="btn-group"
                                        dropdown [insideClick]="true">
                                     <div dropdownToggle class="dropdown-toggle">
                                       <a class="comment-menu-icon"><i class="fas fa-lg">
@@ -275,12 +269,12 @@
                                     <ul *dropdownMenu class="dropdown-menu" role="menu">
                                       <li role="menuitem">
                                         <a *ngIf="reply.user.id === appComponent.userId" class="dropdown-item"
-                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/book/{{comment.book.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
+                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
                                            target="_blank">
                                           Twitterにツイートする
                                         </a>
                                         <a *ngIf="reply.user.id !== appComponent.userId" class="dropdown-item"
-                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/book/{{comment.book.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                                           href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
                                            target="_blank">
                                           Twitterにツイートする
                                         </a>
@@ -334,19 +328,20 @@
                                     </a>
                                   </li>
                                   <li>
-                                    <ul class="reply-user-name-space">
+                                    <ul class="comment-user-name-space">
                                       <li class="comment-user-name"><a
                                         routerLink="/user/{{reply.user.userAccountName}}">{{reply.user.userName}}</a>
                                       </li>
-                                      <li><a class="comment-user-account-name"
-                                             routerLink="/user/{{reply.user.userAccountName}}">
-                                        @{{reply.user.userAccountName}}</a>
+                                      <li>
+                                        <a routerLink="/user/{{reply.user.userAccountName}}">
+                                          <span class="account-name"> @{{reply.user.userAccountName}}</span>
+                                        </a>
                                       </li>
+                                      <li class="comment-date">・{{comment.commentDate | date:"yyyy年M月d日" }}</li>
                                     </ul>
                                   </li>
                                 </ul>
-                                <div class="comment-date">・{{reply.commentDate | date:"yyyy年M月d日" }}</div>
-                                <div class="comment">{{reply.commentText}}</div>
+                                <div class="comment"><p>{{reply.commentText}}</p></div>
                                 <div class="comment-reaction">
                                   <ul class="comment-reactions space-for-comment">
                                     <li>

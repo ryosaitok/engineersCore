@@ -121,6 +121,9 @@ ul.dropdown-menu {
     margin: 5px 1px 6px;
     border-bottom: 1px solid #e6ecf0;
 }
+.username {
+    color: #657786;
+}
 p.name {
     margin: 0;
 }

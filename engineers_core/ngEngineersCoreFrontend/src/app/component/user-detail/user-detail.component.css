@@ -67,7 +67,7 @@ ul {
         width: 90%;
     }
     .comment-content {
-        margin-top: 20px;
+        margin: 20px 0 10px;
     }
     .comment-text-form {
         font-size: 12px;
@@ -198,7 +198,7 @@ ul {
 .user-name, .account-name {
     margin-bottom: 3px
 }
-.account-name {
+.account-name, .account-name > a {
     color: #657786;
 }
 li.user-profile-item {
@@ -365,18 +365,18 @@ ul.book-title-data li {
     word-wrap: break-word;
 }
 ul.authors {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.authors li {
     display: inline;
 }
 .author-name {
-    width: auto !important;
+    width: auto;
 }
 .sale-date {
     font-size: 12px;
-    color: #657786 !important;
+    color: #657786;
 }
 .no-shelf-text {
     padding: 10px;
@@ -421,18 +421,18 @@ li.book-data-item {
     word-wrap: break-word;
 }
 ul.authors {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.authors li {
     display: inline;
 }
 .author-name {
-    width: auto !important;
+    width: auto;
 }
 .sale-date {
     font-size: 12px;
-    color: #657786 !important;
+    color: #657786;
 }
 
 .comment-text {
@@ -455,7 +455,6 @@ ul.authors li {
 }
 .comment-date {
     max-width: 90%;
-    word-break: keep-all;
 }
 ul.comment-reactions {
     margin-bottom: 0;
@@ -506,18 +505,18 @@ ul.comment-reaction li > span.favorite-done {
     word-wrap: break-word;
 }
 ul.authors {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
     padding-left: 0;
 }
 ul.authors li {
     display: inline;
 }
 .author-name {
-    width: auto !important;
+    width: auto;
 }
 .sale-date {
     font-size: 12px;
-    color: #657786 !important;
+    color: #657786;
 }
 .no-book-text {
     padding: 10px;
@@ -529,8 +528,8 @@ ul.authors li {
     height: 45px;
     width: 100%;
     color: #222222;
-    border: 0 solid #ccc !important;
-    border-bottom: 1px solid #ccc !important;
+    border: 0 solid #ccc;
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
     padding: 0;
     box-shadow: none;
@@ -609,5 +608,5 @@ ul.space-for-comment {
     width: 35px;
     border-radius: 50%;
     object-fit: cover;
-    vertical-align: text-top !important;
+    vertical-align: text-top;
 }
