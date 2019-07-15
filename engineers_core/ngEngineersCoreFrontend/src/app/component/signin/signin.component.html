@@ -2,9 +2,9 @@
   <div class="AppContent-main u-cf">
     <!-- メインメニュー -->
     <div class="SigninModules">
-      <div class="content-module">
-        <h3 class="signin-title">ログイン</h3>
-        <div class="service-signin">
+      <ul class="content-module">
+        <p class="signin-title">ログイン</p>
+        <li class="service-signin">
           <div class="twitter-signin">
             <button class="btn btn-default service-signin-button"><b>Twitterでログインする</b></button>
           </div>
@@ -15,8 +15,8 @@
           <div class="github-signin">
             <button class="btn btn-default service-signin-button"><b>Githubでログインする</b></button>
           </div>
-        </div>
-        <div class="email-signin">
+        </li>
+        <li class="email-signin">
           <form #f="ngForm" class="signin-form" (ngSubmit)="signIn(f)">
             <div class="form-group">
               <label for="account-name">
@@ -32,10 +32,10 @@
               <b>ログイン</b>
             </button>
           </form>
-        </div>
+        </li>
         <p class="signup-link"><a routerLink="/signup/">新規登録はこちら</a></p>
-        <p class="signup-link"><a routerLink="/password/reminder/">パスワードを忘れた場合はこちら</a></p>
-      </div>
+        <p class="password-reminder-link"><a routerLink="/password/reminder/">パスワードを忘れた場合はこちら</a></p>
+      </ul>
     </div>
   </div>
 </div>

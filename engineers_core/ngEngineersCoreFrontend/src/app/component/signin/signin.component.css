@@ -1,38 +1,121 @@
-/* メインコンテンツ */
-@media screen and (min-width: 1236px) {
-  .AppContainer {
-    max-width: 890px;
-  }
+a {
+    color: #222222;
+    text-decoration: none;
 }
-.AppContainer {
-    margin: 45px auto;
+a:visited {
+    color: #222222;
+    text-decoration: none;
 }
-.AppContent-main {
-    margin: 15px auto 0;
-    max-width: 890px;
-    min-width: 890px;
+a:hover {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
 }
-.content-module {
-  background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    height: 500px;
-}
-.signin-title {
-    font-weight: bold;
-    text-align: center;
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 
+/* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
+@media screen and (min-width:0px) and (max-width: 480px) {
+    .AppContainer {
+        max-width: 480px;
+    }
+    .AppContent-main {
+    }
+    .SigninModules {
+        width: 100%;
+        padding: 8px;
+    }
+    .btn-default {
+        width: 210px;
+    }
+    .service-signin-button {
+        margin: 5px;
+    }
+    .signin-form {
+        margin: 20px 50px;
+    }
+}
+
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
+    .AppContainer {
+        max-width: 1240px;
+    }
+    .AppContent-main {
+    }
+    .SigninModules {
+        width: 100%;
+        padding: 10px;
+    }
+    .btn-default {
+        width: 250px;
+    }
+    .signin-form {
+        margin: 20px 30%;
+    }
+    .service-signin-button {
+        margin: 10px;
+    }
+}
+
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
+    .AppContainer {
+        max-width: 1190px;
+        margin: 0 auto;
+    }
+    .AppContent-main {
+        margin: 15px auto 0;
+        min-width: 890px;
+    }
+    .SigninModules {
+        padding: 30px;
+    }
+    ul.content-module > li {
+        display: inline-block;
+    }
+    .service-signin {
+        width: 45%;
+        vertical-align: top;
+    }
+    .signin-form {
+        width: 90%;
+        margin: 10px;
+    }
+    .btn-default {
+        width: 300px;
+    }
+    .service-signin-button {
+        margin: 10px;
+    }
+    .email-signin {
+        width: 45%;
+    }
+}
+
+/* メインコンテンツ */
+.SigninModules {
+    background-color: #fff;
+}
+
+.signin-title {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+ul.content-module {
+    text-align: center;
+}
 .service-signin {
-    float: left;
+    text-align: center;
 }
 .btn-default {
-    width: 300px;
     height: 50px;
     font-size: 16px;
-}
-.service-signin-button {
-    margin: 10px 25px 5px 100px;
 }
 .twitter-signin > button {
     color: #fff;
@@ -54,20 +137,13 @@
     font-size: 16px;
 }
 
-.email-signin {
-    margin-bottom: 5px;
-}
-
-.signin-form {
-    width: 40%;
-    margin: 20px 20px 20px 475px;
-}
 .form-group {
+    text-align: left;
 }
 .form-control {
     color: #222222;
-    border: 0 solid #ccc !important;
-    border-bottom: 1px solid #ccc !important;
+    border: 0 solid #ccc;
+    border-bottom: 1px solid #ccc;
     padding: 0;
     margin-bottom: 20px;
     font-size: 16px;
@@ -81,6 +157,7 @@
 .button {
     text-align: center;
 }
-.signup-link {
+.signup-link, .password-reminder-link {
     text-align: center;
+    margin: 20px 0 0;
 }
