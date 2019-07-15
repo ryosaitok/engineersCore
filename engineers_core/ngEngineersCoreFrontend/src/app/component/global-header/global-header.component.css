@@ -126,3 +126,7 @@ ul.dropdown-menu {
 p.name {
     margin: 0;
 }
+p.my-page {
+    margin: 5px 0 0;
+    font-size: 12px;
+}
