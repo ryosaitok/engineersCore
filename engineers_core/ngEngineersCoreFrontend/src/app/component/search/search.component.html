@@ -140,32 +140,33 @@
               <ul class="user-module">
                 <li *ngFor="let user of users" class="user-content flex-module-inner">
                   <!-- ユーザーの情報 -->
-                  <div class="context">
-                    <div class="user">
+                  <ul class="user">
+                    <li *ngIf="user.profileImageLink !== null" class="user-icon">
                       <a routerLink="/user/{{user.userAccountName}}">
-                        <div *ngIf="user.profileImageLink !== null" class="user-icon">
-                          <img class="avatar" src="{{user.profileImageLink}}"
-                               alt=""/>
-                        </div>
-                        <div *ngIf="user.profileImageLink === null" class="user-icon">
-                          <img class="avatar"
-                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
-                               alt=""/>
-                        </div>
+                        <img class="avatar" src="{{user.profileImageLink}}" alt=""/>
                       </a>
+                    </li>
+                    <li *ngIf="user.profileImageLink === null" class="user-icon">
                       <a routerLink="/user/{{user.userAccountName}}">
-                        <div class="user-name">
-                          {{user.userName}} @{{user.userName}}
-                        </div>
+                        <img class="avatar"
+                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                             alt=""/>
                       </a>
-                      <div class="user-description">
-                        {{user.description}}
+                    </li>
+                    <li class="user-name-area">
+                      <div class="user-name">
+                        <a routerLink="/user/{{user.userAccountName}}">{{user.userName}}</a>
                       </div>
+                      <div class="account-name">
+                        <a routerLink="/user/{{user.userAccountName}}">@{{user.userAccountName}}</a>
+                      </div>
+                    </li>
+                    <div class="user-description">
+                      {{user.description}}
                     </div>
-                  </div>
+                  </ul>
                 </li>
               </ul>
-
               <nav
                 *ngIf="(mainPagePre !== undefined && mainPagePre !== null) || (mainPageNext !== undefined && mainPageNext !== null)"
                 aria-label="Page navigation" class="paging-navigation">

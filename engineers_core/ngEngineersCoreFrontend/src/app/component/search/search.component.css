@@ -72,6 +72,16 @@ ul {
     .SidebarBookModules {
         width: 100%;
     }
+    .user-icon {
+        width: 25%;
+    }
+    .user-name-area {
+        width: 75%;
+        vertical-align: middle;
+    }
+    ul.user-module > li {
+        width: 100%;
+    }
 }
 
 /* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
@@ -108,6 +118,16 @@ ul {
     }
     .SidebarBookModules {
         width: 100%;
+    }
+    ul.user-module > li {
+        width: 33%;
+    }
+    .user-icon {
+        width: 22%;
+    }
+    .user-name-area {
+        width: 78%;
+        vertical-align: middle;
     }
 }
 
@@ -163,6 +183,16 @@ ul {
     }
     .popular-book {
         margin-bottom: 10px;
+    }
+    ul.user-module > li {
+        width: 33%;
+    }
+    .user-icon {
+        width: 25%;
+    }
+    .user-name-area {
+        width: 75%;
+        vertical-align: middle;
     }
 }
 
@@ -323,17 +353,20 @@ ul.authors li {
     color: #657786;
 }
 
+ul.user > li {
+    display: inline-block;
+}
 .avatar {
-    float: left;
-    position: absolute;
     width: 45px;
     height: 45px;
-    margin-left: -58px;
     border-radius: 50%;
     object-fit: cover;
 }
 .user-name {
     font-weight: bold;
+}
+.account-name > a {
+    color: #657786;
 }
 .user-info {
     width: 25%;
@@ -344,17 +377,15 @@ ul.user-module {
     margin-bottom: 0;
 }
 ul.user-module > li {
-    width: 145px;
-    vertical-align: top;
     display: inline-block;
 }
 .user-content {
     font-size: 12px;
-    margin: 5px 45px 5px 70px;
-    padding: 10px 0;
+    padding: 15px 10px;
+    vertical-align: top;
 }
 .user-description {
-    margin-top: 10px;
+    margin: 5px;
 }
 
 .no-content-text {
