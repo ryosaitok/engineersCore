@@ -102,8 +102,6 @@ header {
 }
 .login-user-menu {
     margin: 0;
-}
-.user-profile-image {
     cursor: pointer;
 }
 .avatar {
