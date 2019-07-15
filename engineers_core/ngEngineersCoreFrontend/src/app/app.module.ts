@@ -28,8 +28,8 @@ import {VerifyEmailComponent} from './component/verify-email/verify-email.compon
 import {PasswordReminderComponent} from './component/password-reminder/password-reminder.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
 import {ShelfEditComponent} from './component/shelf-edit/shelf-edit.component';
-import { ShelfRegisterComponent } from './component/shelf-register/shelf-register.component';
-import { AccountSettingComponent } from './component/account-setting/account-setting.component';
+import {ShelfRegisterComponent} from './component/shelf-register/shelf-register.component';
+import {AccountSettingComponent} from './component/account-setting/account-setting.component';
 
 const config = new AuthServiceConfig([
   {

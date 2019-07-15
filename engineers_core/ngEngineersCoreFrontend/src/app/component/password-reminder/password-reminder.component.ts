@@ -29,6 +29,9 @@ export class PasswordReminderComponent implements OnInit {
   }
 
   sendPasswordReminder(f: NgForm): void {
+    if (this.appComponent.isDoubleClick()) {
+      return;
+    }
     this.emailAddress = f.value.email;
     this.sentMailFailed = false;
     this.sentMail = false;
@@ -40,9 +43,11 @@ export class PasswordReminderComponent implements OnInit {
       } else {
         this.sentMailFailed = true;
       }
+      this.appComponent.makeClickable();
     }, error => {
       // メール送信処理に失敗した場合はメール送信失敗画面を表示
       this.sentMailFailed = true;
+      this.appComponent.makeClickable();
     });
   }
 }

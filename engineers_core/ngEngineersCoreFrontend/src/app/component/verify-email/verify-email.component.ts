@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {AppComponent} from '../../app.component';
 import {SignupService} from '../../service/signup/signup.service';
-import {UserService} from '../../service/user/user.service';
 import {SigninService} from '../../service/signin/signin.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class VerifyEmailComponent implements OnInit {
     private appComponent: AppComponent,
     private signupService: SignupService,
     private signinService: SigninService,
-    private userService: UserService,
   ) {
   }
 
@@ -51,6 +49,9 @@ export class VerifyEmailComponent implements OnInit {
   // 新規ユーザー登録する
   // TODO:認証ユーザーとユーザーを同一トランザクションで扱えるようにする
   signUp(f: NgForm) {
+    if (this.appComponent.isDoubleClick()) {
+      return;
+    }
     const accountName = f.value.accountName;
     const email = this.verifiedEmail;
     const password = f.value.password;
@@ -59,18 +60,13 @@ export class VerifyEmailComponent implements OnInit {
         localStorage.setItem('authToken', response.token);
         const url = 'user/' + accountName + '/';
         this.router.navigate([url]);
+        this.appComponent.makeClickable();
+      }, error => {
+        this.appComponent.makeClickable();
       });
+    }, err => {
+      this.appComponent.makeClickable();
     });
     this.router.navigate(['login']);
-  }
-
-  getRandomStr(): string {
-    const LENGTH = 8;
-    const SOURCE = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < LENGTH; i++) {
-      result += SOURCE[Math.floor(Math.random() * SOURCE.length)];
-    }
-    return result;
   }
 }

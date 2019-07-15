@@ -41,6 +41,7 @@ export class BookDetailComponent implements OnInit {
   bookInterestedCount: number;
   isInterested: boolean;
   today: string;
+  clicked = false;
 
   modalRef: BsModalRef;
 
@@ -111,6 +112,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   registerBookComment(f: NgForm): void {
+    if (this.appComponent.isDoubleClick()) {
+      return;
+    }
     if (!this.authGuard.canActivate()) {
       return;
     }
@@ -131,6 +135,7 @@ export class BookDetailComponent implements OnInit {
         console.log('読んだコメントの登録に失敗！error: ' + error);
       }
     );
+    this.appComponent.makeClickable();
   }
 
   checkInterested(bookId: number): void {
@@ -299,6 +304,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   registerReply(f: NgForm, commentId: number, commentIndex: number) {
+    if (this.appComponent.isDoubleClick()) {
+      return;
+    }
     if (!this.authGuard.canActivate()) {
       return;
     }
@@ -315,6 +323,7 @@ export class BookDetailComponent implements OnInit {
         }
       });
     });
+    this.appComponent.makeClickable();
   }
 
   deleteReply(commentReplyId: number, commentIndex: number, replyIndex: number): void {
