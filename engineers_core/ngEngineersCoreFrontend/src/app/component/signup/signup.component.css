@@ -1,38 +1,116 @@
+a {
+    color: #222222;
+    text-decoration: none;
+}
+a:visited {
+    color: #222222;
+    text-decoration: none;
+}
+a:hover {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+}
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Smart Phone Web用のスタイル(画面サイズが480px以下の場合) */
+@media screen and (min-width:0px) and (max-width: 480px) {
+    .AppContainer {
+        max-width: 480px;
+    }
+    .AppContent-main {
+    }
+    .SignupModules {
+        width: 100%;
+        padding: 8px;
+    }
+    .btn-default {
+        width: 210px;
+    }
+    .service-signup-button {
+        margin: 5px;
+    }
+    .signup-form {
+        margin: 20px 50px;
+    }
+}
+
+/* Tablet用のスタイル(画面サイズが480~1240px以上の場合) */
+@media screen and (min-width:480px) and (max-width: 1240px) {
+    .AppContainer {
+        max-width: 1240px;
+    }
+    .AppContent-main {
+    }
+    .SignupModules {
+        width: 100%;
+        padding: 10px;
+    }
+    .btn-default {
+        width: 250px;
+    }
+    .signup-form {
+        margin: 20px 30%;
+    }
+    .service-signup-button {
+        margin: 10px;
+    }
+}
+
+/* PC用のスタイル(画面サイズが1240px以上の場合) */
+@media screen and (min-width: 1240px) {
+    .AppContainer {
+        max-width: 1190px;
+        margin: 0 auto;
+    }
+    .AppContent-main {
+        margin: 15px auto 0;
+        min-width: 890px;
+    }
+    .SignupModules {
+        padding: 30px;
+    }
+    ul.first-signup-view > li {
+        display: inline-block;
+    }
+    .service-signup {
+        width: 45%;
+        vertical-align: top;
+    }
+    .signup-form {
+        width: 90%;
+        margin: 10px;
+    }
+    .btn-default {
+        width: 300px;
+    }
+    .service-signup-button {
+        margin: 10px;
+    }
+    .email-signup {
+        width: 45%;
+    }
+}
+
 /* メインコンテンツ */
-@media screen and (min-width: 1236px) {
-  .AppContainer {
-    max-width: 890px;
-  }
-}
-.AppContainer {
-    margin: 45px auto;
-}
-.AppContent-main {
-    margin: 15px auto 0;
-    max-width: 890px;
-    min-width: 890px;
-}
-.content-module {
+.SignupModules {
     background-color: #fff;
-    border: 1px solid #e6ecf0;
-    padding: 10px;
-    height: 500px;
 }
 .signup-title {
     font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0;
+}
+.content-module {
     text-align: center;
 }
-
-.service-signup {
-    float: left;
-}
 .btn-default {
-    width: 300px;
     height: 50px;
     font-size: 16px;
-}
-.service-signup-button {
-    margin: 10px 25px 5px 100px;
 }
 .twitter-signup > button {
     color: #fff;
@@ -54,16 +132,13 @@
     font-size: 16px;
 }
 
-.signup-form {
-    width: 40%;
-    margin: 20px 20px 20px 475px;
-}
 .form-group {
+    text-align: left;
 }
 .form-control {
     color: #222222;
-    border: 0 solid #ccc !important;
-    border-bottom: 1px solid #ccc !important;
+    border: 0 solid #ccc;
+    border-bottom: 1px solid #ccc;
     padding: 0;
     margin-bottom: 20px;
     font-size: 16px;
@@ -79,6 +154,7 @@
 }
 .signin-link {
     text-align: center;
+    margin: 20px 0 0;
 }
 
 .sent-mail-message {

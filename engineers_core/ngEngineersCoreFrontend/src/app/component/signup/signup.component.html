@@ -1,12 +1,12 @@
 <div class="AppContainer">
-  <div class="AppContent-main u-cf">
+  <div class="AppContent-main">
     <!-- メインメニュー -->
     <div class="SignupModules">
       <div class="content-module">
-        <h3 class="signup-title">新規登録</h3>
+        <p class="signup-title">新規登録</p>
         <!-- 初期登録画面 -->
-        <div *ngIf="!sentMail" class="first-signup-view">
-          <div class="service-signup">
+        <ul *ngIf="!sentMail" class="first-signup-view">
+          <li class="service-signup">
             <div class="twitter-signup">
               <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>
             </div>
@@ -16,8 +16,8 @@
             <div class="github-signup">
               <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>
             </div>
-          </div>
-          <div class="email-signup">
+          </li>
+          <li class="email-signup">
             <form #f="ngForm" class="signup-form" (ngSubmit)="sendEmailVerification(f)">
               <div class="form-group">
                 <label for="email">
@@ -35,7 +35,7 @@
                 <b>メールアドレスで登録</b>
               </button>
             </form>
-          </div>
+          </li>
           <p class="signin-link"><a routerLink="/login/">ログインはこちら</a></p>
           <div *ngIf="sentMailFailed" class="sent-mail-message">
           <p><b>「{{emailAddress}}」宛へのメール送信に失敗しました。</b></p>
@@ -46,7 +46,7 @@
           <br>
           <p>※複数回試してもメールが届かない場合は、お手数ですが<a href="#">こちら</a>からお問い合わせください。</p>
         </div>
-        </div>
+        </ul>
         <!-- メールアドレス登録メール送信後画面 -->
         <div *ngIf="sentMail" class="sent-mail-message">
           <p><b>「{{emailAddress}}」宛に確認メールを送信しました。</b></p>
