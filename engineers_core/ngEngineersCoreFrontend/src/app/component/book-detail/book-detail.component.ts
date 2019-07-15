@@ -170,6 +170,7 @@ export class BookDetailComponent implements OnInit {
         this.interestedBookService.registerInterestedBook(loggedInUserId, bookId).subscribe(
           (res) => {
             this.isInterested = true;
+            this.bookInterestedCount += 1;
           },
           (error) => {
             console.log('error: ' + error);
@@ -194,6 +195,7 @@ export class BookDetailComponent implements OnInit {
         this.interestedBookService.deleteInterestedBook(interestedId).subscribe(
           (res) => {
             this.isInterested = false;
+            this.bookInterestedCount -= 1;
           },
           (error) => {
             console.log('error: ' + error);
