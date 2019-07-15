@@ -6,17 +6,17 @@
         <p class="signup-title">新規登録</p>
         <!-- 初期登録画面 -->
         <ul *ngIf="!sentMail" class="first-signup-view">
-          <li class="service-signup">
-            <div class="twitter-signup">
-              <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>
-            </div>
-            <div class="google-signup">
-              <button class="btn btn-default service-signup-button"><b>Googleで登録する</b></button>
-            </div>
-            <div class="github-signup">
-              <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>
-            </div>
-          </li>
+<!--          <li class="service-signup">-->
+<!--            <div class="twitter-signup">-->
+<!--              <button class="btn btn-default service-signup-button"><b>Twitterで登録する</b></button>-->
+<!--            </div>-->
+<!--            <div class="google-signup">-->
+<!--              <button class="btn btn-default service-signup-button"><b>Googleで登録する</b></button>-->
+<!--            </div>-->
+<!--            <div class="github-signup">-->
+<!--              <button class="btn btn-default service-signup-button"><b>Githubで登録する</b></button>-->
+<!--            </div>-->
+<!--          </li>-->
           <li class="email-signup">
             <form #f="ngForm" class="signup-form" (ngSubmit)="sendEmailVerification(f)">
               <div class="form-group">
