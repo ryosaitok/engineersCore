@@ -261,7 +261,7 @@ class PasswordResetView(generics.UpdateAPIView):
             return Response(data={'message': 'PasswordResetView パスワード更新処理でerror', 'success': False}, status=500)
 
 
-class AuthUserView(generics.RetrieveUpdateDestroyAPIView):
+class AuthUserUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer = AuthUserSerializer
 

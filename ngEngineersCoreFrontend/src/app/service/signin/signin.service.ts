@@ -9,8 +9,6 @@ export class SigninService {
 
   HOST = 'http://127.0.0.1:8000/';
   AUTH_API_URL = this.HOST + 'api/auth/';
-  AUTH_USERS_API_URL = this.HOST + 'api/auth/users/';
-  EMAIL_AUTH_USER_API_URL = this.AUTH_USERS_API_URL + '?email=';
   AUTH_USER_ME_API_URL = this.HOST + 'api/auth/me/';
   PASSWORD_REMINDER_SEND_API_URL = this.HOST + 'api/password/reminder/send/';
   VERIFY_PASSWORD_REMINDER_API_URL = this.HOST + 'api/verify/password/reminder/';
@@ -39,11 +37,6 @@ export class SigninService {
     const httpHeaders = this.appendJwtHeader(this.httpHeaders);
     console.log('httpHeaders: ', httpHeaders);
     return this.http.get<any>(this.AUTH_USER_ME_API_URL, {headers: httpHeaders});
-  }
-
-  getAuthUsersByEmail(email: string): Observable<any> {
-    const url = this.EMAIL_AUTH_USER_API_URL + email;
-    return this.http.get<any>(url);
   }
 
   resetPassword(token: string, password: string): Observable<any> {

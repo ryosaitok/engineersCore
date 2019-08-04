@@ -27,7 +27,10 @@ SECRET_KEY = '@*d^0iy$w%*oelye6$18zgzk8w&l8l&6(ml17p+6rnaq2c6b)a'
 DEBUG = True
 
 # APIアクセスを許可するホストを設定する。
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'engineers-core.appspot.com',
+    '127.0.0.1',
+]
 
 # 画像保存のための設定
 MEDIA_URL = '/media/'
@@ -59,11 +62,11 @@ INSTALLED_APPS = [
 # EMAIL_PORT = 25
 
 # 本番用のSendGridメールサーバーの設定
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+# EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,
@@ -109,7 +112,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'engineers_core_frontend', 'build'),
+            os.path.join(BASE_DIR, 'ngEngineersCoreFrontend', 'build'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -125,28 +128,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'engineers_core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 # TODO: 環境変数から読み取るようにする
+# Local
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'engineersCore',
+#         'USER': 'vIarYotual',
+#         'PASSWORD': 'virYotual',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#         },
+#     }
+# }
+# Production
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': os.environ['LOCAL_MYSQL_DB_NAME'],
+        'HOST': '/cloudsql/engineers-core:asia-northeast1:engineers-core',
+        'USER': 'root',
+        'PASSWORD': 'wbouv2032AUBSce2302',
         'NAME': 'engineersCore',
-        # 'USER': os.environ['LOCAL_MYSQL_USER_NAME'],
-        'USER': 'vIarYotual',
-        # 'PASSWORD': os.environ['LOCAL_MYSQL_PASSWORD'],
-        'PASSWORD': 'virYotual',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -166,7 +175,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -180,19 +188,20 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'engineers_core_frontend', 'build', 'static'),
-]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # CORS
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
     '127.0.0.1:4200',
+    'engineers-core.appspot.com',
 )

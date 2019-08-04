@@ -9,8 +9,7 @@ import {Observable} from 'rxjs';
 export class AccountSettingService {
 
   HOST = 'http://127.0.0.1:8000/';
-  AUTH_USER_API_URL = this.HOST + 'api/auth/user/';
-  ACCOUNT_NAME_AUTH_USERS_API_URL = this.HOST + 'api/auth/users/?account_name=';
+  AUTH_USER_UPDATE_API_URL = this.HOST + 'api/auth/user/update/';
   USER_API_URL = this.HOST + 'api/user/';
   USER_PROFILE_IMAGE_UPLOAD_API_URL = this.HOST + 'api/profile/image/upload/';
   httpHeaders = new HttpHeaders({
@@ -28,14 +27,8 @@ export class AccountSettingService {
   ) {
   }
 
-  getAuthUser(accountName: string): Observable<any> {
-    const url = this.ACCOUNT_NAME_AUTH_USERS_API_URL + accountName;
-    const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
-    return this.http.get<any>(url, {headers: httpHeaders});
-  }
-
   updateAuthUser(userName: string): Observable<any> {
-    const url = this.AUTH_USER_API_URL;
+    const url = this.AUTH_USER_UPDATE_API_URL;
     const body = {username: userName};
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.put<any>(url, body, {headers: httpHeaders});
