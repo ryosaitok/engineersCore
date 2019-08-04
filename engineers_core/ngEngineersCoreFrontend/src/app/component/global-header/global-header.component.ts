@@ -21,7 +21,7 @@ export class GlobalHeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private signinService: SigninService,
     private userService: UserService,
   ) {

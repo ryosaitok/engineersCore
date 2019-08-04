@@ -118,6 +118,9 @@ ul {
     .module {
         margin-bottom: 10px;
     }
+    .bookComments {
+        margin-bottom: 0 !important;
+    }
     .flex-module-inner {
         padding: 0 10px;
     }

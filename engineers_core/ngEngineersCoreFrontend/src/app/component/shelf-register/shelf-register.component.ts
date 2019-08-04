@@ -35,7 +35,7 @@ export class ShelfRegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authGuard: AuthGuard,
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private signinService: SigninService,
     private userService: UserService,
     private bookService: BookService,
