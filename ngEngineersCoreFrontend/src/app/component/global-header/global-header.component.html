@@ -21,7 +21,8 @@
                 <li class="nav global-actions" id="global-nav-shelf-books">
                   <nav>
                     <a routerLink="/shelves/">
-                      <span class="shelf-books"><i class="fas fa-lg"><fa-icon [icon]="faBookReader"></fa-icon></i></span>
+                      <span class="shelf-books"><i class="fas fa-lg"><fa-icon
+                        [icon]="faBookReader"></fa-icon></i></span>
                       <b class="menu-text"> みんなの本棚</b>
                     </a>
                   </nav>
@@ -40,14 +41,17 @@
                         <div class="user-profile-image"
                              *ngIf="appComponent.profileImageLink === null || appComponent.profileImageLink === undefined">
                           <nav><img class="avatar"
-                                    src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                    src="{{appComponent.defaultProfileImage}}"
                                     alt=""/>
                           </nav>
                         </div>
                         <div class="user-profile-image"
                              *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined">
-                          <nav><img class="avatar" src="{{appComponent.profileImageLink}}"
-                                    alt=""/></nav>
+                          <nav><img class="avatar"
+                                    src="{{appComponent.profileImageUrl}}{{appComponent.profileImageLink}}"
+                                    alt=""
+                                    onerror="this.src='../../../assets/image/profile/default_profile_image.png';">
+                          </nav>
                         </div>
                       </div>
                       <div dropdownToggle class="dropdown-toggle login-state" *ngIf="!appComponent.isLoggedIn">
@@ -62,14 +66,18 @@
                           <a class="dropdown-item" href="/user/{{appComponent.accountName}}">
                             <b class="fullname">{{appComponent.userName}}</b><span class="UserBadges"></span>
                             <p class="name"><span class="username" dir="ltr">@{{appComponent.accountName}}</span></p>
-                            <p class="my-page"><span >マイページ</span></p>
+                            <p class="my-page"><span>マイページ</span></p>
                           </a>
                         </li>
                         <li *ngIf="appComponent.isLoggedIn" class="divider dropdown-divider"></li>
-                        <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item" href="/shelf/register">本棚を登録</a></li>
+                        <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item"
+                                                                               href="/shelf/register">本棚を登録</a></li>
                         <li *ngIf="appComponent.isLoggedIn" class="divider dropdown-divider"></li>
-                        <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item" href="/account/setting">アカウント設定</a></li>
-                        <li role="menuitem"><a class="dropdown-item" href="https://twitter.com/messages/compose?recipient_id=1142596153529131008">お問い合わせ</a></li>
+                        <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a class="dropdown-item"
+                                                                               href="/account/setting">アカウント設定</a></li>
+                        <li role="menuitem"><a class="dropdown-item"
+                                               href="https://twitter.com/messages/compose?recipient_id=1142596153529131008">お問い合わせ</a>
+                        </li>
                         <li class="divider dropdown-divider"></li>
                         <li *ngIf="appComponent.isLoggedIn" role="menuitem"><a><span class="dropdown-item"
                                                                                      (click)="signOut()">ログアウト</span></a>

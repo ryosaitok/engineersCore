@@ -7,13 +7,14 @@ import {HttpRequestService} from '../http-request/http-request.service';
 import {SigninService} from '../signin/signin.service';
 import {BookService} from '../book/book.service';
 import {UserService} from '../user/user.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   SHELF_API_URL = this.HOST + 'api/shelf/';
   SHELVES_API_URL = this.HOST + 'api/shelves/';
   BOOK_ID_SHELVES_API_URL = this.HOST + 'api/shelves/?book_id=';

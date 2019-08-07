@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,9 @@ export class AppComponent {
   userId: number;
   accountName: string;
   userName: string;
+  profileImageUrl = environment.profileImageUrl;
   profileImageLink: string;
+  defaultProfileImage = '../../../assets/image/profile/default_profile_image.png';
   description: string;
   isLoggedIn: boolean;
   clicked = false;

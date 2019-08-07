@@ -4,13 +4,14 @@ import {Observable} from 'rxjs';
 
 import {ShelfBook} from '../../dto/shelf-book/shelf-book';
 import {SigninService} from '../signin/signin.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfBookService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   SHELF_BOOKS_API_URL = this.HOST + 'api/shelf/books/';
   SHELF_ID_SHELF_BOOKS_API_URL = this.HOST + 'api/shelf/books/?shelf_id=';
   SHELF_BOOKS_BULK_API_URL = this.HOST + 'api/shelf/books/bulk/';

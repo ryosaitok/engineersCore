@@ -6,13 +6,14 @@ import {InterestedBook} from '../../dto/interested-book/interested-book';
 import {SigninService} from '../signin/signin.service';
 import {UserService} from '../user/user.service';
 import {BookService} from '../book/book.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterestedBookService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   INTERESTED_BOOKS_API_URL = this.HOST + 'api/interested/books/';
   ACCOUNT_NAME_INTERESTED_BOOKS_API_URL = this.HOST + 'api/interested/books/?account_name=';
   INTERESTED_BOOK_API_URL = this.HOST + 'api/interested/book/';

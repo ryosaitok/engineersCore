@@ -24,12 +24,12 @@
                   <a routerLink="/user/{{shelf.user.userAccountName}}">
                     <div *ngIf="shelf.user.profileImageLink !== null && shelf.user.profileImageLink !== undefined"
                          class="user-profile-icon">
-                      <img class="profile-image" src="{{shelf.user.profileImageLink}}"
+                      <img class="profile-image" src="{{appComponent.profileImageUrl}}{{shelf.user.profileImageLink}}"
                            alt=""/>
                     </div>
                     <div *ngIf="shelf.user.profileImageLink === null" class="user-profile-icon">
                       <img class="profile-image"
-                           src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                           src="{{appComponent.defaultProfileImage}}"
                            alt=""/>
                     </div>
                   </a>

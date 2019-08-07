@@ -6,13 +6,14 @@ import {SigninService} from '../signin/signin.service';
 import {HttpRequestService} from '../http-request/http-request.service';
 import {User} from '../../dto/user/user';
 import {ShelfCommentReply} from '../../dto/shelf-comment/shelf-comment-reply';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfCommentReplyService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   SHELF_COMMENT_REPLY_API_URL = this.HOST + 'api/shelf/comment/reply/';
   SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/';
   ACCOUNT_NAME_SHELF_COMMENT_REPLIES_API_URL = this.HOST + 'api/shelf/comment/replies/?account_name=';

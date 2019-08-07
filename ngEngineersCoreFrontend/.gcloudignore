@@ -12,22 +12,13 @@
 # below:
 .git
 .gitignore
+node_modules/
+src/
+tsconfig.json
+README.md
+tslint.json
 
 # Python pycache:
 __pycache__/
 # Ignored by the build system
 /setup.cfg
-
-# skip_files:
-media/
-node_modules/
-public/
-src/
-.browserslistrc
-babel.config.js
-pakage.json
-postcss.config.js
-README.md
-tsconfig.json
-tslint.json
-yarn.lock

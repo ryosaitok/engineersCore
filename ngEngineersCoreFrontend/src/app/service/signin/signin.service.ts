@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SigninService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   AUTH_API_URL = this.HOST + 'api/auth/';
   AUTH_USER_ME_API_URL = this.HOST + 'api/auth/me/';
   PASSWORD_REMINDER_SEND_API_URL = this.HOST + 'api/password/reminder/send/';

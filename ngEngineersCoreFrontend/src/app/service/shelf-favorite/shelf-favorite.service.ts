@@ -3,13 +3,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {SigninService} from '../signin/signin.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfFavoriteService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/';
   ACCOUNT_NAME_SHELF_FAVORITES_API_URL = this.HOST + 'api/shelf/favorites/?account_name=';
   SHELF_FAVORITE_API_URL = this.HOST + 'api/shelf/favorite/';

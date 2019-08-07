@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../../dto/user/user';
 import {HttpRequestService} from '../http-request/http-request.service';
 import {SigninService} from '../signin/signin.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
   ) {
   }
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   USER_API_URL = this.HOST + 'api/user/';
   USERS_API_URL = this.HOST + 'api/users/';
   FILTERED_USERS_API_URL = this.HOST + 'api/users/?user=';

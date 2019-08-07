@@ -13,12 +13,12 @@
             <div class="dashboard-user-detail flex-module-inner">
               <ul class="user-profile">
                 <li *ngIf="user.profileImageLink !== null" class="user-profile-item profile-user-icon">
-                  <img class="profile-avatar" src="{{user.profileImageLink}}"
+                  <img class="profile-avatar" src="{{appComponent.profileImageUrl}}{{user.profileImageLink}}"
                        alt=""/>
                 </li>
                 <li *ngIf="user.profileImageLink === null" class="user-profile-item profile-user-icon">
                   <img class="profile-avatar"
-                       src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                       src="{{appComponent.defaultProfileImage}}"
                        alt=""/>
                 </li>
                 <li class="user-profile-item user-name-area">
@@ -108,12 +108,12 @@
                     <div class="producer-icon">
                       <div *ngIf="shelf.user.profileImageLink !== null" class="producer-profile-icon">
                         <img class="producer-profile-image"
-                             src="{{shelf.user.profileImageLink}}"
+                             src="{{appComponent.profileImageUrl}}{{shelf.user.profileImageLink}}"
                              alt=""/>
                       </div>
                       <div *ngIf="shelf.user.profileImageLink === null" class="producer-profile-icon">
                         <img class="producer-profile-image"
-                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                             src="{{appComponent.defaultProfileImage}}"
                              alt=""/>
                       </div>
                     </div>
@@ -264,7 +264,7 @@
                           <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li role="menuitem">
                               <a *ngIf="comment.user.id === appComponent.userId" class="dropdown-item"
-                                 href="https://twitter.com/intent/tweet?&url=http://localhost:4200/user/{{comment.user.userAccountName}}?comment={{comment.id}}&ref_src=twsrc%5Etfw&text={{comment.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
+                                 href="https://twitter.com/intent/tweet?&url={{webHost}}user/{{comment.user.userAccountName}}?comment={{comment.id}}&ref_src=twsrc%5Etfw&text={{comment.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
                                  target="_blank">
                                 Twitterにツイートする
                               </a>
@@ -309,11 +309,11 @@
                               *ngIf="comment.user.profileImageLink !== null && comment.user.profileImageLink !== undefined"
                               class="user-profile-icon">
                               <img class="profile-image"
-                                   src="{{comment.user.profileImageLink}}" alt=""/>
+                                   src="{{appComponent.profileImageUrl}}{{comment.user.profileImageLink}}" alt=""/>
                             </div>
                             <div *ngIf="comment.user.profileImageLink === null" class="user-profile-icon">
                               <img class="profile-image"
-                                   src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                   src="{{appComponent.defaultProfileImage}}"
                                    alt=""/>
                             </div>
                           </a>
@@ -370,11 +370,11 @@
                                 *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                                 class="user-profile-icon">
                                 <img class="min-profile-image"
-                                     src="{{appComponent.profileImageLink}}" alt=""/>
+                                     src="{{appComponent.profileImageUrl}}{{appComponent.profileImageLink}}" alt=""/>
                               </div>
                               <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
                                 <img class="min-profile-image"
-                                     src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                     src="{{appComponent.defaultProfileImage}}"
                                      alt=""/>
                               </div>
                             </li>
@@ -412,12 +412,12 @@
                                       <ul *dropdownMenu class="dropdown-menu" role="menu">
                                         <li role="menuitem">
                                           <a *ngIf="reply.user.id === appComponent.userId" class="dropdown-item"
-                                             href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
+                                             href="https://twitter.com/intent/tweet?&url={{webHost}}shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text={{reply.commentText}}%0a%0a&tw_p=tweetbutton&hashtags=EngineersCore"
                                              target="_blank">
                                             Twitterにツイートする
                                           </a>
                                           <a *ngIf="reply.user.id !== appComponent.userId" class="dropdown-item"
-                                             href="https://twitter.com/intent/tweet?&url=http://localhost:4200/shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
+                                             href="https://twitter.com/intent/tweet?&url={{webHost}}shelf/{{comment.id}}%3Fcomment%3D{{comment.id}}%26reply%3D{{reply.bookCommentReplyId}}&ref_src=twsrc%5Etfw&text=このコメントは...%0a%0a{{reply.commentText}} By {{reply.user.userName}}+%7C&tw_p=tweetbutton&hashtags=EngineersCore"
                                              target="_blank">
                                             Twitterにツイートする
                                           </a>
@@ -461,11 +461,11 @@
                                           *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
                                           class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="{{reply.user.profileImageLink}}" alt=""/>
+                                               src="{{appComponent.profileImageUrl}}{{reply.user.profileImageLink}}" alt=""/>
                                         </div>
                                         <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                                               src="{{appComponent.defaultProfileImage}}"
                                                alt=""/>
                                         </div>
                                       </a>

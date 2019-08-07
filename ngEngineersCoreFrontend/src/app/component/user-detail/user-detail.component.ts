@@ -26,6 +26,7 @@ import {ShelfService} from '../../service/shelf/shelf.service';
 import {ShelfFavoriteService} from '../../service/shelf-favorite/shelf-favorite.service';
 import {BookCommentReplyService} from '../../service/book-comment-reply/book-comment-reply.service';
 import {BookCommentReplyFavoriteService} from '../../service/book-comment-reply-favorite/book-comment-reply-favorite.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-detail',
@@ -34,6 +35,7 @@ import {BookCommentReplyFavoriteService} from '../../service/book-comment-reply-
 })
 export class UserDetailComponent implements OnInit {
 
+  webHost = environment.webUrl;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
   faUser = faUser;

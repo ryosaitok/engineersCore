@@ -1,7 +1,5 @@
 from rest_framework import generics, permissions, status, exceptions
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import FileUploadParser
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 from .serializers import *
@@ -16,9 +14,13 @@ import binascii
 import os
 from google.cloud import storage
 import urllib.parse
+from django.conf import settings
 
 TODAY = date.today()
-BUCKET_NAME = 'test-packet-engineerscore'
+BUCKET_NAME = settings.GS_BUCKET_NAME
+BUCKET_URL = settings.BUCKET_URL
+WEB_HOST = settings.WEB_HOST
+SYSTEM_MAIL_ADDRESS = settings.SYSTEM_MAIL_ADDRESS
 
 
 class ProfileImageUploadView(generics.CreateAPIView):
@@ -57,7 +59,7 @@ class ProfileImageUploadView(generics.CreateAPIView):
             blob.upload_from_filename(image_file_path)
 
             # Userテーブルのprofile_image_linkにGCSのリンクを保存する。
-            profile_image_link = 'https://storage.cloud.google.com/test-packet-engineerscore/' + upload_file_path
+            profile_image_link = BUCKET_URL + upload_file_path
             logged_in_user.profile_image_link = profile_image_link
             logged_in_user.save()
 
@@ -87,7 +89,7 @@ class EmailVerificationView(generics.CreateAPIView):
             return Response(data={'email': email, 'message': '指定されたメールアドレスは、すでに登録されています。'}, status=400)
         # まだ登録されていないメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
         token = generate_key()
-        success = send_email_confirmation(email, 'info@engineers-core.mail', token)
+        success = send_email_confirmation(email, SYSTEM_MAIL_ADDRESS, token)
         if success:
             # メールアドレス認証前のメールアドレス・トークンの保存
             serializer_class.validated_data['token'] = token
@@ -117,11 +119,10 @@ def generate_key():
 def send_email_confirmation(email_address, from_address, token):
     try:
         if email_address is not None:
-            HOST = "http://127.0.0.1:4200/"
             subject = "【EngineersCore】仮登録が完了しました。"
             message = "EngineersCoreへのアカウント仮登録が完了しました。\n\n" \
                       "以下のURLからログインして、本登録を完了させると、ログインしてサービスをご利用いただけます。\n\n"\
-                      + HOST + "signup/{}\n\n".format(token)\
+                      + WEB_HOST + "signup/{}\n\n".format(token)\
                       + "このURLの有効期限は 1時間 です。\n" \
                       "あらかじめご了承ください。\n\n" \
                       "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n\n" \
@@ -170,7 +171,7 @@ class PasswordReminderView(generics.CreateAPIView):
                             status=400)
         # 登録済みメールアドレスの場合は、一意なトークンを持った認証用のメールを送信する
         token = generate_key()
-        success = send_password_reminder(email, 'info@engineers-core.mail', token)
+        success = send_password_reminder(email, SYSTEM_MAIL_ADDRESS, token)
         if success:
             # パスワード変更前のメールアドレス・トークンの保存
             serializer_class.validated_data['token'] = token
@@ -187,10 +188,9 @@ class PasswordReminderView(generics.CreateAPIView):
 def send_password_reminder(email_address, from_address, token):
     try:
         if email_address is not None:
-            HOST = "http://127.0.0.1:4200/"
             subject = "【EngineersCore】パスワード変更のご案内"
             message = "以下のURLからパスワードを変更いただけます。\n\n"\
-                      + HOST + "password/reset/{}\n\n".format(token)\
+                      + WEB_HOST + "password/reset/{}\n\n".format(token)\
                       + "このURLの有効期限は 1時間 です。\n" \
                       "あらかじめご了承ください。\n\n" \
                       "本メールに心当たりのない場合は、お手数ですが削除をお願いいたします。\n\n" \

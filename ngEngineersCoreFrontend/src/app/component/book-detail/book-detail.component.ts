@@ -17,6 +17,7 @@ import {CommentFavoriteService} from '../../service/comment-favorite/comment-fav
 import {UserService} from '../../service/user/user.service';
 import {BookCommentReplyService} from '../../service/book-comment-reply/book-comment-reply.service';
 import {BookCommentReplyFavoriteService} from '../../service/book-comment-reply-favorite/book-comment-reply-favorite.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-book-detail',
@@ -25,6 +26,7 @@ import {BookCommentReplyFavoriteService} from '../../service/book-comment-reply-
 })
 export class BookDetailComponent implements OnInit {
 
+  webHost = environment.webUrl;
   faHeart = faHeart;
   faCommentDots = faCommentDots;
   faBook = faBook;

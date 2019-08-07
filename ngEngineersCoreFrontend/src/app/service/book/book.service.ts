@@ -6,6 +6,7 @@ import {Book} from '../../dto/book/book';
 import {AmazonBook} from '../../dto/amazon-book/amazon-book';
 import {Author} from '../../dto/author/author';
 import {HttpRequestService} from '../http-request/http-request.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class BookService {
@@ -16,7 +17,7 @@ export class BookService {
   ) {
   }
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   BOOK_API_URL = this.HOST + 'api/book/';
   BOOKS_API_URL = this.HOST + 'api/books/';
   TITLE_BOOKS_API_URL = this.HOST + 'api/books/?title=';

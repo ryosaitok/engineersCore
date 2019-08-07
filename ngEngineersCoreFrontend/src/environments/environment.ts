@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://127.0.0.1:8000/', // Local環境のAPIのURL
+  webUrl: 'http://127.0.0.1:4200/', // Local環境のWebサイトのURL
+  profileImageUrl: 'https://storage.cloud.google.com/test-packet-engineerscore/image/profile/', // Local環境のProfile画像の参照先ストレージのURL
 };
 
 /*

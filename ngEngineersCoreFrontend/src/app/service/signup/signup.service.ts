@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignupService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   AUTH_USER_REGISTER_API_URL = this.HOST + 'api/auth/user/register/';
   EMAIL_VERIFICATION_SEND_API_URL = this.HOST + 'api/email/verification/send/';
   VERIFY_EMAIL_API_URL = this.HOST + 'api/verify/email/';

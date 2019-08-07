@@ -143,13 +143,13 @@
                   <ul class="user">
                     <li *ngIf="user.profileImageLink !== null" class="user-icon">
                       <a routerLink="/user/{{user.userAccountName}}">
-                        <img class="avatar" src="{{user.profileImageLink}}" alt=""/>
+                        <img class="avatar" src="{{appComponent.profileImageUrl}}{{user.profileImageLink}}" alt=""/>
                       </a>
                     </li>
                     <li *ngIf="user.profileImageLink === null" class="user-icon">
                       <a routerLink="/user/{{user.userAccountName}}">
                         <img class="avatar"
-                             src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                             src="{{appComponent.defaultProfileImage}}"
                              alt=""/>
                       </a>
                     </li>

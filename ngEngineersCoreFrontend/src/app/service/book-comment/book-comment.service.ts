@@ -7,11 +7,12 @@ import {HttpRequestService} from '../http-request/http-request.service';
 import {SigninService} from '../signin/signin.service';
 import {BookService} from '../book/book.service';
 import {UserService} from '../user/user.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class BookCommentService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   BOOK_COMMENT_API_URL = this.HOST + 'api/book/comment/';
   BOOK_COMMENTS_API_URL = this.HOST + 'api/book/comments/';
   BOOK_ID_BOOK_COMMENTS_API_URL = this.HOST + 'api/book/comments/?book_id=';

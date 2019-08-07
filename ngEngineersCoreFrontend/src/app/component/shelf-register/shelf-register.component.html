@@ -18,12 +18,12 @@
                 <li class="shelf-producer-image">
                   <div *ngIf="appComponent.profileImageLink !== null && appComponent.profileImageLink !== undefined"
                        class="user-profile-icon">
-                    <img class="profile-image" src="{{appComponent.profileImageLink}}"
+                    <img class="profile-image" src="{{appComponent.profileImageUrl}}{{appComponent.profileImageLink}}"
                          alt=""/>
                   </div>
                   <div *ngIf="appComponent.profileImageLink === null" class="user-profile-icon">
                     <img class="profile-image"
-                         src="https://storage.cloud.google.com/test-packet-engineerscore/image/profile/default_profile_image.png"
+                         src="{{appComponent.defaultProfileImage}}"
                          alt=""/>
                   </div>
                 </li>

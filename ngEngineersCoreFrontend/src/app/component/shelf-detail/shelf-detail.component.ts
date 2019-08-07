@@ -19,6 +19,7 @@ import {ShelfCommentService} from '../../service/shelf-comment/shelf-comment.ser
 import {ShelfCommentFavoriteService} from '../../service/shelf-comment-favorite/shelf-comment-favorite.service';
 import {ShelfCommentReplyService} from '../../service/shelf-comment-reply/shelf-comment-reply.service';
 import {ShelfCommentReplyFavoriteService} from '../../service/shelf-comment-reply-favorite/shelf-comment-reply-favorite.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-shelf-detail',
@@ -27,6 +28,7 @@ import {ShelfCommentReplyFavoriteService} from '../../service/shelf-comment-repl
 })
 export class ShelfDetailComponent implements OnInit {
 
+  webHost = environment.webUrl;
   shelfId = Number(this.route.snapshot.paramMap.get('shelfId'));
   shelf: Shelf;
   shelfBookCount: number;

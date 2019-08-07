@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from datetime import timedelta
-from google.oauth2 import service_account
+from django.core.files.storage import default_storage
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -23,11 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '@*d^0iy$w%*oelye6$18zgzk8w&l8l&6(ml17p+6rnaq2c6b)a'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 # APIアクセスを許可するホストを設定する。
 ALLOWED_HOSTS = [
+    'engineers-core-frontend.appspot.com',
     'engineers-core.appspot.com',
     '127.0.0.1',
 ]
@@ -35,11 +33,7 @@ ALLOWED_HOSTS = [
 # 画像保存のための設定
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-# GS_BUCKET_NAME = 'test-packet-engineerscore'
-# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-#     "./../sodium-chalice-245511-a2e97bee388a.json"
-# )
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,16 +51,6 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',  # AngularからAPIにアクセス可能とする
 ]
-# Local用のダミーメールサーバーの設定
-# EMAIL_HOST = 'localhost'
-# EMAIL_PORT = 25
-
-# 本番用のSendGridメールサーバーの設定
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-# EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,
@@ -131,32 +115,6 @@ WSGI_APPLICATION = 'engineers_core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# TODO: 環境変数から読み取るようにする
-# Local
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'engineersCore',
-#         'USER': 'vIarYotual',
-#         'PASSWORD': 'virYotual',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'charset': 'utf8mb4',
-#         },
-#     }
-# }
-# Production
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '/cloudsql/engineers-core:asia-northeast1:engineers-core',
-        'USER': 'root',
-        'PASSWORD': 'wbouv2032AUBSce2302',
-        'NAME': 'engineersCore',
-    }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -203,5 +161,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
     '127.0.0.1:4200',
+    'engineers-core-frontend.appspot.com',
     'engineers-core.appspot.com',
 )
+
+SYSTEM_MAIL_ADDRESS = 'info@engineers-core.mail'

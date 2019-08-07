@@ -45,7 +45,7 @@ export class AccountSettingComponent implements OnInit {
         this.appComponent.profileImageLink = res.profile_image_link;
         if (res.profile_image_link !== null) {
           console.log('res.profile_image_link: ', res.profile_image_link);
-          this.url = res.profile_image_link;
+          this.url = this.appComponent.profileImageUrl + res.profile_image_link;
         } else {
           this.url = '../../assets/image/profile/default_profile_image.png';
         }

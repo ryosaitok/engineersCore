@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {SigninService} from '../signin/signin.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountSettingService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   AUTH_USER_UPDATE_API_URL = this.HOST + 'api/auth/user/update/';
   USER_API_URL = this.HOST + 'api/user/';
   USER_PROFILE_IMAGE_UPLOAD_API_URL = this.HOST + 'api/profile/image/upload/';

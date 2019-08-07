@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class BookAuthorService {
     private http: HttpClient,
   ) {}
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   BOOK_AUTHORS_API_URL = this.HOST + 'api/book/authors/';
 
   getBookAuthors(bookId): Observable<any> {

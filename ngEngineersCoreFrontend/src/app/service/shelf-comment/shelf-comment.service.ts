@@ -5,13 +5,14 @@ import {Observable} from 'rxjs';
 import {User} from '../../dto/user/user';
 import {ShelfComment} from '../../dto/shelf-comment/shelf-comment';
 import {SigninService} from '../signin/signin.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelfCommentService {
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   SHELF_COMMENT_API_URL = this.HOST + 'api/shelf/comment/';
   SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/';
   SHELF_ID_SHELF_COMMENTS_API_URL = this.HOST + 'api/shelf/comments/?shelf_id=';

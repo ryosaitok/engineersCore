@@ -6,6 +6,7 @@ import {User} from '../../dto/user/user';
 import {BookCommentReply} from '../../dto/book-comment/book-comment-reply';
 import {HttpRequestService} from '../http-request/http-request.service';
 import {SigninService} from '../signin/signin.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import {SigninService} from '../signin/signin.service';
 export class BookCommentReplyService {
 
 
-  HOST = 'http://127.0.0.1:8000/';
+  HOST = environment.apiUrl;
   BOOK_COMMENT_REPLY_API_URL = this.HOST + 'api/book/comment/reply/';
   BOOK_COMMENT_REPLIES_API_URL = this.HOST + 'api/book/comment/replies/';
   ACCOUNT_NAME_BOOK_COMMENT_REPLIES_API_URL = this.HOST + 'api/book/comment/replies/?account_name=';
