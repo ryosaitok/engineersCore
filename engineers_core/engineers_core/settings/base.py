@@ -25,6 +25,7 @@ SECRET_KEY = '@*d^0iy$w%*oelye6$18zgzk8w&l8l&6(ml17p+6rnaq2c6b)a'
 
 # APIアクセスを許可するホストを設定する。
 ALLOWED_HOSTS = [
+    'engineers-core.com',
     'engineers-core-frontend.appspot.com',
     'engineers-core.appspot.com',
     '127.0.0.1',
@@ -163,6 +164,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:4200',
     'engineers-core-frontend.appspot.com',
     'engineers-core.appspot.com',
+    'engineers-core.com'
 )
 
 SYSTEM_MAIL_ADDRESS = 'info@engineers-core.mail'

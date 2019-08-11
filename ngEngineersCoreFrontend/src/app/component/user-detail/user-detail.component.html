@@ -42,6 +42,21 @@
             </div>
           </div>
         </div>
+        <!-- 本のリアクション -->
+        <div class="module register-shelf">
+          <div class="flex-module">
+            <div class="flex-module-header">
+              <strong>本棚新規作成</strong>
+            </div>
+            <div class="dashboard-register-shelf flex-module-inner">
+              <div class="action-button">
+                <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register">
+                  <b>本棚を新規作成する</b>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- メインコンテンツ -->
@@ -93,11 +108,6 @@
         <!-- 本棚 -->
         <div *ngIf="shelfSelected" class="module shelves">
           <div *ngIf="shelfCount > 0" class="shelf-module">
-            <div *ngIf="appComponent.accountName === accountName" class="action-button">
-              <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register">
-                <b>本棚を登録する</b>
-              </button>
-            </div>
             <!-- 本棚の情報 -->
             <div *ngFor="let shelf of shelves; let i = index"
                  class="shelf-books-content flex-module-inner">
@@ -195,11 +205,6 @@
             </div>
           </div>
           <div *ngIf="shelfCount === 0" class="shelf-module">
-            <div *ngIf="appComponent.accountName === accountName" class="action-button">
-              <button type="submit" class="btn btn-primary register-button" routerLink="/shelf/register">
-                <b>本棚を登録する</b>
-              </button>
-            </div>
             <div class="no-shelf-text">
               <span>まだ登録した本棚がありません。</span>
             </div>
@@ -461,7 +466,8 @@
                                           *ngIf="reply.user.profileImageLink !== null && reply.user.profileImageLink !== undefined"
                                           class="user-profile-icon">
                                           <img class="min-profile-image"
-                                               src="{{appComponent.profileImageUrl}}{{reply.user.profileImageLink}}" alt=""/>
+                                               src="{{appComponent.profileImageUrl}}{{reply.user.profileImageLink}}"
+                                               alt=""/>
                                         </div>
                                         <div *ngIf="reply.user.profileImageLink === null" class="user-profile-icon">
                                           <img class="min-profile-image"

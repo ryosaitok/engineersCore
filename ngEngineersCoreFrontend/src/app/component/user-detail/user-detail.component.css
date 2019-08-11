@@ -27,6 +27,9 @@ ul {
     }
     .AppContent-main {
     }
+    .flex-module-header {
+        text-align: center;
+    }
     .profile-avatar {
         width: 55px;
         height: 55px;
@@ -80,6 +83,9 @@ ul {
         max-width: 1240px;
     }
     .AppContent-main {
+    }
+    .flex-module-header {
+        text-align: center;
     }
     .profile-avatar {
         width: 105px;
@@ -147,9 +153,6 @@ ul {
     }
     .shelf-info-area {
         width: 90%;
-    }
-    .action-button {
-        width: 850px;
     }
     /* 読んだコメント */
     .comment-book-image {
