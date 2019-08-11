@@ -214,7 +214,6 @@ export class SearchComponent implements OnInit {
    * ユーザー名orユーザーアカウント名で検索して検索結果を表示する
    */
   searchUsersByUser(user: string, sort: string, page: number) {
-    console.log('searchUsersByUser. page: ' + page);
     this.setPage(page);
     this.handleSortForUsers(sort);
     this.router.navigate(['.'], { relativeTo: this.route, queryParams: {user, page: this.page, sort: this.sort}});
@@ -327,7 +326,6 @@ export class SearchComponent implements OnInit {
             this.popularBooks.push(book);
           }
         });
-        console.log('JSON.stringify(this.popularBooks)' + JSON.stringify(this.popularBooks));
       }
     });
   }
@@ -342,7 +340,6 @@ export class SearchComponent implements OnInit {
             this.newBooks.push(book);
           }
         });
-        console.log('JSON.stringify(this.newBooks)' + JSON.stringify(this.newBooks));
       }
     });
   }

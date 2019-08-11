@@ -26,7 +26,6 @@ export class BookCommentReplyFavoriteService {
 
   getReplyFavorite(userId: number, shelfCommentReplyId: number): Observable<any> {
     const url = this.BOOK_COMMENT_REPLY_FAVORITES_API_URL + '?user_id=' + userId + '&comment_reply_id=' + shelfCommentReplyId;
-    console.log('getReplyFavorite。url: ' + url);
     return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 
@@ -42,7 +41,6 @@ export class BookCommentReplyFavoriteService {
 
   registerReplyFavorite(userId: number, bookCommentReplyId: number): Observable<any> {
     const body = {user: userId, book_comment_reply: bookCommentReplyId};
-    console.log('userId: ' + userId + ' shelfCommentReplyId: ' + bookCommentReplyId);
     const httpHeaders = this.signinService.appendJwtHeader(this.httpHeaders);
     return this.http.post<any>(this.BOOK_COMMENT_REPLY_FAVORITES_API_URL, body, {headers: httpHeaders});
   }

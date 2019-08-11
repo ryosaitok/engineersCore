@@ -115,14 +115,14 @@ export class ShelfComponent implements OnInit {
             this.shelves[index].favoriteUserCount += 1;
           },
           (error) => {
-            console.error('shelfFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('shelfFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+        // error
       }
     }, e => {
-      console.error('見つからなかった？loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+      // error
     });
   }
 
@@ -142,11 +142,11 @@ export class ShelfComponent implements OnInit {
             this.shelves[index].favoriteUserCount -= 1;
           },
           (error) => {
-            console.log('undoShelfFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
+        // error
       }
     });
   }

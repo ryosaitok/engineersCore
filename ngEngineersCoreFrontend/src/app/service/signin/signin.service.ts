@@ -25,8 +25,6 @@ export class SigninService {
 
   // 認証トークンを取得する。
   getAuthToken(username, password): Observable<any> {
-    console.log('username: ' + username);
-    console.log('password: ' + password);
     const body = {
       username,
       password
@@ -36,7 +34,6 @@ export class SigninService {
 
   getAuthUser(): Observable<any> {
     const httpHeaders = this.appendJwtHeader(this.httpHeaders);
-    console.log('httpHeaders: ', httpHeaders);
     return this.http.get<any>(this.AUTH_USER_ME_API_URL, {headers: httpHeaders});
   }
 

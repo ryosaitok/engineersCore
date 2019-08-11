@@ -30,6 +30,6 @@ WEB_HOST = 'https://engineers-core-frontend.appspot.com/'
 BUCKET_URL = 'https://storage.cloud.google.com/packet-engineerscore/'
 GS_BUCKET_NAME = 'packet-engineerscore'
 # TODO: 認証ファイル読み込めてない？BUCKETへの読み書きアクセス失敗する...
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    ""  # 認証ファイルを安全な場所から参照できるようにする必要あり
-)
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#     ""  # 認証ファイルを安全な場所から参照できるようにする必要あり
+# )

@@ -44,7 +44,6 @@ export class AccountSettingComponent implements OnInit {
         this.appComponent.userName = res.user_name;
         this.appComponent.profileImageLink = res.profile_image_link;
         if (res.profile_image_link !== null) {
-          console.log('res.profile_image_link: ', res.profile_image_link);
           this.url = this.appComponent.profileImageUrl + res.profile_image_link;
         } else {
           this.url = '../../assets/image/profile/default_profile_image.png';
@@ -82,14 +81,13 @@ export class AccountSettingComponent implements OnInit {
       this.accountSettingService.uploadProfileImage(this.appComponent.userId, this.selectedImage).subscribe(res => {
         // TODO: プロフィール画像更新時に即時反映するようにする。
       }, err => {
-        console.error('プロフィール画像のアップロードに失敗しました、', err);
+        // error
       });
     }
     this.accountSettingService.updateUser(this.appComponent.accountName, userName, description).subscribe(response => {
-      console.log('アカウント設定の更新が完了しました。 response: ', response);
       this.router.navigate(['user/' + this.appComponent.accountName + '/']);
     }, error => {
-      console.log('アカウント設定の更新に失敗しました。 error: ', error);
+      // error
     });
   }
 
@@ -104,7 +102,7 @@ export class AccountSettingComponent implements OnInit {
       this.appComponent.isLoggedIn = false;
       this.accountNameChanged = true;
     }, err => {
-      console.error('アカウント名の変更に失敗しました。', err);
+      // error
     });
   }
 

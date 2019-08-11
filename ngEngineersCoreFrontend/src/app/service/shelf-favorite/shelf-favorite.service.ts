@@ -26,7 +26,6 @@ export class ShelfFavoriteService {
 
   getShelfFavorite(userId: number, shelfId: number): Observable<any> {
     const url = this.SHELF_FAVORITES_API_URL + '?user_id=' + userId + '&shelf_id=' + shelfId;
-    console.log('getShelfFavorite。url: ' + url);
     return this.http.get<any>(url, {headers: this.httpHeaders});
   }
 

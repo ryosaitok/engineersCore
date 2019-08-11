@@ -207,14 +207,14 @@ export class UserDetailComponent implements OnInit {
             this.shelves[index].favoriteUserCount += 1;
           },
           (error) => {
-            console.error('shelfFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('shelfFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+        // error
       }
     }, e => {
-      console.error('見つからなかった？loggedInUserId: ' + loggedInUserId, 'shelfId: ' + shelfId);
+      // error
     });
   }
 
@@ -234,11 +234,11 @@ export class UserDetailComponent implements OnInit {
             this.shelves[index].favoriteUserCount -= 1;
           },
           (error) => {
-            console.log('undoShelfFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。shelfId ' + shelfId);
+        // error
       }
     });
   }
@@ -257,11 +257,11 @@ export class UserDetailComponent implements OnInit {
             this.bookComments[index].favoriteUserCount += 1;
           },
           (error) => {
-            console.error('commentFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('commentFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentId: ' + commentId);
+        // error
       }
     });
   }
@@ -282,11 +282,11 @@ export class UserDetailComponent implements OnInit {
             this.bookComments[index].favoriteUserCount -= 1;
           },
           (error) => {
-            console.log('notCommentFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentId ' + commentId);
+        // error
       }
     });
   }
@@ -299,7 +299,7 @@ export class UserDetailComponent implements OnInit {
       this.bookComments.splice(index, 1);
       this.bookCommentCount -= 1;
     }, error => {
-      console.error('deleteCommentでエラー: ', error);
+      // error
     });
   }
 
@@ -311,7 +311,7 @@ export class UserDetailComponent implements OnInit {
       // 報告済みマークつける
       this.bookComments[index].reportUserIds.push(this.appComponent.userId);
     }, error => {
-      console.error('reportCommentでエラー: ', error);
+      // error
     });
   }
 
@@ -323,7 +323,7 @@ export class UserDetailComponent implements OnInit {
         this.bookComments[commentIndex].commentReplies = this.bookCommentReplyService.convertBookCommentReplies(data.results);
       }
     }, error => {
-      console.error('displayRepliesでエラー: ', error);
+      // error
     });
   }
 
@@ -354,7 +354,7 @@ export class UserDetailComponent implements OnInit {
       this.bookComments[commentIndex].commentReplies.splice(replyIndex, 1);
       this.bookComments[commentIndex].replyUserCount -= 1;
     }, error => {
-      console.error('deleteReplyでエラー: ', error);
+      // error
     });
   }
 
@@ -366,7 +366,7 @@ export class UserDetailComponent implements OnInit {
       // 報告済みマークつける
       this.bookComments[commentIndex].commentReplies[replyIndex].reportUserIds.push(this.appComponent.userId);
     }, error => {
-      console.error('reportReplyでエラー: ', error);
+      // error
     });
   }
 
@@ -384,11 +384,11 @@ export class UserDetailComponent implements OnInit {
             this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserCount += 1;
           },
           (error) => {
-            console.error('replyFavoriteでerror: ' + JSON.stringify(error));
+            // error
           }
         );
       } else {
-        console.error('replyFavoriteが呼ばれるのおかしい。loggedInUserId: ' + loggedInUserId, 'commentReplyId: ' + commentReplyId);
+        // error
       }
     });
   }
@@ -409,11 +409,11 @@ export class UserDetailComponent implements OnInit {
             this.bookComments[commentIndex].commentReplies[replyIndex].favoriteUserCount -= 1;
           },
           (error) => {
-            console.log('notReplyFavoriteでerror: ' + error);
+            // error
           }
         );
       } else {
-        console.error('まだデータが存在しない場合はメソッド呼ばれるのおかしい。commentReplyId: ' + commentReplyId);
+        // error
       }
     });
   }
