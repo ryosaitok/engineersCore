@@ -1,6 +1,3 @@
-demo.jpg
-![demo](https://github.com/ryosaitok/engineersCore/blob/master/demo.jpg)
-
 # engineersCoreのLocalでの環境構築
 
 ## Python3系のインストール
