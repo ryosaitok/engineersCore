@@ -26,8 +26,8 @@
 <br>・$ cd engineersCore/engineers_core
 <br>・$ python manage.py runserver
 <br>・「 http://127.0.0.1:8000/admin/ 」でAdmin画面を開く。superuserは上の手順で作成済み。以下のユーザー名・パスワードでログインできるはず。
-<br>・ユーザー名：virtual_techX
-<br>・パスワード：Ry3110.Kb
+<br>・ユーザー名：testX
+<br>・パスワード：password
 
 ## フロントエンドのビルド・サーバー起動
 <br>・$ yarn install
