@@ -1,3 +1,5 @@
+<img src="https://github.com/ryosaitok/engineersCore/blob/master/engineersCore4.gif?raw=true" alt="engineersCore Demonstration">
+
 # engineersCoreのLocalでの環境構築
 
 ## Python3系のインストール
