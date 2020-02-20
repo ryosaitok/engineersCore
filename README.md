@@ -1,5 +1,8 @@
-demo.jpg
-![demo](https://github.com/ryosaitok/engineersCore/blob/master/demo.jpg)
+# engineersCore
+
+技術の検索、本棚・読んだ本を登録したり、他のユーザーの本棚や読んだ本を見ることができるWebサービスです。
+
+<img src="https://github.com/ryosaitok/engineersCore/blob/master/engineersCore4.gif?raw=true" alt="engineersCore Demonstration">
 
 # engineersCoreのLocalでの環境構築
 
