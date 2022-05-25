@@ -49,7 +49,7 @@ protobuf==3.8.0
 public==2019.4.13
 pyasn1==0.4.5
 pyasn1-modules==0.2.5
-PyJWT==1.7.1
+PyJWT==2.4.0
 PyMySQL==0.9.3
 PySocks==1.6.8
 python3-openid==3.1.0
